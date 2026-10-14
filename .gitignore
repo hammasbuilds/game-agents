@@ -11,3 +11,4 @@ runs/
 *.broguesave
 _vizdoom.ini
 _vizdoom/
+*.log
