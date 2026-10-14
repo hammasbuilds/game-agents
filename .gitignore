@@ -12,3 +12,5 @@ runs/
 _vizdoom.ini
 _vizdoom/
 *.log
+atlas_todo.json
+atlas_sheet.png
