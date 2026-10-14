@@ -34,6 +34,8 @@ class PPOConfig:
     max_grad_norm: float = 0.5
     anneal_lr: bool = True
     torch_threads: int = 2            # the rollout, not the backward pass, is the bottleneck
+    width: int = 1                    # channel multiplier; >1 wants a GPU
+    device: str = "auto"              # "auto" takes CUDA when it is really there
 
 
 class Rollout:
@@ -64,6 +66,23 @@ def compute_gae(buf: Rollout, last_value: np.ndarray, gamma: float, lam: float):
     return adv, adv + buf.values
 
 
+def resolve_device(choice: str) -> torch.device:
+    """Pick a device, and say so out loud.
+
+    "auto" falls back to CPU when CUDA is absent, which is the right default --
+    but a run that *meant* to use a GPU and silently did not is a wasted run, so
+    asking for "cuda" when it is unavailable is an error rather than a fallback.
+    """
+    if choice == "cuda" and not torch.cuda.is_available():
+        raise RuntimeError("cuda was asked for and torch.cuda.is_available() is False")
+    if choice == "auto":
+        choice = "cuda" if torch.cuda.is_available() else "cpu"
+    device = torch.device(choice)
+    name = torch.cuda.get_device_name(device) if device.type == "cuda" else "cpu"
+    print(f"device: {device} ({name})", flush=True)
+    return device
+
+
 def train(env_cfg: EnvConfig, cfg: PPOConfig, out_dir: Path, log_every: int = 10,
           seed: int = 0) -> dict:
     torch.set_num_threads(cfg.torch_threads)
@@ -75,8 +94,9 @@ def train(env_cfg: EnvConfig, cfg: PPOConfig, out_dir: Path, log_every: int = 10
     # workers do -- see fine_timer's note on why this is per-process.
     timer = fine_timer()
     timer.__enter__()
+    device = resolve_device(cfg.device)
     envs = VecDoom(env_cfg, cfg.n_envs)
-    model = ActorCritic(envs.obs_shape, envs.n_actions)
+    model = ActorCritic(envs.obs_shape, envs.n_actions, width=cfg.width).to(device)
     opt = torch.optim.Adam(model.parameters(), lr=cfg.lr, eps=1e-5)
 
     batch = cfg.n_envs * cfg.rollout
@@ -104,14 +124,14 @@ def train(env_cfg: EnvConfig, cfg: PPOConfig, out_dir: Path, log_every: int = 10
                 step_count += cfg.n_envs
 
             with torch.no_grad():
-                _, last_value = model(torch.from_numpy(obs))
-            adv, ret = compute_gae(buf, last_value.numpy(), cfg.gamma, cfg.gae_lambda)
+                _, last_value = model(torch.from_numpy(obs).to(device))
+            adv, ret = compute_gae(buf, last_value.cpu().numpy(), cfg.gamma, cfg.gae_lambda)
 
-            b_obs = torch.from_numpy(buf.obs.reshape(batch, *envs.obs_shape))
-            b_act = torch.from_numpy(buf.actions.reshape(batch))
-            b_logp = torch.from_numpy(buf.logp.reshape(batch))
-            b_adv = torch.from_numpy(adv.reshape(batch))
-            b_ret = torch.from_numpy(ret.reshape(batch))
+            b_obs = torch.from_numpy(buf.obs.reshape(batch, *envs.obs_shape)).to(device)
+            b_act = torch.from_numpy(buf.actions.reshape(batch)).to(device)
+            b_logp = torch.from_numpy(buf.logp.reshape(batch)).to(device)
+            b_adv = torch.from_numpy(adv.reshape(batch)).to(device)
+            b_ret = torch.from_numpy(ret.reshape(batch)).to(device)
 
             mb_size = batch // cfg.minibatches
             idx = np.arange(batch)
@@ -154,16 +174,18 @@ def train(env_cfg: EnvConfig, cfg: PPOConfig, out_dir: Path, log_every: int = 10
                       flush=True)
                 (out_dir / "history.json").write_text(json.dumps(history, indent=1))
                 torch.save({"model": model.state_dict(), "obs_shape": envs.obs_shape,
-                            "n_actions": envs.n_actions, "env": asdict(env_cfg)},
-                           out_dir / "policy.pt")
+                            "n_actions": envs.n_actions, "env": asdict(env_cfg),
+                            "width": cfg.width}, out_dir / "policy.pt")
     finally:
         envs.close()
         timer.__exit__(None, None, None)
 
     torch.save({"model": model.state_dict(), "obs_shape": envs.obs_shape,
-                "n_actions": envs.n_actions, "env": asdict(env_cfg)}, out_dir / "policy.pt")
+                "n_actions": envs.n_actions, "env": asdict(env_cfg),
+                "width": cfg.width}, out_dir / "policy.pt")
     (out_dir / "history.json").write_text(json.dumps(history, indent=1))
     return {"updates": len(history), "steps": step_count,
             "wall_seconds": round(time.time() - started, 1),
             "final_return_mean": history[-1]["return_mean"] if history else None,
-            "params": model.n_params()}
+            "params": model.n_params(), "width": cfg.width, "device": str(device),
+            "envs": cfg.n_envs}

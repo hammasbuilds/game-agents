@@ -109,13 +109,16 @@ class BrogueAgent:
     name: str = "explorer"
     rest_below: float = 0.55        # health fraction under which it stops to rest
     flee_below: float = 0.30
+    patience: int = 12              # explore steps with no new map before diving
     chosen: str = "start"
     history: list[str] = field(default_factory=list)
-    _last_frames: int = 0
+    _seen: int = 0
+    _stalled: int = 0
 
     def reset(self) -> None:
         self.history = []
-        self._last_frames = 0
+        self._seen = 0
+        self._stalled = 0
 
     def _adjacent_threat(self, obs: Observation):
         if obs.player is None:
@@ -128,6 +131,11 @@ class BrogueAgent:
 
     def act(self, obs: Observation) -> tuple[str, str]:
         """Return (key, why)."""
+        # How much of the level is on screen. Exploration that stops adding
+        # cells has finished, whether or not the staircase glyph was recognised.
+        seen = int((obs.screen.map != " ").sum())
+        self._stalled = 0 if seen > self._seen else self._stalled + 1
+        self._seen = max(self._seen, seen)
         melee = self._adjacent_threat(obs)
 
         if melee and obs.health > self.flee_below:
@@ -146,4 +154,15 @@ class BrogueAgent:
             return "x", "explore toward trouble"
         if obs.stairs:
             return ">", "take the stairs down"
+        if self._stalled >= self.patience:
+            # The first version only pressed `>` when it had *recognised* a
+            # staircase glyph, and since `>` is not one of the terrain glyphs the
+            # atlas labels, it never did: six games, 289 of 300 steps spent
+            # exploring an already-explored level, zero descents, while an agent
+            # pressing random keys descended twice. Brogue's `>` travels to the
+            # known staircase by itself, so the agent does not need to see it --
+            # it needs to notice that exploring has stopped paying.
+            self._stalled = 0
+            self._seen = 0
+            return ">", "explored out, dive"
         return "x", "explore"

@@ -19,7 +19,10 @@ from doomagent.model import ActorCritic
 
 def load_policy(path: Path, greedy: bool = True) -> PolicyAgent:
     blob = torch.load(path, map_location="cpu", weights_only=False)
-    model = ActorCritic(tuple(blob["obs_shape"]), blob["n_actions"])
+    # Checkpoints from before --width existed have no entry for it, and they are
+    # all width 1; defaulting keeps them loadable.
+    model = ActorCritic(tuple(blob["obs_shape"]), blob["n_actions"],
+                        width=int(blob.get("width", 1)))
     model.load_state_dict(blob["model"])
     model.eval()
     return PolicyAgent(model, greedy=greedy, name="ppo-greedy" if greedy else "ppo-sampled")

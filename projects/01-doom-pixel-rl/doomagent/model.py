@@ -20,13 +20,24 @@ def _ortho(layer: nn.Module, gain: float) -> nn.Module:
 
 
 class ActorCritic(nn.Module):
-    def __init__(self, obs_shape: tuple[int, int, int], n_actions: int, hidden: int = 256):
+    def __init__(self, obs_shape: tuple[int, int, int], n_actions: int, hidden: int = 256,
+                 width: int = 1):
+        """`width` scales every channel count and the hidden layer.
+
+        width=1 is the CPU-sized trunk -- the Mnih et al. DQN trunk with the
+        channels halved -- and is what the laptop runs. Wider trunks are only
+        worth their forward pass on a GPU, which is what the Kaggle notebook in
+        `kaggle/` exists to test.
+        """
         super().__init__()
         c, h, w = obs_shape
+        ch1, ch2, ch3 = 16 * width, 32 * width, 32 * width
+        hidden = hidden * width
+        self.width = width
         self.trunk = nn.Sequential(
-            _ortho(nn.Conv2d(c, 16, 8, stride=4), np.sqrt(2)), nn.ReLU(),
-            _ortho(nn.Conv2d(16, 32, 4, stride=2), np.sqrt(2)), nn.ReLU(),
-            _ortho(nn.Conv2d(32, 32, 3, stride=1), np.sqrt(2)), nn.ReLU(),
+            _ortho(nn.Conv2d(c, ch1, 8, stride=4), np.sqrt(2)), nn.ReLU(),
+            _ortho(nn.Conv2d(ch1, ch2, 4, stride=2), np.sqrt(2)), nn.ReLU(),
+            _ortho(nn.Conv2d(ch2, ch3, 3, stride=1), np.sqrt(2)), nn.ReLU(),
             nn.Flatten(),
         )
         with torch.no_grad():
@@ -47,13 +58,14 @@ class ActorCritic(nn.Module):
 
     @torch.no_grad()
     def act(self, obs: torch.Tensor, greedy: bool = False) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        obs = obs.to(next(self.parameters()).device, non_blocking=True)
         logits, value = self(obs)
         if greedy:
             action = logits.argmax(dim=-1)
         else:
             action = Categorical(logits=logits).sample()
         logp = Categorical(logits=logits).log_prob(action)
-        return action.numpy(), logp.numpy(), value.numpy()
+        return (action.cpu().numpy(), logp.cpu().numpy(), value.cpu().numpy())
 
     def evaluate(self, obs: torch.Tensor, actions: torch.Tensor):
         logits, value = self(obs)

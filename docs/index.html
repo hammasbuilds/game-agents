@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Game Agents</title>
+<meta name="description" content="Three AI agents that play three real downloadable games, built on a laptop CPU.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f6f7f9;
+    --panel: #ffffff;
+    --panel-2: #f0f2f5;
+    --ink: #15181d;
+    --ink-dim: #5b636f;
+    --line: #dde1e7;
+    --accent: #2f6df6;
+    --good: #1f8a4c;
+    --warn: #b06a00;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1014; --panel: #171a20; --panel-2: #1f232b; --ink: #e9ecf1;
+      --ink-dim: #9aa3b2; --line: #2a2f39; --accent: #6f9bff; --good: #4cc98a;
+      --warn: #e0a24a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1014; --panel: #171a20; --panel-2: #1f232b; --ink: #e9ecf1;
+    --ink-dim: #9aa3b2; --line: #2a2f39; --accent: #6f9bff; --good: #4cc98a;
+    --warn: #e0a24a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 16px 72px; }
+  header { padding: 56px 0 28px; }
+  h1 { font-size: clamp(30px, 5vw, 44px); margin: 0 0 10px; letter-spacing: -0.02em; }
+  .sub { color: var(--ink-dim); font-size: 18px; max-width: 62ch; margin: 0; }
+  .meta { color: var(--ink-dim); font-size: 13px; font-family: var(--mono); margin-top: 14px; }
+  .theme {
+    position: absolute; top: 18px; right: 18px; background: var(--panel);
+    color: var(--ink); border: 1px solid var(--line); border-radius: 999px;
+    padding: 7px 14px; cursor: pointer; font-size: 13px;
+  }
+  nav { display: flex; gap: 6px; flex-wrap: wrap; margin: 26px 0 22px; }
+  nav button {
+    background: var(--panel); color: var(--ink-dim); border: 1px solid var(--line);
+    border-radius: 999px; padding: 9px 16px; cursor: pointer; font-size: 14px;
+  }
+  nav button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  section[hidden] { display: none; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 20px 22px; margin-bottom: 18px;
+  }
+  .card h2 { margin: 0 0 4px; font-size: 21px; letter-spacing: -0.01em; }
+  .card h3 { margin: 26px 0 8px; font-size: 15px; text-transform: uppercase;
+             letter-spacing: 0.08em; color: var(--ink-dim); }
+  .card p { margin: 8px 0; }
+  .lede { color: var(--ink-dim); }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .stat { background: var(--panel-2); border-radius: 12px; padding: 14px 16px; }
+  .stat .n { font-size: 27px; font-weight: 650; font-family: var(--mono); letter-spacing: -0.02em; }
+  .stat .k { color: var(--ink-dim); font-size: 13px; margin-top: 3px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 15px; }
+  th, td { text-align: right; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--ink-dim); font-weight: 600; font-size: 13px;
+       text-transform: uppercase; letter-spacing: 0.05em; }
+  tr.best td { color: var(--good); font-weight: 650; }
+  td.num, th.num { font-family: var(--mono); }
+  .shots { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .shots figure { margin: 0; }
+  .shots img { width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block;
+               image-rendering: pixelated; background: #000; }
+  .shots figcaption { color: var(--ink-dim); font-size: 12px; margin-top: 5px; font-family: var(--mono); }
+  pre { background: var(--panel-2); border-radius: 10px; padding: 14px; overflow-x: auto;
+        font-family: var(--mono); font-size: 12px; line-height: 1.35; margin: 0; }
+  .note { border-left: 3px solid var(--warn); padding-left: 14px; color: var(--ink-dim); }
+  .bugs li { margin-bottom: 10px; }
+  code { font-family: var(--mono); font-size: 0.92em; background: var(--panel-2);
+         padding: 1px 5px; border-radius: 5px; }
+  a { color: var(--accent); }
+  .missing { color: var(--warn); font-family: var(--mono); font-size: 14px; }
+  figure.chart { margin: 0; }
+  @media (max-width: 560px) { header { padding-top: 64px; } }
+</style>
+</head>
+<body>
+<button class="theme" id="theme">theme</button>
+<div class="wrap">
+  <header>
+    <h1>Game Agents</h1>
+    <p class="sub">Three AI agents that play three real games you can download — one learns from
+      pixels, one plans without learning anything, and one plays an ordinary Windows program
+      through screenshots and keystrokes. Built on a laptop CPU.</p>
+    <p class="meta" id="meta"></p>
+  </header>
+
+  <nav id="tabs">
+    <button data-tab="overview" aria-selected="true">Overview</button>
+    <button data-tab="doom">01 · DOOM</button>
+    <button data-tab="crafter">02 · Crafter</button>
+    <button data-tab="brogue">03 · Brogue</button>
+    <button data-tab="bugs">What broke</button>
+  </nav>
+
+  <section id="overview"></section>
+  <section id="doom" hidden></section>
+  <section id="crafter" hidden></section>
+  <section id="brogue" hidden></section>
+  <section id="bugs" hidden></section>
+</div>
+
+<script src="data/results.js"></script>
+<script>
+const R = window.RESULTS || {};
+const $ = (s, el = document) => el.querySelector(s);
+const el = (tag, cls, html) => {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (html !== undefined) n.innerHTML = html;
+  return n;
+};
+const fmt = (v, d = 2) => (v === null || v === undefined || Number.isNaN(v)) ? "—" : Number(v).toFixed(d);
+
+/* ---------- theme ---------- */
+const themeBtn = $("#theme");
+try {
+  const saved = localStorage.getItem("ga-theme");
+  if (saved) document.documentElement.setAttribute("data-theme", saved);
+} catch (e) { /* private mode: the default theme is fine */ }
+themeBtn.addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = cur ? (cur === "dark" ? "light" : "dark") : (dark ? "light" : "dark");
+  document.documentElement.setAttribute("data-theme", next);
+  try { localStorage.setItem("ga-theme", next); } catch (e) {}
+});
+
+/* ---------- tabs ---------- */
+$("#tabs").addEventListener("click", (ev) => {
+  const btn = ev.target.closest("button[data-tab]");
+  if (!btn) return;
+  for (const b of $("#tabs").querySelectorAll("button")) {
+    const on = b === btn;
+    b.setAttribute("aria-selected", on ? "true" : "false");
+    $("#" + b.dataset.tab).hidden = !on;
+  }
+  location.hash = btn.dataset.tab;
+});
+
+/* ---------- helpers ---------- */
+function statGrid(items) {
+  const g = el("div", "grid");
+  for (const [n, k] of items) {
+    const s = el("div", "stat");
+    s.append(el("div", "n", n), el("div", "k", k));
+    g.append(s);
+  }
+  return g;
+}
+function table(headers, rows, bestIndex) {
+  const t = el("table");
+  const thead = el("thead");
+  const hr = el("tr");
+  headers.forEach((h, i) => hr.append(el("th", i ? "num" : "", h)));
+  thead.append(hr);
+  const tb = el("tbody");
+  rows.forEach((r, i) => {
+    const tr = el("tr", i === bestIndex ? "best" : "");
+    r.forEach((c, j) => tr.append(el("td", j ? "num" : "", c)));
+    tb.append(tr);
+  });
+  t.append(thead, tb);
+  return t;
+}
+function shots(names, caption) {
+  const box = el("div", "shots");
+  names.forEach((n, i) => {
+    const f = el("figure");
+    const img = el("img");
+    img.src = "media/" + n;
+    img.alt = caption + " frame " + (i + 1);
+    img.loading = "lazy";
+    f.append(img, el("figcaption", "", caption + " · " + (i + 1)));
+    box.append(f);
+  });
+  return box;
+}
+function missing(what) {
+  return el("p", "missing", "No run artefact for " + what + " yet — the page shows nothing rather than a stale number.");
+}
+
+/* ---------- line chart, drawn as inline SVG ---------- */
+function curveChart(points, w = 900, h = 260) {
+  const pad = { l: 54, r: 14, t: 14, b: 34 };
+  const xs = points.map(p => p.steps), ys = points.map(p => p.return);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs);
+  const y0 = Math.min(0, Math.min(...ys)), y1 = Math.max(...ys) * 1.08;
+  const X = v => pad.l + (v - x0) / (x1 - x0 || 1) * (w - pad.l - pad.r);
+  const Y = v => h - pad.b - (v - y0) / (y1 - y0 || 1) * (h - pad.t - pad.b);
+  const d = points.map((p, i) => (i ? "L" : "M") + X(p.steps).toFixed(1) + " " + Y(p.return).toFixed(1)).join(" ");
+  const ticksY = 4, ticksX = 4;
+  let grid = "";
+  for (let i = 0; i <= ticksY; i++) {
+    const v = y0 + (y1 - y0) * i / ticksY, y = Y(v);
+    grid += `<line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" stroke="currentColor" stroke-opacity="0.12"/>`
+         + `<text x="${pad.l - 9}" y="${y + 4}" text-anchor="end" font-size="11" fill="currentColor" fill-opacity="0.6">${v.toFixed(1)}</text>`;
+  }
+  for (let i = 0; i <= ticksX; i++) {
+    const v = x0 + (x1 - x0) * i / ticksX, x = X(v);
+    grid += `<text x="${x}" y="${h - 10}" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.6">${(v / 1e6).toFixed(1)}M</text>`;
+  }
+  const svg = `<svg viewBox="0 0 ${w} ${h}" width="100%" height="auto" role="img"
+       aria-label="Mean episode return against training steps, rising from about 2 to about 9.5">
+    ${grid}
+    <path d="${d}" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+    <text x="${pad.l}" y="${h - 10}" font-size="11" fill="currentColor" fill-opacity="0.6">steps</text>
+  </svg>`;
+  const f = el("figure", "chart", svg);
+  f.append(el("figcaption", "", "Mean return over the last 100 training episodes, against agent steps."));
+  return f;
+}
+
+/* ---------- overview ---------- */
+function renderOverview() {
+  const s = $("#overview");
+  const card = el("div", "card");
+  card.append(el("h2", "", "Three games, three methods"),
+              el("p", "lede", "Nothing is shared between them on purpose: the interesting question is what each way of playing costs."));
+
+  const doom = (R.doom && R.doom.eval && R.doom.eval.rows) || [];
+  const ppo = doom.find(r => r.agent === "ppo-greedy");
+  const spray = doom.find(r => r.agent === "spray");
+  const crafter = (R.crafter && R.crafter.eval) || [];
+  const planner = crafter.find(r => r.agent === "planner");
+  const rand = crafter.find(r => r.agent === "random");
+
+  card.append(statGrid([
+    [ppo ? fmt(ppo.return_mean) : "—", "DOOM · kills per episode (baseline " + (spray ? fmt(spray.return_mean) : "—") + ")"],
+    [planner ? planner.score + "%" : "—", "Crafter · score (random " + (rand ? rand.score + "%" : "—") + ")"],
+    [planner ? planner.distinct_achievements + "/22" : "—", "Crafter · achievements unlocked"],
+    [R.doom && R.doom.training ? Math.round(R.doom.training.wall_seconds / 60) + " min" : "—", "DOOM · CPU training time"],
+  ]));
+
+  const rows = [
+    ["01 · DOOM from pixels", "ViZDoom (Freedoom)", "PPO on raw frames, CPU only",
+     ppo ? fmt(ppo.return_mean) + " kills vs " + fmt(spray ? spray.return_mean : 0) : "—"],
+    ["02 · Crafter, planned", "Crafter", "goal ladder, no training at all",
+     planner ? planner.score + "% vs " + (rand ? rand.score : "—") + "%" : "—"],
+    ["03 · Brogue, screen-driven", "Brogue CE", "screenshots in, keystrokes out", "see tab"],
+  ];
+  card.append(el("h3", "", "The lineup"), table(["project", "game", "how it plays", "result"], rows, -1));
+  s.append(card);
+
+  const media = el("div", "card");
+  media.append(el("h2", "", "What the agents see"));
+  const m = R.media || {};
+  if (m.doom && m.doom.length) media.append(el("h3", "", "DOOM"), shots(m.doom.slice(0, 3), "doom"));
+  if (m.crafter && m.crafter.length) media.append(el("h3", "", "Crafter"), shots(m.crafter.slice(0, 3), "crafter"));
+  if (m.brogue && m.brogue.length) media.append(el("h3", "", "Brogue"), shots(m.brogue.slice(0, 2), "brogue"));
+  s.append(media);
+}
+
+/* ---------- doom ---------- */
+function renderDoom() {
+  const s = $("#doom");
+  const c = el("div", "card");
+  c.append(el("h2", "", "01 · DOOM from pixels"),
+           el("p", "lede", "ViZDoom embeds the original DOOM engine and ships the free Freedoom data, so nothing commercial is needed. The agent sees four stacked 60×80 greyscale frames and presses one of three buttons. PPO, written out rather than imported, 219,476 parameters, trained on CPU."));
+  const ev = R.doom && R.doom.eval;
+  if (ev && ev.rows) {
+    const rows = ev.rows.map(r => [r.agent, fmt(r.return_mean), fmt(r.return_std), r.return_min, r.return_max, fmt(r.steps_mean, 0)]);
+    const best = ev.rows.reduce((bi, r, i, a) => r.return_mean > a[bi].return_mean ? i : bi, 0);
+    c.append(el("h3", "", "defend_the_center · " + ev.episodes + " held-out episodes, same maps for every agent"),
+             table(["agent", "mean", "sd", "min", "max", "steps"], rows, best));
+  } else c.append(missing("the DOOM evaluation"));
+  if (R.doom && R.doom.curve && R.doom.curve.length) {
+    c.append(el("h3", "", "Training"), curveChart(R.doom.curve));
+  }
+  s.append(c);
+
+  const t = el("div", "card");
+  t.append(el("h2", "", "The line that made it finish in an hour"),
+    el("p", "", "The first working trainer ran at <strong>153 steps/s</strong> while a single environment in the same process did 1,305. Four rounds of profiling, each disproving the obvious answer: the pipe payload (16× smaller changed nothing), the machine being busy (17% idle), the Windows timer resolution set in the trainer (nothing). The instrumented worker gave it up — <code>env.step</code> took 13 ms inside a worker and 0.7 ms in the parent, for identical code."),
+    el("p", "", "A worker sleeps in <code>recv()</code> between steps and every wake-up is rounded up to the scheduler tick. Since Windows 10 2004 that resolution is <em>per process</em>, so <code>timeBeginPeriod(1)</code> has to be called in the worker, which is the one place the earlier attempt had not tried. 292 → 1,530 steps/s."));
+  if (R.media && R.media.doom && R.media.doom.length) t.append(shots(R.media.doom, "doom"));
+  s.append(t);
+}
+
+/* ---------- crafter ---------- */
+function renderCrafter() {
+  const s = $("#crafter");
+  const c = el("div", "card");
+  c.append(el("h2", "", "02 · Crafter, planned rather than learned"),
+           el("p", "lede", "22 achievements in a dependency chain: wood before a table, a table before a pickaxe, a pickaxe before stone. This agent has no weights and no gradients — it decodes the frame, keeps a map, and picks a goal."));
+  const ev = R.crafter && R.crafter.eval;
+  if (ev && ev.length) {
+    const rows = ev.map(r => [r.agent, r.score + "%", fmt(r.reward_mean), r.distinct_achievements + "/22", fmt(r.steps_mean, 0)]);
+    const best = ev.reduce((bi, r, i, a) => r.score > a[bi].score ? i : bi, 0);
+    c.append(el("h3", "", ev[0].episodes + " episodes per agent, same seeds"),
+             table(["agent", "score", "reward", "achievements", "steps survived"], rows, best));
+    c.append(el("p", "lede", "For scale, the numbers published with the benchmark put a trained PPO near 4.6% and DreamerV3 near 14%, with human experts near 50%."));
+  } else c.append(missing("the Crafter evaluation"));
+  s.append(c);
+
+  const p = el("div", "card");
+  p.append(el("h2", "", "It plays from pixels, and here is the number"),
+    el("p", "", "Crafter hands an agent a full semantic map, the player's position and the inventory in its <code>info</code> dict. None of it reaches the planner; one file reads it, and only to score the decoder."));
+  const perc = R.crafter && R.crafter.perception;
+  if (perc && perc.tile_accuracy) {
+    const rows = perc.tile_accuracy.map(r => [r.daylight, (100 * r.tile_accuracy).toFixed(2) + "%", r.frames]);
+    p.append(table(["daylight", "tile accuracy", "frames"], rows, -1));
+    p.append(el("p", "lede", "Midnight is the only bucket below perfect, for a reason worth stating: below half daylight the game blends a vignetted field of <em>random</em> noise into the view. The rest of the lighting inverts exactly — PIL's colour enhance and the tint are both affine per pixel — but noise can only be removed in expectation."));
+    p.append(el("p", "", "Inventory slots read exactly: <strong>" + (100 * perc.inventory_slot_accuracy).toFixed(1) + "%</strong>."));
+  } else p.append(missing("the perception check"));
+  const m = R.media || {};
+  if (m.crafter && m.crafter.length) {
+    p.append(el("h3", "", "Frames, and what the decoder made of them"), shots(m.crafter, "crafter"));
+    if (m.crafter_decoded && m.crafter_decoded.length) {
+      p.append(el("pre", "", m.crafter_decoded[0].replace(/[<>&]/g, ch => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[ch]))));
+    }
+  }
+  s.append(p);
+}
+
+/* ---------- brogue ---------- */
+function renderBrogue() {
+  const s = $("#brogue");
+  const c = el("div", "card");
+  c.append(el("h2", "", "03 · Brogue, through the screen and the keyboard"),
+    el("p", "lede", "Brogue CE is a real desktop roguelike: a 1.7 MB download, an SDL window, no API of any kind. The agent starts the process, finds the window, screenshots the client area, and posts keystrokes to that window handle — so they go to the game whether or not it has focus, and never into anything else that is open."));
+  const play = R.brogue && R.brogue.play;
+  if (play && play.agents) {
+    const rows = [];
+    for (const a of play.agents) {
+      const eps = a.episodes || [];
+      const avg = k => eps.length ? eps.reduce((t, e) => t + (e[k] || 0), 0) / eps.length : null;
+      rows.push([a.agent, eps.length, fmt(avg("descents"), 1), (100 * avg("coverage_mean")).toFixed(1) + "%", fmt(avg("health_final"), 2)]);
+    }
+    c.append(el("h3", "", "Seeded dungeons, same seeds for both agents"),
+             table(["agent", "games", "descents", "map cells named", "health at end"], rows, rows.length - 1));
+    c.append(el("p", "lede", "Descents are counted from the screen: a new level is almost entirely unexplored, so the number of non-blank map cells collapses when the agent takes a staircase."));
+  } else c.append(missing("the Brogue runs"));
+  s.append(c);
+
+  const d = el("div", "card");
+  d.append(el("h2", "", "Reading a screen that is not on a grid"),
+    el("p", "", "Brogue draws 100×34 characters and <em>stretches them over the whole window</em>. At <code>--size 4</code> the window is 908×567, so a cell is 9.08 × 16.68 pixels and the boundaries drift eight pixels across the screen. Assuming an integer lattice produces symptoms that point nowhere near the cause:"),
+    el("ul", "", "<li>the decoder finds <strong>1,924 distinct glyph shapes</strong> in a font with about ninety;</li><li>aligning that lattice by looking for quiet seams wanders by up to 18 pixels between frames, because most of a Brogue screen is black;</li><li>aligning it by repetition is stable horizontally and still ambiguous vertically, because the font does not fill its cell.</li>"),
+    el("p", "", "Cutting on the rounded fractional boundaries and resampling each cell into one canonical box collapses that to <strong>234 prototypes, 119 of which cover 96%</strong> of the cells on screen."),
+    el("p", "note", "The honest limit: this decodes terrain, not prose. Labelling every glyph from Brogue's own fixed strings got the sentences nearly right but smeared votes across neighbouring letters, and is left unfinished in the repository rather than dressed up. Health is read from the colour of the health bar instead, which needs no character recognition."));
+  if (R.media && R.media.brogue && R.media.brogue.length) d.append(shots(R.media.brogue, "brogue"));
+  s.append(d);
+}
+
+/* ---------- bugs ---------- */
+function renderBugs() {
+  const s = $("#bugs");
+  const c = el("div", "card");
+  c.append(el("h2", "", "What broke, and what it looked like"),
+    el("p", "lede", "Every number on this page came after the first version of that project was bad. None of the fixes came from tuning a constant; all of them came from watching a run and finding out what it was actually doing."),
+    el("ul", "bugs", [
+      "<strong>A template atlas built the game's own way was transposed.</strong> Crafter keeps textures in (x, y) and transposes only the finished canvas. 25% of tiles wrong, mostly grass read as stone.",
+      "<strong>Digits matched without the icon behind them.</strong> Crafter's HUD draws the count over the item sprite, so matching against digit-on-black read 5, 6 and 7 as 4.",
+      "<strong>A confidence comparison across two feature spaces.</strong> Cosine similarity is systematically higher in a one-channel space than a three-channel one, so \"whichever decoder matches better\" picked the sleep-screen decoder for every frame and accuracy fell to 0.6%.",
+      "<strong>The planner walked past three trees</strong> to reach a cow eleven tiles away, because food was at 3/9 and \"hungry\" outranked \"collect wood\".",
+      "<strong>It then died at step 223</strong> after forty steps of fleeing zombies <em>with nine unused stone in the inventory</em>. Running does not work in Crafter; a sealed tile does.",
+      "<strong><code>seal()</code> re-chose the most exposed side every step.</strong> The zombies moved, so the agent turned, turned again, and never placed a block: eight episodes ended with 4–9 stone in hand and zero steps sealed.",
+      "<strong>The shelter plan kept mining for thirty steps</strong> with seven stone already in the bag, because mining had been the right answer once.",
+      "<strong>Then it starved behind its own wall,</strong> because nothing opened the box again at dawn.",
+      "<strong>153 steps/s against a single environment's 1,305</strong> — four profiling rounds before the per-process timer resolution turned up in the worker.",
+    ].map(x => "<li>" + x + "</li>").join("")));
+  s.append(c);
+}
+
+renderOverview(); renderDoom(); renderCrafter(); renderBrogue(); renderBugs();
+$("#meta").textContent = "built from commit " + (R.generated || "unknown")
+  + " · every figure here is read from a run artefact, not typed in";
+const want = location.hash.slice(1);
+if (want) {
+  const btn = $('#tabs button[data-tab="' + want + '"]');
+  if (btn) btn.click();
+}
+</script>
+</body>
+</html>

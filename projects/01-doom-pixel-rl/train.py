@@ -22,13 +22,17 @@ def main() -> None:
     ap.add_argument("--entropy", type=float, default=0.01)
     ap.add_argument("--frame-skip", type=int, default=4)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--width", type=int, default=1,
+                    help="channel multiplier; >1 is worth it only on a GPU")
+    ap.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"])
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
     out = Path(args.out or f"runs/{args.scenario}")
     env_cfg = EnvConfig(scenario=args.scenario, frame_skip=args.frame_skip, seed=args.seed)
     cfg = PPOConfig(total_steps=args.steps, n_envs=args.envs, rollout=args.rollout,
-                    lr=args.lr, entropy_coef=args.entropy)
+                    lr=args.lr, entropy_coef=args.entropy, width=args.width,
+                    device=args.device)
     print(f"training {args.scenario}: {args.steps} agent steps "
           f"({args.steps * args.frame_skip} game tics) on {args.envs} envs -> {out}")
     summary = train(env_cfg, cfg, out, seed=args.seed)

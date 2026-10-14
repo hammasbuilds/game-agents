@@ -75,27 +75,49 @@ class Screen:
         return list(zip(rows.tolist(), cols.tolist()))
 
 
-def cell_vectors(frame: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def cell_vectors(frame: np.ndarray, want_colour: bool = False):
     """Every cell as a contrast- and polarity-normalised vector.
 
-    Returns (vectors, ink norms, mean ink colour).
+    Returns (vectors, ink norms, mean ink colour or None). Colour is off by
+    default because pooling it per cell costs more than the rest of the decode
+    put together -- 200 ms of a 230 ms frame -- and the policy reads hue from the
+    health bar directly rather than from the grid.
     """
     img = Image.fromarray(np.asarray(frame)) if not isinstance(frame, Image.Image) else frame
     width, height = img.size
     grey = img.convert("L")
     rgb = np.asarray(img.convert("RGB"), dtype=np.float32)
 
-    xs = [round(c * width / GRID_COLS) for c in range(GRID_COLS + 1)]
-    ys = [round(r * height / GRID_ROWS) for r in range(GRID_ROWS + 1)]
+    # Resampling the whole frame once to an exact (cols*BOX_W, rows*BOX_H) image
+    # puts every cell on an integer boundary, so the cells are plain array slices
+    # afterwards. Cropping and resizing cell by cell gives the same answer and
+    # costs about half a second a frame in Python, which is most of the time a
+    # game takes to play.
+    scaled = np.asarray(grey.resize((GRID_COLS * BOX_W, GRID_ROWS * BOX_H), Image.BILINEAR),
+                        dtype=np.float32)
+    raw = (scaled.reshape(GRID_ROWS, BOX_H, GRID_COLS, BOX_W)
+                 .transpose(0, 2, 1, 3)
+                 .reshape(GRID_ROWS, GRID_COLS, BOX_H * BOX_W))
 
-    raw = np.empty((GRID_ROWS, GRID_COLS, BOX_H * BOX_W), dtype=np.float32)
+    # Colour is taken from the unscaled frame, pooled per cell on the true
+    # fractional boundaries, because it is read for hue and not for shape.
+    if not want_colour:
+        flat = raw.reshape(-1, BOX_H * BOX_W)
+        vectors = flat - np.median(flat, axis=1, keepdims=True)
+        vectors[vectors.sum(axis=1) < 0] *= -1
+        norms = np.linalg.norm(vectors, axis=1)
+        safe = np.where(norms > 1e-6, norms, 1.0)[:, None]
+        return (vectors / safe).reshape(GRID_ROWS, GRID_COLS, -1),             norms.reshape(GRID_ROWS, GRID_COLS), None
+
+    ys = np.minimum((np.arange(GRID_ROWS) * height / GRID_ROWS).round().astype(int), height - 1)
+    xs = np.minimum((np.arange(GRID_COLS) * width / GRID_COLS).round().astype(int), width - 1)
+    yh = max(1, height // GRID_ROWS)
+    xw = max(1, width // GRID_COLS)
     colour = np.zeros((GRID_ROWS, GRID_COLS, 3), dtype=np.uint8)
-    for r in range(GRID_ROWS):
-        for c in range(GRID_COLS):
-            box = (xs[c], ys[r], xs[c + 1], ys[r + 1])
-            patch = grey.crop(box).resize((BOX_W, BOX_H), Image.BILINEAR)
-            raw[r, c] = np.asarray(patch, dtype=np.float32).reshape(-1)
-            tile = rgb[ys[r]:ys[r + 1], xs[c]:xs[c + 1]].reshape(-1, 3)
+    for r, y in enumerate(ys):
+        band = rgb[y:y + yh]
+        for c, x in enumerate(xs):
+            tile = band[:, x:x + xw].reshape(-1, 3)
             if len(tile):
                 lum = tile.mean(axis=1)
                 ink = tile[np.abs(lum - np.median(lum)) > 24]
@@ -126,8 +148,8 @@ class Decoder:
         return cls(blob["prototypes"],
                    {int(k): v for k, v in table.items() if k.isdigit()})
 
-    def __call__(self, frame) -> Screen:
-        vectors, norms, colour = cell_vectors(frame)
+    def __call__(self, frame, want_colour: bool = False) -> Screen:
+        vectors, norms, colour = cell_vectors(frame, want_colour=want_colour)
         flat = vectors.reshape(-1, vectors.shape[-1])
         sims = flat @ self.prototypes.T
         best = sims.argmax(axis=1)
