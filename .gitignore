@@ -9,3 +9,5 @@ runs/
 *.npz
 *.broguerec
 *.broguesave
+_vizdoom.ini
+_vizdoom/
