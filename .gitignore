@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+# downloaded games: fetched by scripts, never committed
+games/
+# run artifacts
+runs/
+*.pt
+*.npz
+*.broguerec
+*.broguesave
