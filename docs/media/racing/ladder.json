@@ -33,54 +33,72 @@
    "tag": "000",
    "steps": 0,
    "episodes": 6,
-   "return_mean": -46.58,
-   "return_std": 16.02,
-   "return_min": -75.13,
-   "return_max": -25.8,
+   "return_mean": -53.72,
+   "return_std": 16.04,
+   "return_min": -74.24,
+   "return_max": -32.09,
    "length_mean": 238.0,
    "returns": [
-    -43.63,
-    -25.8,
-    -45.5,
-    -75.13,
-    -41.59,
-    -47.86
+    -53.9,
+    -74.24,
+    -62.0,
+    -32.09,
+    -62.36,
+    -37.76
    ]
   },
   {
    "tag": "005",
    "steps": 59904,
    "episodes": 6,
-   "return_mean": 227.73,
-   "return_std": 134.26,
-   "return_min": 123.86,
-   "return_max": 459.79,
+   "return_mean": 134.96,
+   "return_std": 55.42,
+   "return_min": 60.63,
+   "return_max": 223.49,
    "length_mean": 238.0,
    "returns": [
-    459.79,
-    320.22,
-    159.13,
-    169.9,
-    133.49,
-    123.86
+    223.49,
+    167.98,
+    109.62,
+    60.63,
+    127.55,
+    120.49
    ]
   },
   {
    "tag": "015",
    "steps": 179712,
    "episodes": 6,
-   "return_mean": 302.5,
-   "return_std": 125.3,
-   "return_min": 149.22,
-   "return_max": 435.82,
+   "return_mean": 300.8,
+   "return_std": 160.55,
+   "return_min": 32.95,
+   "return_max": 514.0,
    "length_mean": 238.0,
    "returns": [
-    435.82,
-    385.97,
-    149.22,
-    156.66,
-    290.76,
-    396.58
+    288.56,
+    514.0,
+    403.35,
+    269.24,
+    296.69,
+    32.95
+   ]
+  },
+  {
+   "tag": "035",
+   "steps": 419328,
+   "episodes": 6,
+   "return_mean": 375.95,
+   "return_std": 158.61,
+   "return_min": 219.88,
+   "return_max": 670.68,
+   "length_mean": 238.0,
+   "returns": [
+    394.73,
+    219.88,
+    670.68,
+    312.28,
+    382.74,
+    275.37
    ]
   }
  ]

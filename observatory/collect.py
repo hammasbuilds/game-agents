@@ -122,6 +122,36 @@ def judge(ladder: list[dict] | None) -> Verdict | None:
     return Verdict("no gain", detail)
 
 
+_PROCESS_CACHE: dict = {"at": 0.0, "games": set()}
+
+
+def training_processes() -> set:
+    """Which games have a trainer running right now.
+
+    Cached for a few seconds because this costs a PowerShell call and the
+    collector asks once per game.
+    """
+    if time.time() - _PROCESS_CACHE["at"] < 8:
+        return _PROCESS_CACHE["games"]
+    found = set()
+    try:
+        out = subprocess.run(
+            ["powershell", "-NoProfile", "-Command",
+             "Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | "
+             "ForEach-Object { $_.CommandLine }"],
+            capture_output=True, text=True, timeout=30).stdout
+        for line in out.splitlines():
+            if "arcade.train" not in line:
+                continue
+            parts = line.split()
+            if "--game" in parts:
+                found.add(parts[parts.index("--game") + 1])
+    except Exception:
+        pass
+    _PROCESS_CACHE.update({"at": time.time(), "games": found})
+    return found
+
+
 def arcade_runs() -> list[dict]:
     import sys
     sys.path.insert(0, str(ROOT))
@@ -152,6 +182,7 @@ def arcade_runs() -> list[dict]:
         log_age = age_seconds(log) if log else None
         starting = (log_age is not None and log_age < STALE_AFTER
                     and (run_dir / "ckpt_000.pt").exists())
+        has_process = key in training_processes()
         if summary:
             state = "finished"
         elif history:
@@ -162,7 +193,11 @@ def arcade_runs() -> list[dict]:
             state = "not started"
         idle = age_seconds(run_dir / "history.json") if history else log_age
         if state == "running" and idle is not None and idle > STALE_AFTER:
-            state = "stalled"
+            # A quiet run with no process behind it was stopped; a quiet run with
+            # a process behind it is stuck. Calling the first one 'stalled' reads
+            # as a fault when it was a decision, which is the sort of thing that
+            # sends you looking for a bug that is not there.
+            state = "stalled" if has_process else "stopped"
 
         eta = None
         if state == "running" and last and last.get("sps"):

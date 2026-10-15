@@ -45,9 +45,19 @@ game; the card is a button to that game's own page.
 
 | game | untrained | trained | verdict |
 |---|---:|---:|---|
-| **Car racing** | −39.9 | **+218.0** at 60k steps | learned — +257.8 against a bar of 135.2 |
+| **Car racing** | −53.7 | **+376.0** at 419k steps | learned — +429.7 against a bar of 130.2 |
 | **Table tennis** | −20.0 | −16.6 at 2M steps | learned — +3.4 against a bar of 2.1 |
 | Boxing | 2.12 | 1.62 at 2M steps | **no gain** — −0.5 against a bar of 3.4 |
+
+Racing's own ladder, every row on the same six levels:
+
+| checkpoint | steps | score |
+|---|---:|---:|
+| random keys | — | −50.4 |
+| untrained | 0 | −53.7 |
+| 5% | 59,904 | +135.0 |
+| 15% | 179,712 | +300.8 |
+| **35%** | **419,328** | **+376.0** |
 
 Every row scores the same levels for every checkpoint, against a random-key
 policy and against the untrained network. The bar is two standard errors of the
