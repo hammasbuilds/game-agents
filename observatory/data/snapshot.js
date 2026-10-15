@@ -1,5 +1,5 @@
 window.SNAPSHOT = {
- "taken_at": "2026-10-15 07:30:35Z",
+ "taken_at": "2026-10-15 08:06:09Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -16,7 +16,7 @@ window.SNAPSHOT = {
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": 4132,
+   "seconds_since_update": 6266,
    "checkpoints": [
     {
      "tag": "000",
@@ -1115,7 +1115,7 @@ window.SNAPSHOT = {
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 14648,
+   "seconds_since_update": 16782,
    "checkpoints": [
     {
      "tag": "000",
@@ -2240,7 +2240,7 @@ window.SNAPSHOT = {
    "wall_minutes": 61.1,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 343,
+   "seconds_since_update": 2477,
    "checkpoints": [
     {
      "tag": "000",
@@ -3372,7 +3372,7 @@ window.SNAPSHOT = {
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 11034,
+   "seconds_since_update": 13168,
    "checkpoints": [
     {
      "tag": "000",
@@ -6606,7 +6606,7 @@ window.SNAPSHOT = {
   "media_dir": "../docs/media"
  },
  "machine": {
-  "cpu_percent": 53.1,
+  "cpu_percent": 65.4,
   "python_processes": 30,
   "gpu": {
    "name": "Quadro RTX 5000",

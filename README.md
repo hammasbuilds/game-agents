@@ -27,6 +27,35 @@ measurement.
 — the same DOOM agent on a GPU, asking whether the laptop-sized network was a
 compromise or was enough.
 
+![car racing: untrained, 60k, 180k and 419k steps playing the same track](docs/media/racing/progress.gif)
+
+*Car racing. Four checkpoints of the same network playing the same track at the
+same moment: never trained, then 60k, 180k and 419k steps. All four games are in
+the [reel](docs/media/reel.mp4).*
+
+## What an hour of laptop CPU actually buys
+
+Four games, one network, one PPO, one evaluation protocol — and four different
+answers. Every row is scored on the same levels as its own untrained checkpoint,
+and the verdict compares the two against **two standard errors of the
+difference**, so a gain smaller than its own uncertainty is not called a win.
+
+| game | untrained | trained | verdict |
+|---|---:|---:|---|
+| **Car racing** | −53.7 | **+376.0** | learned — +429.7 against a bar of 130.2 |
+| Table tennis | −20.0 | −16.6 | learned — +3.4 against a bar of 2.1 |
+| Boxing | 2.1 | 1.6 | no gain — −0.5 against a bar of 3.4 |
+| Platformer | 25.0 | 0.0 | **worse than untrained** — it collapsed onto one button |
+
+That spread is the result, not an embarrassment to tidy away. Racing pays the
+agent for every metre of road, so it learns from the first episode and ends up
+driving. Kangaroo pays nothing until a ladder climb and a punch happen in
+sequence, which random play almost never completes — so nothing pulls the
+gradient anywhere, the policy narrows onto a single action, and two million steps
+produce something worse than the network you started with. The
+[arcade README](arcade/) shows the action counts that prove the collapse rather
+than asserting it.
+
 They deliberately share no method. The point of three is to show three ways of
 getting a machine to play something — and what each one actually costs.
 

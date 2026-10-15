@@ -98,7 +98,7 @@ def _show(path: Path) -> str:
 
 
 def write_clip(frames: list[np.ndarray], path: Path, fps: int = 20,
-               gif: bool = False) -> None:
+               gif: bool = False, gif_width: int = 520) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     try:
@@ -124,8 +124,9 @@ def write_clip(frames: list[np.ndarray], path: Path, fps: int = 20,
         small = []
         for frame in frames[::stride]:
             img = Image.fromarray(frame)
-            if img.width > 520:
-                img = img.resize((520, round(img.height * 520 / img.width)), Image.LANCZOS)
+            if img.width > gif_width:
+                img = img.resize((gif_width, round(img.height * gif_width / img.width)),
+                                 Image.LANCZOS)
             small.append(img.convert("P", palette=Image.ADAPTIVE, colors=48))
         gif_path = path.with_suffix(".gif")
         small[0].save(gif_path, save_all=True, append_images=small[1:],

@@ -55,6 +55,7 @@ def main() -> None:
     ap.add_argument("--seconds", type=int, default=16)
     ap.add_argument("--fps", type=int, default=20)
     ap.add_argument("--games", nargs="*", default=None)
+    ap.add_argument("--columns", type=int, default=0, help="0 picks 2 for more than two games")
     args = ap.parse_args()
 
     limit = args.seconds * args.fps
@@ -83,8 +84,12 @@ def main() -> None:
     if not rows:
         raise SystemExit("no films to stack yet")
 
+    # Laid out as a grid rather than a column. Four games stacked is 520x960, a
+    # shape that makes a reader scroll past three of them to see the fourth;
+    # two across is the same content in a header-sized picture.
     width = max(r[2][0].shape[1] for r in rows)
     length = max(len(r[2]) for r in rows)
+    columns = args.columns if args.columns else (2 if len(rows) > 2 else 1)
     out = []
     for i in range(length):
         panels = []
@@ -97,11 +102,11 @@ def main() -> None:
             panel.paste(banner(width, title, detail), (0, 0))
             panel.paste(img, (0, HEADER_H))
             panels.append(panel)
-        canvas = Image.new("RGB", (width, sum(p.height for p in panels)), (16, 19, 24))
-        y = 0
-        for panel in panels:
-            canvas.paste(panel, (0, y))
-            y += panel.height
+        cell_h = max(p.height for p in panels)
+        n_rows = (len(panels) + columns - 1) // columns
+        canvas = Image.new("RGB", (width * columns, cell_h * n_rows), (16, 19, 24))
+        for n, panel in enumerate(panels):
+            canvas.paste(panel, ((n % columns) * width, (n // columns) * cell_h))
         out.append(np.asarray(canvas))
 
     write_clip(out, MEDIA / "reel.mp4", fps=args.fps, gif=True)
