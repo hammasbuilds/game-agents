@@ -1,5 +1,5 @@
 window.SNAPSHOT = {
- "taken_at": "2026-10-15 04:38:52Z",
+ "taken_at": "2026-10-15 04:49:16Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -7,16 +7,16 @@ window.SNAPSHOT = {
    "title": "Car racing",
    "env_id": "CarRacing-v3",
    "blurb": "Top-down racing. The agent sees the track and steers; an untrained one spins on the grass, a trained one follows the road.",
-   "state": "running",
-   "steps": 30720,
-   "updates": 20,
-   "sps": 46.0,
-   "return_now": -26.41,
-   "entropy_now": 1.3116,
+   "state": "stalled",
+   "steps": 46080,
+   "updates": 30,
+   "sps": 46.1,
+   "return_now": 46.8,
+   "entropy_now": 1.1368,
    "wall_minutes": null,
    "params": null,
-   "eta_minutes": 423.7,
-   "seconds_since_update": 56,
+   "eta_minutes": null,
+   "seconds_since_update": 347,
    "checkpoints": [
     {
      "tag": "000",
@@ -156,6 +156,76 @@ window.SNAPSHOT = {
      "entropy": 1.3116,
      "sps": 46.0,
      "value_loss": 55.0033
+    },
+    {
+     "steps": 32256,
+     "return": -17.651,
+     "entropy": 1.2402,
+     "sps": 45.9,
+     "value_loss": 59.6346
+    },
+    {
+     "steps": 33792,
+     "return": -12.438,
+     "entropy": 1.2389,
+     "sps": 45.9,
+     "value_loss": 74.5297
+    },
+    {
+     "steps": 35328,
+     "return": -3.002,
+     "entropy": 1.1877,
+     "sps": 45.9,
+     "value_loss": 63.1034
+    },
+    {
+     "steps": 36864,
+     "return": 2.213,
+     "entropy": 1.1687,
+     "sps": 45.9,
+     "value_loss": 89.1478
+    },
+    {
+     "steps": 38400,
+     "return": 14.149,
+     "entropy": 1.1523,
+     "sps": 45.9,
+     "value_loss": 76.4769
+    },
+    {
+     "steps": 39936,
+     "return": 16.915,
+     "entropy": 1.1959,
+     "sps": 46.0,
+     "value_loss": 89.966
+    },
+    {
+     "steps": 41472,
+     "return": 25.382,
+     "entropy": 1.1406,
+     "sps": 46.0,
+     "value_loss": 106.4707
+    },
+    {
+     "steps": 43008,
+     "return": 40.086,
+     "entropy": 1.1003,
+     "sps": 45.9,
+     "value_loss": 59.4653
+    },
+    {
+     "steps": 44544,
+     "return": 44.12,
+     "entropy": 1.1542,
+     "sps": 46.0,
+     "value_loss": 51.2026
+    },
+    {
+     "steps": 46080,
+     "return": 46.803,
+     "entropy": 1.1368,
+     "sps": 46.1,
+     "value_loss": 41.8035
     }
    ],
    "ladder": null,
@@ -167,7 +237,9 @@ window.SNAPSHOT = {
     "=== Car racing (CarRacing-v3) : 1,200,000 steps on 12 envs -> D:\\github\\game-agents\\runs_arcade\\racing",
     "checkpoint 000 at step 0 (untrained) -> ckpt_000.pt",
     "u10/781 steps=15360 return=-49.74182147953037 sps=48.0 ent=1.4794",
-    "u20/781 steps=30720 return=-26.414701151379568 sps=46.0 ent=1.3116"
+    "u20/781 steps=30720 return=-26.414701151379568 sps=46.0 ent=1.3116",
+    "u30/781 steps=46080 return=46.80339192663467 sps=46.1 ent=1.1368",
+    "checkpoint 005 at 59904 steps, training return 103.61589195523365 -> ckpt_005.pt"
    ]
   },
   {
@@ -185,7 +257,7 @@ window.SNAPSHOT = {
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 4346,
+   "seconds_since_update": 4968,
    "checkpoints": [
     {
      "tag": "000",
@@ -1310,7 +1382,7 @@ window.SNAPSHOT = {
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": 4313,
+   "seconds_since_update": 4936,
    "checkpoints": [],
    "curve": [],
    "ladder": null,
@@ -1348,7 +1420,7 @@ window.SNAPSHOT = {
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 731,
+   "seconds_since_update": 1354,
    "checkpoints": [
     {
      "tag": "000",
@@ -4432,12 +4504,12 @@ window.SNAPSHOT = {
  },
  "machine": {
   "cpu_percent": 100.0,
-  "python_processes": 50,
+  "python_processes": 54,
   "gpu": {
    "name": "Quadro RTX 5000",
    "memory_used": "14029 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "58 %"
+   "utilisation": "19 %"
   }
  }
 };
