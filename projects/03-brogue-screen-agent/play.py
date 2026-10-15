@@ -118,18 +118,26 @@ def main() -> None:
     ap.add_argument("--seeds", type=int, nargs="*", default=[1, 2, 3, 4, 5])
     ap.add_argument("--steps", type=int, default=300)
     ap.add_argument("--delay", type=float, default=0.10)
-    ap.add_argument("--agent", default="explorer", choices=["explorer", "random", "both"])
+    ap.add_argument("--agent", default="explorer",
+                    choices=["explorer", "random", "cautious", "both", "all"])
     ap.add_argument("--out", default="runs/play.json")
     args = ap.parse_args()
 
     decoder = Decoder.load()
-    names = ["random", "explorer"] if args.agent == "both" else [args.agent]
+    names = {"both": ["random", "explorer"],
+             "all": ["random", "explorer", "cautious"]}.get(args.agent, [args.agent])
     before = read_scores(APP)
     results = []
     for name in names:
         rows = []
         for seed in args.seeds:
-            agent = BrogueAgent() if name == "explorer" else RandomAgent(seed)
+            if name == "random":
+                agent = RandomAgent(seed)
+            else:
+                # `cautious` is the same policy with one switch off: it never
+                # walks toward a monster it can see, and only fights what is
+                # already next to it.
+                agent = BrogueAgent(name=name, seek_trouble=(name == "explorer"))
             row = play_one(agent, seed, args.steps, args.delay, decoder)
             rows.append(row)
             print(f"{name} seed {seed}: descents {row['descents']} "

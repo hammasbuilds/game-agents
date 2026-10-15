@@ -112,6 +112,7 @@ class BrogueAgent:
     patience: int = 12              # explore steps with no new map before diving
     dive_commit: int = 8            # how many `>` presses a dive is worth
     retreat_limit: int = 25         # total retreat steps allowed in one game
+    seek_trouble: bool = True       # walk toward monsters to clear the level
     chosen: str = "start"
     history: list[str] = field(default_factory=list)
     _seen: int = 0
@@ -174,7 +175,7 @@ class BrogueAgent:
             # visible rather than adjacent spent 135 of 300 steps asleep, and the
             # monster still arrived.
             return "z", "rest"
-        if (obs.threats and obs.health > self.rest_below
+        if (self.seek_trouble and obs.threats and obs.health > self.rest_below
                 and self._stalled < self.patience and self._diving == 0):
             # Something is visible but not adjacent. Exploring walks toward it,
             # which is what we want: a cleared level is a safer level.

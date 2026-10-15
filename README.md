@@ -95,6 +95,21 @@ HTML rather than read from the data.
 python ui/export.py && python ui/check_page.py
 ```
 
+## Tests
+
+```bash
+python -m pytest tests -q        # 14 passed
+```
+
+The agents are judged by playing — that is what the evaluation scripts are for.
+The tests pin the machinery underneath, where a quiet mistake moves a score
+without crashing anything: the advantage estimator and its episode boundary, the
+uint8 normalisation the policy depends on, the pathfinder, the shelter geometry,
+the achievement inference (including its deliberate refusal to claim a kill when
+a monster merely stepped aside), and the character grid the Brogue decoder cuts
+out of a frame. One of them encodes the rule that cost the most games: the agent
+must not press `<` on depth 1, because that leaves the dungeon and ends the run.
+
 ## Running them
 
 ```bash
