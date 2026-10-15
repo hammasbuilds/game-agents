@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Observatory</title>
+<meta name="description" content="Operational view of every game-playing agent: what is training, how fast, and whether it is actually learning.">
+<style>
+  :root {
+    color-scheme: dark light;
+    --bg: #0b0d11; --panel: #14171d; --panel-2: #1b1f27; --ink: #e8ecf3;
+    --ink-dim: #8e98a8; --line: #262b35; --accent: #5b8cff;
+    --ok: #3ecf8e; --warn: #e8b04a; --bad: #e8705f; --idle: #6b7484;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f5f6f8; --panel: #ffffff; --panel-2: #eef1f5; --ink: #141820;
+      --ink-dim: #5d6673; --line: #dfe3ea; --accent: #2f6df6;
+      --ok: #16885a; --warn: #a2690a; --bad: #c0392b; --idle: #7a8291;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 18px 70px; }
+  header { display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline;
+           justify-content: space-between; padding: 30px 0 6px; }
+  h1 { font-size: 25px; margin: 0; letter-spacing: -0.02em; }
+  .meta { color: var(--ink-dim); font-family: var(--mono); font-size: 12.5px; }
+  .machine { display: flex; gap: 18px; flex-wrap: wrap; color: var(--ink-dim);
+             font-family: var(--mono); font-size: 12.5px; margin: 4px 0 18px; }
+  .machine b { color: var(--ink); font-weight: 600; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+           padding: 16px 18px; margin-bottom: 16px; }
+  .panel h2 { margin: 0 0 3px; font-size: 16px; letter-spacing: -0.01em; }
+  .panel p.lede { margin: 0 0 12px; color: var(--ink-dim); font-size: 13.5px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: right; padding: 8px 9px; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child, th.l, td.l { text-align: left; }
+  th { color: var(--ink-dim); font-weight: 600; font-size: 11.5px;
+       text-transform: uppercase; letter-spacing: 0.06em; }
+  td.num { font-family: var(--mono); }
+  tr.run { cursor: pointer; }
+  tr.run:hover td { background: var(--panel-2); }
+  tr.open td { background: var(--panel-2); }
+  .chip { display: inline-block; font-family: var(--mono); font-size: 11px;
+          padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; }
+  .chip.running { color: var(--accent); }
+  .chip.finished { color: var(--ok); }
+  .chip.stalled { color: var(--bad); }
+  .chip.notstarted { color: var(--idle); }
+  .chip.learned { color: var(--ok); }
+  .chip.insidenoise { color: var(--warn); }
+  .chip.nogain { color: var(--bad); }
+  .bar { width: 130px; height: 7px; border-radius: 99px; background: var(--panel-2);
+         overflow: hidden; display: inline-block; vertical-align: middle; }
+  .bar span { display: block; height: 100%; background: var(--accent); }
+  .detail { padding: 0 !important; }
+  .detail-inner { padding: 14px 10px 18px; display: grid; gap: 16px;
+                  grid-template-columns: minmax(320px, 1.4fr) minmax(260px, 1fr); }
+  @media (max-width: 860px) { .detail-inner { grid-template-columns: 1fr; } }
+  pre { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+        padding: 10px 12px; overflow-x: auto; font-family: var(--mono);
+        font-size: 11.5px; line-height: 1.45; margin: 0; color: var(--ink-dim); }
+  .k { color: var(--ink-dim); font-size: 12px; text-transform: uppercase;
+       letter-spacing: 0.06em; margin: 0 0 6px; }
+  .verdict { font-size: 13px; color: var(--ink-dim); margin-top: 8px; }
+  .empty { color: var(--ink-dim); font-size: 13.5px; }
+  a { color: var(--accent); }
+  .controls { display: flex; gap: 10px; align-items: center; }
+  button { background: var(--panel-2); color: var(--ink); border: 1px solid var(--line);
+           border-radius: 999px; padding: 6px 13px; cursor: pointer; font-size: 12.5px; }
+  .dot { width: 7px; height: 7px; border-radius: 99px; background: var(--ok);
+         display: inline-block; margin-right: 6px; }
+  .dot.off { background: var(--idle); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Agent Observatory</h1>
+      <div class="meta" id="taken">…</div>
+    </div>
+    <div class="controls">
+      <button id="refresh"><span class="dot" id="dot"></span><span id="refresh-label">auto-refresh on</span></button>
+      <button id="theme">theme</button>
+    </div>
+  </header>
+  <div class="machine" id="machine"></div>
+  <main id="main"></main>
+</div>
+
+<script src="data/snapshot.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c;
+                          if (h !== undefined) n.innerHTML = h; return n; };
+const esc = s => String(s ?? "").replace(/[<>&"]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" }[c]));
+const num = (v, d = 2) => (v === null || v === undefined) ? "—" : Number(v).toFixed(d);
+const int = v => (v === null || v === undefined) ? "—" : Number(v).toLocaleString();
+const BUDGET = { boxing: 2000000, platformer: 2000000, racing: 1200000, pingpong: 2000000 };
+
+try { const t = localStorage.getItem("obs-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+$("#theme").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try { localStorage.setItem("obs-theme", next); } catch (e) {}
+});
+
+/* ---------- sparkline ---------- */
+function spark(points, w = 150, h = 34, key = "return") {
+  const ys = points.map(p => p[key]).filter(v => v !== null && v !== undefined);
+  if (ys.length < 2) return "";
+  const lo = Math.min(...ys), hi = Math.max(...ys), span = (hi - lo) || 1;
+  const d = ys.map((v, i) => (i ? "L" : "M") + (i / (ys.length - 1) * w).toFixed(1)
+    + " " + (h - (v - lo) / span * h).toFixed(1)).join(" ");
+  return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" style="display:block">
+    <path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1.6"/></svg>`;
+}
+
+/* ---------- bigger chart for the detail panel ---------- */
+function chart(points, key, label, colour) {
+  const ys = points.map(p => p[key]).filter(v => v !== null && v !== undefined);
+  if (ys.length < 2) return el("p", "empty", "not enough data for " + label);
+  const w = 520, h = 150, pad = { l: 44, r: 8, t: 10, b: 20 };
+  const xs = points.map(p => p.steps);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs);
+  const lo = Math.min(...ys), hi = Math.max(...ys), span = (hi - lo) || 1;
+  const X = v => pad.l + (v - x0) / ((x1 - x0) || 1) * (w - pad.l - pad.r);
+  const Y = v => h - pad.b - (v - lo) / span * (h - pad.t - pad.b);
+  let body = "";
+  [lo, (lo + hi) / 2, hi].forEach(v => {
+    body += `<line x1="${pad.l}" y1="${Y(v)}" x2="${w - pad.r}" y2="${Y(v)}" stroke="currentColor" stroke-opacity="0.1"/>`
+         + `<text x="${pad.l - 6}" y="${Y(v) + 3.5}" text-anchor="end" font-size="10" fill="currentColor" fill-opacity="0.55">${v.toFixed(1)}</text>`;
+  });
+  const pts = points.filter(p => p[key] !== null && p[key] !== undefined);
+  body += `<path d="${pts.map((p, i) => (i ? "L" : "M") + X(p.steps).toFixed(1) + " " + Y(p[key]).toFixed(1)).join(" ")}"
+           fill="none" stroke="${colour}" stroke-width="1.8"/>`;
+  body += `<text x="${pad.l}" y="${h - 5}" font-size="10" fill="currentColor" fill-opacity="0.55">${(x0 / 1e6).toFixed(2)}M</text>`
+       + `<text x="${w - pad.r}" y="${h - 5}" text-anchor="end" font-size="10" fill="currentColor" fill-opacity="0.55">${(x1 / 1e6).toFixed(2)}M steps</text>`;
+  const f = el("figure", "", `<svg viewBox="0 0 ${w} ${h}" width="100%" style="height:auto;display:block" role="img" aria-label="${esc(label)}">${body}</svg>`);
+  f.style.margin = "0";
+  f.append(el("div", "k", label));
+  return f;
+}
+
+/* ---------- rendering ---------- */
+let openKey = null;
+
+function render() {
+  const S = window.SNAPSHOT;
+  const main = $("#main");
+  main.textContent = "";
+  if (!S) { main.append(el("p", "empty", "No snapshot yet — run python -m observatory.collect")); return; }
+
+  $("#taken").textContent = "snapshot " + S.taken_at;
+  const m = S.machine || {};
+  const bits = [];
+  if (m.cpu_percent !== null && m.cpu_percent !== undefined) bits.push(`cpu <b>${m.cpu_percent}%</b>`);
+  if (m.python_processes) bits.push(`python procs <b>${m.python_processes}</b>`);
+  if (m.gpu) bits.push(`gpu <b>${esc(m.gpu.name)}</b> ${esc(m.gpu.memory_used)} / ${esc(m.gpu.memory_total)} · ${esc(m.gpu.utilisation)}`);
+  $("#machine").innerHTML = bits.join("");
+  $("#machine").textContent = "";
+  bits.forEach(b => $("#machine").append(el("span", "", b)));
+
+  // -- training runs --------------------------------------------------
+  const runs = el("div", "panel");
+  runs.append(el("h2", "", "Training runs"),
+    el("p", "lede", "Click a row for its curves, checkpoints and log. The verdict compares the finished network with the untrained one and asks whether the gain clears their combined spread — a run that cannot clear it is not called a win."));
+  const t = el("table");
+  t.append(el("thead", "", `<tr>
+      <th class="l">game</th><th class="l">state</th><th class="l">progress</th>
+      <th>steps</th><th>steps/s</th><th>eta</th><th>return</th><th>entropy</th>
+      <th class="l">trend</th><th class="l">verdict</th></tr>`));
+  const tb = el("tbody");
+  for (const r of S.arcade) {
+    const tr = el("tr", "run" + (openKey === r.key ? " open" : ""));
+    const budget = BUDGET[r.key];
+    const pct = budget ? Math.min(100, 100 * r.steps / budget) : 0;
+    const stateClass = r.state.replace(/[^a-z]/g, "");
+    const v = r.verdict;
+    tr.innerHTML = `
+      <td class="l">${esc(r.title)}<div class="k" style="margin:2px 0 0">${esc(r.env_id)}</div></td>
+      <td class="l"><span class="chip ${stateClass}">${esc(r.state)}</span></td>
+      <td class="l"><span class="bar"><span style="width:${pct.toFixed(1)}%"></span></span></td>
+      <td class="num">${int(r.steps)}</td>
+      <td class="num">${r.sps ?? "—"}</td>
+      <td class="num">${r.eta_minutes ? r.eta_minutes + "m" : (r.wall_minutes ? r.wall_minutes + "m total" : "—")}</td>
+      <td class="num">${num(r.return_now, 1)}</td>
+      <td class="num">${num(r.entropy_now, 2)}</td>
+      <td class="l">${spark(r.curve)}</td>
+      <td class="l">${v ? `<span class="chip ${v.label.replace(/[^a-z]/g, "")}">${esc(v.label)}</span>` : "—"}</td>`;
+    tr.addEventListener("click", () => { openKey = openKey === r.key ? null : r.key; render(); });
+    tb.append(tr);
+
+    if (openKey === r.key) {
+      const row = el("tr");
+      const cell = el("td", "detail");
+      cell.colSpan = 10;
+      const inner = el("div", "detail-inner");
+
+      const left = el("div");
+      if (r.curve && r.curve.length > 1) {
+        left.append(chart(r.curve, "return", "episode return", "var(--accent)"));
+        left.append(chart(r.curve, "entropy", "policy entropy — falling means it is committing to actions", "var(--warn)"));
+      } else {
+        left.append(el("p", "empty", "no finished episodes yet"));
+      }
+
+      const right = el("div");
+      if (r.ladder && r.ladder.length) {
+        right.append(el("div", "k", "checkpoint ladder, same levels for every row"));
+        const lt = el("table");
+        lt.append(el("thead", "", "<tr><th class='l'>checkpoint</th><th>steps</th><th>score</th><th>spread</th></tr>"));
+        const ltb = el("tbody");
+        for (const row2 of r.ladder) {
+          const label = row2.tag === "random" ? "random keys" : (row2.steps === 0 ? "untrained" : row2.tag + "%");
+          ltb.append(el("tr", "", `<td class="l">${esc(label)}</td>
+            <td class="num">${row2.steps === null ? "—" : int(row2.steps)}</td>
+            <td class="num">${num(row2.return_mean, 2)}</td>
+            <td class="num">± ${num(row2.return_std, 2)}</td>`));
+        }
+        lt.append(ltb);
+        right.append(lt);
+        if (v) right.append(el("div", "verdict", esc(v.detail)));
+      } else {
+        right.append(el("p", "empty", "no checkpoint ladder yet — it is scored once training finishes"));
+      }
+      if (r.checkpoints && r.checkpoints.length) {
+        right.append(el("div", "k", "saved weights"),
+          el("div", "", r.checkpoints.map(c => `<span class="chip">${esc(c.tag)}</span>`).join(" ")));
+      }
+      if (r.log_tail && r.log_tail.length) {
+        left.append(el("div", "k", "log"), el("pre", "", esc(r.log_tail.slice(-8).join("\n"))));
+      }
+      inner.append(left, right);
+      cell.append(inner);
+      row.append(cell);
+      tb.append(row);
+    }
+  }
+  t.append(tb);
+  runs.append(t);
+  main.append(runs);
+
+  // -- the hand-built agents -------------------------------------------
+  const projects = el("div", "panel");
+  projects.append(el("h2", "", "Hand-built agents"),
+    el("p", "lede", "These are not trained on a curve: one learns, one plans with no weights at all, and one plays a program that has no API. Each is shown against the floor it has to beat."));
+  const pt = el("table");
+  pt.append(el("thead", "", "<tr><th class='l'>agent</th><th class='l'>game</th><th class='l'>result</th><th class='l'>floor</th><th class='l'>detail</th></tr>"));
+  const ptb = el("tbody");
+  for (const p of S.projects) {
+    ptb.append(el("tr", "", `<td class="l">${esc(p.title)}</td><td class="l">${esc(p.env_id)}</td>
+      <td class="l num">${esc(p.headline)}</td><td class="l num">${esc(p.baseline)}</td>
+      <td class="l">${esc(p.detail)}</td>`));
+  }
+  pt.append(ptb);
+  projects.append(pt);
+  main.append(projects);
+}
+
+/* ---------- auto refresh ---------- */
+let auto = true;
+function reload() {
+  if (!auto) return;
+  const s = document.createElement("script");
+  // A cache-buster, because this also has to work when the page is opened
+  // straight off disk, where fetch() of a local file is blocked.
+  s.src = "data/snapshot.js?t=" + Date.now();
+  s.onload = () => { render(); s.remove(); };
+  document.body.append(s);
+}
+$("#refresh").addEventListener("click", () => {
+  auto = !auto;
+  $("#dot").className = "dot" + (auto ? "" : " off");
+  $("#refresh-label").textContent = auto ? "auto-refresh on" : "auto-refresh off";
+  if (auto) reload();
+});
+render();
+setInterval(reload, 15000);
+</script>
+</body>
+</html>
