@@ -232,6 +232,12 @@ def train(game: Game, cfg: PPOConfig, out_dir: Path, seed: int = 0,
                 path = save_checkpoint(model, game, cfg, out_dir, step_count, tag, stats)
                 saved.append({"tag": tag, "update": update, "steps": step_count,
                               "path": path.name, "return_mean": row["return_mean"]})
+                # Flush the registry with the checkpoint rather than on the next
+                # logging tick. A run stopped in between leaves weights on disk
+                # that nothing downstream can see: racing kept a 419k-step
+                # checkpoint that its own ladder never scored, because the stop
+                # landed in that gap.
+                (out_dir / "checkpoints.json").write_text(json.dumps(saved, indent=1))
                 print(f"checkpoint {tag} at {step_count} steps, "
                       f"training return {row['return_mean']} -> {path.name}", flush=True)
 

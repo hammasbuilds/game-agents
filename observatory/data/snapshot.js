@@ -1,5 +1,5 @@
 window.SNAPSHOT = {
- "taken_at": "2026-10-15 06:22:04Z",
+ "taken_at": "2026-10-15 06:33:22Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -7,7 +7,7 @@ window.SNAPSHOT = {
    "title": "Car racing",
    "env_id": "CarRacing-v3",
    "blurb": "Top-down racing. The agent sees the track and steers; an untrained one spins on the grass, a trained one follows the road.",
-   "state": "running",
+   "state": "stalled",
    "steps": 414720,
    "updates": 270,
    "sps": 60.1,
@@ -15,8 +15,8 @@ window.SNAPSHOT = {
    "entropy_now": 0.2935,
    "wall_minutes": null,
    "params": null,
-   "eta_minutes": 217.8,
-   "seconds_since_update": 21,
+   "eta_minutes": null,
+   "seconds_since_update": 698,
    "checkpoints": [
     {
      "tag": "000",
@@ -982,9 +982,9 @@ window.SNAPSHOT = {
     {
      "tag": "random",
      "steps": null,
-     "episodes": 5,
-     "return_mean": -50.41,
-     "return_std": 21.7,
+     "episodes": 6,
+     "return_mean": -49.43,
+     "return_std": 19.56,
      "return_min": -78.5,
      "return_max": -23.08,
      "length_mean": 238.0,
@@ -993,59 +993,80 @@ window.SNAPSHOT = {
       -36.18,
       -78.5,
       -51.95,
-      -62.36
+      -62.36,
+      -44.49
      ]
     },
     {
      "tag": "000",
      "steps": 0,
-     "episodes": 5,
-     "return_mean": -39.86,
-     "return_std": 18.86,
-     "return_min": -71.03,
-     "return_max": -22.34,
+     "episodes": 6,
+     "return_mean": -46.58,
+     "return_std": 16.02,
+     "return_min": -75.13,
+     "return_max": -25.8,
      "length_mean": 238.0,
      "returns": [
-      -71.03,
-      -22.34,
-      -35.59,
-      -28.77,
-      -41.59
+      -43.63,
+      -25.8,
+      -45.5,
+      -75.13,
+      -41.59,
+      -47.86
      ]
     },
     {
      "tag": "005",
      "steps": 59904,
-     "episodes": 5,
-     "return_mean": 217.98,
-     "return_std": 149.97,
-     "return_min": 35.56,
-     "return_max": 422.12,
+     "episodes": 6,
+     "return_mean": 227.73,
+     "return_std": 134.26,
+     "return_min": 123.86,
+     "return_max": 459.79,
      "length_mean": 238.0,
      "returns": [
-      422.12,
-      309.84,
-      169.03,
-      153.34,
-      35.56
+      459.79,
+      320.22,
+      159.13,
+      169.9,
+      133.49,
+      123.86
+     ]
+    },
+    {
+     "tag": "015",
+     "steps": 179712,
+     "episodes": 6,
+     "return_mean": 302.5,
+     "return_std": 125.3,
+     "return_min": 149.22,
+     "return_max": 435.82,
+     "length_mean": 238.0,
+     "returns": [
+      435.82,
+      385.97,
+      149.22,
+      156.66,
+      290.76,
+      396.58
      ]
     }
    ],
    "verdict": {
     "label": "learned",
-    "detail": "+257.8 against a bar of 135.2, which is two standard errors of the difference over 5 episodes a side"
+    "detail": "+349.1 against a bar of 103.1, which is two standard errors of the difference over 6 episodes a side"
    },
    "media_dir": "../docs/media/racing",
    "clips": [
     "progress.mp4",
     "step_000.mp4",
-    "step_005.mp4"
+    "step_005.mp4",
+    "step_015.mp4"
    ],
    "gifs": [
     "progress.gif"
    ],
    "log_tail": [
-    "u160/781 steps=245760 return=363.085658732665 sps=59.1 ent=0.4419",
     "u170/781 steps=261120 return=398.64681894384523 sps=59.3 ent=0.5294",
     "u180/781 steps=276480 return=360.65355300412904 sps=59.2 ent=0.546",
     "u190/781 steps=291840 return=362.5787089061021 sps=59.5 ent=0.4979",
@@ -1056,7 +1077,8 @@ window.SNAPSHOT = {
     "u240/781 steps=368640 return=488.27719739755275 sps=61.2 ent=0.3745",
     "u250/781 steps=384000 return=453.86253610391907 sps=60.9 ent=0.4153",
     "u260/781 steps=399360 return=452.32371105989876 sps=60.3 ent=0.3305",
-    "u270/781 steps=414720 return=529.3148001101682 sps=60.1 ent=0.2935"
+    "u270/781 steps=414720 return=529.3148001101682 sps=60.1 ent=0.2935",
+    "checkpoint 035 at 419328 steps, training return 533.2861426014995 -> ckpt_035.pt"
    ]
   },
   {
@@ -1074,7 +1096,7 @@ window.SNAPSHOT = {
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 10537,
+   "seconds_since_update": 11214,
    "checkpoints": [
     {
      "tag": "000",
@@ -2190,32 +2212,1152 @@ window.SNAPSHOT = {
    "title": "Platformer",
    "env_id": "ALE/Kangaroo-v5",
    "blurb": "Climb the ladders, punch the monkeys, reach the top. The legal stand-in for Mario: a platformer with ROMs that ship licensed.",
-   "state": "not started",
-   "steps": 0,
-   "updates": 0,
-   "sps": null,
-   "return_now": null,
-   "entropy_now": null,
+   "state": "running",
+   "steps": 245760,
+   "updates": 160,
+   "sps": 444.8,
+   "return_now": 0.0,
+   "entropy_now": 0.351,
    "wall_minutes": null,
    "params": null,
-   "eta_minutes": null,
-   "seconds_since_update": 1976,
-   "checkpoints": [],
-   "curve": [],
+   "eta_minutes": 65.7,
+   "seconds_since_update": 24,
+   "checkpoints": [
+    {
+     "tag": "000",
+     "steps": 0
+    },
+    {
+     "tag": "005",
+     "steps": 99840
+    }
+   ],
+   "curve": [
+    {
+     "steps": 4608,
+     "return": 40.0,
+     "entropy": 2.8796,
+     "sps": 288.6,
+     "value_loss": 0.5067
+    },
+    {
+     "steps": 6144,
+     "return": 50.0,
+     "entropy": 2.8647,
+     "sps": 328.2,
+     "value_loss": 110.9331
+    },
+    {
+     "steps": 7680,
+     "return": 46.154,
+     "entropy": 2.875,
+     "sps": 361.9,
+     "value_loss": 0.372
+    },
+    {
+     "steps": 9216,
+     "return": 42.857,
+     "entropy": 2.8469,
+     "sps": 380.7,
+     "value_loss": 110.6541
+    },
+    {
+     "steps": 10752,
+     "return": 31.579,
+     "entropy": 2.8498,
+     "sps": 395.2,
+     "value_loss": 0.4744
+    },
+    {
+     "steps": 12288,
+     "return": 28.571,
+     "entropy": 2.8347,
+     "sps": 404.5,
+     "value_loss": 0.1721
+    },
+    {
+     "steps": 13824,
+     "return": 26.087,
+     "entropy": 2.7704,
+     "sps": 421.3,
+     "value_loss": 204.9268
+    },
+    {
+     "steps": 15360,
+     "return": 42.857,
+     "entropy": 2.7115,
+     "sps": 431.3,
+     "value_loss": 111.4701
+    },
+    {
+     "steps": 16896,
+     "return": 45.161,
+     "entropy": 2.6903,
+     "sps": 447.9,
+     "value_loss": 156.0783
+    },
+    {
+     "steps": 18432,
+     "return": 51.429,
+     "entropy": 2.7087,
+     "sps": 455.0,
+     "value_loss": 1.3144
+    },
+    {
+     "steps": 19968,
+     "return": 48.78,
+     "entropy": 2.561,
+     "sps": 452.9,
+     "value_loss": 220.6092
+    },
+    {
+     "steps": 21504,
+     "return": 47.619,
+     "entropy": 2.5848,
+     "sps": 462.0,
+     "value_loss": 0.9607
+    },
+    {
+     "steps": 23040,
+     "return": 45.833,
+     "entropy": 2.5899,
+     "sps": 468.9,
+     "value_loss": 2.1182
+    },
+    {
+     "steps": 24576,
+     "return": 44.898,
+     "entropy": 2.5289,
+     "sps": 475.3,
+     "value_loss": 0.82
+    },
+    {
+     "steps": 26112,
+     "return": 43.137,
+     "entropy": 2.5503,
+     "sps": 481.0,
+     "value_loss": 0.7384
+    },
+    {
+     "steps": 27648,
+     "return": 37.931,
+     "entropy": 2.5467,
+     "sps": 482.9,
+     "value_loss": 1.3787
+    },
+    {
+     "steps": 29184,
+     "return": 36.066,
+     "entropy": 2.4591,
+     "sps": 479.1,
+     "value_loss": 110.7505
+    },
+    {
+     "steps": 30720,
+     "return": 33.846,
+     "entropy": 2.5712,
+     "sps": 483.3,
+     "value_loss": 0.5239
+    },
+    {
+     "steps": 32256,
+     "return": 32.353,
+     "entropy": 2.5101,
+     "sps": 487.2,
+     "value_loss": 0.4159
+    },
+    {
+     "steps": 33792,
+     "return": 33.803,
+     "entropy": 2.2416,
+     "sps": 490.4,
+     "value_loss": 218.7788
+    },
+    {
+     "steps": 35328,
+     "return": 35.135,
+     "entropy": 2.114,
+     "sps": 489.2,
+     "value_loss": 110.8854
+    },
+    {
+     "steps": 36864,
+     "return": 38.961,
+     "entropy": 2.0875,
+     "sps": 487.6,
+     "value_loss": 111.1896
+    },
+    {
+     "steps": 38400,
+     "return": 39.506,
+     "entropy": 2.1889,
+     "sps": 492.7,
+     "value_loss": 100.4333
+    },
+    {
+     "steps": 39936,
+     "return": 40.476,
+     "entropy": 2.2546,
+     "sps": 497.0,
+     "value_loss": 1.0046
+    },
+    {
+     "steps": 41472,
+     "return": 38.636,
+     "entropy": 2.2197,
+     "sps": 497.0,
+     "value_loss": 1.0825
+    },
+    {
+     "steps": 43008,
+     "return": 37.363,
+     "entropy": 1.9753,
+     "sps": 495.3,
+     "value_loss": 108.7433
+    },
+    {
+     "steps": 44544,
+     "return": 37.5,
+     "entropy": 2.2101,
+     "sps": 497.7,
+     "value_loss": 0.8218
+    },
+    {
+     "steps": 46080,
+     "return": 36.735,
+     "entropy": 2.1498,
+     "sps": 501.0,
+     "value_loss": 0.3719
+    },
+    {
+     "steps": 47616,
+     "return": 36.0,
+     "entropy": 2.114,
+     "sps": 505.6,
+     "value_loss": 0.2736
+    },
+    {
+     "steps": 49152,
+     "return": 36.0,
+     "entropy": 2.0716,
+     "sps": 503.6,
+     "value_loss": 0.1913
+    },
+    {
+     "steps": 50688,
+     "return": 32.0,
+     "entropy": 2.0491,
+     "sps": 504.7,
+     "value_loss": 0.2698
+    },
+    {
+     "steps": 52224,
+     "return": 32.0,
+     "entropy": 1.7346,
+     "sps": 505.0,
+     "value_loss": 110.5578
+    },
+    {
+     "steps": 53760,
+     "return": 32.0,
+     "entropy": 1.7675,
+     "sps": 502.4,
+     "value_loss": 0.1838
+    },
+    {
+     "steps": 55296,
+     "return": 32.0,
+     "entropy": 1.7529,
+     "sps": 497.7,
+     "value_loss": 0.306
+    },
+    {
+     "steps": 56832,
+     "return": 34.0,
+     "entropy": 1.6369,
+     "sps": 498.7,
+     "value_loss": 109.1969
+    },
+    {
+     "steps": 58368,
+     "return": 34.0,
+     "entropy": 1.6407,
+     "sps": 493.4,
+     "value_loss": 0.2503
+    },
+    {
+     "steps": 59904,
+     "return": 30.0,
+     "entropy": 1.6873,
+     "sps": 493.6,
+     "value_loss": 0.2785
+    },
+    {
+     "steps": 61440,
+     "return": 26.0,
+     "entropy": 1.5103,
+     "sps": 490.5,
+     "value_loss": 110.4439
+    },
+    {
+     "steps": 62976,
+     "return": 26.0,
+     "entropy": 1.4622,
+     "sps": 484.2,
+     "value_loss": 0.3626
+    },
+    {
+     "steps": 64512,
+     "return": 26.0,
+     "entropy": 1.4209,
+     "sps": 482.9,
+     "value_loss": 0.255
+    },
+    {
+     "steps": 66048,
+     "return": 24.0,
+     "entropy": 1.1672,
+     "sps": 484.0,
+     "value_loss": 109.4438
+    },
+    {
+     "steps": 67584,
+     "return": 22.0,
+     "entropy": 1.253,
+     "sps": 480.9,
+     "value_loss": 0.6258
+    },
+    {
+     "steps": 69120,
+     "return": 24.0,
+     "entropy": 1.0287,
+     "sps": 478.4,
+     "value_loss": 109.6677
+    },
+    {
+     "steps": 70656,
+     "return": 22.0,
+     "entropy": 0.9648,
+     "sps": 478.2,
+     "value_loss": 110.4829
+    },
+    {
+     "steps": 72192,
+     "return": 22.0,
+     "entropy": 1.0545,
+     "sps": 478.5,
+     "value_loss": 0.6248
+    },
+    {
+     "steps": 73728,
+     "return": 24.0,
+     "entropy": 1.1513,
+     "sps": 473.8,
+     "value_loss": 0.5586
+    },
+    {
+     "steps": 75264,
+     "return": 26.0,
+     "entropy": 1.1119,
+     "sps": 466.2,
+     "value_loss": 106.705
+    },
+    {
+     "steps": 76800,
+     "return": 28.0,
+     "entropy": 1.1887,
+     "sps": 466.8,
+     "value_loss": 0.2059
+    },
+    {
+     "steps": 78336,
+     "return": 28.0,
+     "entropy": 1.1812,
+     "sps": 466.6,
+     "value_loss": 0.2175
+    },
+    {
+     "steps": 79872,
+     "return": 28.0,
+     "entropy": 1.1584,
+     "sps": 465.6,
+     "value_loss": 0.1555
+    },
+    {
+     "steps": 81408,
+     "return": 28.0,
+     "entropy": 1.164,
+     "sps": 464.7,
+     "value_loss": 0.0743
+    },
+    {
+     "steps": 82944,
+     "return": 28.0,
+     "entropy": 1.1671,
+     "sps": 464.1,
+     "value_loss": 0.0757
+    },
+    {
+     "steps": 84480,
+     "return": 26.0,
+     "entropy": 1.2131,
+     "sps": 462.8,
+     "value_loss": 0.0671
+    },
+    {
+     "steps": 86016,
+     "return": 24.0,
+     "entropy": 1.2048,
+     "sps": 461.9,
+     "value_loss": 0.0491
+    },
+    {
+     "steps": 87552,
+     "return": 24.0,
+     "entropy": 1.2432,
+     "sps": 461.7,
+     "value_loss": 0.0286
+    },
+    {
+     "steps": 89088,
+     "return": 20.0,
+     "entropy": 1.2545,
+     "sps": 459.2,
+     "value_loss": 0.0177
+    },
+    {
+     "steps": 90624,
+     "return": 20.0,
+     "entropy": 1.2961,
+     "sps": 458.6,
+     "value_loss": 0.0147
+    },
+    {
+     "steps": 92160,
+     "return": 16.0,
+     "entropy": 1.377,
+     "sps": 458.8,
+     "value_loss": 0.0082
+    },
+    {
+     "steps": 93696,
+     "return": 16.0,
+     "entropy": 1.3424,
+     "sps": 454.1,
+     "value_loss": 0.0073
+    },
+    {
+     "steps": 95232,
+     "return": 16.0,
+     "entropy": 1.4404,
+     "sps": 453.5,
+     "value_loss": 0.0039
+    },
+    {
+     "steps": 96768,
+     "return": 16.0,
+     "entropy": 1.4627,
+     "sps": 452.7,
+     "value_loss": 0.002
+    },
+    {
+     "steps": 98304,
+     "return": 14.0,
+     "entropy": 1.5375,
+     "sps": 448.8,
+     "value_loss": 0.0017
+    },
+    {
+     "steps": 99840,
+     "return": 14.0,
+     "entropy": 1.4375,
+     "sps": 450.0,
+     "value_loss": 111.4744
+    },
+    {
+     "steps": 101376,
+     "return": 14.0,
+     "entropy": 1.4137,
+     "sps": 449.7,
+     "value_loss": 0.0904
+    },
+    {
+     "steps": 102912,
+     "return": 14.0,
+     "entropy": 1.1484,
+     "sps": 447.7,
+     "value_loss": 0.0233
+    },
+    {
+     "steps": 104448,
+     "return": 14.0,
+     "entropy": 1.3373,
+     "sps": 448.3,
+     "value_loss": 0.0212
+    },
+    {
+     "steps": 105984,
+     "return": 16.0,
+     "entropy": 1.3252,
+     "sps": 449.6,
+     "value_loss": 0.027
+    },
+    {
+     "steps": 107520,
+     "return": 16.0,
+     "entropy": 1.3686,
+     "sps": 449.0,
+     "value_loss": 0.012
+    },
+    {
+     "steps": 109056,
+     "return": 14.0,
+     "entropy": 1.3559,
+     "sps": 448.0,
+     "value_loss": 0.0076
+    },
+    {
+     "steps": 110592,
+     "return": 14.0,
+     "entropy": 1.4439,
+     "sps": 449.0,
+     "value_loss": 0.0045
+    },
+    {
+     "steps": 112128,
+     "return": 12.0,
+     "entropy": 1.502,
+     "sps": 449.5,
+     "value_loss": 0.0047
+    },
+    {
+     "steps": 113664,
+     "return": 12.0,
+     "entropy": 1.483,
+     "sps": 447.7,
+     "value_loss": 0.0045
+    },
+    {
+     "steps": 115200,
+     "return": 12.0,
+     "entropy": 1.4989,
+     "sps": 447.4,
+     "value_loss": 0.0026
+    },
+    {
+     "steps": 116736,
+     "return": 12.0,
+     "entropy": 1.5131,
+     "sps": 448.0,
+     "value_loss": 0.0021
+    },
+    {
+     "steps": 118272,
+     "return": 10.0,
+     "entropy": 1.5426,
+     "sps": 448.0,
+     "value_loss": 0.0019
+    },
+    {
+     "steps": 119808,
+     "return": 10.0,
+     "entropy": 1.4778,
+     "sps": 444.8,
+     "value_loss": 0.001
+    },
+    {
+     "steps": 121344,
+     "return": 10.0,
+     "entropy": 1.5017,
+     "sps": 441.4,
+     "value_loss": 0.001
+    },
+    {
+     "steps": 122880,
+     "return": 10.0,
+     "entropy": 1.2789,
+     "sps": 435.9,
+     "value_loss": 111.677
+    },
+    {
+     "steps": 124416,
+     "return": 8.0,
+     "entropy": 1.1363,
+     "sps": 436.1,
+     "value_loss": 0.0728
+    },
+    {
+     "steps": 125952,
+     "return": 12.0,
+     "entropy": 0.4754,
+     "sps": 434.1,
+     "value_loss": 216.9865
+    },
+    {
+     "steps": 127488,
+     "return": 10.0,
+     "entropy": 0.1207,
+     "sps": 434.5,
+     "value_loss": 25.0497
+    },
+    {
+     "steps": 129024,
+     "return": 10.0,
+     "entropy": 0.2243,
+     "sps": 434.6,
+     "value_loss": 0.8593
+    },
+    {
+     "steps": 130560,
+     "return": 10.0,
+     "entropy": 0.3337,
+     "sps": 433.4,
+     "value_loss": 0.1867
+    },
+    {
+     "steps": 132096,
+     "return": 10.0,
+     "entropy": 0.3766,
+     "sps": 433.8,
+     "value_loss": 0.2742
+    },
+    {
+     "steps": 133632,
+     "return": 10.0,
+     "entropy": 0.5171,
+     "sps": 434.8,
+     "value_loss": 0.1118
+    },
+    {
+     "steps": 135168,
+     "return": 10.0,
+     "entropy": 0.4794,
+     "sps": 435.7,
+     "value_loss": 0.064
+    },
+    {
+     "steps": 136704,
+     "return": 10.0,
+     "entropy": 0.4445,
+     "sps": 435.2,
+     "value_loss": 0.0385
+    },
+    {
+     "steps": 138240,
+     "return": 10.0,
+     "entropy": 0.4336,
+     "sps": 435.2,
+     "value_loss": 0.0555
+    },
+    {
+     "steps": 139776,
+     "return": 10.0,
+     "entropy": 0.3791,
+     "sps": 435.9,
+     "value_loss": 0.0232
+    },
+    {
+     "steps": 141312,
+     "return": 10.0,
+     "entropy": 0.3973,
+     "sps": 435.8,
+     "value_loss": 0.0141
+    },
+    {
+     "steps": 142848,
+     "return": 10.0,
+     "entropy": 0.4184,
+     "sps": 434.9,
+     "value_loss": 0.0056
+    },
+    {
+     "steps": 144384,
+     "return": 10.0,
+     "entropy": 0.4594,
+     "sps": 435.8,
+     "value_loss": 0.005
+    },
+    {
+     "steps": 145920,
+     "return": 10.0,
+     "entropy": 0.5191,
+     "sps": 436.6,
+     "value_loss": 0.0034
+    },
+    {
+     "steps": 147456,
+     "return": 10.0,
+     "entropy": 0.5182,
+     "sps": 437.0,
+     "value_loss": 0.0024
+    },
+    {
+     "steps": 148992,
+     "return": 10.0,
+     "entropy": 0.4615,
+     "sps": 436.1,
+     "value_loss": 0.0016
+    },
+    {
+     "steps": 150528,
+     "return": 10.0,
+     "entropy": 0.463,
+     "sps": 436.8,
+     "value_loss": 0.0015
+    },
+    {
+     "steps": 152064,
+     "return": 8.0,
+     "entropy": 0.4768,
+     "sps": 437.3,
+     "value_loss": 0.0013
+    },
+    {
+     "steps": 153600,
+     "return": 8.0,
+     "entropy": 0.5301,
+     "sps": 436.9,
+     "value_loss": 0.0011
+    },
+    {
+     "steps": 155136,
+     "return": 8.0,
+     "entropy": 0.5678,
+     "sps": 437.0,
+     "value_loss": 111.8181
+    },
+    {
+     "steps": 156672,
+     "return": 8.0,
+     "entropy": 0.5366,
+     "sps": 437.8,
+     "value_loss": 0.1106
+    },
+    {
+     "steps": 158208,
+     "return": 8.0,
+     "entropy": 0.6099,
+     "sps": 437.9,
+     "value_loss": 0.0075
+    },
+    {
+     "steps": 159744,
+     "return": 10.0,
+     "entropy": 0.6217,
+     "sps": 437.1,
+     "value_loss": 0.0052
+    },
+    {
+     "steps": 161280,
+     "return": 10.0,
+     "entropy": 0.5438,
+     "sps": 437.8,
+     "value_loss": 111.3445
+    },
+    {
+     "steps": 162816,
+     "return": 10.0,
+     "entropy": 0.4066,
+     "sps": 438.5,
+     "value_loss": 0.1448
+    },
+    {
+     "steps": 164352,
+     "return": 10.0,
+     "entropy": 0.5621,
+     "sps": 437.4,
+     "value_loss": 0.0328
+    },
+    {
+     "steps": 165888,
+     "return": 12.0,
+     "entropy": 0.5434,
+     "sps": 435.7,
+     "value_loss": 0.0191
+    },
+    {
+     "steps": 167424,
+     "return": 12.0,
+     "entropy": 0.5718,
+     "sps": 434.4,
+     "value_loss": 0.0124
+    },
+    {
+     "steps": 168960,
+     "return": 8.0,
+     "entropy": 0.5707,
+     "sps": 433.9,
+     "value_loss": 0.007
+    },
+    {
+     "steps": 170496,
+     "return": 8.0,
+     "entropy": 0.4107,
+     "sps": 434.1,
+     "value_loss": 110.1915
+    },
+    {
+     "steps": 172032,
+     "return": 6.0,
+     "entropy": 0.1352,
+     "sps": 434.4,
+     "value_loss": 0.3316
+    },
+    {
+     "steps": 173568,
+     "return": 4.0,
+     "entropy": 0.2145,
+     "sps": 433.7,
+     "value_loss": 0.0777
+    },
+    {
+     "steps": 175104,
+     "return": 4.0,
+     "entropy": 0.2431,
+     "sps": 434.7,
+     "value_loss": 0.0398
+    },
+    {
+     "steps": 176640,
+     "return": 6.0,
+     "entropy": 0.2382,
+     "sps": 435.1,
+     "value_loss": 0.0245
+    },
+    {
+     "steps": 178176,
+     "return": 6.0,
+     "entropy": 0.2472,
+     "sps": 434.5,
+     "value_loss": 0.0236
+    },
+    {
+     "steps": 179712,
+     "return": 6.0,
+     "entropy": 0.2994,
+     "sps": 434.9,
+     "value_loss": 0.0123
+    },
+    {
+     "steps": 181248,
+     "return": 6.0,
+     "entropy": 0.32,
+     "sps": 435.7,
+     "value_loss": 0.0068
+    },
+    {
+     "steps": 182784,
+     "return": 6.0,
+     "entropy": 0.3605,
+     "sps": 435.7,
+     "value_loss": 0.0043
+    },
+    {
+     "steps": 184320,
+     "return": 6.0,
+     "entropy": 0.3553,
+     "sps": 434.9,
+     "value_loss": 0.004
+    },
+    {
+     "steps": 185856,
+     "return": 6.0,
+     "entropy": 0.3464,
+     "sps": 435.5,
+     "value_loss": 0.0019
+    },
+    {
+     "steps": 187392,
+     "return": 6.0,
+     "entropy": 0.3466,
+     "sps": 436.0,
+     "value_loss": 0.0018
+    },
+    {
+     "steps": 188928,
+     "return": 6.0,
+     "entropy": 0.3809,
+     "sps": 436.0,
+     "value_loss": 0.0018
+    },
+    {
+     "steps": 190464,
+     "return": 6.0,
+     "entropy": 0.3453,
+     "sps": 436.0,
+     "value_loss": 0.0013
+    },
+    {
+     "steps": 192000,
+     "return": 6.0,
+     "entropy": 0.2809,
+     "sps": 436.4,
+     "value_loss": 0.0011
+    },
+    {
+     "steps": 193536,
+     "return": 6.0,
+     "entropy": 0.2718,
+     "sps": 436.6,
+     "value_loss": 0.0009
+    },
+    {
+     "steps": 195072,
+     "return": 6.0,
+     "entropy": 0.2959,
+     "sps": 436.0,
+     "value_loss": 0.0007
+    },
+    {
+     "steps": 196608,
+     "return": 6.0,
+     "entropy": 0.307,
+     "sps": 436.5,
+     "value_loss": 0.0006
+    },
+    {
+     "steps": 198144,
+     "return": 6.0,
+     "entropy": 0.2984,
+     "sps": 436.3,
+     "value_loss": 0.0006
+    },
+    {
+     "steps": 199680,
+     "return": 6.0,
+     "entropy": 0.2845,
+     "sps": 436.2,
+     "value_loss": 0.0003
+    },
+    {
+     "steps": 201216,
+     "return": 6.0,
+     "entropy": 0.2799,
+     "sps": 436.5,
+     "value_loss": 0.0003
+    },
+    {
+     "steps": 202752,
+     "return": 4.0,
+     "entropy": 0.2839,
+     "sps": 436.5,
+     "value_loss": 0.0003
+    },
+    {
+     "steps": 204288,
+     "return": 4.0,
+     "entropy": 0.3044,
+     "sps": 435.9,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 205824,
+     "return": 4.0,
+     "entropy": 0.2942,
+     "sps": 436.4,
+     "value_loss": 0.0003
+    },
+    {
+     "steps": 207360,
+     "return": 4.0,
+     "entropy": 0.3164,
+     "sps": 437.4,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 208896,
+     "return": 2.0,
+     "entropy": 0.3102,
+     "sps": 437.0,
+     "value_loss": 0.0001
+    },
+    {
+     "steps": 210432,
+     "return": 2.0,
+     "entropy": 0.2865,
+     "sps": 437.1,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 211968,
+     "return": 2.0,
+     "entropy": 0.2966,
+     "sps": 437.6,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 213504,
+     "return": 2.0,
+     "entropy": 0.3078,
+     "sps": 438.1,
+     "value_loss": 0.0005
+    },
+    {
+     "steps": 215040,
+     "return": 2.0,
+     "entropy": 0.3344,
+     "sps": 437.2,
+     "value_loss": 0.0003
+    },
+    {
+     "steps": 216576,
+     "return": 2.0,
+     "entropy": 0.3284,
+     "sps": 437.6,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 218112,
+     "return": 2.0,
+     "entropy": 0.3497,
+     "sps": 437.9,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 219648,
+     "return": 2.0,
+     "entropy": 0.4027,
+     "sps": 437.5,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 221184,
+     "return": 0.0,
+     "entropy": 0.4145,
+     "sps": 437.5,
+     "value_loss": 0.0001
+    },
+    {
+     "steps": 222720,
+     "return": 0.0,
+     "entropy": 0.3964,
+     "sps": 437.7,
+     "value_loss": 0.0003
+    },
+    {
+     "steps": 224256,
+     "return": 0.0,
+     "entropy": 0.332,
+     "sps": 437.5,
+     "value_loss": 0.0001
+    },
+    {
+     "steps": 225792,
+     "return": 0.0,
+     "entropy": 0.3497,
+     "sps": 437.1,
+     "value_loss": 0.0001
+    },
+    {
+     "steps": 227328,
+     "return": 0.0,
+     "entropy": 0.3305,
+     "sps": 437.6,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 228864,
+     "return": 0.0,
+     "entropy": 0.346,
+     "sps": 437.7,
+     "value_loss": 0.0001
+    },
+    {
+     "steps": 230400,
+     "return": 0.0,
+     "entropy": 0.3976,
+     "sps": 437.2,
+     "value_loss": 0.0001
+    },
+    {
+     "steps": 231936,
+     "return": 0.0,
+     "entropy": 0.3932,
+     "sps": 438.1,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 233472,
+     "return": 0.0,
+     "entropy": 0.331,
+     "sps": 438.5,
+     "value_loss": 0.0001
+    },
+    {
+     "steps": 235008,
+     "return": 0.0,
+     "entropy": 0.3591,
+     "sps": 439.3,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 236544,
+     "return": 0.0,
+     "entropy": 0.405,
+     "sps": 439.7,
+     "value_loss": 0.0003
+    },
+    {
+     "steps": 238080,
+     "return": 0.0,
+     "entropy": 0.3798,
+     "sps": 440.6,
+     "value_loss": 0.0001
+    },
+    {
+     "steps": 239616,
+     "return": 0.0,
+     "entropy": 0.346,
+     "sps": 441.9,
+     "value_loss": 0.0001
+    },
+    {
+     "steps": 241152,
+     "return": 0.0,
+     "entropy": 0.3345,
+     "sps": 442.9,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 242688,
+     "return": 0.0,
+     "entropy": 0.2859,
+     "sps": 443.6,
+     "value_loss": 0.0001
+    },
+    {
+     "steps": 244224,
+     "return": 0.0,
+     "entropy": 0.2946,
+     "sps": 443.9,
+     "value_loss": 0.0002
+    },
+    {
+     "steps": 245760,
+     "return": 0.0,
+     "entropy": 0.351,
+     "sps": 444.8,
+     "value_loss": 0.0001
+    }
+   ],
    "ladder": null,
    "verdict": null,
    "media_dir": "../docs/media/platformer",
    "clips": [],
    "gifs": [],
    "log_tail": [
-    "=== train platformer started 2026-10-15 05:47:05Z ===",
-    "=== train platformer started 2026-10-15 05:47:56Z ===",
-    "=== Platformer (ALE/Kangaroo-v5) : 40,000 steps on 4 envs, small x2, lr 0.0003, entropy 0.02 -> D:\\github\\game-agents\\runs_arcade\\platformer",
-    "checkpoint 000 at step 0 (untrained) -> ckpt_000.pt",
-    "checkpoint 005 at 2048 steps, training return 0.0 -> ckpt_005.pt",
-    "u10/156 steps=2560 return=0.0 sps=79.2 ent=2.89",
-    "u20/156 steps=5120 return=0.0 sps=97.8 ent=2.844",
-    "checkpoint 015 at 5888 steps, training return 18.181818181818183 -> ckpt_015.pt"
+    "u60/1302 steps=92160 return=16.0 sps=458.8 ent=1.377",
+    "checkpoint 005 at 99840 steps, training return 14.0 -> ckpt_005.pt",
+    "u70/1302 steps=107520 return=16.0 sps=449.0 ent=1.3686",
+    "u80/1302 steps=122880 return=10.0 sps=435.9 ent=1.2789",
+    "u90/1302 steps=138240 return=10.0 sps=435.2 ent=0.4336",
+    "u100/1302 steps=153600 return=8.0 sps=436.9 ent=0.5301",
+    "u110/1302 steps=168960 return=8.0 sps=433.9 ent=0.5707",
+    "u120/1302 steps=184320 return=6.0 sps=434.9 ent=0.3553",
+    "u130/1302 steps=199680 return=6.0 sps=436.2 ent=0.2845",
+    "u140/1302 steps=215040 return=2.0 sps=437.2 ent=0.3344",
+    "u150/1302 steps=230400 return=0.0 sps=437.2 ent=0.3976",
+    "u160/1302 steps=245760 return=0.0 sps=444.8 ent=0.351"
    ]
   },
   {
@@ -2233,7 +3375,7 @@ window.SNAPSHOT = {
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 6923,
+   "seconds_since_update": 7600,
    "checkpoints": [
     {
      "tag": "000",
@@ -5467,13 +6609,13 @@ window.SNAPSHOT = {
   "media_dir": "../docs/media"
  },
  "machine": {
-  "cpu_percent": 71.6,
-  "python_processes": 52,
+  "cpu_percent": 78.3,
+  "python_processes": 46,
   "gpu": {
    "name": "Quadro RTX 5000",
    "memory_used": "14073 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "78 %"
+   "utilisation": "95 %"
   }
  }
 };

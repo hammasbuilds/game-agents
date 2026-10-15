@@ -7,15 +7,16 @@
   50001,
   50002,
   50003,
-  50004
+  50004,
+  50005
  ],
  "ladder": [
   {
    "tag": "random",
    "steps": null,
-   "episodes": 5,
-   "return_mean": -50.41,
-   "return_std": 21.7,
+   "episodes": 6,
+   "return_mean": -49.43,
+   "return_std": 19.56,
    "return_min": -78.5,
    "return_max": -23.08,
    "length_mean": 238.0,
@@ -24,41 +25,62 @@
     -36.18,
     -78.5,
     -51.95,
-    -62.36
+    -62.36,
+    -44.49
    ]
   },
   {
    "tag": "000",
    "steps": 0,
-   "episodes": 5,
-   "return_mean": -39.86,
-   "return_std": 18.86,
-   "return_min": -71.03,
-   "return_max": -22.34,
+   "episodes": 6,
+   "return_mean": -46.58,
+   "return_std": 16.02,
+   "return_min": -75.13,
+   "return_max": -25.8,
    "length_mean": 238.0,
    "returns": [
-    -71.03,
-    -22.34,
-    -35.59,
-    -28.77,
-    -41.59
+    -43.63,
+    -25.8,
+    -45.5,
+    -75.13,
+    -41.59,
+    -47.86
    ]
   },
   {
    "tag": "005",
    "steps": 59904,
-   "episodes": 5,
-   "return_mean": 217.98,
-   "return_std": 149.97,
-   "return_min": 35.56,
-   "return_max": 422.12,
+   "episodes": 6,
+   "return_mean": 227.73,
+   "return_std": 134.26,
+   "return_min": 123.86,
+   "return_max": 459.79,
    "length_mean": 238.0,
    "returns": [
-    422.12,
-    309.84,
-    169.03,
-    153.34,
-    35.56
+    459.79,
+    320.22,
+    159.13,
+    169.9,
+    133.49,
+    123.86
+   ]
+  },
+  {
+   "tag": "015",
+   "steps": 179712,
+   "episodes": 6,
+   "return_mean": 302.5,
+   "return_std": 125.3,
+   "return_min": 149.22,
+   "return_max": 435.82,
+   "length_mean": 238.0,
+   "returns": [
+    435.82,
+    385.97,
+    149.22,
+    156.66,
+    290.76,
+    396.58
    ]
   }
  ]

@@ -143,6 +143,22 @@ def main() -> None:
     game = CATALOGUE[args.game]
     run_dir = Path(args.run or ROOT / "runs_arcade" / args.game)
     saved = json.loads((run_dir / "checkpoints.json").read_text())
+
+    # Trust the directory over the registry. The weights are the artefact; the
+    # registry is a note about them, and a run stopped between the two leaves
+    # checkpoints that are real and unlisted.
+    listed = {entry["path"] for entry in saved}
+    for path in sorted(run_dir.glob("ckpt_*.pt")):
+        if path.name in listed:
+            continue
+        tag = path.stem.replace("ckpt_", "")
+        import torch
+        blob = torch.load(path, map_location="cpu", weights_only=False)
+        saved.append({"tag": tag, "update": None, "steps": int(blob.get("step", 0)),
+                      "path": path.name, "return_mean": None})
+        print(f"found an unlisted checkpoint on disk: {path.name} "
+              f"at {blob.get('step', 0):,} steps")
+    saved.sort(key=lambda entry: entry["steps"])
     out_dir = MEDIA / args.game
 
     # -- the ladder --------------------------------------------------------
