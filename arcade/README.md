@@ -71,10 +71,26 @@ baseline were enough to see that; four were not.
 
 **The sensitivity check that makes the null result mean something.** "No
 improvement" is only evidence if the measurement could have found improvement.
-The same pipeline, unchanged, is run on Pong — a game where learning is
-unmistakable — and reports the climb there. A null result on Boxing beside a
-clear positive on Pong says something about Boxing's budget; a null result on its
-own would only say something about the harness.
+The same pipeline, unchanged, was run on Pong over the same eight-episode
+protocol:
+
+| game | untrained | trained | verdict |
+|---|---:|---:|---|
+| Boxing | 2.12 | 1.62 | **no gain** — −0.5 against a bar of 3.4 |
+| Pong | −20.00 | −16.62 | **learned** — +3.4 against a bar of 2.1 |
+
+So the harness finds a climb where one exists and refuses one where it does not.
+A null result on Boxing beside a clear positive on Pong says something about
+Boxing's budget; a null result on its own would only say something about the
+harness.
+
+**The bar is two standard errors, not two standard deviations** — and getting
+that wrong is what the first version of the verdict did. A standard deviation
+says how much one episode differs from another; a standard error says how well
+the *mean* is pinned down, and shrinks with the square root of the episode count.
+Judged by deviations, Pong's +3.4 fell under a bar of 3.9 and was declared noise,
+while its training curve had climbed from −21 to −14 over a hundred episodes. The
+test has to match the quantity being compared.
 
 ## Two details that are easy to get wrong
 

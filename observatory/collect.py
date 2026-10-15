@@ -87,9 +87,19 @@ class Verdict:
 def judge(ladder: list[dict] | None) -> Verdict | None:
     """Did this run learn anything the evaluation can actually see?
 
-    The comparison is the trained checkpoint against the untrained one, and the
-    bar is the two spreads added: if the gain is smaller than that, the ladder
-    cannot tell them apart and neither can we.
+    The comparison is the trained checkpoint against the untrained one. The bar
+    is twice the standard error of the difference between the two means -- very
+    roughly a 95% interval -- and *not* the sum of the two standard deviations,
+    which is what this first did.
+
+    That distinction is the whole correctness of the column. A standard deviation
+    describes how much one episode differs from another; the standard error
+    describes how well the mean is pinned down, and it shrinks with the square
+    root of the episode count. Using the deviations, Pong's +3.4 was declared
+    'inside noise' against a bar of 3.9 even though its training curve had
+    climbed from -21 to -14 over a hundred episodes. With the standard errors the
+    bar is 2.1, and Pong reads as learned while Boxing still reads as no gain --
+    which is what the curves say in both cases.
     """
     if not ladder:
         return None
@@ -98,16 +108,18 @@ def judge(ladder: list[dict] | None) -> Verdict | None:
     if untrained is None or trained is untrained:
         return None
     gain = trained["return_mean"] - untrained["return_mean"]
-    noise = (untrained.get("return_std") or 0) + (trained.get("return_std") or 0)
-    episodes = trained.get("episodes") or 0
-    if gain > noise:
-        return Verdict("learned", f"{gain:+.1f} against a combined spread of {noise:.1f} "
-                                  f"over {episodes} episodes")
+    n_a = max(1, untrained.get("episodes") or 1)
+    n_b = max(1, trained.get("episodes") or 1)
+    se_a = (untrained.get("return_std") or 0) / (n_a ** 0.5)
+    se_b = (trained.get("return_std") or 0) / (n_b ** 0.5)
+    bar = 2 * ((se_a ** 2 + se_b ** 2) ** 0.5)
+    detail = (f"{gain:+.1f} against a bar of {bar:.1f}, which is two standard errors "
+              f"of the difference over {n_b} episodes a side")
+    if gain > bar:
+        return Verdict("learned", detail)
     if gain > 0:
-        return Verdict("inside noise", f"{gain:+.1f} is smaller than the combined spread "
-                                       f"of {noise:.1f}, so the run cannot claim it")
-    return Verdict("no gain", f"{gain:+.1f} against the untrained network over "
-                              f"{episodes} episodes")
+        return Verdict("inside noise", detail + " — too small to claim")
+    return Verdict("no gain", detail)
 
 
 def arcade_runs() -> list[dict]:

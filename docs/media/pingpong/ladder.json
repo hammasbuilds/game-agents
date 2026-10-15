@@ -1,0 +1,157 @@
+{
+ "game": "pingpong",
+ "title": "Table tennis",
+ "env_id": "ALE/Pong-v5",
+ "evaluation_seeds": [
+  50000,
+  50001,
+  50002,
+  50003,
+  50004,
+  50005,
+  50006,
+  50007
+ ],
+ "ladder": [
+  {
+   "tag": "random",
+   "steps": null,
+   "episodes": 8,
+   "return_mean": -20.38,
+   "return_std": 0.74,
+   "return_min": -21.0,
+   "return_max": -19.0,
+   "length_mean": 912.6,
+   "returns": [
+    -21.0,
+    -20.0,
+    -20.0,
+    -19.0,
+    -20.0,
+    -21.0,
+    -21.0,
+    -21.0
+   ]
+  },
+  {
+   "tag": "000",
+   "steps": 0,
+   "episodes": 8,
+   "return_mean": -20.0,
+   "return_std": 1.31,
+   "return_min": -21.0,
+   "return_max": -18.0,
+   "length_mean": 935.5,
+   "returns": [
+    -21.0,
+    -20.0,
+    -21.0,
+    -18.0,
+    -20.0,
+    -21.0,
+    -21.0,
+    -18.0
+   ]
+  },
+  {
+   "tag": "005",
+   "steps": 99840,
+   "episodes": 8,
+   "return_mean": -19.88,
+   "return_std": 0.83,
+   "return_min": -21.0,
+   "return_max": -18.0,
+   "length_mean": 949.5,
+   "returns": [
+    -20.0,
+    -20.0,
+    -20.0,
+    -20.0,
+    -21.0,
+    -20.0,
+    -20.0,
+    -18.0
+   ]
+  },
+  {
+   "tag": "015",
+   "steps": 299520,
+   "episodes": 8,
+   "return_mean": -20.75,
+   "return_std": 0.46,
+   "return_min": -21.0,
+   "return_max": -20.0,
+   "length_mean": 842.6,
+   "returns": [
+    -21.0,
+    -20.0,
+    -21.0,
+    -21.0,
+    -20.0,
+    -21.0,
+    -21.0,
+    -21.0
+   ]
+  },
+  {
+   "tag": "035",
+   "steps": 700416,
+   "episodes": 8,
+   "return_mean": -20.5,
+   "return_std": 0.76,
+   "return_min": -21.0,
+   "return_max": -19.0,
+   "length_mean": 1060.6,
+   "returns": [
+    -21.0,
+    -21.0,
+    -19.0,
+    -21.0,
+    -20.0,
+    -20.0,
+    -21.0,
+    -21.0
+   ]
+  },
+  {
+   "tag": "065",
+   "steps": 1299456,
+   "episodes": 8,
+   "return_mean": -15.75,
+   "return_std": 7.38,
+   "return_min": -21.0,
+   "return_max": -2.0,
+   "length_mean": 1794.5,
+   "returns": [
+    -20.0,
+    -20.0,
+    -2.0,
+    -18.0,
+    -20.0,
+    -19.0,
+    -6.0,
+    -21.0
+   ]
+  },
+  {
+   "tag": "100",
+   "steps": 1999872,
+   "episodes": 8,
+   "return_mean": -16.62,
+   "return_std": 2.62,
+   "return_min": -21.0,
+   "return_max": -13.0,
+   "length_mean": 2240.6,
+   "returns": [
+    -19.0,
+    -18.0,
+    -15.0,
+    -15.0,
+    -21.0,
+    -17.0,
+    -15.0,
+    -13.0
+   ]
+  }
+ ]
+}

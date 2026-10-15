@@ -7,7 +7,281 @@
    "env_id": "CarRacing-v3",
    "trained": false,
    "summary": null,
-   "curve": [],
+   "curve": [
+    {
+     "steps": 3072,
+     "return": -44.78051821474697,
+     "entropy": 1.6002,
+     "length": 238.0,
+     "sps": 52.9
+    },
+    {
+     "steps": 4608,
+     "return": -44.78051821474697,
+     "entropy": 1.5927,
+     "length": 238.0,
+     "sps": 53.9
+    },
+    {
+     "steps": 6144,
+     "return": -48.50237949077789,
+     "entropy": 1.5795,
+     "length": 238.0,
+     "sps": 53.1
+    },
+    {
+     "steps": 7680,
+     "return": -48.50237949077789,
+     "entropy": 1.5693,
+     "length": 238.0,
+     "sps": 53.0
+    },
+    {
+     "steps": 9216,
+     "return": -48.52224846388299,
+     "entropy": 1.5705,
+     "length": 238.0,
+     "sps": 52.5
+    },
+    {
+     "steps": 10752,
+     "return": -48.52224846388299,
+     "entropy": 1.5693,
+     "length": 238.0,
+     "sps": 50.4
+    },
+    {
+     "steps": 12288,
+     "return": -52.97308545091588,
+     "entropy": 1.5398,
+     "length": 237.5,
+     "sps": 47.9
+    },
+    {
+     "steps": 13824,
+     "return": -52.97308545091588,
+     "entropy": 1.5086,
+     "length": 237.5,
+     "sps": 48.6
+    },
+    {
+     "steps": 15360,
+     "return": -49.74182147953037,
+     "entropy": 1.4794,
+     "length": 237.41666666666666,
+     "sps": 48.0
+    },
+    {
+     "steps": 16896,
+     "return": -49.38827752092885,
+     "entropy": 1.4729,
+     "length": 236.30645161290323,
+     "sps": 47.4
+    },
+    {
+     "steps": 18432,
+     "return": -44.04007365824383,
+     "entropy": 1.4538,
+     "length": 234.45205479452054,
+     "sps": 47.4
+    },
+    {
+     "steps": 19968,
+     "return": -46.5913942755242,
+     "entropy": 1.4338,
+     "length": 232.96153846153845,
+     "sps": 47.4
+    },
+    {
+     "steps": 21504,
+     "return": -45.474629651445596,
+     "entropy": 1.4298,
+     "length": 230.04597701149424,
+     "sps": 47.1
+    },
+    {
+     "steps": 23040,
+     "return": -41.49252108407852,
+     "entropy": 1.4343,
+     "length": 230.79166666666666,
+     "sps": 46.9
+    },
+    {
+     "steps": 24576,
+     "return": -40.381188756906056,
+     "entropy": 1.41,
+     "length": 231.010101010101,
+     "sps": 46.7
+    },
+    {
+     "steps": 26112,
+     "return": -35.997708666269446,
+     "entropy": 1.376,
+     "length": 231.08,
+     "sps": 46.4
+    },
+    {
+     "steps": 27648,
+     "return": -33.57383436156823,
+     "entropy": 1.3444,
+     "length": 231.08,
+     "sps": 46.3
+    },
+    {
+     "steps": 29184,
+     "return": -26.79205976336314,
+     "entropy": 1.3045,
+     "length": 231.08,
+     "sps": 46.1
+    },
+    {
+     "steps": 30720,
+     "return": -26.414701151379568,
+     "entropy": 1.3116,
+     "length": 231.08,
+     "sps": 46.0
+    },
+    {
+     "steps": 32256,
+     "return": -17.651344698519093,
+     "entropy": 1.2402,
+     "length": 231.08,
+     "sps": 45.9
+    },
+    {
+     "steps": 33792,
+     "return": -12.438351690919784,
+     "entropy": 1.2389,
+     "length": 230.39,
+     "sps": 45.9
+    },
+    {
+     "steps": 35328,
+     "return": -3.0017345456843465,
+     "entropy": 1.1877,
+     "length": 230.39,
+     "sps": 45.9
+    },
+    {
+     "steps": 36864,
+     "return": 2.213308716260555,
+     "entropy": 1.1687,
+     "length": 229.46,
+     "sps": 45.9
+    },
+    {
+     "steps": 38400,
+     "return": 14.149103001268097,
+     "entropy": 1.1523,
+     "length": 229.46,
+     "sps": 45.9
+    },
+    {
+     "steps": 39936,
+     "return": 16.915150727057437,
+     "entropy": 1.1959,
+     "length": 230.16,
+     "sps": 46.0
+    },
+    {
+     "steps": 41472,
+     "return": 25.381659765742093,
+     "entropy": 1.1406,
+     "length": 230.16,
+     "sps": 46.0
+    },
+    {
+     "steps": 43008,
+     "return": 40.086220750096025,
+     "entropy": 1.1003,
+     "length": 233.04,
+     "sps": 45.9
+    },
+    {
+     "steps": 44544,
+     "return": 44.1204511337438,
+     "entropy": 1.1542,
+     "length": 234.45,
+     "sps": 46.0
+    },
+    {
+     "steps": 46080,
+     "return": 46.80339192663467,
+     "entropy": 1.1368,
+     "length": 236.03,
+     "sps": 46.1
+    },
+    {
+     "steps": 47616,
+     "return": 51.31774809810414,
+     "entropy": 1.1723,
+     "length": 236.03,
+     "sps": 46.2
+    },
+    {
+     "steps": 49152,
+     "return": 59.74430716821271,
+     "entropy": 1.1506,
+     "length": 236.03,
+     "sps": 46.2
+    },
+    {
+     "steps": 50688,
+     "return": 64.17463266835279,
+     "entropy": 1.1264,
+     "length": 236.03,
+     "sps": 46.1
+    },
+    {
+     "steps": 52224,
+     "return": 69.79110537830839,
+     "entropy": 1.007,
+     "length": 234.45,
+     "sps": 46.0
+    },
+    {
+     "steps": 53760,
+     "return": 78.2052448853056,
+     "entropy": 1.0502,
+     "length": 234.45,
+     "sps": 45.9
+    },
+    {
+     "steps": 55296,
+     "return": 94.93877587981238,
+     "entropy": 1.063,
+     "length": 234.45,
+     "sps": 45.8
+    },
+    {
+     "steps": 56832,
+     "return": 95.33209475921744,
+     "entropy": 1.0363,
+     "length": 234.21,
+     "sps": 45.7
+    },
+    {
+     "steps": 58368,
+     "return": 104.07081511920855,
+     "entropy": 1.0118,
+     "length": 234.1,
+     "sps": 45.5
+    },
+    {
+     "steps": 59904,
+     "return": 103.61589195523365,
+     "entropy": 0.8937,
+     "length": 234.1,
+     "sps": 45.6
+    },
+    {
+     "steps": 61440,
+     "return": 113.26608164848467,
+     "entropy": 0.9166,
+     "length": 235.14,
+     "sps": 45.4
+    }
+   ],
    "ladder": null,
    "evaluation_seeds": null,
    "clips": [],
@@ -1394,85 +1668,70 @@
    "title": "Table tennis",
    "blurb": "Score runs from -21 to +21, so there is nowhere for a weak agent to hide: it starts losing every rally and ends winning them.",
    "env_id": "ALE/Pong-v5",
-   "trained": false,
-   "summary": null,
+   "trained": true,
+   "summary": {
+    "game": "pingpong",
+    "env_id": "ALE/Pong-v5",
+    "updates": 1302,
+    "steps": 1999872,
+    "wall_seconds": 3574.1,
+    "final_return_mean": -14.4,
+    "params": 425047,
+    "width": 1,
+    "device": "cpu",
+    "envs": 12,
+    "checkpoints": [
+     {
+      "tag": "000",
+      "update": 0,
+      "steps": 0,
+      "path": "ckpt_000.pt",
+      "return_mean": null
+     },
+     {
+      "tag": "005",
+      "update": 65,
+      "steps": 99840,
+      "path": "ckpt_005.pt",
+      "return_mean": -20.39
+     },
+     {
+      "tag": "015",
+      "update": 195,
+      "steps": 299520,
+      "path": "ckpt_015.pt",
+      "return_mean": -20.42
+     },
+     {
+      "tag": "035",
+      "update": 456,
+      "steps": 700416,
+      "path": "ckpt_035.pt",
+      "return_mean": -19.97
+     },
+     {
+      "tag": "065",
+      "update": 846,
+      "steps": 1299456,
+      "path": "ckpt_065.pt",
+      "return_mean": -14.84
+     },
+     {
+      "tag": "100",
+      "update": 1302,
+      "steps": 1999872,
+      "path": "ckpt_100.pt",
+      "return_mean": -14.4
+     }
+    ]
+   },
    "curve": [
-    {
-     "steps": 9216,
-     "return": -21.0,
-     "entropy": 1.7761,
-     "length": 759.0,
-     "sps": 398.7
-    },
-    {
-     "steps": 10752,
-     "return": -20.875,
-     "entropy": 1.7657,
-     "length": 837.125,
-     "sps": 414.9
-    },
-    {
-     "steps": 12288,
-     "return": -20.6,
-     "entropy": 1.7646,
-     "length": 864.2,
-     "sps": 428.6
-    },
     {
      "steps": 13824,
      "return": -20.454545454545453,
      "entropy": 1.7651,
      "length": 885.4545454545455,
      "sps": 440.5
-    },
-    {
-     "steps": 15360,
-     "return": -20.333333333333332,
-     "entropy": 1.7676,
-     "length": 908.6666666666666,
-     "sps": 450.9
-    },
-    {
-     "steps": 16896,
-     "return": -20.333333333333332,
-     "entropy": 1.767,
-     "length": 908.6666666666666,
-     "sps": 452.3
-    },
-    {
-     "steps": 18432,
-     "return": -20.333333333333332,
-     "entropy": 1.7695,
-     "length": 908.6666666666666,
-     "sps": 451.1
-    },
-    {
-     "steps": 19968,
-     "return": -20.428571428571427,
-     "entropy": 1.7724,
-     "length": 891.1428571428571,
-     "sps": 449.4
-    },
-    {
-     "steps": 21504,
-     "return": -20.55,
-     "entropy": 1.766,
-     "length": 872.75,
-     "sps": 445.5
-    },
-    {
-     "steps": 23040,
-     "return": -20.40909090909091,
-     "entropy": 1.766,
-     "length": 885.3636363636364,
-     "sps": 443.1
-    },
-    {
-     "steps": 24576,
-     "return": -20.416666666666668,
-     "entropy": 1.7731,
-     "length": 880.5833333333334,
-     "sps": 442.8
     },
     {
      "steps": 26112,
@@ -1482,109 +1741,11 @@
      "sps": 443.5
     },
     {
-     "steps": 27648,
-     "return": -20.416666666666668,
-     "entropy": 1.7554,
-     "length": 880.5833333333334,
-     "sps": 442.6
-    },
-    {
-     "steps": 29184,
-     "return": -20.44,
-     "entropy": 1.7653,
-     "length": 875.92,
-     "sps": 443.9
-    },
-    {
-     "steps": 30720,
-     "return": -20.517241379310345,
-     "entropy": 1.7709,
-     "length": 864.6896551724138,
-     "sps": 443.1
-    },
-    {
-     "steps": 32256,
-     "return": -20.558823529411764,
-     "entropy": 1.7725,
-     "length": 862.3235294117648,
-     "sps": 442.1
-    },
-    {
-     "steps": 33792,
-     "return": -20.542857142857144,
-     "entropy": 1.7785,
-     "length": 861.7142857142857,
-     "sps": 442.0
-    },
-    {
-     "steps": 35328,
-     "return": -20.52777777777778,
-     "entropy": 1.7807,
-     "length": 862.6111111111111,
-     "sps": 442.3
-    },
-    {
-     "steps": 36864,
-     "return": -20.52777777777778,
-     "entropy": 1.7795,
-     "length": 862.6111111111111,
-     "sps": 442.1
-    },
-    {
      "steps": 38400,
      "return": -20.54054054054054,
      "entropy": 1.7723,
      "length": 860.5135135135135,
      "sps": 441.8
-    },
-    {
-     "steps": 39936,
-     "return": -20.575,
-     "entropy": 1.7696,
-     "length": 857.3,
-     "sps": 441.8
-    },
-    {
-     "steps": 41472,
-     "return": -20.5609756097561,
-     "entropy": 1.7617,
-     "length": 856.780487804878,
-     "sps": 442.1
-    },
-    {
-     "steps": 43008,
-     "return": -20.545454545454547,
-     "entropy": 1.757,
-     "length": 859.4090909090909,
-     "sps": 442.6
-    },
-    {
-     "steps": 44544,
-     "return": -20.51063829787234,
-     "entropy": 1.7541,
-     "length": 867.6808510638298,
-     "sps": 443.1
-    },
-    {
-     "steps": 46080,
-     "return": -20.520833333333332,
-     "entropy": 1.7275,
-     "length": 869.9166666666666,
-     "sps": 443.0
-    },
-    {
-     "steps": 47616,
-     "return": -20.520833333333332,
-     "entropy": 1.7064,
-     "length": 869.9166666666666,
-     "sps": 443.6
-    },
-    {
-     "steps": 49152,
-     "return": -20.53061224489796,
-     "entropy": 1.6821,
-     "length": 869.4897959183673,
-     "sps": 443.1
     },
     {
      "steps": 50688,
@@ -1594,109 +1755,11 @@
      "sps": 442.9
     },
     {
-     "steps": 52224,
-     "return": -20.51923076923077,
-     "entropy": 1.6413,
-     "length": 873.5769230769231,
-     "sps": 442.6
-    },
-    {
-     "steps": 53760,
-     "return": -20.464285714285715,
-     "entropy": 1.6431,
-     "length": 877.4642857142857,
-     "sps": 441.9
-    },
-    {
-     "steps": 55296,
-     "return": -20.473684210526315,
-     "entropy": 1.6244,
-     "length": 876.8421052631579,
-     "sps": 442.5
-    },
-    {
-     "steps": 56832,
-     "return": -20.45,
-     "entropy": 1.6586,
-     "length": 880.95,
-     "sps": 442.0
-    },
-    {
-     "steps": 58368,
-     "return": -20.45,
-     "entropy": 1.6845,
-     "length": 880.95,
-     "sps": 442.0
-    },
-    {
-     "steps": 59904,
-     "return": -20.442622950819672,
-     "entropy": 1.6882,
-     "length": 880.1803278688525,
-     "sps": 443.2
-    },
-    {
-     "steps": 61440,
-     "return": -20.442622950819672,
-     "entropy": 1.6865,
-     "length": 880.1803278688525,
-     "sps": 443.4
-    },
-    {
      "steps": 62976,
      "return": -20.41269841269841,
      "entropy": 1.6956,
      "length": 883.4920634920635,
      "sps": 442.9
-    },
-    {
-     "steps": 64512,
-     "return": -20.40909090909091,
-     "entropy": 1.6888,
-     "length": 884.9848484848485,
-     "sps": 443.3
-    },
-    {
-     "steps": 66048,
-     "return": -20.422535211267604,
-     "entropy": 1.7147,
-     "length": 887.0,
-     "sps": 443.7
-    },
-    {
-     "steps": 67584,
-     "return": -20.40277777777778,
-     "entropy": 1.6973,
-     "length": 888.25,
-     "sps": 443.2
-    },
-    {
-     "steps": 69120,
-     "return": -20.410958904109588,
-     "entropy": 1.6709,
-     "length": 886.7808219178082,
-     "sps": 443.5
-    },
-    {
-     "steps": 70656,
-     "return": -20.410958904109588,
-     "entropy": 1.6949,
-     "length": 886.7808219178082,
-     "sps": 443.5
-    },
-    {
-     "steps": 72192,
-     "return": -20.41891891891892,
-     "entropy": 1.702,
-     "length": 885.9054054054054,
-     "sps": 443.5
-    },
-    {
-     "steps": 73728,
-     "return": -20.428571428571427,
-     "entropy": 1.694,
-     "length": 883.922077922078,
-     "sps": 443.7
     },
     {
      "steps": 75264,
@@ -1706,109 +1769,11 @@
      "sps": 443.6
     },
     {
-     "steps": 76800,
-     "return": -20.428571428571427,
-     "entropy": 1.6745,
-     "length": 880.9642857142857,
-     "sps": 443.9
-    },
-    {
-     "steps": 78336,
-     "return": -20.428571428571427,
-     "entropy": 1.6356,
-     "length": 880.9642857142857,
-     "sps": 442.3
-    },
-    {
-     "steps": 79872,
-     "return": -20.435294117647057,
-     "entropy": 1.6748,
-     "length": 880.6470588235294,
-     "sps": 441.8
-    },
-    {
-     "steps": 81408,
-     "return": -20.430232558139537,
-     "entropy": 1.657,
-     "length": 880.1860465116279,
-     "sps": 441.9
-    },
-    {
-     "steps": 82944,
-     "return": -20.42528735632184,
-     "entropy": 1.6796,
-     "length": 879.7126436781609,
-     "sps": 442.5
-    },
-    {
-     "steps": 84480,
-     "return": -20.426966292134832,
-     "entropy": 1.705,
-     "length": 879.2134831460675,
-     "sps": 442.0
-    },
-    {
-     "steps": 86016,
-     "return": -20.440860215053764,
-     "entropy": 1.6918,
-     "length": 878.3870967741935,
-     "sps": 441.8
-    },
-    {
      "steps": 87552,
      "return": -20.431578947368422,
      "entropy": 1.6742,
      "length": 878.421052631579,
      "sps": 442.5
-    },
-    {
-     "steps": 89088,
-     "return": -20.422680412371133,
-     "entropy": 1.6764,
-     "length": 878.8144329896908,
-     "sps": 442.3
-    },
-    {
-     "steps": 90624,
-     "return": -20.422680412371133,
-     "entropy": 1.6873,
-     "length": 878.8144329896908,
-     "sps": 442.5
-    },
-    {
-     "steps": 92160,
-     "return": -20.428571428571427,
-     "entropy": 1.6929,
-     "length": 878.6938775510204,
-     "sps": 442.7
-    },
-    {
-     "steps": 93696,
-     "return": -20.434343434343436,
-     "entropy": 1.7025,
-     "length": 878.1414141414141,
-     "sps": 442.9
-    },
-    {
-     "steps": 95232,
-     "return": -20.43,
-     "entropy": 1.7172,
-     "length": 880.18,
-     "sps": 442.9
-    },
-    {
-     "steps": 96768,
-     "return": -20.41,
-     "entropy": 1.7349,
-     "length": 879.71,
-     "sps": 442.6
-    },
-    {
-     "steps": 98304,
-     "return": -20.41,
-     "entropy": 1.7321,
-     "length": 879.71,
-     "sps": 442.8
     },
     {
      "steps": 99840,
@@ -1818,109 +1783,11 @@
      "sps": 442.8
     },
     {
-     "steps": 101376,
-     "return": -20.39,
-     "entropy": 1.7333,
-     "length": 882.58,
-     "sps": 442.3
-    },
-    {
-     "steps": 102912,
-     "return": -20.41,
-     "entropy": 1.7202,
-     "length": 880.81,
-     "sps": 442.8
-    },
-    {
-     "steps": 104448,
-     "return": -20.43,
-     "entropy": 1.7354,
-     "length": 877.59,
-     "sps": 442.7
-    },
-    {
-     "steps": 105984,
-     "return": -20.44,
-     "entropy": 1.7485,
-     "length": 878.44,
-     "sps": 442.9
-    },
-    {
-     "steps": 107520,
-     "return": -20.43,
-     "entropy": 1.7526,
-     "length": 880.71,
-     "sps": 443.2
-    },
-    {
-     "steps": 109056,
-     "return": -20.43,
-     "entropy": 1.7632,
-     "length": 880.71,
-     "sps": 443.4
-    },
-    {
-     "steps": 110592,
-     "return": -20.42,
-     "entropy": 1.7698,
-     "length": 884.41,
-     "sps": 443.5
-    },
-    {
      "steps": 112128,
      "return": -20.43,
      "entropy": 1.7619,
      "length": 882.61,
      "sps": 443.5
-    },
-    {
-     "steps": 113664,
-     "return": -20.43,
-     "entropy": 1.7669,
-     "length": 887.3,
-     "sps": 444.0
-    },
-    {
-     "steps": 115200,
-     "return": -20.43,
-     "entropy": 1.758,
-     "length": 888.55,
-     "sps": 443.8
-    },
-    {
-     "steps": 116736,
-     "return": -20.44,
-     "entropy": 1.7586,
-     "length": 890.97,
-     "sps": 443.6
-    },
-    {
-     "steps": 118272,
-     "return": -20.44,
-     "entropy": 1.761,
-     "length": 892.8,
-     "sps": 444.1
-    },
-    {
-     "steps": 119808,
-     "return": -20.44,
-     "entropy": 1.7548,
-     "length": 893.56,
-     "sps": 444.0
-    },
-    {
-     "steps": 121344,
-     "return": -20.43,
-     "entropy": 1.753,
-     "length": 893.44,
-     "sps": 444.4
-    },
-    {
-     "steps": 122880,
-     "return": -20.43,
-     "entropy": 1.7567,
-     "length": 893.44,
-     "sps": 444.7
     },
     {
      "steps": 124416,
@@ -1930,109 +1797,11 @@
      "sps": 444.7
     },
     {
-     "steps": 125952,
-     "return": -20.43,
-     "entropy": 1.7541,
-     "length": 896.99,
-     "sps": 444.9
-    },
-    {
-     "steps": 127488,
-     "return": -20.43,
-     "entropy": 1.7465,
-     "length": 900.31,
-     "sps": 445.2
-    },
-    {
-     "steps": 129024,
-     "return": -20.41,
-     "entropy": 1.7378,
-     "length": 902.71,
-     "sps": 445.2
-    },
-    {
-     "steps": 130560,
-     "return": -20.41,
-     "entropy": 1.7355,
-     "length": 902.71,
-     "sps": 445.0
-    },
-    {
-     "steps": 132096,
-     "return": -20.41,
-     "entropy": 1.7244,
-     "length": 901.46,
-     "sps": 445.2
-    },
-    {
-     "steps": 133632,
-     "return": -20.41,
-     "entropy": 1.7363,
-     "length": 902.21,
-     "sps": 445.7
-    },
-    {
-     "steps": 135168,
-     "return": -20.42,
-     "entropy": 1.7229,
-     "length": 900.56,
-     "sps": 445.8
-    },
-    {
      "steps": 136704,
      "return": -20.43,
      "entropy": 1.7329,
      "length": 899.34,
      "sps": 445.6
-    },
-    {
-     "steps": 138240,
-     "return": -20.42,
-     "entropy": 1.7323,
-     "length": 897.49,
-     "sps": 445.4
-    },
-    {
-     "steps": 139776,
-     "return": -20.42,
-     "entropy": 1.7377,
-     "length": 896.44,
-     "sps": 445.6
-    },
-    {
-     "steps": 141312,
-     "return": -20.42,
-     "entropy": 1.7407,
-     "length": 899.14,
-     "sps": 445.6
-    },
-    {
-     "steps": 142848,
-     "return": -20.42,
-     "entropy": 1.7445,
-     "length": 899.14,
-     "sps": 445.6
-    },
-    {
-     "steps": 144384,
-     "return": -20.44,
-     "entropy": 1.722,
-     "length": 898.05,
-     "sps": 445.7
-    },
-    {
-     "steps": 145920,
-     "return": -20.44,
-     "entropy": 1.7255,
-     "length": 898.05,
-     "sps": 445.9
-    },
-    {
-     "steps": 147456,
-     "return": -20.46,
-     "entropy": 1.7312,
-     "length": 895.87,
-     "sps": 446.2
     },
     {
      "steps": 148992,
@@ -2042,109 +1811,11 @@
      "sps": 446.3
     },
     {
-     "steps": 150528,
-     "return": -20.49,
-     "entropy": 1.7089,
-     "length": 891.14,
-     "sps": 446.3
-    },
-    {
-     "steps": 152064,
-     "return": -20.49,
-     "entropy": 1.709,
-     "length": 891.14,
-     "sps": 446.3
-    },
-    {
-     "steps": 153600,
-     "return": -20.47,
-     "entropy": 1.7021,
-     "length": 894.0,
-     "sps": 446.1
-    },
-    {
-     "steps": 155136,
-     "return": -20.47,
-     "entropy": 1.7209,
-     "length": 894.36,
-     "sps": 446.0
-    },
-    {
-     "steps": 156672,
-     "return": -20.48,
-     "entropy": 1.7421,
-     "length": 894.21,
-     "sps": 446.3
-    },
-    {
-     "steps": 158208,
-     "return": -20.46,
-     "entropy": 1.7481,
-     "length": 893.56,
-     "sps": 446.3
-    },
-    {
-     "steps": 159744,
-     "return": -20.47,
-     "entropy": 1.7508,
-     "length": 893.08,
-     "sps": 446.1
-    },
-    {
      "steps": 161280,
      "return": -20.48,
      "entropy": 1.7545,
      "length": 893.49,
      "sps": 446.6
-    },
-    {
-     "steps": 162816,
-     "return": -20.47,
-     "entropy": 1.7493,
-     "length": 893.6,
-     "sps": 446.8
-    },
-    {
-     "steps": 164352,
-     "return": -20.48,
-     "entropy": 1.7415,
-     "length": 893.71,
-     "sps": 446.9
-    },
-    {
-     "steps": 165888,
-     "return": -20.46,
-     "entropy": 1.7196,
-     "length": 895.03,
-     "sps": 447.1
-    },
-    {
-     "steps": 167424,
-     "return": -20.47,
-     "entropy": 1.7292,
-     "length": 894.85,
-     "sps": 447.1
-    },
-    {
-     "steps": 168960,
-     "return": -20.45,
-     "entropy": 1.7193,
-     "length": 896.4,
-     "sps": 447.1
-    },
-    {
-     "steps": 170496,
-     "return": -20.46,
-     "entropy": 1.7005,
-     "length": 898.47,
-     "sps": 446.9
-    },
-    {
-     "steps": 172032,
-     "return": -20.47,
-     "entropy": 1.7181,
-     "length": 900.82,
-     "sps": 446.8
     },
     {
      "steps": 173568,
@@ -2154,109 +1825,11 @@
      "sps": 447.1
     },
     {
-     "steps": 175104,
-     "return": -20.44,
-     "entropy": 1.741,
-     "length": 906.54,
-     "sps": 447.0
-    },
-    {
-     "steps": 176640,
-     "return": -20.44,
-     "entropy": 1.7299,
-     "length": 904.88,
-     "sps": 446.7
-    },
-    {
-     "steps": 178176,
-     "return": -20.45,
-     "entropy": 1.737,
-     "length": 903.88,
-     "sps": 446.5
-    },
-    {
-     "steps": 179712,
-     "return": -20.46,
-     "entropy": 1.7511,
-     "length": 903.37,
-     "sps": 446.4
-    },
-    {
-     "steps": 181248,
-     "return": -20.46,
-     "entropy": 1.7611,
-     "length": 903.85,
-     "sps": 446.7
-    },
-    {
-     "steps": 182784,
-     "return": -20.45,
-     "entropy": 1.7579,
-     "length": 903.83,
-     "sps": 446.7
-    },
-    {
-     "steps": 184320,
-     "return": -20.43,
-     "entropy": 1.7584,
-     "length": 905.7,
-     "sps": 446.5
-    },
-    {
      "steps": 185856,
      "return": -20.42,
      "entropy": 1.751,
      "length": 905.27,
      "sps": 446.6
-    },
-    {
-     "steps": 187392,
-     "return": -20.41,
-     "entropy": 1.731,
-     "length": 910.86,
-     "sps": 446.5
-    },
-    {
-     "steps": 188928,
-     "return": -20.42,
-     "entropy": 1.706,
-     "length": 910.31,
-     "sps": 446.5
-    },
-    {
-     "steps": 190464,
-     "return": -20.43,
-     "entropy": 1.7025,
-     "length": 906.58,
-     "sps": 446.6
-    },
-    {
-     "steps": 192000,
-     "return": -20.43,
-     "entropy": 1.6756,
-     "length": 905.52,
-     "sps": 446.5
-    },
-    {
-     "steps": 193536,
-     "return": -20.43,
-     "entropy": 1.6911,
-     "length": 906.09,
-     "sps": 446.5
-    },
-    {
-     "steps": 195072,
-     "return": -20.44,
-     "entropy": 1.6985,
-     "length": 904.62,
-     "sps": 446.4
-    },
-    {
-     "steps": 196608,
-     "return": -20.42,
-     "entropy": 1.6721,
-     "length": 905.94,
-     "sps": 446.4
     },
     {
      "steps": 198144,
@@ -2266,109 +1839,11 @@
      "sps": 446.6
     },
     {
-     "steps": 199680,
-     "return": -20.4,
-     "entropy": 1.6907,
-     "length": 904.66,
-     "sps": 446.5
-    },
-    {
-     "steps": 201216,
-     "return": -20.4,
-     "entropy": 1.7012,
-     "length": 902.84,
-     "sps": 446.5
-    },
-    {
-     "steps": 202752,
-     "return": -20.41,
-     "entropy": 1.7004,
-     "length": 900.75,
-     "sps": 446.3
-    },
-    {
-     "steps": 204288,
-     "return": -20.41,
-     "entropy": 1.6756,
-     "length": 900.75,
-     "sps": 446.4
-    },
-    {
-     "steps": 205824,
-     "return": -20.39,
-     "entropy": 1.651,
-     "length": 898.75,
-     "sps": 446.6
-    },
-    {
-     "steps": 207360,
-     "return": -20.39,
-     "entropy": 1.6538,
-     "length": 899.04,
-     "sps": 446.6
-    },
-    {
-     "steps": 208896,
-     "return": -20.39,
-     "entropy": 1.6341,
-     "length": 898.04,
-     "sps": 446.5
-    },
-    {
      "steps": 210432,
      "return": -20.39,
      "entropy": 1.6537,
      "length": 899.35,
      "sps": 446.6
-    },
-    {
-     "steps": 211968,
-     "return": -20.4,
-     "entropy": 1.672,
-     "length": 898.99,
-     "sps": 446.5
-    },
-    {
-     "steps": 213504,
-     "return": -20.4,
-     "entropy": 1.6669,
-     "length": 897.2,
-     "sps": 446.5
-    },
-    {
-     "steps": 215040,
-     "return": -20.4,
-     "entropy": 1.6474,
-     "length": 894.85,
-     "sps": 446.4
-    },
-    {
-     "steps": 216576,
-     "return": -20.41,
-     "entropy": 1.6236,
-     "length": 892.99,
-     "sps": 446.5
-    },
-    {
-     "steps": 218112,
-     "return": -20.41,
-     "entropy": 1.6067,
-     "length": 891.7,
-     "sps": 446.4
-    },
-    {
-     "steps": 219648,
-     "return": -20.4,
-     "entropy": 1.6398,
-     "length": 893.34,
-     "sps": 446.3
-    },
-    {
-     "steps": 221184,
-     "return": -20.4,
-     "entropy": 1.6502,
-     "length": 893.06,
-     "sps": 446.3
     },
     {
      "steps": 222720,
@@ -2378,109 +1853,11 @@
      "sps": 446.5
     },
     {
-     "steps": 224256,
-     "return": -20.39,
-     "entropy": 1.6632,
-     "length": 894.88,
-     "sps": 446.5
-    },
-    {
-     "steps": 225792,
-     "return": -20.4,
-     "entropy": 1.6792,
-     "length": 893.82,
-     "sps": 446.5
-    },
-    {
-     "steps": 227328,
-     "return": -20.4,
-     "entropy": 1.6613,
-     "length": 895.13,
-     "sps": 446.5
-    },
-    {
-     "steps": 228864,
-     "return": -20.38,
-     "entropy": 1.6736,
-     "length": 897.72,
-     "sps": 446.6
-    },
-    {
-     "steps": 230400,
-     "return": -20.38,
-     "entropy": 1.683,
-     "length": 897.72,
-     "sps": 446.5
-    },
-    {
-     "steps": 231936,
-     "return": -20.37,
-     "entropy": 1.6864,
-     "length": 898.03,
-     "sps": 446.4
-    },
-    {
-     "steps": 233472,
-     "return": -20.38,
-     "entropy": 1.6854,
-     "length": 898.34,
-     "sps": 446.4
-    },
-    {
      "steps": 235008,
      "return": -20.37,
      "entropy": 1.6979,
      "length": 898.41,
      "sps": 446.5
-    },
-    {
-     "steps": 236544,
-     "return": -20.37,
-     "entropy": 1.6963,
-     "length": 898.41,
-     "sps": 446.3
-    },
-    {
-     "steps": 238080,
-     "return": -20.37,
-     "entropy": 1.7104,
-     "length": 898.33,
-     "sps": 446.3
-    },
-    {
-     "steps": 239616,
-     "return": -20.36,
-     "entropy": 1.7018,
-     "length": 902.21,
-     "sps": 446.2
-    },
-    {
-     "steps": 241152,
-     "return": -20.36,
-     "entropy": 1.7141,
-     "length": 902.22,
-     "sps": 446.2
-    },
-    {
-     "steps": 242688,
-     "return": -20.35,
-     "entropy": 1.7187,
-     "length": 899.2,
-     "sps": 446.1
-    },
-    {
-     "steps": 244224,
-     "return": -20.36,
-     "entropy": 1.7286,
-     "length": 899.57,
-     "sps": 446.0
-    },
-    {
-     "steps": 245760,
-     "return": -20.33,
-     "entropy": 1.7259,
-     "length": 902.6,
-     "sps": 446.0
     },
     {
      "steps": 247296,
@@ -2490,108 +1867,10 @@
      "sps": 445.8
     },
     {
-     "steps": 248832,
-     "return": -20.34,
-     "entropy": 1.7382,
-     "length": 904.14,
-     "sps": 445.8
-    },
-    {
-     "steps": 250368,
-     "return": -20.33,
-     "entropy": 1.747,
-     "length": 904.57,
-     "sps": 445.8
-    },
-    {
-     "steps": 251904,
-     "return": -20.33,
-     "entropy": 1.7399,
-     "length": 906.07,
-     "sps": 445.8
-    },
-    {
-     "steps": 253440,
-     "return": -20.33,
-     "entropy": 1.716,
-     "length": 905.72,
-     "sps": 445.9
-    },
-    {
-     "steps": 254976,
-     "return": -20.33,
-     "entropy": 1.7002,
-     "length": 907.89,
-     "sps": 446.0
-    },
-    {
-     "steps": 256512,
-     "return": -20.32,
-     "entropy": 1.708,
-     "length": 909.8,
-     "sps": 446.0
-    },
-    {
-     "steps": 258048,
-     "return": -20.3,
-     "entropy": 1.6919,
-     "length": 914.07,
-     "sps": 446.0
-    },
-    {
      "steps": 259584,
      "return": -20.32,
      "entropy": 1.6942,
      "length": 912.21,
-     "sps": 446.0
-    },
-    {
-     "steps": 261120,
-     "return": -20.31,
-     "entropy": 1.6966,
-     "length": 913.69,
-     "sps": 446.1
-    },
-    {
-     "steps": 262656,
-     "return": -20.31,
-     "entropy": 1.6882,
-     "length": 911.36,
-     "sps": 446.1
-    },
-    {
-     "steps": 264192,
-     "return": -20.34,
-     "entropy": 1.6726,
-     "length": 909.89,
-     "sps": 446.1
-    },
-    {
-     "steps": 265728,
-     "return": -20.34,
-     "entropy": 1.697,
-     "length": 908.8,
-     "sps": 446.1
-    },
-    {
-     "steps": 267264,
-     "return": -20.35,
-     "entropy": 1.721,
-     "length": 908.53,
-     "sps": 446.2
-    },
-    {
-     "steps": 268800,
-     "return": -20.35,
-     "entropy": 1.6977,
-     "length": 908.53,
-     "sps": 446.1
-    },
-    {
-     "steps": 270336,
-     "return": -20.35,
-     "entropy": 1.7011,
-     "length": 908.18,
      "sps": 446.0
     },
     {
@@ -2602,109 +1881,11 @@
      "sps": 446.0
     },
     {
-     "steps": 273408,
-     "return": -20.39,
-     "entropy": 1.7116,
-     "length": 905.06,
-     "sps": 446.1
-    },
-    {
-     "steps": 274944,
-     "return": -20.39,
-     "entropy": 1.6931,
-     "length": 905.06,
-     "sps": 446.1
-    },
-    {
-     "steps": 276480,
-     "return": -20.4,
-     "entropy": 1.7064,
-     "length": 904.76,
-     "sps": 446.1
-    },
-    {
-     "steps": 278016,
-     "return": -20.42,
-     "entropy": 1.6999,
-     "length": 901.6,
-     "sps": 445.9
-    },
-    {
-     "steps": 279552,
-     "return": -20.4,
-     "entropy": 1.7165,
-     "length": 901.64,
-     "sps": 446.0
-    },
-    {
-     "steps": 281088,
-     "return": -20.4,
-     "entropy": 1.7295,
-     "length": 901.68,
-     "sps": 445.9
-    },
-    {
-     "steps": 282624,
-     "return": -20.39,
-     "entropy": 1.7185,
-     "length": 905.99,
-     "sps": 445.9
-    },
-    {
      "steps": 284160,
      "return": -20.39,
      "entropy": 1.714,
      "length": 905.99,
      "sps": 445.8
-    },
-    {
-     "steps": 285696,
-     "return": -20.39,
-     "entropy": 1.719,
-     "length": 908.53,
-     "sps": 445.9
-    },
-    {
-     "steps": 287232,
-     "return": -20.41,
-     "entropy": 1.7144,
-     "length": 909.64,
-     "sps": 445.6
-    },
-    {
-     "steps": 288768,
-     "return": -20.41,
-     "entropy": 1.7327,
-     "length": 908.73,
-     "sps": 445.6
-    },
-    {
-     "steps": 290304,
-     "return": -20.41,
-     "entropy": 1.7339,
-     "length": 908.73,
-     "sps": 445.7
-    },
-    {
-     "steps": 291840,
-     "return": -20.41,
-     "entropy": 1.7385,
-     "length": 908.73,
-     "sps": 445.7
-    },
-    {
-     "steps": 293376,
-     "return": -20.42,
-     "entropy": 1.742,
-     "length": 911.71,
-     "sps": 445.6
-    },
-    {
-     "steps": 294912,
-     "return": -20.43,
-     "entropy": 1.7405,
-     "length": 912.09,
-     "sps": 445.5
     },
     {
      "steps": 296448,
@@ -2714,109 +1895,11 @@
      "sps": 445.7
     },
     {
-     "steps": 297984,
-     "return": -20.43,
-     "entropy": 1.7289,
-     "length": 913.07,
-     "sps": 445.7
-    },
-    {
-     "steps": 299520,
-     "return": -20.42,
-     "entropy": 1.7114,
-     "length": 913.08,
-     "sps": 445.7
-    },
-    {
-     "steps": 301056,
-     "return": -20.4,
-     "entropy": 1.6915,
-     "length": 918.13,
-     "sps": 445.5
-    },
-    {
-     "steps": 302592,
-     "return": -20.39,
-     "entropy": 1.6712,
-     "length": 921.24,
-     "sps": 445.4
-    },
-    {
-     "steps": 304128,
-     "return": -20.37,
-     "entropy": 1.6416,
-     "length": 920.73,
-     "sps": 445.5
-    },
-    {
-     "steps": 305664,
-     "return": -20.35,
-     "entropy": 1.6723,
-     "length": 922.69,
-     "sps": 445.5
-    },
-    {
-     "steps": 307200,
-     "return": -20.36,
-     "entropy": 1.6708,
-     "length": 923.17,
-     "sps": 445.5
-    },
-    {
      "steps": 308736,
      "return": -20.34,
      "entropy": 1.669,
      "length": 924.13,
      "sps": 445.4
-    },
-    {
-     "steps": 310272,
-     "return": -20.34,
-     "entropy": 1.6845,
-     "length": 922.94,
-     "sps": 445.3
-    },
-    {
-     "steps": 311808,
-     "return": -20.34,
-     "entropy": 1.708,
-     "length": 922.94,
-     "sps": 445.5
-    },
-    {
-     "steps": 313344,
-     "return": -20.34,
-     "entropy": 1.7041,
-     "length": 922.36,
-     "sps": 445.5
-    },
-    {
-     "steps": 314880,
-     "return": -20.33,
-     "entropy": 1.688,
-     "length": 923.76,
-     "sps": 445.4
-    },
-    {
-     "steps": 316416,
-     "return": -20.35,
-     "entropy": 1.7093,
-     "length": 922.3,
-     "sps": 445.1
-    },
-    {
-     "steps": 317952,
-     "return": -20.32,
-     "entropy": 1.6967,
-     "length": 926.64,
-     "sps": 445.1
-    },
-    {
-     "steps": 319488,
-     "return": -20.3,
-     "entropy": 1.7169,
-     "length": 929.54,
-     "sps": 444.9
     },
     {
      "steps": 321024,
@@ -2826,109 +1909,11 @@
      "sps": 444.7
     },
     {
-     "steps": 322560,
-     "return": -20.31,
-     "entropy": 1.7427,
-     "length": 931.96,
-     "sps": 444.6
-    },
-    {
-     "steps": 324096,
-     "return": -20.31,
-     "entropy": 1.7485,
-     "length": 931.96,
-     "sps": 444.3
-    },
-    {
-     "steps": 325632,
-     "return": -20.32,
-     "entropy": 1.7474,
-     "length": 931.41,
-     "sps": 444.1
-    },
-    {
-     "steps": 327168,
-     "return": -20.3,
-     "entropy": 1.7413,
-     "length": 932.71,
-     "sps": 444.1
-    },
-    {
-     "steps": 328704,
-     "return": -20.3,
-     "entropy": 1.7365,
-     "length": 932.59,
-     "sps": 443.9
-    },
-    {
-     "steps": 330240,
-     "return": -20.29,
-     "entropy": 1.7351,
-     "length": 933.61,
-     "sps": 444.2
-    },
-    {
-     "steps": 331776,
-     "return": -20.28,
-     "entropy": 1.7234,
-     "length": 935.38,
-     "sps": 444.6
-    },
-    {
      "steps": 333312,
      "return": -20.31,
      "entropy": 1.7373,
      "length": 934.25,
      "sps": 444.9
-    },
-    {
-     "steps": 334848,
-     "return": -20.33,
-     "entropy": 1.7276,
-     "length": 935.58,
-     "sps": 445.2
-    },
-    {
-     "steps": 336384,
-     "return": -20.35,
-     "entropy": 1.7297,
-     "length": 935.29,
-     "sps": 445.5
-    },
-    {
-     "steps": 337920,
-     "return": -20.33,
-     "entropy": 1.7405,
-     "length": 938.26,
-     "sps": 443.6
-    },
-    {
-     "steps": 339456,
-     "return": -20.33,
-     "entropy": 1.7396,
-     "length": 938.26,
-     "sps": 442.0
-    },
-    {
-     "steps": 340992,
-     "return": -20.33,
-     "entropy": 1.7446,
-     "length": 935.5,
-     "sps": 442.2
-    },
-    {
-     "steps": 342528,
-     "return": -20.34,
-     "entropy": 1.7492,
-     "length": 935.57,
-     "sps": 442.5
-    },
-    {
-     "steps": 344064,
-     "return": -20.34,
-     "entropy": 1.7558,
-     "length": 934.59,
-     "sps": 442.8
     },
     {
      "steps": 345600,
@@ -2938,46 +1923,1113 @@
      "sps": 443.1
     },
     {
-     "steps": 347136,
-     "return": -20.33,
-     "entropy": 1.7535,
-     "length": 931.99,
-     "sps": 443.4
-    },
-    {
-     "steps": 348672,
-     "return": -20.33,
-     "entropy": 1.759,
-     "length": 932.68,
-     "sps": 443.7
-    },
-    {
-     "steps": 350208,
-     "return": -20.33,
-     "entropy": 1.7662,
-     "length": 932.68,
-     "sps": 444.2
-    },
-    {
-     "steps": 351744,
+     "steps": 357888,
      "return": -20.35,
-     "entropy": 1.7691,
-     "length": 929.13,
-     "sps": 444.6
+     "entropy": 1.7763,
+     "length": 928.93,
+     "sps": 445.9
     },
     {
-     "steps": 353280,
-     "return": -20.36,
-     "entropy": 1.7678,
-     "length": 931.87,
-     "sps": 445.0
+     "steps": 370176,
+     "return": -20.24,
+     "entropy": 1.7637,
+     "length": 946.78,
+     "sps": 449.4
+    },
+    {
+     "steps": 382464,
+     "return": -20.24,
+     "entropy": 1.7607,
+     "length": 946.87,
+     "sps": 452.1
+    },
+    {
+     "steps": 394752,
+     "return": -20.2,
+     "entropy": 1.7196,
+     "length": 951.07,
+     "sps": 453.3
+    },
+    {
+     "steps": 407040,
+     "return": -20.19,
+     "entropy": 1.7117,
+     "length": 959.0,
+     "sps": 455.4
+    },
+    {
+     "steps": 419328,
+     "return": -20.26,
+     "entropy": 1.7156,
+     "length": 953.63,
+     "sps": 457.7
+    },
+    {
+     "steps": 431616,
+     "return": -20.28,
+     "entropy": 1.7226,
+     "length": 956.39,
+     "sps": 460.5
+    },
+    {
+     "steps": 443904,
+     "return": -20.24,
+     "entropy": 1.6829,
+     "length": 965.04,
+     "sps": 463.4
+    },
+    {
+     "steps": 456192,
+     "return": -20.28,
+     "entropy": 1.6899,
+     "length": 953.27,
+     "sps": 466.3
+    },
+    {
+     "steps": 468480,
+     "return": -20.41,
+     "entropy": 1.7038,
+     "length": 939.09,
+     "sps": 469.0
+    },
+    {
+     "steps": 480768,
+     "return": -20.38,
+     "entropy": 1.7077,
+     "length": 945.6,
+     "sps": 471.7
+    },
+    {
+     "steps": 493056,
+     "return": -20.39,
+     "entropy": 1.7116,
+     "length": 946.82,
+     "sps": 474.2
+    },
+    {
+     "steps": 505344,
+     "return": -20.41,
+     "entropy": 1.7249,
+     "length": 934.96,
+     "sps": 476.7
+    },
+    {
+     "steps": 517632,
+     "return": -20.32,
+     "entropy": 1.7301,
+     "length": 933.44,
+     "sps": 479.1
+    },
+    {
+     "steps": 529920,
+     "return": -20.26,
+     "entropy": 1.6834,
+     "length": 938.26,
+     "sps": 481.3
+    },
+    {
+     "steps": 542208,
+     "return": -20.22,
+     "entropy": 1.6781,
+     "length": 940.67,
+     "sps": 483.6
+    },
+    {
+     "steps": 554496,
+     "return": -20.2,
+     "entropy": 1.7273,
+     "length": 945.46,
+     "sps": 485.7
+    },
+    {
+     "steps": 566784,
+     "return": -20.08,
+     "entropy": 1.7075,
+     "length": 949.55,
+     "sps": 487.7
+    },
+    {
+     "steps": 579072,
+     "return": -20.12,
+     "entropy": 1.6985,
+     "length": 942.29,
+     "sps": 489.7
+    },
+    {
+     "steps": 591360,
+     "return": -20.08,
+     "entropy": 1.6655,
+     "length": 953.83,
+     "sps": 491.5
+    },
+    {
+     "steps": 603648,
+     "return": -19.98,
+     "entropy": 1.6829,
+     "length": 967.59,
+     "sps": 493.4
+    },
+    {
+     "steps": 615936,
+     "return": -19.98,
+     "entropy": 1.6721,
+     "length": 974.84,
+     "sps": 495.2
+    },
+    {
+     "steps": 628224,
+     "return": -20.02,
+     "entropy": 1.6806,
+     "length": 970.47,
+     "sps": 497.0
+    },
+    {
+     "steps": 640512,
+     "return": -20.0,
+     "entropy": 1.7096,
+     "length": 977.13,
+     "sps": 498.7
+    },
+    {
+     "steps": 652800,
+     "return": -19.89,
+     "entropy": 1.7158,
+     "length": 994.22,
+     "sps": 500.3
+    },
+    {
+     "steps": 665088,
+     "return": -19.93,
+     "entropy": 1.7185,
+     "length": 1002.02,
+     "sps": 501.8
+    },
+    {
+     "steps": 677376,
+     "return": -19.89,
+     "entropy": 1.7011,
+     "length": 1011.16,
+     "sps": 503.2
+    },
+    {
+     "steps": 689664,
+     "return": -19.91,
+     "entropy": 1.6979,
+     "length": 1010.58,
+     "sps": 504.7
+    },
+    {
+     "steps": 701952,
+     "return": -20.01,
+     "entropy": 1.6966,
+     "length": 1000.66,
+     "sps": 505.9
+    },
+    {
+     "steps": 714240,
+     "return": -20.01,
+     "entropy": 1.6979,
+     "length": 1004.52,
+     "sps": 507.4
+    },
+    {
+     "steps": 726528,
+     "return": -20.0,
+     "entropy": 1.6749,
+     "length": 1015.21,
+     "sps": 508.6
+    },
+    {
+     "steps": 738816,
+     "return": -19.96,
+     "entropy": 1.6451,
+     "length": 1020.63,
+     "sps": 509.8
+    },
+    {
+     "steps": 751104,
+     "return": -19.81,
+     "entropy": 1.6137,
+     "length": 1038.09,
+     "sps": 511.1
+    },
+    {
+     "steps": 763392,
+     "return": -19.73,
+     "entropy": 1.5943,
+     "length": 1045.25,
+     "sps": 512.3
+    },
+    {
+     "steps": 775680,
+     "return": -19.6,
+     "entropy": 1.5587,
+     "length": 1063.64,
+     "sps": 513.6
+    },
+    {
+     "steps": 787968,
+     "return": -19.45,
+     "entropy": 1.5223,
+     "length": 1082.95,
+     "sps": 514.8
+    },
+    {
+     "steps": 800256,
+     "return": -19.38,
+     "entropy": 1.5273,
+     "length": 1092.28,
+     "sps": 516.0
+    },
+    {
+     "steps": 812544,
+     "return": -19.22,
+     "entropy": 1.486,
+     "length": 1115.62,
+     "sps": 517.0
+    },
+    {
+     "steps": 824832,
+     "return": -19.14,
+     "entropy": 1.4669,
+     "length": 1128.74,
+     "sps": 518.2
+    },
+    {
+     "steps": 837120,
+     "return": -19.08,
+     "entropy": 1.4638,
+     "length": 1137.66,
+     "sps": 519.3
+    },
+    {
+     "steps": 849408,
+     "return": -18.98,
+     "entropy": 1.4603,
+     "length": 1165.68,
+     "sps": 520.3
+    },
+    {
+     "steps": 861696,
+     "return": -18.78,
+     "entropy": 1.4134,
+     "length": 1183.93,
+     "sps": 521.4
+    },
+    {
+     "steps": 873984,
+     "return": -18.75,
+     "entropy": 1.4369,
+     "length": 1200.46,
+     "sps": 522.4
+    },
+    {
+     "steps": 886272,
+     "return": -18.69,
+     "entropy": 1.4756,
+     "length": 1227.32,
+     "sps": 523.4
+    },
+    {
+     "steps": 898560,
+     "return": -18.65,
+     "entropy": 1.4678,
+     "length": 1251.81,
+     "sps": 524.3
+    },
+    {
+     "steps": 910848,
+     "return": -18.51,
+     "entropy": 1.5114,
+     "length": 1277.42,
+     "sps": 525.3
+    },
+    {
+     "steps": 923136,
+     "return": -18.38,
+     "entropy": 1.5052,
+     "length": 1298.92,
+     "sps": 526.2
+    },
+    {
+     "steps": 935424,
+     "return": -18.31,
+     "entropy": 1.4819,
+     "length": 1330.71,
+     "sps": 527.2
+    },
+    {
+     "steps": 947712,
+     "return": -18.2,
+     "entropy": 1.4891,
+     "length": 1358.34,
+     "sps": 528.1
+    },
+    {
+     "steps": 960000,
+     "return": -18.0,
+     "entropy": 1.4584,
+     "length": 1384.77,
+     "sps": 528.9
+    },
+    {
+     "steps": 972288,
+     "return": -17.94,
+     "entropy": 1.4498,
+     "length": 1406.79,
+     "sps": 529.7
+    },
+    {
+     "steps": 984576,
+     "return": -17.81,
+     "entropy": 1.4073,
+     "length": 1437.96,
+     "sps": 530.6
+    },
+    {
+     "steps": 996864,
+     "return": -17.71,
+     "entropy": 1.3859,
+     "length": 1466.31,
+     "sps": 531.4
+    },
+    {
+     "steps": 1009152,
+     "return": -17.66,
+     "entropy": 1.3504,
+     "length": 1487.78,
+     "sps": 532.0
+    },
+    {
+     "steps": 1021440,
+     "return": -17.59,
+     "entropy": 1.3505,
+     "length": 1508.58,
+     "sps": 532.7
+    },
+    {
+     "steps": 1033728,
+     "return": -17.51,
+     "entropy": 1.4009,
+     "length": 1525.87,
+     "sps": 533.5
+    },
+    {
+     "steps": 1046016,
+     "return": -17.17,
+     "entropy": 1.3365,
+     "length": 1565.97,
+     "sps": 534.2
+    },
+    {
+     "steps": 1058304,
+     "return": -17.09,
+     "entropy": 1.2965,
+     "length": 1582.92,
+     "sps": 534.9
+    },
+    {
+     "steps": 1070592,
+     "return": -16.8,
+     "entropy": 1.3,
+     "length": 1618.77,
+     "sps": 535.6
+    },
+    {
+     "steps": 1082880,
+     "return": -16.74,
+     "entropy": 1.3371,
+     "length": 1638.38,
+     "sps": 536.2
+    },
+    {
+     "steps": 1095168,
+     "return": -16.6,
+     "entropy": 1.3061,
+     "length": 1661.86,
+     "sps": 536.9
+    },
+    {
+     "steps": 1107456,
+     "return": -16.41,
+     "entropy": 1.305,
+     "length": 1679.85,
+     "sps": 537.5
+    },
+    {
+     "steps": 1119744,
+     "return": -16.41,
+     "entropy": 1.2847,
+     "length": 1699.33,
+     "sps": 538.1
+    },
+    {
+     "steps": 1132032,
+     "return": -16.4,
+     "entropy": 1.2008,
+     "length": 1706.93,
+     "sps": 538.8
+    },
+    {
+     "steps": 1144320,
+     "return": -16.25,
+     "entropy": 1.1829,
+     "length": 1734.55,
+     "sps": 539.3
+    },
+    {
+     "steps": 1156608,
+     "return": -16.1,
+     "entropy": 1.2784,
+     "length": 1756.3,
+     "sps": 540.0
+    },
+    {
+     "steps": 1168896,
+     "return": -16.12,
+     "entropy": 1.3006,
+     "length": 1766.62,
+     "sps": 540.6
+    },
+    {
+     "steps": 1181184,
+     "return": -16.13,
+     "entropy": 1.2439,
+     "length": 1787.55,
+     "sps": 541.1
+    },
+    {
+     "steps": 1193472,
+     "return": -15.75,
+     "entropy": 1.267,
+     "length": 1817.5,
+     "sps": 541.6
+    },
+    {
+     "steps": 1205760,
+     "return": -15.64,
+     "entropy": 1.2017,
+     "length": 1833.3,
+     "sps": 542.1
+    },
+    {
+     "steps": 1218048,
+     "return": -15.47,
+     "entropy": 1.2066,
+     "length": 1846.43,
+     "sps": 542.6
+    },
+    {
+     "steps": 1230336,
+     "return": -15.33,
+     "entropy": 1.1736,
+     "length": 1866.15,
+     "sps": 543.1
+    },
+    {
+     "steps": 1242624,
+     "return": -15.19,
+     "entropy": 1.232,
+     "length": 1878.39,
+     "sps": 543.6
+    },
+    {
+     "steps": 1254912,
+     "return": -15.12,
+     "entropy": 1.1839,
+     "length": 1882.06,
+     "sps": 544.0
+    },
+    {
+     "steps": 1267200,
+     "return": -15.1,
+     "entropy": 1.1369,
+     "length": 1891.1,
+     "sps": 544.6
+    },
+    {
+     "steps": 1279488,
+     "return": -14.97,
+     "entropy": 1.1601,
+     "length": 1905.17,
+     "sps": 545.0
+    },
+    {
+     "steps": 1291776,
+     "return": -14.86,
+     "entropy": 1.1709,
+     "length": 1922.52,
+     "sps": 545.5
+    },
+    {
+     "steps": 1304064,
+     "return": -14.8,
+     "entropy": 1.0229,
+     "length": 1926.88,
+     "sps": 546.0
+    },
+    {
+     "steps": 1316352,
+     "return": -14.55,
+     "entropy": 1.1087,
+     "length": 1941.88,
+     "sps": 546.5
+    },
+    {
+     "steps": 1328640,
+     "return": -14.44,
+     "entropy": 1.0859,
+     "length": 1947.58,
+     "sps": 547.0
+    },
+    {
+     "steps": 1340928,
+     "return": -14.32,
+     "entropy": 1.1309,
+     "length": 1958.06,
+     "sps": 547.5
+    },
+    {
+     "steps": 1353216,
+     "return": -14.29,
+     "entropy": 1.1314,
+     "length": 1963.61,
+     "sps": 547.8
+    },
+    {
+     "steps": 1365504,
+     "return": -14.23,
+     "entropy": 1.1495,
+     "length": 1971.16,
+     "sps": 548.2
+    },
+    {
+     "steps": 1377792,
+     "return": -13.91,
+     "entropy": 1.1383,
+     "length": 1995.12,
+     "sps": 548.6
+    },
+    {
+     "steps": 1390080,
+     "return": -13.98,
+     "entropy": 1.2257,
+     "length": 2004.26,
+     "sps": 549.1
+    },
+    {
+     "steps": 1402368,
+     "return": -14.12,
+     "entropy": 1.2055,
+     "length": 1999.99,
+     "sps": 549.6
+    },
+    {
+     "steps": 1414656,
+     "return": -14.3,
+     "entropy": 1.2725,
+     "length": 2000.71,
+     "sps": 550.0
+    },
+    {
+     "steps": 1426944,
+     "return": -14.34,
+     "entropy": 1.2201,
+     "length": 2012.14,
+     "sps": 550.4
+    },
+    {
+     "steps": 1439232,
+     "return": -14.29,
+     "entropy": 1.189,
+     "length": 2028.55,
+     "sps": 550.8
+    },
+    {
+     "steps": 1451520,
+     "return": -14.43,
+     "entropy": 1.2557,
+     "length": 2041.4,
+     "sps": 551.3
+    },
+    {
+     "steps": 1463808,
+     "return": -14.62,
+     "entropy": 1.2906,
+     "length": 2033.01,
+     "sps": 551.7
+    },
+    {
+     "steps": 1476096,
+     "return": -14.78,
+     "entropy": 1.2684,
+     "length": 2028.61,
+     "sps": 552.1
+    },
+    {
+     "steps": 1488384,
+     "return": -14.8,
+     "entropy": 1.2254,
+     "length": 2031.48,
+     "sps": 552.5
+    },
+    {
+     "steps": 1500672,
+     "return": -14.83,
+     "entropy": 1.2185,
+     "length": 2047.8,
+     "sps": 552.8
+    },
+    {
+     "steps": 1512960,
+     "return": -14.81,
+     "entropy": 1.2114,
+     "length": 2061.56,
+     "sps": 553.3
+    },
+    {
+     "steps": 1525248,
+     "return": -15.19,
+     "entropy": 1.188,
+     "length": 2062.9,
+     "sps": 553.1
+    },
+    {
+     "steps": 1537536,
+     "return": -15.26,
+     "entropy": 1.2595,
+     "length": 2071.23,
+     "sps": 553.5
+    },
+    {
+     "steps": 1549824,
+     "return": -15.39,
+     "entropy": 1.2256,
+     "length": 2097.82,
+     "sps": 553.9
+    },
+    {
+     "steps": 1562112,
+     "return": -15.29,
+     "entropy": 1.2411,
+     "length": 2118.35,
+     "sps": 554.3
+    },
+    {
+     "steps": 1574400,
+     "return": -15.39,
+     "entropy": 1.3235,
+     "length": 2128.55,
+     "sps": 554.6
+    },
+    {
+     "steps": 1586688,
+     "return": -15.47,
+     "entropy": 1.3026,
+     "length": 2148.54,
+     "sps": 554.9
+    },
+    {
+     "steps": 1598976,
+     "return": -15.64,
+     "entropy": 1.3061,
+     "length": 2144.61,
+     "sps": 555.3
+    },
+    {
+     "steps": 1611264,
+     "return": -15.43,
+     "entropy": 1.2447,
+     "length": 2184.64,
+     "sps": 555.6
+    },
+    {
+     "steps": 1623552,
+     "return": -15.37,
+     "entropy": 1.2016,
+     "length": 2198.47,
+     "sps": 555.9
+    },
+    {
+     "steps": 1635840,
+     "return": -15.38,
+     "entropy": 1.2496,
+     "length": 2199.94,
+     "sps": 556.3
+    },
+    {
+     "steps": 1648128,
+     "return": -15.4,
+     "entropy": 1.1804,
+     "length": 2199.7,
+     "sps": 556.7
+    },
+    {
+     "steps": 1660416,
+     "return": -15.38,
+     "entropy": 1.162,
+     "length": 2195.3,
+     "sps": 557.2
+    },
+    {
+     "steps": 1672704,
+     "return": -15.51,
+     "entropy": 1.2064,
+     "length": 2182.58,
+     "sps": 557.6
+    },
+    {
+     "steps": 1684992,
+     "return": -15.56,
+     "entropy": 1.2021,
+     "length": 2171.64,
+     "sps": 558.1
+    },
+    {
+     "steps": 1697280,
+     "return": -15.44,
+     "entropy": 1.1687,
+     "length": 2181.83,
+     "sps": 558.6
+    },
+    {
+     "steps": 1709568,
+     "return": -15.24,
+     "entropy": 1.2045,
+     "length": 2202.98,
+     "sps": 559.1
+    },
+    {
+     "steps": 1721856,
+     "return": -15.26,
+     "entropy": 1.1162,
+     "length": 2202.32,
+     "sps": 559.3
+    },
+    {
+     "steps": 1734144,
+     "return": -15.25,
+     "entropy": 1.0625,
+     "length": 2198.92,
+     "sps": 559.7
+    },
+    {
+     "steps": 1746432,
+     "return": -14.97,
+     "entropy": 1.1006,
+     "length": 2203.84,
+     "sps": 559.0
+    },
+    {
+     "steps": 1758720,
+     "return": -14.96,
+     "entropy": 1.0925,
+     "length": 2199.45,
+     "sps": 559.2
+    },
+    {
+     "steps": 1771008,
+     "return": -14.69,
+     "entropy": 1.0288,
+     "length": 2199.25,
+     "sps": 559.6
+    },
+    {
+     "steps": 1783296,
+     "return": -14.56,
+     "entropy": 1.1475,
+     "length": 2189.12,
+     "sps": 559.5
+    },
+    {
+     "steps": 1795584,
+     "return": -14.52,
+     "entropy": 1.1758,
+     "length": 2185.74,
+     "sps": 559.7
+    },
+    {
+     "steps": 1807872,
+     "return": -14.44,
+     "entropy": 1.1317,
+     "length": 2177.13,
+     "sps": 559.5
+    },
+    {
+     "steps": 1820160,
+     "return": -14.1,
+     "entropy": 1.1395,
+     "length": 2195.27,
+     "sps": 559.4
+    },
+    {
+     "steps": 1832448,
+     "return": -14.26,
+     "entropy": 1.1329,
+     "length": 2176.49,
+     "sps": 559.5
+    },
+    {
+     "steps": 1844736,
+     "return": -14.41,
+     "entropy": 1.1886,
+     "length": 2161.76,
+     "sps": 559.7
+    },
+    {
+     "steps": 1857024,
+     "return": -14.31,
+     "entropy": 1.1813,
+     "length": 2172.88,
+     "sps": 559.5
+    },
+    {
+     "steps": 1869312,
+     "return": -14.37,
+     "entropy": 1.1835,
+     "length": 2179.79,
+     "sps": 559.6
+    },
+    {
+     "steps": 1881600,
+     "return": -14.33,
+     "entropy": 1.2166,
+     "length": 2188.88,
+     "sps": 559.9
+    },
+    {
+     "steps": 1893888,
+     "return": -14.3,
+     "entropy": 1.1922,
+     "length": 2205.66,
+     "sps": 560.2
+    },
+    {
+     "steps": 1906176,
+     "return": -14.16,
+     "entropy": 1.2208,
+     "length": 2231.78,
+     "sps": 560.2
+    },
+    {
+     "steps": 1918464,
+     "return": -14.03,
+     "entropy": 1.2165,
+     "length": 2254.71,
+     "sps": 560.3
+    },
+    {
+     "steps": 1930752,
+     "return": -14.18,
+     "entropy": 1.2005,
+     "length": 2249.48,
+     "sps": 560.6
+    },
+    {
+     "steps": 1943040,
+     "return": -14.19,
+     "entropy": 1.2028,
+     "length": 2253.12,
+     "sps": 560.5
+    },
+    {
+     "steps": 1955328,
+     "return": -14.28,
+     "entropy": 1.2164,
+     "length": 2257.02,
+     "sps": 560.2
+    },
+    {
+     "steps": 1967616,
+     "return": -14.29,
+     "entropy": 1.2373,
+     "length": 2257.59,
+     "sps": 560.1
+    },
+    {
+     "steps": 1979904,
+     "return": -14.4,
+     "entropy": 1.2005,
+     "length": 2267.91,
+     "sps": 560.1
+    },
+    {
+     "steps": 1992192,
+     "return": -14.34,
+     "entropy": 1.1966,
+     "length": 2277.28,
+     "sps": 560.1
+    },
+    {
+     "steps": 1999872,
+     "return": -14.4,
+     "entropy": 1.2063,
+     "length": 2279.1,
+     "sps": 559.8
     }
    ],
-   "ladder": null,
-   "evaluation_seeds": null,
-   "clips": [],
-   "gifs": [],
-   "progress": null
+   "ladder": [
+    {
+     "tag": "random",
+     "steps": null,
+     "episodes": 8,
+     "return_mean": -20.38,
+     "return_std": 0.74,
+     "return_min": -21.0,
+     "return_max": -19.0,
+     "length_mean": 912.6,
+     "returns": [
+      -21.0,
+      -20.0,
+      -20.0,
+      -19.0,
+      -20.0,
+      -21.0,
+      -21.0,
+      -21.0
+     ]
+    },
+    {
+     "tag": "000",
+     "steps": 0,
+     "episodes": 8,
+     "return_mean": -20.0,
+     "return_std": 1.31,
+     "return_min": -21.0,
+     "return_max": -18.0,
+     "length_mean": 935.5,
+     "returns": [
+      -21.0,
+      -20.0,
+      -21.0,
+      -18.0,
+      -20.0,
+      -21.0,
+      -21.0,
+      -18.0
+     ]
+    },
+    {
+     "tag": "005",
+     "steps": 99840,
+     "episodes": 8,
+     "return_mean": -19.88,
+     "return_std": 0.83,
+     "return_min": -21.0,
+     "return_max": -18.0,
+     "length_mean": 949.5,
+     "returns": [
+      -20.0,
+      -20.0,
+      -20.0,
+      -20.0,
+      -21.0,
+      -20.0,
+      -20.0,
+      -18.0
+     ]
+    },
+    {
+     "tag": "015",
+     "steps": 299520,
+     "episodes": 8,
+     "return_mean": -20.75,
+     "return_std": 0.46,
+     "return_min": -21.0,
+     "return_max": -20.0,
+     "length_mean": 842.6,
+     "returns": [
+      -21.0,
+      -20.0,
+      -21.0,
+      -21.0,
+      -20.0,
+      -21.0,
+      -21.0,
+      -21.0
+     ]
+    },
+    {
+     "tag": "035",
+     "steps": 700416,
+     "episodes": 8,
+     "return_mean": -20.5,
+     "return_std": 0.76,
+     "return_min": -21.0,
+     "return_max": -19.0,
+     "length_mean": 1060.6,
+     "returns": [
+      -21.0,
+      -21.0,
+      -19.0,
+      -21.0,
+      -20.0,
+      -20.0,
+      -21.0,
+      -21.0
+     ]
+    },
+    {
+     "tag": "065",
+     "steps": 1299456,
+     "episodes": 8,
+     "return_mean": -15.75,
+     "return_std": 7.38,
+     "return_min": -21.0,
+     "return_max": -2.0,
+     "length_mean": 1794.5,
+     "returns": [
+      -20.0,
+      -20.0,
+      -2.0,
+      -18.0,
+      -20.0,
+      -19.0,
+      -6.0,
+      -21.0
+     ]
+    },
+    {
+     "tag": "100",
+     "steps": 1999872,
+     "episodes": 8,
+     "return_mean": -16.62,
+     "return_std": 2.62,
+     "return_min": -21.0,
+     "return_max": -13.0,
+     "length_mean": 2240.6,
+     "returns": [
+      -19.0,
+      -18.0,
+      -15.0,
+      -15.0,
+      -21.0,
+      -17.0,
+      -15.0,
+      -13.0
+     ]
+    }
+   ],
+   "evaluation_seeds": [
+    50000,
+    50001,
+    50002,
+    50003,
+    50004,
+    50005,
+    50006,
+    50007
+   ],
+   "clips": [
+    "progress.mp4",
+    "step_000.mp4",
+    "step_035.mp4",
+    "step_100.mp4"
+   ],
+   "gifs": [
+    "progress.gif"
+   ],
+   "progress": "progress.mp4"
   }
  }
 }

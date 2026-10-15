@@ -1,5 +1,5 @@
 {
- "taken_at": "2026-10-15 04:49:16Z",
+ "taken_at": "2026-10-15 04:54:00Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -7,20 +7,24 @@
    "title": "Car racing",
    "env_id": "CarRacing-v3",
    "blurb": "Top-down racing. The agent sees the track and steers; an untrained one spins on the grass, a trained one follows the road.",
-   "state": "stalled",
-   "steps": 46080,
-   "updates": 30,
-   "sps": 46.1,
-   "return_now": 46.8,
-   "entropy_now": 1.1368,
+   "state": "running",
+   "steps": 61440,
+   "updates": 40,
+   "sps": 45.4,
+   "return_now": 113.27,
+   "entropy_now": 0.9166,
    "wall_minutes": null,
    "params": null,
-   "eta_minutes": null,
-   "seconds_since_update": 347,
+   "eta_minutes": 418.0,
+   "seconds_since_update": 282,
    "checkpoints": [
     {
      "tag": "000",
      "steps": 0
+    },
+    {
+     "tag": "005",
+     "steps": 59904
     }
    ],
    "curve": [
@@ -226,6 +230,76 @@
      "entropy": 1.1368,
      "sps": 46.1,
      "value_loss": 41.8035
+    },
+    {
+     "steps": 47616,
+     "return": 51.318,
+     "entropy": 1.1723,
+     "sps": 46.2,
+     "value_loss": 88.8631
+    },
+    {
+     "steps": 49152,
+     "return": 59.744,
+     "entropy": 1.1506,
+     "sps": 46.2,
+     "value_loss": 64.6993
+    },
+    {
+     "steps": 50688,
+     "return": 64.175,
+     "entropy": 1.1264,
+     "sps": 46.1,
+     "value_loss": 101.5074
+    },
+    {
+     "steps": 52224,
+     "return": 69.791,
+     "entropy": 1.007,
+     "sps": 46.0,
+     "value_loss": 163.9667
+    },
+    {
+     "steps": 53760,
+     "return": 78.205,
+     "entropy": 1.0502,
+     "sps": 45.9,
+     "value_loss": 150.1618
+    },
+    {
+     "steps": 55296,
+     "return": 94.939,
+     "entropy": 1.063,
+     "sps": 45.8,
+     "value_loss": 131.6559
+    },
+    {
+     "steps": 56832,
+     "return": 95.332,
+     "entropy": 1.0363,
+     "sps": 45.7,
+     "value_loss": 139.5954
+    },
+    {
+     "steps": 58368,
+     "return": 104.071,
+     "entropy": 1.0118,
+     "sps": 45.5,
+     "value_loss": 136.7859
+    },
+    {
+     "steps": 59904,
+     "return": 103.616,
+     "entropy": 0.8937,
+     "sps": 45.6,
+     "value_loss": 171.4684
+    },
+    {
+     "steps": 61440,
+     "return": 113.266,
+     "entropy": 0.9166,
+     "sps": 45.4,
+     "value_loss": 203.2607
     }
    ],
    "ladder": null,
@@ -239,7 +313,8 @@
     "u10/781 steps=15360 return=-49.74182147953037 sps=48.0 ent=1.4794",
     "u20/781 steps=30720 return=-26.414701151379568 sps=46.0 ent=1.3116",
     "u30/781 steps=46080 return=46.80339192663467 sps=46.1 ent=1.1368",
-    "checkpoint 005 at 59904 steps, training return 103.61589195523365 -> ckpt_005.pt"
+    "checkpoint 005 at 59904 steps, training return 103.61589195523365 -> ckpt_005.pt",
+    "u40/781 steps=61440 return=113.26608164848467 sps=45.4 ent=0.9166"
    ]
   },
   {
@@ -257,7 +332,7 @@
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 4968,
+   "seconds_since_update": 5256,
    "checkpoints": [
     {
      "tag": "000",
@@ -1340,7 +1415,7 @@
    ],
    "verdict": {
     "label": "no gain",
-    "detail": "-0.5 against the untrained network over 8 episodes"
+    "detail": "-0.5 against a bar of 3.4, which is two standard errors of the difference over 8 episodes a side"
    },
    "media_dir": "../docs/media/boxing",
    "clips": [
@@ -1382,7 +1457,7 @@
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": 4936,
+   "seconds_since_update": 5224,
    "checkpoints": [],
    "curve": [],
    "ladder": null,
@@ -1420,7 +1495,7 @@
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 1354,
+   "seconds_since_update": 1642,
    "checkpoints": [
     {
      "tag": "000",
@@ -2366,11 +2441,162 @@
      "value_loss": 0.0307
     }
    ],
-   "ladder": null,
-   "verdict": null,
+   "ladder": [
+    {
+     "tag": "random",
+     "steps": null,
+     "episodes": 8,
+     "return_mean": -20.38,
+     "return_std": 0.74,
+     "return_min": -21.0,
+     "return_max": -19.0,
+     "length_mean": 912.6,
+     "returns": [
+      -21.0,
+      -20.0,
+      -20.0,
+      -19.0,
+      -20.0,
+      -21.0,
+      -21.0,
+      -21.0
+     ]
+    },
+    {
+     "tag": "000",
+     "steps": 0,
+     "episodes": 8,
+     "return_mean": -20.0,
+     "return_std": 1.31,
+     "return_min": -21.0,
+     "return_max": -18.0,
+     "length_mean": 935.5,
+     "returns": [
+      -21.0,
+      -20.0,
+      -21.0,
+      -18.0,
+      -20.0,
+      -21.0,
+      -21.0,
+      -18.0
+     ]
+    },
+    {
+     "tag": "005",
+     "steps": 99840,
+     "episodes": 8,
+     "return_mean": -19.88,
+     "return_std": 0.83,
+     "return_min": -21.0,
+     "return_max": -18.0,
+     "length_mean": 949.5,
+     "returns": [
+      -20.0,
+      -20.0,
+      -20.0,
+      -20.0,
+      -21.0,
+      -20.0,
+      -20.0,
+      -18.0
+     ]
+    },
+    {
+     "tag": "015",
+     "steps": 299520,
+     "episodes": 8,
+     "return_mean": -20.75,
+     "return_std": 0.46,
+     "return_min": -21.0,
+     "return_max": -20.0,
+     "length_mean": 842.6,
+     "returns": [
+      -21.0,
+      -20.0,
+      -21.0,
+      -21.0,
+      -20.0,
+      -21.0,
+      -21.0,
+      -21.0
+     ]
+    },
+    {
+     "tag": "035",
+     "steps": 700416,
+     "episodes": 8,
+     "return_mean": -20.5,
+     "return_std": 0.76,
+     "return_min": -21.0,
+     "return_max": -19.0,
+     "length_mean": 1060.6,
+     "returns": [
+      -21.0,
+      -21.0,
+      -19.0,
+      -21.0,
+      -20.0,
+      -20.0,
+      -21.0,
+      -21.0
+     ]
+    },
+    {
+     "tag": "065",
+     "steps": 1299456,
+     "episodes": 8,
+     "return_mean": -15.75,
+     "return_std": 7.38,
+     "return_min": -21.0,
+     "return_max": -2.0,
+     "length_mean": 1794.5,
+     "returns": [
+      -20.0,
+      -20.0,
+      -2.0,
+      -18.0,
+      -20.0,
+      -19.0,
+      -6.0,
+      -21.0
+     ]
+    },
+    {
+     "tag": "100",
+     "steps": 1999872,
+     "episodes": 8,
+     "return_mean": -16.62,
+     "return_std": 2.62,
+     "return_min": -21.0,
+     "return_max": -13.0,
+     "length_mean": 2240.6,
+     "returns": [
+      -19.0,
+      -18.0,
+      -15.0,
+      -15.0,
+      -21.0,
+      -17.0,
+      -15.0,
+      -13.0
+     ]
+    }
+   ],
+   "verdict": {
+    "label": "learned",
+    "detail": "+3.4 against a bar of 2.1, which is two standard errors of the difference over 8 episodes a side"
+   },
    "media_dir": "../docs/media/pingpong",
-   "clips": [],
-   "gifs": [],
+   "clips": [
+    "progress.mp4",
+    "step_000.mp4",
+    "step_035.mp4",
+    "step_100.mp4"
+   ],
+   "gifs": [
+    "progress.gif"
+   ],
    "log_tail": [
     "u1220/1302 steps=1873920 return=-14.35 sps=559.8 ent=1.1804",
     "u1230/1302 steps=1889280 return=-14.44 sps=560.1 ent=1.1808",
@@ -4503,13 +4729,13 @@
   "media_dir": "../docs/media"
  },
  "machine": {
-  "cpu_percent": 100.0,
-  "python_processes": 54,
+  "cpu_percent": 90.4,
+  "python_processes": 48,
   "gpu": {
    "name": "Quadro RTX 5000",
    "memory_used": "14029 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "19 %"
+   "utilisation": "16 %"
   }
  }
 }
