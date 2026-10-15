@@ -63,7 +63,46 @@ CATALOGUE: dict[str, Game] = {
               "stand-in for Mario: a platformer with ROMs that ship licensed.",
         kwargs={"frameskip": 1, "repeat_action_probability": 0.0},
     ),
+    # Pong is here as insurance for the demo rather than for its own sake. The
+    # other three are games where a laptop-sized budget may buy only a modest
+    # improvement -- Kangaroo in particular is a hard-exploration game that can
+    # sit at zero for a long time -- and this one reliably travels from losing
+    # every rally to winning, which is the clearest picture of learning there is.
+    "pingpong": Game(
+        key="pingpong",
+        env_id="ALE/Pong-v5",
+        title="Table tennis",
+        blurb="Score runs from -21 to +21, so there is nowhere for a weak agent "
+              "to hide: it starts losing every rally and ends winning them.",
+        kwargs={"frameskip": 1, "repeat_action_probability": 0.0},
+    ),
 }
+
+
+class SkipIntro(gym.Wrapper):
+    """Run through an opening animation before handing the episode over.
+
+    The reward collected during those frames is kept rather than thrown away, so
+    the episode's score still means what the game says it means.
+    """
+
+    def __init__(self, env: gym.Env, frames: int = 50):
+        super().__init__(env)
+        self.frames = frames
+
+    def reset(self, **kwargs):
+        obs, info = self.env.reset(**kwargs)
+        carried = 0.0
+        for _ in range(self.frames):
+            obs, reward, terminated, truncated, info = self.env.step(0)
+            carried += float(reward)
+            if terminated or truncated:
+                obs, info = self.env.reset(**kwargs)
+                carried = 0.0
+                break
+        info = dict(info)
+        info["intro_reward"] = carried
+        return obs, info
 
 
 def make(game: Game, seed: int | None = None, render: bool = False) -> gym.Env:
@@ -81,6 +120,12 @@ def make(game: Game, seed: int | None = None, render: bool = False) -> gym.Env:
             env, noop_max=30, frame_skip=4, screen_size=FRAME_H,
             grayscale_obs=True, scale_obs=False, terminal_on_life_loss=False)
     else:
+        # CarRacing opens with a camera zoom that lasts about fifty frames, and
+        # during it the car is a few pixels across on an empty green field. Those
+        # frames are not a driving problem, and training on them teaches the
+        # policy to act on a picture it will never see again, so they are skipped
+        # before the episode is handed over.
+        env = SkipIntro(env, frames=50)
         # Skip first, then shrink: holding an action for four frames is what
         # makes one decision cover a meaningful amount of driving, and doing it
         # before the resize means three quarters of the resizing is never done.

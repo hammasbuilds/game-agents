@@ -21,7 +21,8 @@ ROOT = Path(__file__).resolve().parents[1]
 # throughput on this machine rather than guessed: the racing game runs at a
 # quarter of the Atari pace because every agent step is four physics steps and a
 # render.
-BUDGET = {"boxing": 2_000_000, "platformer": 2_000_000, "racing": 800_000}
+BUDGET = {"boxing": 2_000_000, "platformer": 2_000_000, "racing": 800_000,
+          "pingpong": 2_000_000}
 
 
 def main() -> None:
