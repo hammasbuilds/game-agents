@@ -51,12 +51,23 @@ def main() -> None:
         ladder = read(media / "ladder.json")
         clips = sorted(p.name for p in media.glob("*.mp4")) if media.exists() else []
         gifs = sorted(p.name for p in media.glob("*.gif")) if media.exists() else []
+        # A run that was stopped early but produced a scored ladder has results
+        # worth showing; calling it 'training' hides them behind a placeholder.
+        if summary:
+            state = "trained"
+        elif ladder:
+            state = "stopped early"
+        elif history:
+            state = "training"
+        else:
+            state = "not started"
         games[key] = {
             "key": key,
+            "state": state,
             "title": game.title,
             "blurb": game.blurb,
             "env_id": game.env_id,
-            "trained": bool(summary),
+            "trained": bool(summary) or bool(ladder),
             "summary": summary,
             "curve": thin(history),
             "ladder": (ladder or {}).get("ladder"),
@@ -65,8 +76,7 @@ def main() -> None:
             "gifs": gifs,
             "progress": "progress.mp4" if "progress.mp4" in clips else None,
         }
-        state = "trained" if summary else ("training" if history else "not started")
-        print(f"{key:<11} {state:<12} updates={len(history):>5} "
+        print(f"{key:<11} {state:<13} updates={len(history):>5} "
               f"ladder={'yes' if ladder else 'no':<4} clips={len(clips)}")
 
     DATA.mkdir(parents=True, exist_ok=True)
