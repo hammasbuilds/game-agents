@@ -1,0 +1,65 @@
+{
+ "game": "racing",
+ "title": "Car racing",
+ "env_id": "CarRacing-v3",
+ "evaluation_seeds": [
+  50000,
+  50001,
+  50002,
+  50003,
+  50004
+ ],
+ "ladder": [
+  {
+   "tag": "random",
+   "steps": null,
+   "episodes": 5,
+   "return_mean": -50.41,
+   "return_std": 21.7,
+   "return_min": -78.5,
+   "return_max": -23.08,
+   "length_mean": 238.0,
+   "returns": [
+    -23.08,
+    -36.18,
+    -78.5,
+    -51.95,
+    -62.36
+   ]
+  },
+  {
+   "tag": "000",
+   "steps": 0,
+   "episodes": 5,
+   "return_mean": -39.86,
+   "return_std": 18.86,
+   "return_min": -71.03,
+   "return_max": -22.34,
+   "length_mean": 238.0,
+   "returns": [
+    -71.03,
+    -22.34,
+    -35.59,
+    -28.77,
+    -41.59
+   ]
+  },
+  {
+   "tag": "005",
+   "steps": 59904,
+   "episodes": 5,
+   "return_mean": 217.98,
+   "return_std": 149.97,
+   "return_min": 35.56,
+   "return_max": 422.12,
+   "length_mean": 238.0,
+   "returns": [
+    422.12,
+    309.84,
+    169.03,
+    153.34,
+    35.56
+   ]
+  }
+ ]
+}
