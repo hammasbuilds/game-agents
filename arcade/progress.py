@@ -111,15 +111,22 @@ def write_clip(frames: list[np.ndarray], path: Path, fps: int = 20,
     else:
         print(f"  {_show(path)}  {path.stat().st_size / 1e6:.1f} MB")
     if gif:
+        # A GIF is a sequence of full frames with no inter-frame compression, so
+        # it grows without bound: the first boxing reel came out at 12.5 MB for
+        # 891 frames, which is not a thing to put in a README. Cap the length and
+        # drop frames evenly rather than truncating, so the clip still shows the
+        # whole episode rather than its first few seconds.
+        budget = 150
+        stride = max(2, len(frames) // budget + 1)
         small = []
-        for frame in frames[::2]:
+        for frame in frames[::stride]:
             img = Image.fromarray(frame)
-            if img.width > 640:
-                img = img.resize((640, round(img.height * 640 / img.width)), Image.LANCZOS)
-            small.append(img.convert("P", palette=Image.ADAPTIVE, colors=64))
+            if img.width > 520:
+                img = img.resize((520, round(img.height * 520 / img.width)), Image.LANCZOS)
+            small.append(img.convert("P", palette=Image.ADAPTIVE, colors=48))
         gif_path = path.with_suffix(".gif")
         small[0].save(gif_path, save_all=True, append_images=small[1:],
-                      duration=int(2000 / fps), loop=0, optimize=True)
+                      duration=max(40, int(1000 * stride / fps)), loop=0, optimize=True)
         print(f"  {_show(gif_path)}  {gif_path.stat().st_size / 1e6:.1f} MB")
 
 
