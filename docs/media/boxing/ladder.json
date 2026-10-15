@@ -1,0 +1,157 @@
+{
+ "game": "boxing",
+ "title": "Boxing",
+ "env_id": "ALE/Boxing-v5",
+ "evaluation_seeds": [
+  50000,
+  50001,
+  50002,
+  50003,
+  50004,
+  50005,
+  50006,
+  50007
+ ],
+ "ladder": [
+  {
+   "tag": "random",
+   "steps": null,
+   "episodes": 8,
+   "return_mean": 0.5,
+   "return_std": 5.83,
+   "return_min": -10.0,
+   "return_max": 7.0,
+   "length_mean": 1782.0,
+   "returns": [
+    -4.0,
+    6.0,
+    -3.0,
+    -10.0,
+    5.0,
+    1.0,
+    2.0,
+    7.0
+   ]
+  },
+  {
+   "tag": "000",
+   "steps": 0,
+   "episodes": 8,
+   "return_mean": 2.12,
+   "return_std": 3.27,
+   "return_min": -1.0,
+   "return_max": 9.0,
+   "length_mean": 1782.0,
+   "returns": [
+    0.0,
+    -1.0,
+    4.0,
+    3.0,
+    9.0,
+    0.0,
+    0.0,
+    2.0
+   ]
+  },
+  {
+   "tag": "005",
+   "steps": 99840,
+   "episodes": 8,
+   "return_mean": 3.0,
+   "return_std": 4.41,
+   "return_min": -2.0,
+   "return_max": 12.0,
+   "length_mean": 1782.0,
+   "returns": [
+    3.0,
+    -1.0,
+    5.0,
+    0.0,
+    3.0,
+    12.0,
+    4.0,
+    -2.0
+   ]
+  },
+  {
+   "tag": "015",
+   "steps": 299520,
+   "episodes": 8,
+   "return_mean": -3.5,
+   "return_std": 8.4,
+   "return_min": -14.0,
+   "return_max": 9.0,
+   "length_mean": 1782.0,
+   "returns": [
+    -14.0,
+    -3.0,
+    9.0,
+    4.0,
+    -11.0,
+    3.0,
+    -12.0,
+    -4.0
+   ]
+  },
+  {
+   "tag": "035",
+   "steps": 700416,
+   "episodes": 8,
+   "return_mean": 2.12,
+   "return_std": 6.31,
+   "return_min": -6.0,
+   "return_max": 12.0,
+   "length_mean": 1782.0,
+   "returns": [
+    3.0,
+    8.0,
+    0.0,
+    -6.0,
+    -6.0,
+    12.0,
+    1.0,
+    5.0
+   ]
+  },
+  {
+   "tag": "065",
+   "steps": 1299456,
+   "episodes": 8,
+   "return_mean": -2.12,
+   "return_std": 5.0,
+   "return_min": -13.0,
+   "return_max": 4.0,
+   "length_mean": 1782.0,
+   "returns": [
+    -4.0,
+    -2.0,
+    1.0,
+    4.0,
+    -2.0,
+    -13.0,
+    -1.0,
+    0.0
+   ]
+  },
+  {
+   "tag": "100",
+   "steps": 1999872,
+   "episodes": 8,
+   "return_mean": 1.62,
+   "return_std": 3.5,
+   "return_min": -2.0,
+   "return_max": 9.0,
+   "length_mean": 1782.0,
+   "returns": [
+    0.0,
+    0.0,
+    4.0,
+    1.0,
+    9.0,
+    2.0,
+    -2.0,
+    -1.0
+   ]
+  }
+ ]
+}

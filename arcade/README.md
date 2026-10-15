@@ -41,6 +41,41 @@ python ui/export_arcade.py                  # feed it to the dashboard
 Results land in `docs/media/<game>/` and appear on the dashboard as a card per
 game; the card is a button to that game's own page.
 
+## A game that did not learn, and how we know
+
+Boxing trained for 2,000,000 steps — 56 minutes — and came out **no better than
+the network that had never been trained at all**:
+
+| checkpoint | score over the same 8 levels |
+|---|---:|
+| random keys | 0.50 ± 5.83 |
+| untrained | 2.12 ± 3.27 |
+| 5% | 3.00 ± 4.41 |
+| 35% | 2.12 ± 6.31 |
+| 65% | −2.12 ± 5.00 |
+| **100%** | **1.62 ± 3.50** |
+
+The ladder does not climb; it wanders inside its own error bars. The training
+return said the same thing more quietly — it went from −0.25 to 2.55, which looks
+like progress until you notice that the untrained network already scores 2.12.
+
+This is the expected result rather than a broken run: published PPO curves put
+Boxing near zero until about 5M steps and only reach a strong score around 10M,
+so a laptop hour buys the flat part of the curve. It is kept here, with its
+numbers, because a page that only shows the games that worked teaches the wrong
+lesson about what an hour of training buys.
+
+An earlier check of two checkpoints over **four** episodes read −2.5 against
++1.25 and looked like clear learning. It was noise. Eight episodes and a random
+baseline were enough to see that; four were not.
+
+**The sensitivity check that makes the null result mean something.** "No
+improvement" is only evidence if the measurement could have found improvement.
+The same pipeline, unchanged, is run on Pong — a game where learning is
+unmistakable — and reports the climb there. A null result on Boxing beside a
+clear positive on Pong says something about Boxing's budget; a null result on its
+own would only say something about the harness.
+
 ## Two details that are easy to get wrong
 
 **The untrained agent is filmed sampling, not taking the argmax.** A freshly
