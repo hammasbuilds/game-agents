@@ -86,16 +86,30 @@ def compose(strips: list[tuple[str, str, list[np.ndarray]]]) -> list[np.ndarray]
     return out
 
 
+def _show(path: Path) -> str:
+    """A short name for a path that may or may not sit under the repository."""
+    try:
+        return str(path.resolve().relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def write_clip(frames: list[np.ndarray], path: Path, fps: int = 20,
                gif: bool = False) -> None:
+    path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     try:
         import imageio.v2 as imageio
+        # H.264 refuses odd dimensions.
         even = [f[:f.shape[0] // 2 * 2, :f.shape[1] // 2 * 2] for f in frames]
         imageio.mimwrite(path, even, fps=fps, quality=8, macro_block_size=None)
-        print(f"  {path.relative_to(ROOT)}  {path.stat().st_size / 1e6:.1f} MB")
     except Exception as exc:
-        print(f"  (no mp4 for {path.name}: {exc})")
+        # Only the encoding belongs in here. Wrapping the logging too meant a
+        # failure to *print* the filename was reported as "no mp4" on a video
+        # that had in fact been written perfectly well.
+        print(f"  (no mp4 for {path.name}: {type(exc).__name__}: {exc})")
+    else:
+        print(f"  {_show(path)}  {path.stat().st_size / 1e6:.1f} MB")
     if gif:
         small = []
         for frame in frames[::2]:
@@ -106,7 +120,7 @@ def write_clip(frames: list[np.ndarray], path: Path, fps: int = 20,
         gif_path = path.with_suffix(".gif")
         small[0].save(gif_path, save_all=True, append_images=small[1:],
                       duration=int(2000 / fps), loop=0, optimize=True)
-        print(f"  {gif_path.relative_to(ROOT)}  {gif_path.stat().st_size / 1e6:.1f} MB")
+        print(f"  {_show(gif_path)}  {gif_path.stat().st_size / 1e6:.1f} MB")
 
 
 def main() -> None:

@@ -1,8 +1,22 @@
 # game-agents
 
-Three AI agents that play three real games you can download, built on a laptop
-CPU. One learns from pixels, one plans without learning anything, and one plays
-an ordinary Windows program through screenshots and keystrokes.
+AI agents that play real games on a laptop CPU — and, more to the point, a way to
+**see what learning actually did**.
+
+Every trained game here keeps a checkpoint from **step 0**, before a single
+gradient step, and the repository's main output is a video in which that
+untrained network and the finished one play **the same level at the same time**.
+No learning curve to interpret, no click to play: the untrained car spins on the
+grass while the trained one follows the road.
+
+There are two halves:
+
+- **[The arcade](arcade/)** — car racing, boxing, a platformer and table tennis,
+  all learned by one network with one PPO implementation, with a checkpoint
+  ladder from untrained to finished.
+- **Three one-off agents** — one learns DOOM from pixels, one plans its way
+  through Crafter with no weights at all, and one plays an ordinary Windows
+  program through screenshots and keystrokes.
 
 **[Live dashboard →](https://hammasbuilds.github.io/game-agents/)** ·
 **[Analytics →](https://hammasbuilds.github.io/game-agents/analytics.html)** —
