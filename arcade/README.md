@@ -41,6 +41,24 @@ python ui/export_arcade.py                  # feed it to the dashboard
 Results land in `docs/media/<game>/` and appear on the dashboard as a card per
 game; the card is a button to that game's own page.
 
+## What an hour of CPU buys, per game
+
+| game | untrained | trained | verdict |
+|---|---:|---:|---|
+| **Car racing** | −39.9 | **+218.0** at 60k steps | learned — +257.8 against a bar of 135.2 |
+| **Table tennis** | −20.0 | −16.6 at 2M steps | learned — +3.4 against a bar of 2.1 |
+| Boxing | 2.12 | 1.62 at 2M steps | **no gain** — −0.5 against a bar of 3.4 |
+
+Every row scores the same levels for every checkpoint, against a random-key
+policy and against the untrained network. The bar is two standard errors of the
+difference, not two standard deviations — see below for why that distinction
+decided one of these verdicts.
+
+Racing is the one to look at first, because its score needs no explaining: a
+negative number in CarRacing means the car mostly sat on the grass collecting the
+per-step penalty. The untrained panel drifts off the road at −42 while the
+60k-step panel tracks the curve at +156, on the same seed, at the same moment.
+
 ## A game that did not learn, and how we know
 
 Boxing trained for 2,000,000 steps — 56 minutes — and came out **no better than

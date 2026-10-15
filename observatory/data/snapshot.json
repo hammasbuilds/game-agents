@@ -1,5 +1,5 @@
 {
- "taken_at": "2026-10-15 05:28:44Z",
+ "taken_at": "2026-10-15 05:29:18Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -16,7 +16,7 @@
    "wall_minutes": null,
    "params": null,
    "eta_minutes": 275.9,
-   "seconds_since_update": 101,
+   "seconds_since_update": 133,
    "checkpoints": [
     {
      "tag": "000",
@@ -1102,7 +1102,7 @@
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 7338,
+   "seconds_since_update": 7370,
    "checkpoints": [
     {
      "tag": "000",
@@ -2227,7 +2227,7 @@
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": 7306,
+   "seconds_since_update": 7338,
    "checkpoints": [],
    "curve": [],
    "ladder": null,
@@ -2265,7 +2265,7 @@
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 3724,
+   "seconds_since_update": 3756,
    "checkpoints": [
     {
      "tag": "000",
@@ -5499,13 +5499,13 @@
   "media_dir": "../docs/media"
  },
  "machine": {
-  "cpu_percent": 100.0,
-  "python_processes": 56,
+  "cpu_percent": 99.9,
+  "python_processes": 54,
   "gpu": {
    "name": "Quadro RTX 5000",
    "memory_used": "14025 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "9 %"
+   "utilisation": "16 %"
   }
  }
 }
