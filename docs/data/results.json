@@ -1,5 +1,5 @@
 {
- "generated": "0d977da",
+ "generated": "7f66967",
  "doom": {
   "eval": {
    "scenario": "defend_the_center",
@@ -2815,6 +2815,62 @@
    "wall_seconds": 3530.7,
    "final_return_mean": 9.5,
    "params": 219476
+  },
+  "kaggle": {
+   "control": {
+    "params": 219476,
+    "width": 1,
+    "device": "cuda",
+    "wall_seconds": 1653.9,
+    "steps": 1199616,
+    "steps_per_second": 725.3,
+    "eval": {
+     "random": {
+      "mean": 0.03,
+      "sd": 1.0
+     },
+     "spray": {
+      "mean": 0.77,
+      "sd": 0.68
+     },
+     "ppo-greedy": {
+      "mean": 8.53,
+      "sd": 1.22
+     },
+     "ppo-sampled": {
+      "mean": 8.2,
+      "sd": 1.03
+     }
+    },
+    "best_policy_mean": 8.53
+   },
+   "wide": {
+    "params": 3446084,
+    "width": 4,
+    "device": "cuda",
+    "wall_seconds": 1694.1,
+    "steps": 1199616,
+    "steps_per_second": 708.1,
+    "eval": {
+     "random": {
+      "mean": 0.03,
+      "sd": 1.0
+     },
+     "spray": {
+      "mean": 0.77,
+      "sd": 0.68
+     },
+     "ppo-greedy": {
+      "mean": 10.43,
+      "sd": 1.38
+     },
+     "ppo-sampled": {
+      "mean": 9.93,
+      "sd": 1.08
+     }
+    },
+    "best_policy_mean": 10.43
+   }
   }
  },
  "crafter": {
@@ -3004,10 +3060,430 @@
      "count": 1
     }
    ]
+  },
+  "ab": {
+   "head": [
+    {
+     "agent": "planner",
+     "episodes": 30,
+     "length": 3000,
+     "score": 12.02,
+     "reward_mean": 7.6,
+     "reward_std": 2.61,
+     "achievements_mean": 15.0,
+     "distinct_achievements": 15,
+     "steps_mean": 261.2,
+     "died": 30,
+     "success_rates": {
+      "collect_coal": 30.0,
+      "collect_diamond": 0.0,
+      "collect_drink": 76.7,
+      "collect_iron": 0.0,
+      "collect_sapling": 100.0,
+      "collect_stone": 66.7,
+      "collect_wood": 96.7,
+      "defeat_skeleton": 0.0,
+      "defeat_zombie": 40.0,
+      "eat_cow": 40.0,
+      "eat_plant": 0.0,
+      "make_iron_pickaxe": 0.0,
+      "make_iron_sword": 0.0,
+      "make_stone_pickaxe": 3.3,
+      "make_stone_sword": 3.3,
+      "make_wood_pickaxe": 80.0,
+      "make_wood_sword": 70.0,
+      "place_furnace": 36.7,
+      "place_plant": 46.7,
+      "place_stone": 66.7,
+      "place_table": 93.3,
+      "wake_up": 0.0
+     },
+     "self_tracking": {
+      "precision": 1.0,
+      "recall": 0.992
+     },
+     "goal_share": {
+      "shelter": 0.329,
+      "collect_wood": 0.146,
+      "flee": 0.079,
+      "mine_adjacent_tree": 0.076,
+      "mine_adjacent_stone": 0.073,
+      "place_table": 0.047,
+      "collect_drink": 0.038,
+      "collect_stone": 0.037,
+      "explore": 0.028,
+      "sapling_adjacent": 0.025,
+      "forage_for_food": 0.015,
+      "drink_critical": 0.014
+     }
+    }
+   ],
+   "new": [
+    {
+     "agent": "planner",
+     "episodes": 30,
+     "length": 3000,
+     "score": 12.55,
+     "reward_mean": 8.07,
+     "reward_std": 3.03,
+     "achievements_mean": 15.0,
+     "distinct_achievements": 15,
+     "steps_mean": 254.3,
+     "died": 30,
+     "success_rates": {
+      "collect_coal": 36.7,
+      "collect_diamond": 0.0,
+      "collect_drink": 86.7,
+      "collect_iron": 0.0,
+      "collect_sapling": 100.0,
+      "collect_stone": 73.3,
+      "collect_wood": 96.7,
+      "defeat_skeleton": 0.0,
+      "defeat_zombie": 53.3,
+      "eat_cow": 40.0,
+      "eat_plant": 0.0,
+      "make_iron_pickaxe": 0.0,
+      "make_iron_sword": 0.0,
+      "make_stone_pickaxe": 3.3,
+      "make_stone_sword": 3.3,
+      "make_wood_pickaxe": 80.0,
+      "make_wood_sword": 76.7,
+      "place_furnace": 40.0,
+      "place_plant": 46.7,
+      "place_stone": 66.7,
+      "place_table": 93.3,
+      "wake_up": 0.0
+     },
+     "self_tracking": {
+      "precision": 1.0,
+      "recall": 0.993
+     },
+     "goal_share": {
+      "shelter": 0.207,
+      "collect_wood": 0.142,
+      "flee": 0.119,
+      "mine_adjacent_stone": 0.08,
+      "mine_adjacent_tree": 0.075,
+      "place_table": 0.048,
+      "collect_stone": 0.045,
+      "collect_drink": 0.04,
+      "drink_critical": 0.039,
+      "forage_for_food": 0.029,
+      "sapling_adjacent": 0.026,
+      "explore": 0.026
+     }
+    }
+   ]
   }
  },
  "brogue": {
-  "play": null
+  "play": {
+   "agents": [
+    {
+     "agent": "random",
+     "episodes": [
+      {
+       "seed": 11,
+       "steps": 300,
+       "died_at": null,
+       "descents": 2,
+       "agent_depth": null,
+       "coverage_mean": 0.8323,
+       "health_mean": 0.981,
+       "health_final": 0.995,
+       "reasons": {
+        "random": 300
+       }
+      },
+      {
+       "seed": 12,
+       "steps": 300,
+       "died_at": null,
+       "descents": 4,
+       "agent_depth": null,
+       "coverage_mean": 0.8131,
+       "health_mean": 0.942,
+       "health_final": 0.945,
+       "reasons": {
+        "random": 300
+       }
+      },
+      {
+       "seed": 13,
+       "steps": 300,
+       "died_at": null,
+       "descents": 1,
+       "agent_depth": null,
+       "coverage_mean": 0.7917,
+       "health_mean": 0.508,
+       "health_final": 0.0,
+       "reasons": {
+        "random": 300
+       }
+      },
+      {
+       "seed": 14,
+       "steps": 300,
+       "died_at": null,
+       "descents": 1,
+       "agent_depth": null,
+       "coverage_mean": 0.8142,
+       "health_mean": 0.878,
+       "health_final": 0.797,
+       "reasons": {
+        "random": 300
+       }
+      },
+      {
+       "seed": 15,
+       "steps": 300,
+       "died_at": null,
+       "descents": 0,
+       "agent_depth": null,
+       "coverage_mean": 0.7919,
+       "health_mean": 0.837,
+       "health_final": 0.995,
+       "reasons": {
+        "random": 300
+       }
+      },
+      {
+       "seed": 16,
+       "steps": 300,
+       "died_at": null,
+       "descents": 0,
+       "agent_depth": null,
+       "coverage_mean": 0.7646,
+       "health_mean": 0.995,
+       "health_final": 0.995,
+       "reasons": {
+        "random": 300
+       }
+      }
+     ]
+    },
+    {
+     "agent": "explorer",
+     "episodes": [
+      {
+       "seed": 11,
+       "steps": 300,
+       "died_at": null,
+       "descents": 1,
+       "agent_depth": 1,
+       "coverage_mean": 0.8697,
+       "health_mean": 0.94,
+       "health_final": 0.995,
+       "reasons": {
+        "explore": 77,
+        "explore toward trouble": 195,
+        "explored out, dive": 3,
+        "diving": 19,
+        "retreat upstairs": 4,
+        "rest": 2
+       }
+      },
+      {
+       "seed": 12,
+       "steps": 300,
+       "died_at": null,
+       "descents": 1,
+       "agent_depth": 2,
+       "coverage_mean": 0.7999,
+       "health_mean": 0.557,
+       "health_final": 0.995,
+       "reasons": {
+        "explore": 130,
+        "explore toward trouble": 20,
+        "explored out, dive": 14,
+        "diving": 110,
+        "rest": 1,
+        "retreat upstairs": 25
+       }
+      },
+      {
+       "seed": 13,
+       "steps": 300,
+       "died_at": null,
+       "descents": 1,
+       "agent_depth": 1,
+       "coverage_mean": 0.8338,
+       "health_mean": 0.987,
+       "health_final": 0.995,
+       "reasons": {
+        "explore": 82,
+        "explore toward trouble": 199,
+        "explored out, dive": 2,
+        "diving": 16,
+        "rest": 1
+       }
+      },
+      {
+       "seed": 14,
+       "steps": 300,
+       "died_at": null,
+       "descents": 1,
+       "agent_depth": 2,
+       "coverage_mean": 0.8477,
+       "health_mean": 0.833,
+       "health_final": 0.995,
+       "reasons": {
+        "explore": 184,
+        "explore toward trouble": 16,
+        "rest": 45,
+        "explored out, dive": 6,
+        "diving": 48,
+        "retreat upstairs": 1
+       }
+      },
+      {
+       "seed": 15,
+       "steps": 300,
+       "died_at": null,
+       "descents": 0,
+       "agent_depth": 0,
+       "coverage_mean": 0.8069,
+       "health_mean": 0.993,
+       "health_final": 0.995,
+       "reasons": {
+        "explore": 69,
+        "explore toward trouble": 193,
+        "explored out, dive": 5,
+        "diving": 33
+       }
+      },
+      {
+       "seed": 16,
+       "steps": 300,
+       "died_at": null,
+       "descents": 0,
+       "agent_depth": 0,
+       "coverage_mean": 0.8206,
+       "health_mean": 0.815,
+       "health_final": 0.797,
+       "reasons": {
+        "explore": 40,
+        "explore toward trouble": 260
+       }
+      }
+     ]
+    }
+   ],
+   "scores_before": [],
+   "scores_after": [],
+   "new_entries": [],
+   "deepest_recorded": null
+  },
+  "explorer": {
+   "agents": [
+    {
+     "agent": "explorer",
+     "episodes": [
+      {
+       "seed": 11,
+       "steps": 300,
+       "died_at": null,
+       "descents": 2,
+       "coverage_mean": 0.8402,
+       "health_mean": 0.983,
+       "health_final": 0.995,
+       "reasons": {
+        "explore": 112,
+        "explore toward trouble": 152,
+        "explored out, dive": 4,
+        "diving": 32
+       }
+      },
+      {
+       "seed": 12,
+       "steps": 300,
+       "died_at": null,
+       "descents": 1,
+       "coverage_mean": 0.766,
+       "health_mean": 0.223,
+       "health_final": 0.0,
+       "reasons": {
+        "explore": 39,
+        "explore toward trouble": 6,
+        "explored out, dive": 4,
+        "diving": 24,
+        "rest": 3,
+        "retreat upstairs": 224
+       }
+      },
+      {
+       "seed": 13,
+       "steps": 300,
+       "died_at": null,
+       "descents": 1,
+       "coverage_mean": 0.8228,
+       "health_mean": 0.509,
+       "health_final": 0.0,
+       "reasons": {
+        "explore": 111,
+        "explore toward trouble": 11,
+        "explored out, dive": 4,
+        "diving": 32,
+        "rest": 2,
+        "retreat upstairs": 140
+       }
+      },
+      {
+       "seed": 14,
+       "steps": 300,
+       "died_at": null,
+       "descents": 0,
+       "coverage_mean": 0.8332,
+       "health_mean": 0.96,
+       "health_final": 0.995,
+       "reasons": {
+        "explore": 72,
+        "explore toward trouble": 205,
+        "rest": 1,
+        "explored out, dive": 3,
+        "diving": 19
+       }
+      },
+      {
+       "seed": 15,
+       "steps": 300,
+       "died_at": null,
+       "descents": 1,
+       "coverage_mean": 0.8182,
+       "health_mean": 0.683,
+       "health_final": 0.0,
+       "reasons": {
+        "explore": 115,
+        "explore toward trouble": 21,
+        "explored out, dive": 8,
+        "diving": 64,
+        "retreat upstairs": 92
+       }
+      },
+      {
+       "seed": 16,
+       "steps": 300,
+       "died_at": null,
+       "descents": 1,
+       "coverage_mean": 0.8236,
+       "health_mean": 0.874,
+       "health_final": 0.896,
+       "reasons": {
+        "explore": 118,
+        "explore toward trouble": 160,
+        "retreat upstairs": 1,
+        "explored out, dive": 3,
+        "diving": 18
+       }
+      }
+     ]
+    }
+   ],
+   "scores_before": [],
+   "scores_after": [],
+   "new_entries": [],
+   "deepest_recorded": null
+  }
  },
  "media": {
   "doom": [
@@ -3030,9 +3506,9 @@
    "gras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras",
    "gras gras gras gras gras tree tree gras wate\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ntabl gras gras gras gras gras tree gras gras\ngras gras gras gras tree gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras",
    "path gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras tabl gras gras\ngras gras tabl gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\nston tree gras gras tree gras tabl gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras tabl gras",
-   "path path ston ston ston path ston ston ston\npath path ston ston ston path diam ston ston\npath ston ston ston ston path iron iron ston\nston ston ston path path path path path iron\nston ston ston ston furn path path path path\nston ston ston ston ston path iron path path\nston ston ston ston ston path diam ston ston",
-   "ston ston ston path diam ston ston ston ston\nston ston path path iron iron ston ston gras\nston path path path path path iron path gras\nston ston furn path path ston path path gras\nston ston ston ston iron path path gras gras\nston ston ston path diam ston ston gras gras\nston ston ston path lava ston ston gras gras",
-   "iron ston ston ston sand ston iron path path\nsand ston ston ston path diam ston ston ston\nston ston ston path ston iron iron ston ston\nston ston ston path path ston path iron path\nston ston ston furn path path ston path sand\nston ston ston ston ston iron path path gras\ntabl iron ston ston path diam ston ston gras"
+   "path path ston ston ston path ston ston ston\npath path ston ston ston path diam ston ston\npath ston ston ston ston path iron iron ston\nston ston ston path path path path path iron\nston ston ston ston furn path path path path\nston ston ston ston ston path iron path path\nston ston ston ston ston ston diam ston ston",
+   "gras gras tree sand sand wate wate wate wate\ngras gras gras sand sand wate wate wate wate\ngras gras gras tree sand wate wate wate wate\ngras gras gras ston sand sand wate wate wate\ngras gras gras gras gras sand wate wate wate\ngras gras gras gras gras gras gras wate wate\ngras gras tabl gras gras gras gras wate wate",
+   "iron iron ston ston ston ston ston ston gras\ngras gras gras ston iron gras gras gras gras\ngras gras gras gras gras gras sand sand sand\ngras gras gras ston sand sand ston wate wate\ngras gras tree sand sand wate wate wate wate\ngras gras ston sand sand wate wate wate wate\ngras gras gras tree sand wate wate wate wate"
   ],
   "brogue": [
    "brogue_0.png",
@@ -3040,5 +3516,594 @@
    "brogue_2.png",
    "brogue_3.png"
   ]
- }
+ },
+ "episode": {
+  "frames": [
+   "ep_000.png",
+   "ep_001.png",
+   "ep_002.png",
+   "ep_003.png",
+   "ep_004.png",
+   "ep_005.png",
+   "ep_006.png",
+   "ep_007.png",
+   "ep_008.png",
+   "ep_009.png",
+   "ep_010.png",
+   "ep_011.png",
+   "ep_012.png",
+   "ep_013.png",
+   "ep_014.png",
+   "ep_015.png",
+   "ep_016.png",
+   "ep_017.png",
+   "ep_018.png",
+   "ep_019.png",
+   "ep_020.png",
+   "ep_021.png",
+   "ep_022.png",
+   "ep_023.png",
+   "ep_024.png",
+   "ep_025.png",
+   "ep_026.png",
+   "ep_027.png",
+   "ep_028.png",
+   "ep_029.png",
+   "ep_030.png",
+   "ep_031.png",
+   "ep_032.png",
+   "ep_033.png",
+   "ep_034.png",
+   "ep_035.png",
+   "ep_036.png",
+   "ep_037.png",
+   "ep_038.png",
+   "ep_039.png",
+   "ep_040.png",
+   "ep_041.png",
+   "ep_042.png",
+   "ep_043.png",
+   "ep_044.png"
+  ],
+  "goals": [
+   "sapling_adjacent",
+   "collect_wood",
+   "collect_wood",
+   "collect_wood",
+   "collect_wood",
+   "collect_wood",
+   "collect_wood",
+   "collect_wood",
+   "collect_wood",
+   "collect_wood",
+   "collect_wood",
+   "mine_adjacent_tree",
+   "collect_wood",
+   "mine_adjacent_tree",
+   "collect_wood",
+   "mine_adjacent_tree",
+   "place_table",
+   "collect_wood",
+   "collect_wood",
+   "mine_adjacent_tree",
+   "place_table",
+   "collect_wood",
+   "collect_wood",
+   "place_table",
+   "collect_wood",
+   "mine_adjacent_tree",
+   "flee",
+   "place_table",
+   "collect_wood",
+   "mine_adjacent_tree",
+   "collect_wood",
+   "mine_adjacent_tree",
+   "place_table",
+   "place_table",
+   "mine_adjacent_tree",
+   "make_wood_pickaxe",
+   "collect_wood",
+   "make_wood_sword",
+   "mine_adjacent_tree",
+   "collect_stone",
+   "collect_stone",
+   "collect_stone",
+   "collect_stone",
+   "collect_stone",
+   "collect_stone"
+  ],
+  "daylight": [
+   0.81,
+   0.82,
+   0.84,
+   0.85,
+   0.87,
+   0.88,
+   0.89,
+   0.91,
+   0.92,
+   0.93,
+   0.94,
+   0.95,
+   0.95,
+   0.96,
+   0.97,
+   0.97,
+   0.98,
+   0.98,
+   0.99,
+   0.99,
+   0.99,
+   0.99,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   0.99,
+   0.99,
+   0.99,
+   0.99,
+   0.98,
+   0.98,
+   0.97
+  ],
+  "inventory": [
+   {},
+   {
+    "sapling": 1
+   },
+   {
+    "sapling": 1
+   },
+   {
+    "sapling": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 2
+   },
+   {
+    "sapling": 1,
+    "wood": 2
+   },
+   {
+    "sapling": 1,
+    "wood": 2
+   },
+   {
+    "sapling": 1,
+    "wood": 3
+   },
+   {
+    "sapling": 1,
+    "wood": 3
+   },
+   {
+    "sapling": 1,
+    "wood": 3
+   },
+   {
+    "sapling": 1,
+    "wood": 4
+   },
+   {
+    "sapling": 1,
+    "wood": 4
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 6
+   },
+   {
+    "sapling": 1,
+    "wood": 4
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 6
+   },
+   {
+    "sapling": 1,
+    "wood": 4
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 6
+   },
+   {
+    "sapling": 1,
+    "wood": 4
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 6
+   },
+   {
+    "sapling": 1,
+    "wood": 6
+   },
+   {
+    "sapling": 1,
+    "wood": 4
+   },
+   {
+    "sapling": 1,
+    "wood": 4
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 6
+   },
+   {
+    "sapling": 1,
+    "wood": 7
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 6
+   },
+   {
+    "sapling": 1,
+    "wood": 5,
+    "wood_pickaxe": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "wood_pickaxe": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 5,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   }
+  ],
+  "step": [
+   0,
+   2,
+   4,
+   6,
+   8,
+   10,
+   12,
+   14,
+   16,
+   18,
+   20,
+   22,
+   24,
+   26,
+   28,
+   30,
+   32,
+   34,
+   36,
+   38,
+   40,
+   42,
+   44,
+   46,
+   48,
+   50,
+   52,
+   54,
+   56,
+   58,
+   60,
+   62,
+   64,
+   66,
+   68,
+   70,
+   72,
+   74,
+   76,
+   78,
+   80,
+   82,
+   84,
+   86,
+   88
+  ]
+ },
+ "iterations": {
+  "_comment": "What each change actually measured, in the order it happened. Episode counts are recorded because they decide what the difference means: on Crafter, 10 episodes moves the score by about +-2 points on its own, which is the size of most of these steps. Differences inside that band are marked as noise rather than claimed as progress.",
+  "crafter": {
+   "metric": "Crafter score (geometric mean of 22 achievement rates)",
+   "steps": [
+    {
+     "label": "first working planner",
+     "score": 1.77,
+     "episodes": 3,
+     "achievements": 5,
+     "survived": 185,
+     "note": "78% of steps spent exploring, back and forth over the same twenty tiles",
+     "reliable": false
+    },
+    {
+     "label": "committed exploration",
+     "score": 2.08,
+     "episodes": 3,
+     "achievements": 6,
+     "survived": 212,
+     "note": "covered ground at last, then died on the first night",
+     "reliable": false
+    },
+    {
+     "label": "urgency-ordered goal ladder",
+     "score": 14.13,
+     "episodes": 3,
+     "achievements": 14,
+     "survived": 258,
+     "note": "stopped walking past trees to reach a distant cow; the big one",
+     "reliable": false
+    },
+    {
+     "label": "night shelter",
+     "score": 12.29,
+     "episodes": 3,
+     "achievements": 13,
+     "survived": 289,
+     "note": "survived longer, scored the same -- 3 episodes cannot tell these apart",
+     "reliable": false
+    },
+    {
+     "label": "committed shelter plan",
+     "score": 13.33,
+     "episodes": 8,
+     "achievements": 15,
+     "survived": 234,
+     "note": "sealing stopped oscillating between open sides",
+     "reliable": false
+    },
+    {
+     "label": "break out at dawn",
+     "score": 13.87,
+     "episodes": 10,
+     "achievements": 15,
+     "survived": 278,
+     "note": "stopped starving behind its own wall",
+     "reliable": false
+    },
+    {
+     "label": "same code, 30 episodes",
+     "score": 12.02,
+     "episodes": 30,
+     "achievements": 15,
+     "survived": 261,
+     "note": "the honest measurement of the line above: the 13.87 was noise",
+     "reliable": true
+    },
+    {
+     "label": "needs before shelter, two-walled nooks",
+     "score": 12.55,
+     "episodes": 30,
+     "achievements": 15,
+     "survived": 254,
+     "note": "inside noise overall, but ahead on 7 of 15 individual achievement rates",
+     "reliable": true
+    }
+   ],
+   "baselines": [
+    {
+     "label": "random",
+     "score": 1.13,
+     "episodes": 10
+    },
+    {
+     "label": "forager (wander and press do)",
+     "score": 1.25,
+     "episodes": 10
+    }
+   ],
+   "published": [
+    {
+     "label": "PPO (benchmark paper)",
+     "score": 4.6
+    },
+    {
+     "label": "DreamerV3 (benchmark paper)",
+     "score": 14.0
+    },
+    {
+     "label": "human experts (benchmark paper)",
+     "score": 50.5
+    }
+   ]
+  },
+  "doom": {
+   "metric": "kills per episode on defend_the_center, 30 held-out maps",
+   "steps": [
+    {
+     "label": "random",
+     "score": 0.0,
+     "episodes": 30,
+     "reliable": true
+    },
+    {
+     "label": "scripted turn-and-shoot",
+     "score": 1.23,
+     "episodes": 30,
+     "reliable": true
+    },
+    {
+     "label": "PPO, 2M steps, CPU",
+     "score": 9.8,
+     "episodes": 30,
+     "reliable": true
+    }
+   ],
+   "throughput": [
+    {
+     "label": "first working trainer",
+     "sps": 153,
+     "note": "a single environment in one process did 1,305"
+    },
+    {
+     "label": "uint8 frames instead of float32 stacks",
+     "sps": 167,
+     "note": "16x less data on the pipe, no change: wrong suspect"
+    },
+    {
+     "label": "1 ms timer resolution in the trainer",
+     "sps": 223,
+     "note": "still wrong: the resolution is per process"
+    },
+    {
+     "label": "1 ms timer resolution in each worker",
+     "sps": 1530,
+     "note": "the workers were the ones sleeping in recv()"
+    },
+    {
+     "label": "with the policy in the loop (the real run)",
+     "sps": 577,
+     "note": "2M steps in 59 minutes"
+    }
+   ]
+  },
+  "brogue": {
+   "metric": "staircases descended per 300 keystrokes",
+   "steps": [
+    {
+     "label": "explorer, waiting to recognise a staircase",
+     "score": 0.0,
+     "episodes": 6,
+     "note": "'>' is not one of the terrain glyphs the atlas labels, so it never saw one",
+     "reliable": true
+    },
+    {
+     "label": "dive when exploring stops paying",
+     "score": 0.17,
+     "episodes": 6,
+     "note": "pressed '>' once and went back to exploring, undoing the travel",
+     "reliable": true
+    },
+    {
+     "label": "commit eight presses to a dive",
+     "score": 1.0,
+     "episodes": 1,
+     "note": "Brogue's '>' travels first and descends only on arrival",
+     "reliable": false
+    }
+   ],
+   "decoder": [
+    {
+     "label": "fixed 9x16 lattice",
+     "prototypes": 1924,
+     "note": "in a font of about ninety glyphs"
+    },
+    {
+     "label": "aligned by repetition",
+     "prototypes": 929,
+     "note": "stable in x, ambiguous in y"
+    },
+    {
+     "label": "fractional cells, resampled",
+     "prototypes": 234,
+     "note": "119 of them cover 96% of the screen"
+    }
+   ]
+  }
+ },
+ "clips": [
+  "clip_brogue.gif",
+  "clip_brogue.mp4",
+  "clip_crafter.gif",
+  "clip_crafter.mp4",
+  "clip_doom.gif",
+  "clip_doom.mp4"
+ ]
 }

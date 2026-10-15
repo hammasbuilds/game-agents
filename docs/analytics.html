@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Game Agents · Analytics</title>
+<meta name="description" content="Every measurement behind the three game-playing agents: what each change did, how training went, and where the agents spend their steps.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f6f7f9; --panel: #ffffff; --panel-2: #f0f2f5; --ink: #15181d;
+    --ink-dim: #5b636f; --line: #dde1e7; --accent: #2f6df6; --good: #1f8a4c;
+    --warn: #b06a00; --bad: #c0392b;
+    --s1: #2f6df6; --s2: #e07a1f; --s3: #19a07a; --s4: #9b59b6;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1014; --panel: #171a20; --panel-2: #1f232b; --ink: #e9ecf1;
+      --ink-dim: #9aa3b2; --line: #2a2f39; --accent: #6f9bff; --good: #4cc98a;
+      --warn: #e0a24a; --bad: #e8705f;
+      --s1: #6f9bff; --s2: #f0a35e; --s3: #4cc98a; --s4: #c08adf;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1014; --panel: #171a20; --panel-2: #1f232b; --ink: #e9ecf1;
+    --ink-dim: #9aa3b2; --line: #2a2f39; --accent: #6f9bff; --good: #4cc98a;
+    --warn: #e0a24a; --bad: #e8705f;
+    --s1: #6f9bff; --s2: #f0a35e; --s3: #4cc98a; --s4: #c08adf;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px 80px; }
+  header { padding: 48px 0 10px; }
+  h1 { font-size: clamp(27px, 4.4vw, 38px); margin: 0 0 8px; letter-spacing: -0.02em; }
+  .sub { color: var(--ink-dim); max-width: 70ch; margin: 0; }
+  .back { display: inline-block; margin: 14px 0 0; font-size: 14px; }
+  .theme { position: absolute; top: 18px; right: 18px; background: var(--panel);
+           color: var(--ink); border: 1px solid var(--line); border-radius: 999px;
+           padding: 7px 14px; cursor: pointer; font-size: 13px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+          padding: 20px 22px; margin: 18px 0; }
+  .card h2 { margin: 0 0 4px; font-size: 20px; letter-spacing: -0.01em; }
+  .card h3 { margin: 24px 0 8px; font-size: 13px; text-transform: uppercase;
+             letter-spacing: 0.08em; color: var(--ink-dim); }
+  .lede { color: var(--ink-dim); margin: 6px 0 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th, td { text-align: right; padding: 8px 9px; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--ink-dim); font-weight: 600; font-size: 12.5px;
+       text-transform: uppercase; letter-spacing: 0.05em; }
+  td.num { font-family: var(--mono); }
+  tr.noise td { color: var(--ink-dim); }
+  .tag { font-size: 11px; font-family: var(--mono); padding: 2px 7px; border-radius: 999px;
+         border: 1px solid var(--line); color: var(--ink-dim); }
+  .tag.ok { color: var(--good); border-color: var(--good); }
+  .tag.noise { color: var(--warn); border-color: var(--warn); }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .stat { background: var(--panel-2); border-radius: 12px; padding: 13px 15px; }
+  .stat .n { font-size: 25px; font-weight: 650; font-family: var(--mono); letter-spacing: -0.02em; }
+  .stat .k { color: var(--ink-dim); font-size: 12.5px; margin-top: 3px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px;
+            color: var(--ink-dim); margin-top: 8px; }
+  .legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px;
+              margin-right: 6px; vertical-align: -1px; }
+  figure { margin: 0; }
+  figcaption { color: var(--ink-dim); font-size: 12.5px; margin-top: 6px; }
+  .note { border-left: 3px solid var(--warn); padding-left: 13px; color: var(--ink-dim); }
+  code { font-family: var(--mono); font-size: 0.92em; background: var(--panel-2);
+         padding: 1px 5px; border-radius: 5px; }
+  a { color: var(--accent); }
+  video { width: 100%; border-radius: 12px; border: 1px solid var(--line); background: #000; }
+  .clips { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+</style>
+</head>
+<body>
+<button class="theme" id="theme">theme</button>
+<div class="wrap">
+  <header>
+    <h1>Analytics</h1>
+    <p class="sub">Every measurement behind the three agents: what each change was worth, how many
+      episodes it was measured over, how training went step by step, and where the agents spend
+      their keystrokes. Numbers that sit inside the noise of their own measurement are marked as
+      such rather than claimed.</p>
+    <a class="back" href="index.html">← back to the overview</a>
+  </header>
+  <main id="main"></main>
+</div>
+
+<script src="data/results.js"></script>
+<script>
+const R = window.RESULTS || {};
+const IT = R.iterations || {};
+const $ = s => document.querySelector(s);
+const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c;
+                          if (h !== undefined) n.innerHTML = h; return n; };
+const esc = s => String(s).replace(/[<>&]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]));
+const fmt = (v, d = 2) => (v === null || v === undefined) ? "—" : Number(v).toFixed(d);
+
+try { const t = localStorage.getItem("ga-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+$("#theme").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = cur ? (cur === "dark" ? "light" : "dark") : (dark ? "light" : "dark");
+  document.documentElement.setAttribute("data-theme", next);
+  try { localStorage.setItem("ga-theme", next); } catch (e) {}
+});
+
+/* ===== chart helpers, all inline SVG ===== */
+function svg(w, h, body, label) {
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="auto" role="img" aria-label="${esc(label)}">${body}</svg>`;
+}
+function axes(x0, y0, x1, y1, ticks, fmtV) {
+  let out = "";
+  for (const t of ticks) {
+    out += `<line x1="${x0}" y1="${t.y}" x2="${x1}" y2="${t.y}" stroke="currentColor" stroke-opacity="0.12"/>`
+         + `<text x="${x0 - 8}" y="${t.y + 4}" text-anchor="end" font-size="11" fill="currentColor" fill-opacity="0.6">${fmtV(t.v)}</text>`;
+  }
+  return out;
+}
+function lineChart(series, opts) {
+  const w = opts.w || 980, h = opts.h || 280;
+  const pad = { l: 58, r: 16, t: 14, b: 32 };
+  const all = series.flatMap(s => s.points);
+  const xs = all.map(p => p[0]), ys = all.map(p => p[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs);
+  const y0 = opts.yZero ? Math.min(0, Math.min(...ys)) : Math.min(...ys);
+  const y1 = Math.max(...ys) * 1.07 || 1;
+  const X = v => pad.l + (v - x0) / (x1 - x0 || 1) * (w - pad.l - pad.r);
+  const Y = v => h - pad.b - (v - y0) / (y1 - y0 || 1) * (h - pad.t - pad.b);
+  const ticks = [];
+  for (let i = 0; i <= 4; i++) { const v = y0 + (y1 - y0) * i / 4; ticks.push({ v, y: Y(v) }); }
+  let body = axes(pad.l, pad.t, w - pad.r, h - pad.b, ticks, opts.fmtY || (v => v.toFixed(1)));
+  series.forEach((s, i) => {
+    const d = s.points.map((p, j) => (j ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)).join(" ");
+    body += `<path d="${d}" fill="none" stroke="var(--s${i + 1})" stroke-width="2" stroke-linejoin="round"/>`;
+  });
+  for (let i = 0; i <= 4; i++) {
+    const v = x0 + (x1 - x0) * i / 4;
+    body += `<text x="${X(v)}" y="${h - 9}" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.6">${(opts.fmtX || (q => q))(v)}</text>`;
+  }
+  const f = el("figure", "", svg(w, h, body, opts.label || "chart"));
+  if (opts.caption) f.append(el("figcaption", "", opts.caption));
+  if (series.length > 1) {
+    const lg = el("div", "legend");
+    series.forEach((s, i) => lg.append(el("span", "", `<i style="background:var(--s${i + 1})"></i>${esc(s.name)}`)));
+    f.append(lg);
+  }
+  return f;
+}
+function barChart(rows, opts) {
+  const w = opts.w || 980, rowH = 24, pad = { l: opts.labelWidth || 190, r: 70, t: 8, b: 8 };
+  const h = pad.t + pad.b + rows.length * rowH;
+  const max = opts.max || Math.max(...rows.map(r => r.value)) || 1;
+  let body = "";
+  rows.forEach((r, i) => {
+    const y = pad.t + i * rowH;
+    const len = Math.max(1, (w - pad.l - pad.r) * (r.value / max));
+    const colour = r.colour || "var(--s1)";
+    body += `<text x="${pad.l - 10}" y="${y + 15}" text-anchor="end" font-size="12.5" fill="currentColor" fill-opacity="0.85">${esc(r.label)}</text>`
+         + `<rect x="${pad.l}" y="${y + 4}" width="${len}" height="${rowH - 10}" rx="4" fill="${colour}"/>`
+         + `<text x="${pad.l + len + 8}" y="${y + 15}" font-size="12" font-family="ui-monospace,monospace" fill="currentColor" fill-opacity="0.75">${esc(r.text ?? r.value)}</text>`;
+  });
+  const f = el("figure", "", svg(w, h, body, opts.label || "bars"));
+  if (opts.caption) f.append(el("figcaption", "", opts.caption));
+  return f;
+}
+function stripChart(groups, opts) {
+  const w = opts.w || 980, rowH = 46, pad = { l: 120, r: 24, t: 14, b: 26 };
+  const h = pad.t + pad.b + groups.length * rowH;
+  const all = groups.flatMap(g => g.values);
+  const lo = Math.min(...all), hi = Math.max(...all);
+  const X = v => pad.l + (v - lo) / ((hi - lo) || 1) * (w - pad.l - pad.r);
+  let body = "";
+  groups.forEach((g, i) => {
+    const y = pad.t + i * rowH + rowH / 2;
+    const mean = g.values.reduce((a, b) => a + b, 0) / g.values.length;
+    body += `<text x="${pad.l - 12}" y="${y + 4}" text-anchor="end" font-size="12.5" fill="currentColor" fill-opacity="0.85">${esc(g.label)}</text>`
+         + `<line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" stroke="currentColor" stroke-opacity="0.1"/>`;
+    for (const v of g.values) {
+      body += `<circle cx="${X(v).toFixed(1)}" cy="${(y + (Math.random() - 0.5) * 11).toFixed(1)}" r="3.4" fill="var(--s${(i % 4) + 1})" fill-opacity="0.55"/>`;
+    }
+    body += `<line x1="${X(mean)}" y1="${y - 15}" x2="${X(mean)}" y2="${y + 15}" stroke="var(--s${(i % 4) + 1})" stroke-width="2.5"/>`;
+  });
+  for (let i = 0; i <= 4; i++) {
+    const v = lo + (hi - lo) * i / 4;
+    body += `<text x="${X(v)}" y="${h - 8}" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.6">${v.toFixed(0)}</text>`;
+  }
+  const f = el("figure", "", svg(w, h, body, opts.label || "distribution"));
+  if (opts.caption) f.append(el("figcaption", "", opts.caption));
+  return f;
+}
+function table(headers, rows, rowClass) {
+  const t = el("table"), thead = el("thead"), hr = el("tr");
+  headers.forEach((h, i) => hr.append(el("th", i ? "num" : "", h)));
+  thead.append(hr);
+  const tb = el("tbody");
+  rows.forEach((r, i) => {
+    const tr = el("tr", rowClass ? rowClass(i) : "");
+    r.forEach((c, j) => tr.append(el("td", j ? "num" : "", c)));
+    tb.append(tr);
+  });
+  t.append(thead, tb);
+  return t;
+}
+
+/* ===== sections ===== */
+const main = $("#main");
+
+/* 1. what each change was worth */
+(function iterations() {
+  const c = el("div", "card");
+  c.append(el("h2", "", "What each change was worth"),
+    el("p", "lede", "Crafter's score is a geometric mean over 22 achievement rates, so with ten episodes a single lucky run moves it by about two points. That is larger than most of the steps below, which is why the episode count is in the table and why the early rows are marked as not reliable rather than quietly listed as progress."));
+  const cr = IT.crafter;
+  if (cr) {
+    c.append(lineChart([{ name: "Crafter score", points: cr.steps.map((s, i) => [i, s.score]) }], {
+      yZero: true, h: 240,
+      fmtX: v => (cr.steps[Math.round(v)] || {}).episodes ? cr.steps[Math.round(v)].episodes + " eps" : "",
+      fmtY: v => v.toFixed(0) + "%",
+      label: "Crafter score across successive versions of the planner",
+      caption: "Each point is a version of the planner, in the order it was built. The x labels are how many episodes that point was measured over."
+    }));
+    c.append(table(["change", "score", "episodes", "achievements", "steps survived", "", "what the run showed"],
+      cr.steps.map(s => [s.label, s.score + "%", s.episodes, s.achievements ?? "—", s.survived ?? "—",
+        s.reliable ? '<span class="tag ok">measured</span>' : '<span class="tag noise">inside noise</span>',
+        '<span style="color:var(--ink-dim)">' + esc(s.note || "") + "</span>"]),
+      i => cr.steps[i].reliable ? "" : "noise"));
+    const base = cr.baselines.concat(cr.published.map(p => ({ label: p.label + " *", score: p.score, episodes: "—" })));
+    c.append(el("h3", "", "For scale"),
+      barChart(base.map(b => ({ label: b.label, value: b.score, text: b.score + "%" }))
+        .concat([{ label: "this planner (30 eps)", value: cr.steps[cr.steps.length - 1].score,
+                   text: cr.steps[cr.steps.length - 1].score + "%", colour: "var(--s3)" }]),
+        { caption: "* published with the Crafter benchmark, not measured here.", label: "scores against published baselines" }));
+  }
+  main.append(c);
+})();
+
+/* 2. doom training */
+(function doom() {
+  const c = el("div", "card");
+  c.append(el("h2", "", "DOOM · training, step by step"));
+  const curve = (R.doom && R.doom.curve) || [];
+  if (curve.length) {
+    c.append(lineChart([{ name: "mean return (last 100 episodes)", points: curve.map(p => [p.steps, p.return]) }],
+      { yZero: true, fmtX: v => (v / 1e6).toFixed(1) + "M", label: "return against steps",
+        caption: "2,000,000 agent steps — 8,000,000 game tics — in 59 minutes on twelve CPU processes." }));
+  }
+  const hist = (R.doom && R.doom.curve) || [];
+  const tr = R.doom && R.doom.training;
+  if (tr) {
+    c.append(el("div", "grid", ""), );
+    const g = el("div", "grid");
+    [[tr.params.toLocaleString(), "parameters"],
+     [Math.round(tr.steps / tr.wall_seconds) + "/s", "agent steps per second"],
+     [(tr.wall_seconds / 60).toFixed(0) + " min", "wall clock, CPU only"],
+     [tr.steps.toLocaleString(), "agent steps"]].forEach(([n, k]) => {
+      const s = el("div", "stat"); s.append(el("div", "n", n), el("div", "k", k)); g.append(s);
+    });
+    c.append(g);
+  }
+  const ev = R.doom && R.doom.eval;
+  if (ev && ev.rows) {
+    c.append(el("h3", "", "Every evaluation episode, not just the mean"));
+    c.append(stripChart(ev.rows.map(r => ({ label: r.agent, values: r.returns })),
+      { label: "per-episode returns", caption: "One dot per held-out map; the bar is the mean. The trained policy's worst map beats both baselines' best." }));
+  }
+  const kg = R.doom && R.doom.kaggle;
+  if (kg) {
+    c.append(el("h3", "", "Was the laptop-sized network a compromise? (GPU, Kaggle)"));
+    const arms = Object.entries(kg);
+    c.append(table(["arm", "parameters", "steps", "steps/s", "minutes", "kills per episode"],
+      arms.map(([name, v]) => [name, v.params.toLocaleString(), v.steps.toLocaleString(),
+        v.steps_per_second, (v.wall_seconds / 60).toFixed(0), fmt(v.best_policy_mean)])));
+    c.append(el("p", "lede", "Both arms on one GPU, same steps, same evaluation seeds; only the width changes. The wide trunk is 15.7 times the parameters and costs 2% of the throughput, because ViZDoom's rollout is CPU work and the gradient was never the bottleneck. So yes: the small network was a compromise, and where there is a GPU the capacity is nearly free."));
+  }
+  const th = IT.doom && IT.doom.throughput;
+  if (th) {
+    c.append(el("h3", "", "Throughput, and three wrong suspects"));
+    c.append(barChart(th.map(t => ({ label: t.label, value: t.sps, text: t.sps + "/s",
+      colour: t.sps > 1000 ? "var(--s3)" : "var(--s1)" })),
+      { labelWidth: 290, caption: "The fix was one call to timeBeginPeriod(1) — in the worker process, not the trainer." }));
+  }
+  main.append(c);
+})();
+
+/* 3. crafter detail */
+(function crafter() {
+  const c = el("div", "card");
+  c.append(el("h2", "", "Crafter · where the score comes from"));
+  const evs = (R.crafter && R.crafter.eval) || [];
+  const ab = (R.crafter && R.crafter.ab) || {};
+  const latest = (ab.new && ab.new[0]) || evs.find(r => r.agent === "planner");
+  if (latest && latest.success_rates) {
+    const rows = Object.entries(latest.success_rates)
+      .sort((a, b) => b[1] - a[1])
+      .map(([k, v]) => ({ label: k, value: v, text: v.toFixed(0) + "%",
+                          colour: v === 0 ? "var(--bad)" : v > 60 ? "var(--s3)" : "var(--s1)" }));
+    c.append(barChart(rows, { max: 100, labelWidth: 185,
+      caption: "Share of " + latest.episodes + " episodes in which each achievement fired. The seven at zero are the whole reason the score is 12% and not 40%: everything past stone tools is behind surviving the first night." }));
+  }
+  if (latest && latest.goal_share) {
+    c.append(el("h3", "", "Where the steps go"));
+    c.append(barChart(Object.entries(latest.goal_share).map(([k, v]) =>
+      ({ label: k, value: v * 100, text: (v * 100).toFixed(1) + "%" })),
+      { labelWidth: 185, caption: "Share of all steps spent pursuing each goal." }));
+  }
+  const perc = R.crafter && R.crafter.perception;
+  if (perc) {
+    c.append(el("h3", "", "Decoder accuracy, by how dark it is"));
+    c.append(barChart(perc.tile_accuracy.map(t => ({
+      label: t.daylight + " (" + t.frames + " frames)", value: 100 * t.tile_accuracy,
+      text: (100 * t.tile_accuracy).toFixed(2) + "%",
+      colour: t.tile_accuracy > 0.999 ? "var(--s3)" : "var(--s2)" })),
+      { max: 100, labelWidth: 185,
+        caption: "Tiles read correctly from the 64×64 frame, against the game's own map. Midnight is lower because the game blends a field of random noise into the view, and noise can only be removed in expectation." }));
+  }
+  if (ab.head && ab.new) {
+    c.append(el("h3", "", "The A/B that settled it"));
+    c.append(table(["version", "score", "reward", "achievements", "episodes"],
+      [["before", ab.head[0].score + "%", fmt(ab.head[0].reward_mean), ab.head[0].distinct_achievements, ab.head[0].episodes],
+       ["after", ab.new[0].score + "%", fmt(ab.new[0].reward_mean), ab.new[0].distinct_achievements, ab.new[0].episodes]]));
+    c.append(el("p", "note", "A 0.5 point difference over 30 episodes is not a result on its own. It is kept because the newer version is ahead on seven of the fifteen individual achievement rates, which is a finer measurement than the single score."));
+  }
+  main.append(c);
+})();
+
+/* 4. brogue detail */
+(function brogue() {
+  const c = el("div", "card");
+  c.append(el("h2", "", "Brogue · per game, and the decoder"));
+  const play = R.brogue && R.brogue.play;
+  if (play && play.agents) {
+    for (const a of play.agents) {
+      c.append(el("h3", "", a.agent));
+      c.append(table(["seed", "descents", "map named", "health at end", "steps"],
+        (a.episodes || []).map(e => [e.seed, e.descents,
+          (100 * (e.coverage_mean || 0)).toFixed(1) + "%", fmt(e.health_final), e.steps])));
+    }
+  }
+  const dec = IT.brogue && IT.brogue.decoder;
+  if (dec) {
+    c.append(el("h3", "", "Glyph prototypes found, by how the grid was cut"));
+    c.append(barChart(dec.map(d => ({ label: d.label, value: d.prototypes,
+      text: d.prototypes.toLocaleString(), colour: d.prototypes < 300 ? "var(--s3)" : "var(--s2)" })),
+      { labelWidth: 230, caption: "Brogue's font has about ninety glyphs. A fixed lattice finds 1,924 of them because the grid is stretched over the window at 9.08 × 16.68 pixels a cell." }));
+  }
+  const steps = IT.brogue && IT.brogue.steps;
+  if (steps) {
+    c.append(el("h3", "", "Descending, three attempts"));
+    c.append(table(["version", "descents per game", "episodes", "what went wrong"],
+      steps.map(s => [s.label, fmt(s.score, 2), s.episodes,
+        '<span style="color:var(--ink-dim)">' + esc(s.note) + "</span>"])));
+  }
+  main.append(c);
+})();
+
+/* 5. clips */
+(function clips() {
+  const names = R.clips || [];
+  if (!names.length) return;
+  const c = el("div", "card");
+  c.append(el("h2", "", "The agents playing"),
+           el("p", "lede", "Real episodes, recorded by ui/record.py at the frame rate shown."));
+  const box = el("div", "clips");
+  for (const n of names.filter(x => x.endsWith(".mp4"))) {
+    const f = el("figure");
+    const v = document.createElement("video");
+    v.src = "media/" + n; v.controls = true; v.loop = true; v.muted = true; v.playsInline = true;
+    f.append(v, el("figcaption", "", n.replace("clip_", "").replace(".mp4", "")));
+    box.append(f);
+  }
+  c.append(box);
+  main.append(c);
+})();
+</script>
+</body>
+</html>

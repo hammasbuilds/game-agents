@@ -4,8 +4,22 @@ Three AI agents that play three real games you can download, built on a laptop
 CPU. One learns from pixels, one plans without learning anything, and one plays
 an ordinary Windows program through screenshots and keystrokes.
 
+**[Live dashboard →](https://hammasbuilds.github.io/game-agents/)** ·
+**[Analytics →](https://hammasbuilds.github.io/game-agents/analytics.html)** —
+every figure on both is read from a run artefact in this repository, not typed in,
+and the analytics page marks which differences are inside the noise of their own
+measurement.
+**[Kaggle notebook →](https://www.kaggle.com/code/muhammadhammas13/does-a-wider-network-help-a-doom-agent)**
+— the same DOOM agent on a GPU, asking whether the laptop-sized network was a
+compromise or was enough.
+
 They deliberately share no method. The point of three is to show three ways of
 getting a machine to play something — and what each one actually costs.
+
+| | | |
+|:---:|:---:|:---:|
+| ![DOOM](docs/media/clip_doom.gif) | ![Crafter](docs/media/clip_crafter.gif) | ![Brogue](docs/media/clip_brogue.gif) |
+| PPO from pixels, 12 kills in this episode | the planner, 8 achievements, no training | screenshots and keystrokes, reached depth 3 |
 
 | project | game | how it plays | result |
 |---|---|---|---|
@@ -65,6 +79,21 @@ code they broke:
   similarities across a three-channel and a one-channel space, where the smaller
   space always wins. Accuracy fell to 0.6% before the comparison was replaced
   with the sleep screen's exact algebraic signature.
+
+## The dashboard
+
+`docs/` is a static page — no build step, no server, no CDN — served at
+[hammasbuilds.github.io/game-agents](https://hammasbuilds.github.io/game-agents/).
+`ui/export.py` fills it from the run artefacts each project writes, so a result
+the page shows is one some run produced; where a run is missing, the card says so
+instead of showing a stale number. `ui/check_page.py` checks the page without
+opening a browser: files it references but does not ship, CSS variables used but
+never defined, anything loaded from a third party, and numbers typed into the
+HTML rather than read from the data.
+
+```bash
+python ui/export.py && python ui/check_page.py
+```
 
 ## Running them
 

@@ -32,6 +32,10 @@ user32.SetProcessDPIAware()
 WM_KEYDOWN, WM_KEYUP, WM_CHAR = 0x0100, 0x0101, 0x0102
 
 # Virtual-key codes for the keys Brogue needs that are not plain characters.
+class WindowGone(RuntimeError):
+    """The game window is gone or minimised, so there is nothing to capture."""
+
+
 VK = {
     "up": 0x26, "down": 0x28, "left": 0x25, "right": 0x27,
     "enter": 0x0D, "escape": 0x1B, "space": 0x20, "tab": 0x09,
@@ -55,11 +59,24 @@ class BrogueWindow:
 
     @property
     def alive(self) -> bool:
-        return self.process.poll() is None and bool(user32.IsWindow(self.hwnd))
+        """Whether there is still a window worth photographing.
+
+        `IsWindow` is not enough. When a Brogue game ends the window can go to
+        the minimised position Windows uses -- a client rect of 0x0 at
+        (-32000, -32000) -- while the handle stays valid, and asking for a
+        screenshot of that raises deep inside the capture library. One game
+        ending that way took a whole six-game batch with it.
+        """
+        if self.process.poll() is not None or not user32.IsWindow(self.hwnd):
+            return False
+        x, y, w, h = self.client_rect()
+        return w > 0 and h > 0 and x > -30000 and y > -30000
 
     # -- output -----------------------------------------------------------
     def grab(self, sct) -> np.ndarray:
         x, y, w, h = self.client_rect()
+        if w <= 0 or h <= 0 or x <= -30000:
+            raise WindowGone(f"the window is no longer on screen: {(x, y, w, h)}")
         shot = sct.grab({"left": x, "top": y, "width": w, "height": h})
         return np.array(Image.frombytes("RGB", shot.size, shot.rgb))
 

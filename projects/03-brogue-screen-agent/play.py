@@ -23,10 +23,13 @@ import numpy as np
 
 from brogueagent.agent import BrogueAgent, observe
 from brogueagent.screen import Decoder
-from brogueagent.window import launch
+from brogueagent.window import WindowGone, launch
 
 APP = Path(__file__).resolve().parents[2] / "games" / "brogue" / "app" / "BrogueCE-windows"
-RANDOM_KEYS = ["h", "j", "k", "l", "y", "u", "b", "n", "x", "z", "s", ">", "<"]
+# `<` is deliberately absent. On depth 1 it leaves the dungeon and ends the run,
+# so a baseline that pressed it would be scored on how fast it quit rather than
+# on how it played.
+RANDOM_KEYS = ["h", "j", "k", "l", "y", "u", "b", "n", "x", "z", "s", ">"]
 
 
 class RandomAgent:
@@ -75,7 +78,12 @@ def play_one(agent, seed: int, steps: int, delay: float, decoder) -> dict:
                 if not win.alive:
                     died_at = step
                     break
-                frame = win.grab(sct)
+                try:
+                    frame = win.grab(sct)
+                except WindowGone:
+                    # The game ended, by death or by quit, and took its window.
+                    died_at = step
+                    break
                 obs = observe(frame, decoder)
                 lit = int((obs.screen.map != " ").sum())
                 if last_lit is not None and last_lit > 120 and lit < 0.45 * last_lit:
@@ -98,6 +106,7 @@ def play_one(agent, seed: int, steps: int, delay: float, decoder) -> dict:
             win.close()
             time.sleep(0.6)
     return {"seed": seed, "steps": steps, "died_at": died_at, "descents": descents,
+            "agent_depth": getattr(agent, "depth", None),
             "coverage_mean": round(float(np.mean(coverage)), 4) if coverage else None,
             "health_mean": round(float(np.mean(health)), 3) if health else None,
             "health_final": round(float(health[-1]), 3) if health else None,

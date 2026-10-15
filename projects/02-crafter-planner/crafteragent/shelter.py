@@ -168,17 +168,19 @@ class ShelterPlan:
         pocket = find_pocket(memory, max_open=1)
         if pocket is not None and stone >= 1:
             return ("seal", memory.pos) if pocket == memory.pos else ("goto", pocket)
+        # A nook with two ways in needs two blocks rather than four, and is far
+        # more common than a dead end. Taking it before walking off to quarry is
+        # worth a lot after dark: the episodes that ended "killed outright" were
+        # mostly spent mining in the open with two or three stone already in hand.
+        loose = find_pocket(memory, max_open=2)
+        if loose is not None and stone >= 2:
+            return ("seal", memory.pos) if loose == memory.pos else ("goto", loose)
         if inventory.get("wood_pickaxe", 0) > 0:
             cell, _ = diggable_face(memory)
             if cell is not None:
                 return "dig", cell
-            stones = memory.cells_of({"stone"})
-            if stones:
+            if memory.cells_of({"stone"}):
                 return "mine", None
-        # A pocket with two ways in still halves the number of blocks needed.
-        loose = find_pocket(memory, max_open=2)
-        if loose is not None and loose != memory.pos and stone >= 2:
-            return "goto", loose
         return "idle", None
 
     def next_action(self, memory: WorldMemory, inventory: dict, threats) -> str | None:
@@ -217,8 +219,15 @@ class ShelterPlan:
             px, py = memory.pos
             delta = (self.target[0] - px, self.target[1] - py)
             if delta in MOVES:
-                if memory.facing == delta:
-                    return "do" if memory.material(self.target) == "stone" else MOVES[delta]
+                if memory.facing != delta:
+                    return MOVES[delta]
+                if memory.material(self.target) == "stone":
+                    return "do"
+                # The tile is mined out. Step into it: a hole in a rock face has
+                # three stone walls already, so the agent is one block from safe
+                # instead of the four an open-grass box costs. Mining the tile
+                # and then walking away -- which is what this did before -- left
+                # it standing outside its own shelter with the blocks in hand.
                 return MOVES[delta]
             self.reset()
         elif self.mode == "mine":

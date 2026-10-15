@@ -53,6 +53,9 @@
     border-radius: 999px; padding: 9px 16px; cursor: pointer; font-size: 14px;
   }
   nav button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  nav .analytics-link { margin-left: auto; align-self: center; font-size: 14px;
+                        padding: 9px 16px; border: 1px solid var(--line);
+                        border-radius: 999px; text-decoration: none; }
   section[hidden] { display: none; }
   .card {
     background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
@@ -88,6 +91,16 @@
   a { color: var(--accent); }
   .missing { color: var(--warn); font-family: var(--mono); font-size: 14px; }
   figure.chart { margin: 0; }
+  .viewer { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+  .viewer img { width: 224px; height: 224px; image-rendering: pixelated;
+                border-radius: 12px; border: 1px solid var(--line); background: #000; }
+  .viewer-side { flex: 1 1 220px; min-width: 200px; }
+  .goal { font-family: var(--mono); font-size: 20px; font-weight: 650; color: var(--accent); }
+  .inv { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); margin-top: 10px; }
+  .controls { display: flex; gap: 12px; align-items: center; margin-top: 16px; }
+  .controls button { background: var(--panel-2); color: var(--ink); border: 1px solid var(--line);
+                     border-radius: 999px; padding: 8px 16px; cursor: pointer; font-size: 14px; }
+  .controls input[type="range"] { flex: 1; accent-color: var(--accent); }
   @media (max-width: 560px) { header { padding-top: 64px; } }
 </style>
 </head>
@@ -108,6 +121,7 @@
     <button data-tab="crafter">02 · Crafter</button>
     <button data-tab="brogue">03 · Brogue</button>
     <button data-tab="bugs">What broke</button>
+    <a class="analytics-link" href="analytics.html">Analytics →</a>
   </nav>
 
   <section id="overview"></section>
@@ -266,6 +280,24 @@ function renderOverview() {
   if (m.crafter && m.crafter.length) media.append(el("h3", "", "Crafter"), shots(m.crafter.slice(0, 3), "crafter"));
   if (m.brogue && m.brogue.length) media.append(el("h3", "", "Brogue"), shots(m.brogue.slice(0, 2), "brogue"));
   s.append(media);
+
+  const clips = (R.clips || []).filter(n => n.endsWith(".mp4"));
+  if (clips.length) {
+    const cv = el("div", "card");
+    cv.append(el("h2", "", "Watch them play"),
+              el("p", "lede", "Real episodes, recorded straight off the agents."));
+    const box = el("div", "shots");
+    for (const n of clips) {
+      const f = el("figure");
+      const v = document.createElement("video");
+      v.src = "media/" + n; v.controls = true; v.loop = true; v.muted = true; v.playsInline = true;
+      v.style.width = "100%"; v.style.borderRadius = "10px"; v.style.border = "1px solid var(--line)";
+      f.append(v, el("figcaption", "", n.replace("clip_", "").replace(".mp4", "")));
+      box.append(f);
+    }
+    cv.append(box);
+    s.append(cv);
+  }
 }
 
 /* ---------- doom ---------- */
@@ -328,6 +360,61 @@ function renderCrafter() {
     }
   }
   s.append(p);
+
+  const ep = R.episode;
+  if (ep && ep.frames && ep.frames.length) s.append(episodeViewer(ep));
+}
+
+/* ---------- step through an episode ---------- */
+function episodeViewer(ep) {
+  const c = el("div", "card");
+  c.append(el("h2", "", "Watch it decide"),
+    el("p", "lede", "One episode, every second step. The goal underneath is the rung of the ladder the planner picked for that frame — watch it leave \"collect wood\" when the light starts to go."));
+
+  const stage = el("div", "viewer");
+  const img = el("img");
+  img.src = "media/" + ep.frames[0];
+  img.alt = "Crafter frame";
+  const side = el("div", "viewer-side");
+  const goal = el("div", "goal", "—");
+  const info = el("div", "k", "");
+  const inv = el("div", "inv", "");
+  side.append(goal, info, inv);
+  stage.append(img, side);
+
+  const controls = el("div", "controls");
+  const slider = el("input");
+  slider.type = "range";
+  slider.min = "0";
+  slider.max = String(ep.frames.length - 1);
+  slider.value = "0";
+  slider.setAttribute("aria-label", "episode step");
+  const play = el("button", "", "▶ play");
+  controls.append(play, slider);
+
+  let i = 0, timer = null;
+  function show(n) {
+    i = Math.max(0, Math.min(ep.frames.length - 1, n));
+    slider.value = String(i);
+    img.src = "media/" + ep.frames[i];
+    goal.textContent = ep.goals[i];
+    info.textContent = "step " + ep.step[i] + " · daylight " + ep.daylight[i].toFixed(2);
+    const items = ep.inventory[i] || {};
+    const keys = Object.keys(items);
+    inv.textContent = keys.length ? keys.map(k => k + " ×" + items[k]).join("  ") : "nothing carried";
+  }
+  slider.addEventListener("input", () => show(Number(slider.value)));
+  play.addEventListener("click", () => {
+    if (timer) { clearInterval(timer); timer = null; play.textContent = "▶ play"; return; }
+    play.textContent = "⏸ pause";
+    timer = setInterval(() => {
+      if (i >= ep.frames.length - 1) { clearInterval(timer); timer = null; play.textContent = "▶ play"; return; }
+      show(i + 1);
+    }, 320);
+  });
+  show(0);
+  c.append(stage, controls);
+  return c;
 }
 
 /* ---------- brogue ---------- */

@@ -206,10 +206,6 @@ class PlannerAgent:
                       lambda: self._face_and_do(self._adjacent_objects(ZOMBIE))))
         # Night, or anything chasing us: get boxed in. This sits above `flee`
         # because fleeing from zombies in Crafter does not work -- see shelter.py.
-        g.append(Goal("shelter",
-                      lambda: (self.perceiver.daylight_now < 0.5 or bool(close))
-                      and not self._sheltered(),
-                      lambda: self._shelter(close)))
         g.append(Goal("flee",
                       lambda: bool(close) and (not have("wood_sword")
                                                or inv.get("health", 9) <= 4),
@@ -224,6 +220,12 @@ class PlannerAgent:
                       lambda: self._collect(WATER)))
         g.append(Goal("eat_critical", lambda: inv.get("food", 9) <= 2,
                       lambda: self._attack(COW) or self._attack(RIPE_PLANT)))
+
+        g.append(Goal("shelter",
+                      lambda: (self.perceiver.daylight_now < 0.5 or bool(close))
+                      and not self._sheltered(),
+                      lambda: self._shelter(close)))
+
 
         # Nothing to eat or drink in the remembered map is not a reason to carry
         # on mining: two episodes ended at food 0 while the agent quarried stone

@@ -16,13 +16,14 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGE = ROOT / "docs" / "index.html"
+PAGES = [ROOT / "docs" / "index.html", ROOT / "docs" / "analytics.html"]
 
 COLOUR = re.compile(r"^(#[0-9a-fA-F]{3,8}|rgb|hsl|var\(|transparent|currentColor|[a-z-]+)")
 
 
-def main() -> int:
-    html = PAGE.read_text(encoding="utf-8")
+def check(page: Path) -> list[str]:
+    html = page.read_text(encoding="utf-8")
+    PAGE = page
     problems: list[str] = []
 
     # every local file the page asks for must exist
@@ -38,7 +39,14 @@ def main() -> int:
 
     # custom properties: used but never defined
     defined = set(re.findall(r"(--[a-z0-9-]+)\s*:", html))
-    used = set(re.findall(r"var\((--[a-z0-9-]+)", html))
+    # `var(--s${i + 1})` in a template literal is a family of variables built at
+    # run time, not a variable called `--s`; matching it was this checker's own
+    # first false positive.
+    used = set(re.findall(r"var\((--[a-z0-9-]+)(?!\$\{)", html))
+    interpolated = set(re.findall(r"var\((--[a-z0-9-]+)\$\{", html))
+    for prefix in interpolated:
+        if not any(name.startswith(prefix) for name in defined):
+            problems.append(f"builds {prefix}... at run time but defines no such variable")
     for name in sorted(used - defined):
         problems.append(f"uses {name} but never defines it")
 
@@ -57,34 +65,45 @@ def main() -> int:
         if depth <= 0:
             problems.append("the dark-only selector sits outside its media query")
 
-    # structural sanity
-    for tab in ("overview", "doom", "crafter", "brogue", "bugs"):
-        if f'id="{tab}"' not in html:
-            problems.append(f"no section for the {tab} tab")
-        if f'data-tab="{tab}"' not in html:
-            problems.append(f"no button for the {tab} tab")
+    # structural sanity: the overview has tabs, the analytics page does not
+    if page.name == "index.html":
+        for tab in ("overview", "doom", "crafter", "brogue", "bugs"):
+            if f'id="{tab}"' not in html:
+                problems.append(f"no section for the {tab} tab")
+            if f'data-tab="{tab}"' not in html:
+                problems.append(f"no button for the {tab} tab")
 
     # the page must not carry results of its own
     data = ROOT / "docs" / "data" / "results.js"
     if not data.exists():
         problems.append("docs/data/results.js is missing: run ui/export.py")
     else:
-        payload = json.loads(data.read_text().split("=", 1)[1].rsplit(";", 1)[0])
         body = html.split("<body>", 1)[1]
         for suspicious in re.findall(r">\s*(\d+\.\d+)\s*<", body):
             problems.append(f"a number is typed into the page rather than read from the data: {suspicious}")
+    return problems
+
+
+def main() -> int:
+    data = ROOT / "docs" / "data" / "results.js"
+    if data.exists():
+        payload = json.loads(data.read_text().split("=", 1)[1].rsplit(";", 1)[0])
         print(f"data: doom={'yes' if payload['doom']['eval'] else 'no'} "
               f"crafter={'yes' if payload['crafter']['eval'] else 'no'} "
               f"brogue={'yes' if payload['brogue']['play'] else 'no'} "
-              f"media={sum(len(v) for v in payload['media'].values())} files")
-
-    if problems:
-        print(f"\n{len(problems)} problem(s):")
-        for p in problems:
-            print("  - " + p)
-        return 1
-    print("page checks out")
-    return 0
+              f"media={sum(len(v) for v in payload['media'].values())} files "
+              f"clips={len(payload.get('clips', []))}")
+    total = 0
+    for page in PAGES:
+        problems = check(page)
+        total += len(problems)
+        if problems:
+            print(f"\n{page.name}: {len(problems)} problem(s)")
+            for item in problems:
+                print("  - " + item)
+        else:
+            print(f"{page.name}: checks out")
+    return 1 if total else 0
 
 
 if __name__ == "__main__":

@@ -65,6 +65,26 @@ One `timeBeginPeriod(1)` inside `_worker` took the rollout from 292 to 1,530
 steps/s — 5.2×, for a line of code, and the reason the 2M-step run finishes in an
 hour instead of six. It is documented in `doomagent/vecenv.py:fine_timer`.
 
+## Was the small network a compromise? (Kaggle, GPU)
+
+The 219k-parameter trunk was sized for a CPU, which leaves an obvious question
+the laptop cannot answer. The
+[notebook in `kaggle/`](https://www.kaggle.com/code/muhammadhammas13/does-a-wider-network-help-a-doom-agent)
+runs both widths on one GPU with the same steps, the same seeds and the same
+evaluation maps:
+
+| arm | parameters | steps | steps/s | wall clock | kills per episode |
+|---|---:|---:|---:|---:|---:|
+| control (width 1) | 219,476 | 1,199,616 | 725 | 28 min | 8.53 |
+| **wide (width 4)** | **3,446,084** | 1,199,616 | 708 | 28 min | **10.43** |
+
+So: yes, it was a compromise. 15.7× the parameters buys 1.9 more kills per
+episode and costs **2% of the throughput** — because ViZDoom's rollout is CPU
+work and the gradient was never the bottleneck. On a GPU the capacity is nearly
+free; on the laptop it would have been paid for in wall clock.
+
+Raw outputs are in `runs_kaggle/`.
+
 ## Files
 
 ```

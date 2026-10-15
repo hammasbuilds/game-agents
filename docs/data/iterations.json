@@ -1,0 +1,64 @@
+{
+ "_comment": "What each change actually measured, in the order it happened. Episode counts are recorded because they decide what the difference means: on Crafter, 10 episodes moves the score by about +-2 points on its own, which is the size of most of these steps. Differences inside that band are marked as noise rather than claimed as progress.",
+ "crafter": {
+  "metric": "Crafter score (geometric mean of 22 achievement rates)",
+  "steps": [
+   {"label": "first working planner", "score": 1.77, "episodes": 3, "achievements": 5,
+    "survived": 185, "note": "78% of steps spent exploring, back and forth over the same twenty tiles", "reliable": false},
+   {"label": "committed exploration", "score": 2.08, "episodes": 3, "achievements": 6,
+    "survived": 212, "note": "covered ground at last, then died on the first night", "reliable": false},
+   {"label": "urgency-ordered goal ladder", "score": 14.13, "episodes": 3, "achievements": 14,
+    "survived": 258, "note": "stopped walking past trees to reach a distant cow; the big one", "reliable": false},
+   {"label": "night shelter", "score": 12.29, "episodes": 3, "achievements": 13,
+    "survived": 289, "note": "survived longer, scored the same -- 3 episodes cannot tell these apart", "reliable": false},
+   {"label": "committed shelter plan", "score": 13.33, "episodes": 8, "achievements": 15,
+    "survived": 234, "note": "sealing stopped oscillating between open sides", "reliable": false},
+   {"label": "break out at dawn", "score": 13.87, "episodes": 10, "achievements": 15,
+    "survived": 278, "note": "stopped starving behind its own wall", "reliable": false},
+   {"label": "same code, 30 episodes", "score": 12.02, "episodes": 30, "achievements": 15,
+    "survived": 261, "note": "the honest measurement of the line above: the 13.87 was noise", "reliable": true},
+   {"label": "needs before shelter, two-walled nooks", "score": 12.55, "episodes": 30, "achievements": 15,
+    "survived": 254, "note": "inside noise overall, but ahead on 7 of 15 individual achievement rates", "reliable": true}
+  ],
+  "baselines": [
+   {"label": "random", "score": 1.13, "episodes": 10},
+   {"label": "forager (wander and press do)", "score": 1.25, "episodes": 10}
+  ],
+  "published": [
+   {"label": "PPO (benchmark paper)", "score": 4.6},
+   {"label": "DreamerV3 (benchmark paper)", "score": 14.0},
+   {"label": "human experts (benchmark paper)", "score": 50.5}
+  ]
+ },
+ "doom": {
+  "metric": "kills per episode on defend_the_center, 30 held-out maps",
+  "steps": [
+   {"label": "random", "score": 0.0, "episodes": 30, "reliable": true},
+   {"label": "scripted turn-and-shoot", "score": 1.23, "episodes": 30, "reliable": true},
+   {"label": "PPO, 2M steps, CPU", "score": 9.8, "episodes": 30, "reliable": true}
+  ],
+  "throughput": [
+   {"label": "first working trainer", "sps": 153, "note": "a single environment in one process did 1,305"},
+   {"label": "uint8 frames instead of float32 stacks", "sps": 167, "note": "16x less data on the pipe, no change: wrong suspect"},
+   {"label": "1 ms timer resolution in the trainer", "sps": 223, "note": "still wrong: the resolution is per process"},
+   {"label": "1 ms timer resolution in each worker", "sps": 1530, "note": "the workers were the ones sleeping in recv()"},
+   {"label": "with the policy in the loop (the real run)", "sps": 577, "note": "2M steps in 59 minutes"}
+  ]
+ },
+ "brogue": {
+  "metric": "staircases descended per 300 keystrokes",
+  "steps": [
+   {"label": "explorer, waiting to recognise a staircase", "score": 0.0, "episodes": 6,
+    "note": "'>' is not one of the terrain glyphs the atlas labels, so it never saw one", "reliable": true},
+   {"label": "dive when exploring stops paying", "score": 0.17, "episodes": 6,
+    "note": "pressed '>' once and went back to exploring, undoing the travel", "reliable": true},
+   {"label": "commit eight presses to a dive", "score": 1.0, "episodes": 1,
+    "note": "Brogue's '>' travels first and descends only on arrival", "reliable": false}
+  ],
+  "decoder": [
+   {"label": "fixed 9x16 lattice", "prototypes": 1924, "note": "in a font of about ninety glyphs"},
+   {"label": "aligned by repetition", "prototypes": 929, "note": "stable in x, ambiguous in y"},
+   {"label": "fractional cells, resampled", "prototypes": 234, "note": "119 of them cover 96% of the screen"}
+  ]
+ }
+}

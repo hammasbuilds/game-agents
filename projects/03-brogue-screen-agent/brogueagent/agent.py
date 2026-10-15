@@ -110,15 +110,23 @@ class BrogueAgent:
     rest_below: float = 0.55        # health fraction under which it stops to rest
     flee_below: float = 0.30
     patience: int = 12              # explore steps with no new map before diving
+    dive_commit: int = 8            # how many `>` presses a dive is worth
+    retreat_limit: int = 25         # total retreat steps allowed in one game
     chosen: str = "start"
     history: list[str] = field(default_factory=list)
     _seen: int = 0
     _stalled: int = 0
+    _diving: int = 0
+    _retreats: int = 0
+    depth: int = 0                  # levels descended, counted from the screen
 
     def reset(self) -> None:
         self.history = []
         self._seen = 0
         self._stalled = 0
+        self._diving = 0
+        self._retreats = 0
+        self.depth = 0
 
     def _adjacent_threat(self, obs: Observation):
         if obs.player is None:
@@ -134,25 +142,59 @@ class BrogueAgent:
         # How much of the level is on screen. Exploration that stops adding
         # cells has finished, whether or not the staircase glyph was recognised.
         seen = int((obs.screen.map != " ").sum())
+        # A level the agent has just arrived on is almost entirely unexplored, so
+        # a collapse in the number of visible cells is a staircase being taken.
+        # The agent counts its own depth this way because of what `<` does on
+        # depth 1: climbing up from the first level *leaves the dungeon and ends
+        # the run*. Retreating upstairs there is not a retreat, it is a
+        # resignation, and it ended games after eleven keystrokes.
+        if self._seen > 120 and seen < 0.45 * self._seen:
+            self.depth += 1
+            self._seen = seen
         self._stalled = 0 if seen > self._seen else self._stalled + 1
         self._seen = max(self._seen, seen)
         melee = self._adjacent_threat(obs)
 
-        if melee and obs.health > self.flee_below:
-            # Walking into a monster is how you attack it in Brogue.
+        if melee and (obs.health > self.flee_below or self._retreats >= self.retreat_limit):
+            # Walking into a monster is how you attack it in Brogue. Cornered and
+            # hurt, hitting back still beats walking away: a monster adjacent to
+            # a retreating player gets a free swing every turn.
             return MOVE_KEYS[melee], f"attack {melee}"
-        if obs.health <= self.flee_below and obs.threats:
-            # Outnumbered and hurt: climb back toward the last staircase rather
-            # than trading hits. `<` travels to the up stairs.
+        if (obs.health <= self.flee_below and obs.threats
+                and self._retreats < self.retreat_limit and self.depth > 0):
+            # Hurt with something in sight: climb back toward the last staircase.
+            # This is capped, because it was an absorbing state -- three of six
+            # games spent 118 to 201 of their 300 keystrokes pressing `<` and
+            # died anyway. Retreating is a move, not a plan.
+            self._retreats += 1
             return "<", "retreat upstairs"
         if obs.health <= self.rest_below and not obs.threats:
             # `z` rests until something happens; health comes back with it.
+            # Only with the screen clear: resting while a monster was merely
+            # visible rather than adjacent spent 135 of 300 steps asleep, and the
+            # monster still arrived.
             return "z", "rest"
-        if obs.threats and obs.health > self.rest_below:
+        if (obs.threats and obs.health > self.rest_below
+                and self._stalled < self.patience and self._diving == 0):
             # Something is visible but not adjacent. Exploring walks toward it,
             # which is what we want: a cleared level is a safer level.
+            #
+            # Unless there is nothing left to explore. Without the stall guard
+            # this branch outranked the dive and became its own trap: one 900
+            # keystroke game spent 833 of them here, on a level it had already
+            # finished, because a monster stayed on screen the whole time.
             return "x", "explore toward trouble"
+        if self._diving > 0:
+            # Brogue's `>` travels toward the staircase and only descends once
+            # the player is standing on it, so the key has to be pressed several
+            # times in a row. Interleaving it with `x` walked the agent back to
+            # whatever it had been exploring: ten dives in one game, zero
+            # descents. Fighting still interrupts -- being killed on the stairs
+            # is not a descent either.
+            self._diving -= 1
+            return ">", "diving"
         if obs.stairs:
+            self._diving = self.dive_commit
             return ">", "take the stairs down"
         if self._stalled >= self.patience:
             # The first version only pressed `>` when it had *recognised* a
@@ -164,5 +206,6 @@ class BrogueAgent:
             # it needs to notice that exploring has stopped paying.
             self._stalled = 0
             self._seen = 0
+            self._diving = self.dive_commit
             return ">", "explored out, dive"
         return "x", "explore"

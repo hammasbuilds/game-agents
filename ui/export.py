@@ -104,6 +104,42 @@ def crafter_frames(count: int = 6) -> tuple[list[str], list[str]]:
     return frames, decoded
 
 
+def crafter_episode(steps: int = 90, every: int = 2) -> dict:
+    """A short episode kept frame by frame, with the goal chosen at each one.
+
+    This is what the planner looks like from the inside: the dashboard steps
+    through it, so the goal ladder can be watched switching from "collect wood"
+    to "shelter" as the light goes.
+    """
+    sys.path.insert(0, str(ROOT / "projects" / "02-crafter-planner"))
+    try:
+        import crafter
+        from crafteragent.agent import PlannerAgent
+    except ImportError:
+        return {}
+    env = crafter.Env(seed=502, length=steps + 2)
+    frame = env.reset()
+    agent = PlannerAgent()
+    agent.reset()
+    out = {"frames": [], "goals": [], "daylight": [], "inventory": [], "step": []}
+    for step in range(steps):
+        action = agent.act(frame)
+        if step % every == 0:
+            name = f"ep_{len(out['frames']):03d}.png"
+            Image.fromarray(frame).resize((128, 128), Image.NEAREST).save(MEDIA / name)
+            inv = {k: v for k, v in agent.inventory.items() if v and k not in
+                   ("health", "food", "drink", "energy")}
+            out["frames"].append(name)
+            out["goals"].append(agent.chosen)
+            out["daylight"].append(round(agent.perceiver.daylight_now, 2))
+            out["inventory"].append(inv)
+            out["step"].append(step)
+        frame, _, done, _ = env.step(action)
+        if done:
+            break
+    return out
+
+
 def brogue_frames(count: int = 4) -> list[str]:
     captured = sorted((ROOT / "projects" / "03-brogue-screen-agent" / "runs" / "frames")
                       .glob("*.png"))
@@ -120,9 +156,13 @@ def collect() -> dict:
     doom_eval = read_json(ROOT / "projects/01-doom-pixel-rl/runs/defend_the_center/eval.json")
     doom_hist = read_json(ROOT / "projects/01-doom-pixel-rl/runs/defend_the_center/history.json")
     doom_train = read_json(ROOT / "projects/01-doom-pixel-rl/runs/defend_the_center/train_summary.json")
+    kaggle = read_json(ROOT / "projects/01-doom-pixel-rl/runs_kaggle/width_comparison.json")
     crafter_eval = read_json(ROOT / "projects/02-crafter-planner/runs/eval_all.json")
     crafter_perc = read_json(ROOT / "projects/02-crafter-planner/runs/perception.json")
+    ab_head = read_json(ROOT / "projects/02-crafter-planner/runs/ab_head.json")
+    ab_new = read_json(ROOT / "projects/02-crafter-planner/runs/ab_new.json")
     brogue_play = read_json(ROOT / "projects/03-brogue-screen-agent/runs/play.json")
+    brogue_explorer = read_json(ROOT / "projects/03-brogue-screen-agent/runs/play_explorer.json")
 
     curve = []
     if doom_hist:
@@ -133,9 +173,11 @@ def collect() -> dict:
     return {
         "generated": subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT,
                                     capture_output=True, text=True).stdout.strip(),
-        "doom": {"eval": doom_eval, "curve": curve[::2], "training": doom_train},
-        "crafter": {"eval": crafter_eval, "perception": crafter_perc},
-        "brogue": {"play": brogue_play},
+        "doom": {"eval": doom_eval, "curve": curve[::2], "training": doom_train,
+                 "kaggle": kaggle},
+        "crafter": {"eval": crafter_eval, "perception": crafter_perc,
+                    "ab": {"head": ab_head, "new": ab_new}},
+        "brogue": {"play": brogue_play, "explorer": brogue_explorer},
     }
 
 
@@ -153,12 +195,20 @@ def main() -> None:
     except Exception as exc:
         print(f"crafter frames skipped: {exc}")
     try:
+        payload_episode = crafter_episode()
+    except Exception as exc:
+        payload_episode = {}
+        print(f"crafter episode skipped: {exc}")
+    try:
         media["brogue"] = brogue_frames()
     except Exception as exc:
         print(f"brogue frames skipped: {exc}")
 
     payload = collect()
     payload["media"] = media
+    payload["episode"] = payload_episode
+    payload["iterations"] = read_json(DATA / "iterations.json")
+    payload["clips"] = sorted(p.name for p in MEDIA.glob("clip_*"))
     (DATA / "results.json").write_text(json.dumps(payload, indent=1))
     # The same payload as a script, so the page also works when opened straight
     # off disk: fetch() of a local JSON file is blocked by the browser, and a
