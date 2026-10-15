@@ -48,6 +48,7 @@ game; the card is a button to that game's own page.
 | **Car racing** | −53.7 | **+376.0** at 419k steps | learned — +429.7 against a bar of 130.2 |
 | **Table tennis** | −20.0 | −16.6 at 2M steps | learned — +3.4 against a bar of 2.1 |
 | Boxing | 2.12 | 1.62 at 2M steps | **no gain** — −0.5 against a bar of 3.4 |
+| Platformer | 25.0 | 0.0 at 2M steps | **worse than untrained** — see below |
 
 Racing's own ladder, every row on the same six levels:
 
@@ -68,6 +69,48 @@ Racing is the one to look at first, because its score needs no explaining: a
 negative number in CarRacing means the car mostly sat on the grass collecting the
 per-step penalty. The untrained panel drifts off the road at −42 while the
 60k-step panel tracks the curve at +156, on the same seed, at the same moment.
+
+## A game where training made it worse, and why
+
+Kangaroo is the most instructive run here, because it did not merely fail to
+improve — it got **worse than the network that had never been trained**, and then
+stayed there:
+
+| checkpoint | steps | score over 8 episodes |
+|---|---:|---:|
+| random keys | — | 50.0 ± 92.6 |
+| untrained | 0 | 25.0 ± 70.7 |
+| 5% | 99,840 | **0.00 ± 0.00** |
+| 15% | 299,520 | **0.00 ± 0.00** |
+| 35% | 700,416 | **0.00 ± 0.00** |
+| 65% | 1,299,456 | **0.00 ± 0.00** |
+| 100% | 1,999,872 | **0.00 ± 0.00** |
+
+A score of exactly zero with exactly zero spread, five checkpoints running, is
+not a result to write down and move past — it is either a real collapse or a
+broken evaluation, and those need telling apart. Counting the actions each
+checkpoint actually took settles it:
+
+```
+ckpt 000 (untrained)  479 steps   top actions: 14 x35, 3 x29, 0 x28     spread out
+ckpt 065 (trained)    479 steps   top actions: 10 x377, 7 x30, 14 x14   one button
+```
+
+The trained policy pressed a single button for 377 of 479 steps. It collapsed
+onto a deterministic action that never scores, and the evaluation is fine — the
+random and untrained arms score through the same code path.
+
+**Why this game and not the others.** Kangaroo's first points need a specific
+sequence — climb a ladder, punch a monkey, climb again — that random exploration
+almost never completes, so there is nothing for the gradient to reinforce. With
+no signal pulling it anywhere, the entropy bonus is the only thing keeping the
+policy spread out, and at 0.01 it loses: the policy narrows, exploration stops,
+and the collapse is self-sealing. Racing, by contrast, pays something for every
+metre of road, so there is a gradient from the first episode.
+
+This is the honest shape of the answer to "what does an hour of CPU buy": on a
+game with dense reward, a car that learned to drive; on a game with sparse
+reward, a policy worse than the one you started with.
 
 ## A game that did not learn, and how we know
 

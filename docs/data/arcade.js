@@ -3369,61 +3369,101 @@ window.ARCADE = {
   },
   "platformer": {
    "key": "platformer",
-   "state": "training",
+   "state": "trained",
    "title": "Platformer",
    "blurb": "Climb the ladders, punch the monkeys, reach the top. The legal stand-in for Mario: a platformer with ROMs that ship licensed.",
    "env_id": "ALE/Kangaroo-v5",
-   "trained": false,
-   "summary": null,
+   "trained": true,
+   "summary": {
+    "game": "platformer",
+    "env_id": "ALE/Kangaroo-v5",
+    "updates": 1302,
+    "steps": 1999872,
+    "wall_seconds": 3667.3,
+    "final_return_mean": 6.0,
+    "params": 428131,
+    "width": 1,
+    "arch": "nature",
+    "device": "cpu",
+    "envs": 12,
+    "learning_rate": 0.00025,
+    "lr_schedule": "linear",
+    "entropy_coef": 0.01,
+    "rollout": 128,
+    "epochs": 4,
+    "checkpoints": [
+     {
+      "tag": "000",
+      "update": 0,
+      "steps": 0,
+      "path": "ckpt_000.pt",
+      "return_mean": null
+     },
+     {
+      "tag": "005",
+      "update": 65,
+      "steps": 99840,
+      "path": "ckpt_005.pt",
+      "return_mean": 14.0
+     },
+     {
+      "tag": "015",
+      "update": 195,
+      "steps": 299520,
+      "path": "ckpt_015.pt",
+      "return_mean": 2.0
+     },
+     {
+      "tag": "035",
+      "update": 456,
+      "steps": 700416,
+      "path": "ckpt_035.pt",
+      "return_mean": 8.0
+     },
+     {
+      "tag": "065",
+      "update": 846,
+      "steps": 1299456,
+      "path": "ckpt_065.pt",
+      "return_mean": 14.0
+     },
+     {
+      "tag": "100",
+      "update": 1302,
+      "steps": 1999872,
+      "path": "ckpt_100.pt",
+      "return_mean": 6.0
+     }
+    ]
+   },
    "curve": [
     {
-     "steps": 9216,
-     "return": 42.857142857142854,
-     "entropy": 2.8469,
-     "length": 420.7142857142857,
-     "sps": 380.7
+     "steps": 13824,
+     "return": 26.08695652173913,
+     "entropy": 2.7704,
+     "length": 434.95652173913044,
+     "sps": 421.3
     },
     {
-     "steps": 16896,
-     "return": 45.16129032258065,
-     "entropy": 2.6903,
-     "length": 439.2258064516129,
-     "sps": 447.9
+     "steps": 26112,
+     "return": 43.13725490196079,
+     "entropy": 2.5503,
+     "length": 437.3921568627451,
+     "sps": 481.0
     },
     {
-     "steps": 24576,
-     "return": 44.89795918367347,
-     "entropy": 2.5289,
-     "length": 437.3673469387755,
-     "sps": 475.3
+     "steps": 38400,
+     "return": 39.50617283950617,
+     "entropy": 2.1889,
+     "length": 437.39506172839504,
+     "sps": 492.7
     },
     {
-     "steps": 32256,
-     "return": 32.35294117647059,
-     "entropy": 2.5101,
-     "length": 429.29411764705884,
-     "sps": 487.2
-    },
-    {
-     "steps": 39936,
-     "return": 40.476190476190474,
-     "entropy": 2.2546,
-     "length": 440.14285714285717,
-     "sps": 497.0
-    },
-    {
-     "steps": 47616,
-     "return": 36.0,
-     "entropy": 2.114,
-     "length": 441.47,
-     "sps": 505.6
-    },
-    {
-     "steps": 55296,
+     "steps": 50688,
      "return": 32.0,
-     "entropy": 1.7529,
-     "length": 457.66,
-     "sps": 497.7
+     "entropy": 2.0491,
+     "length": 454.01,
+     "sps": 504.7
     },
     {
      "steps": 62976,
@@ -3433,53 +3473,32 @@ window.ARCADE = {
      "sps": 484.2
     },
     {
-     "steps": 70656,
-     "return": 22.0,
-     "entropy": 0.9648,
-     "length": 471.84,
-     "sps": 478.2
+     "steps": 75264,
+     "return": 26.0,
+     "entropy": 1.1119,
+     "length": 480.75,
+     "sps": 466.2
     },
     {
-     "steps": 78336,
-     "return": 28.0,
-     "entropy": 1.1812,
-     "length": 486.94,
-     "sps": 466.6
-    },
-    {
-     "steps": 86016,
+     "steps": 87552,
      "return": 24.0,
-     "entropy": 1.2048,
-     "length": 518.21,
-     "sps": 461.9
+     "entropy": 1.2432,
+     "length": 519.61,
+     "sps": 461.7
     },
     {
-     "steps": 93696,
-     "return": 16.0,
-     "entropy": 1.3424,
-     "length": 528.58,
-     "sps": 454.1
-    },
-    {
-     "steps": 101376,
+     "steps": 99840,
      "return": 14.0,
-     "entropy": 1.4137,
-     "length": 538.57,
-     "sps": 449.7
+     "entropy": 1.4375,
+     "length": 539.97,
+     "sps": 450.0
     },
     {
-     "steps": 109056,
-     "return": 14.0,
-     "entropy": 1.3559,
-     "length": 542.04,
-     "sps": 448.0
-    },
-    {
-     "steps": 116736,
+     "steps": 112128,
      "return": 12.0,
-     "entropy": 1.5131,
-     "length": 546.11,
-     "sps": 448.0
+     "entropy": 1.502,
+     "length": 544.48,
+     "sps": 449.5
     },
     {
      "steps": 124416,
@@ -3489,53 +3508,32 @@ window.ARCADE = {
      "sps": 436.1
     },
     {
-     "steps": 132096,
+     "steps": 136704,
      "return": 10.0,
-     "entropy": 0.3766,
-     "length": 501.14,
-     "sps": 433.8
+     "entropy": 0.4445,
+     "length": 488.47,
+     "sps": 435.2
     },
     {
-     "steps": 139776,
+     "steps": 148992,
      "return": 10.0,
-     "entropy": 0.3791,
-     "length": 477.31,
-     "sps": 435.9
+     "entropy": 0.4615,
+     "length": 450.99,
+     "sps": 436.1
     },
     {
-     "steps": 147456,
+     "steps": 161280,
      "return": 10.0,
-     "entropy": 0.5182,
-     "length": 451.04,
-     "sps": 437.0
+     "entropy": 0.5438,
+     "length": 434.52,
+     "sps": 437.8
     },
     {
-     "steps": 155136,
-     "return": 8.0,
-     "entropy": 0.5678,
-     "length": 443.98,
-     "sps": 437.0
-    },
-    {
-     "steps": 162816,
-     "return": 10.0,
-     "entropy": 0.4066,
-     "length": 433.91,
-     "sps": 438.5
-    },
-    {
-     "steps": 170496,
-     "return": 8.0,
-     "entropy": 0.4107,
-     "length": 436.1,
-     "sps": 434.1
-    },
-    {
-     "steps": 178176,
-     "return": 6.0,
-     "entropy": 0.2472,
-     "length": 439.02,
-     "sps": 434.5
+     "steps": 173568,
+     "return": 4.0,
+     "entropy": 0.2145,
+     "length": 435.89,
+     "sps": 433.7
     },
     {
      "steps": 185856,
@@ -3545,53 +3543,32 @@ window.ARCADE = {
      "sps": 435.5
     },
     {
-     "steps": 193536,
+     "steps": 198144,
      "return": 6.0,
-     "entropy": 0.2718,
-     "length": 439.6,
-     "sps": 436.6
+     "entropy": 0.2984,
+     "length": 438.89,
+     "sps": 436.3
     },
     {
-     "steps": 201216,
-     "return": 6.0,
-     "entropy": 0.2799,
-     "length": 438.48,
-     "sps": 436.5
-    },
-    {
-     "steps": 208896,
+     "steps": 210432,
      "return": 2.0,
-     "entropy": 0.3102,
-     "length": 430.7,
-     "sps": 437.0
+     "entropy": 0.2865,
+     "length": 426.96,
+     "sps": 437.1
     },
     {
-     "steps": 216576,
-     "return": 2.0,
-     "entropy": 0.3284,
-     "length": 423.86,
-     "sps": 437.6
-    },
-    {
-     "steps": 224256,
+     "steps": 222720,
      "return": 0.0,
-     "entropy": 0.332,
-     "length": 434.51,
-     "sps": 437.5
+     "entropy": 0.3964,
+     "length": 433.85,
+     "sps": 437.7
     },
     {
-     "steps": 231936,
+     "steps": 235008,
      "return": 0.0,
-     "entropy": 0.3932,
-     "length": 434.38,
-     "sps": 438.1
-    },
-    {
-     "steps": 239616,
-     "return": 0.0,
-     "entropy": 0.346,
-     "length": 426.21,
-     "sps": 441.9
+     "entropy": 0.3591,
+     "length": 431.61,
+     "sps": 439.3
     },
     {
      "steps": 247296,
@@ -3601,53 +3578,32 @@ window.ARCADE = {
      "sps": 446.0
     },
     {
-     "steps": 254976,
+     "steps": 259584,
      "return": 0.0,
-     "entropy": 0.3121,
-     "length": 414.55,
-     "sps": 449.9
+     "entropy": 0.2721,
+     "length": 400.88,
+     "sps": 451.5
     },
     {
-     "steps": 262656,
+     "steps": 271872,
      "return": 0.0,
-     "entropy": 0.2827,
-     "length": 397.76,
-     "sps": 453.4
+     "entropy": 0.444,
+     "length": 378.23,
+     "sps": 457.4
     },
     {
-     "steps": 270336,
+     "steps": 284160,
      "return": 0.0,
-     "entropy": 0.4034,
-     "length": 380.42,
-     "sps": 456.7
+     "entropy": 0.4711,
+     "length": 368.61,
+     "sps": 460.4
     },
     {
-     "steps": 278016,
-     "return": 0.0,
-     "entropy": 0.4878,
-     "length": 373.34,
-     "sps": 458.8
-    },
-    {
-     "steps": 285696,
-     "return": 0.0,
-     "entropy": 0.5045,
-     "length": 363.23,
-     "sps": 460.6
-    },
-    {
-     "steps": 293376,
+     "steps": 296448,
      "return": 2.0,
-     "entropy": 0.4475,
-     "length": 357.04,
-     "sps": 463.1
-    },
-    {
-     "steps": 301056,
-     "return": 2.0,
-     "entropy": 0.7293,
-     "length": 366.02,
-     "sps": 465.6
+     "entropy": 0.6262,
+     "length": 361.32,
+     "sps": 464.5
     },
     {
      "steps": 308736,
@@ -3657,53 +3613,32 @@ window.ARCADE = {
      "sps": 467.7
     },
     {
-     "steps": 316416,
+     "steps": 321024,
      "return": 2.0,
-     "entropy": 0.7833,
-     "length": 393.73,
-     "sps": 469.9
+     "entropy": 0.6136,
+     "length": 406.76,
+     "sps": 470.7
     },
     {
-     "steps": 324096,
-     "return": 2.0,
-     "entropy": 0.5066,
-     "length": 415.87,
-     "sps": 470.4
-    },
-    {
-     "steps": 331776,
+     "steps": 333312,
      "return": 6.0,
-     "entropy": 0.708,
-     "length": 441.42,
-     "sps": 467.9
+     "entropy": 0.409,
+     "length": 444.69,
+     "sps": 468.0
     },
     {
-     "steps": 339456,
+     "steps": 345600,
      "return": 6.0,
-     "entropy": 0.6764,
-     "length": 453.56,
-     "sps": 466.9
+     "entropy": 0.9852,
+     "length": 461.19,
+     "sps": 465.0
     },
     {
-     "steps": 347136,
-     "return": 8.0,
-     "entropy": 0.6405,
-     "length": 466.13,
-     "sps": 464.8
-    },
-    {
-     "steps": 354816,
+     "steps": 357888,
      "return": 10.0,
-     "entropy": 0.2501,
-     "length": 467.84,
-     "sps": 463.3
-    },
-    {
-     "steps": 362496,
-     "return": 10.0,
-     "entropy": 0.2401,
-     "length": 437.65,
-     "sps": 463.2
+     "entropy": 0.2403,
+     "length": 454.61,
+     "sps": 463.5
     },
     {
      "steps": 370176,
@@ -3713,53 +3648,32 @@ window.ARCADE = {
      "sps": 463.3
     },
     {
-     "steps": 377856,
+     "steps": 382464,
      "return": 4.0,
-     "entropy": 0.3926,
-     "length": 405.83,
-     "sps": 460.9
+     "entropy": 0.4108,
+     "length": 411.09,
+     "sps": 461.1
     },
     {
-     "steps": 385536,
-     "return": 4.0,
-     "entropy": 0.4367,
-     "length": 409.26,
-     "sps": 460.5
+     "steps": 394752,
+     "return": 0.0,
+     "entropy": 0.5816,
+     "length": 418.24,
+     "sps": 455.3
     },
     {
-     "steps": 393216,
+     "steps": 407040,
      "return": 2.0,
-     "entropy": 0.472,
-     "length": 420.82,
-     "sps": 455.6
+     "entropy": 0.762,
+     "length": 452.37,
+     "sps": 452.6
     },
     {
-     "steps": 400896,
+     "steps": 419328,
      "return": 2.0,
-     "entropy": 0.5596,
-     "length": 435.95,
-     "sps": 453.0
-    },
-    {
-     "steps": 408576,
-     "return": 2.0,
-     "entropy": 0.7897,
-     "length": 456.68,
-     "sps": 452.7
-    },
-    {
-     "steps": 416256,
-     "return": 2.0,
-     "entropy": 0.8278,
-     "length": 489.42,
-     "sps": 452.0
-    },
-    {
-     "steps": 423936,
-     "return": 4.0,
-     "entropy": 1.0367,
-     "length": 520.73,
-     "sps": 452.0
+     "entropy": 0.7749,
+     "length": 501.47,
+     "sps": 452.3
     },
     {
      "steps": 431616,
@@ -3769,53 +3683,32 @@ window.ARCADE = {
      "sps": 451.8
     },
     {
-     "steps": 439296,
+     "steps": 443904,
      "return": 4.0,
-     "entropy": 1.3191,
-     "length": 548.03,
-     "sps": 452.1
+     "entropy": 1.3729,
+     "length": 547.8,
+     "sps": 451.5
     },
     {
-     "steps": 446976,
+     "steps": 456192,
      "return": 4.0,
-     "entropy": 1.4756,
-     "length": 551.04,
-     "sps": 451.3
+     "entropy": 0.5393,
+     "length": 558.87,
+     "sps": 450.2
     },
     {
-     "steps": 454656,
+     "steps": 468480,
      "return": 6.0,
-     "entropy": 0.8259,
-     "length": 555.23,
-     "sps": 450.1
-    },
-    {
-     "steps": 462336,
-     "return": 6.0,
-     "entropy": 0.3532,
-     "length": 546.89,
-     "sps": 450.4
-    },
-    {
-     "steps": 470016,
-     "return": 6.0,
-     "entropy": 0.4714,
-     "length": 514.85,
+     "entropy": 0.3831,
+     "length": 519.38,
      "sps": 450.5
     },
     {
-     "steps": 477696,
+     "steps": 480768,
      "return": 6.0,
-     "entropy": 0.6338,
-     "length": 513.56,
-     "sps": 450.4
-    },
-    {
-     "steps": 485376,
-     "return": 6.0,
-     "entropy": 0.7384,
-     "length": 511.89,
-     "sps": 450.3
+     "entropy": 0.6128,
+     "length": 511.35,
+     "sps": 450.2
     },
     {
      "steps": 493056,
@@ -3825,52 +3718,31 @@ window.ARCADE = {
      "sps": 450.4
     },
     {
-     "steps": 500736,
-     "return": 6.0,
-     "entropy": 0.9605,
-     "length": 511.32,
+     "steps": 505344,
+     "return": 4.0,
+     "entropy": 1.0364,
+     "length": 516.14,
      "sps": 450.3
     },
     {
-     "steps": 508416,
+     "steps": 517632,
      "return": 4.0,
-     "entropy": 0.9304,
-     "length": 517.67,
-     "sps": 450.5
+     "entropy": 1.5501,
+     "length": 541.3,
+     "sps": 450.2
     },
     {
-     "steps": 516096,
-     "return": 2.0,
-     "entropy": 1.205,
-     "length": 537.81,
-     "sps": 450.1
-    },
-    {
-     "steps": 523776,
+     "steps": 529920,
      "return": 4.0,
-     "entropy": 1.6906,
-     "length": 552.36,
+     "entropy": 1.9415,
+     "length": 575.2,
      "sps": 450.3
     },
     {
-     "steps": 531456,
-     "return": 2.0,
-     "entropy": 1.957,
-     "length": 574.23,
-     "sps": 450.1
-    },
-    {
-     "steps": 539136,
+     "steps": 542208,
      "return": 4.0,
-     "entropy": 1.4746,
-     "length": 566.89,
-     "sps": 450.1
-    },
-    {
-     "steps": 546816,
-     "return": 6.0,
-     "entropy": 0.6459,
-     "length": 577.41,
+     "entropy": 1.5651,
+     "length": 572.63,
      "sps": 449.9
     },
     {
@@ -3881,53 +3753,32 @@ window.ARCADE = {
      "sps": 450.7
     },
     {
-     "steps": 562176,
+     "steps": 566784,
      "return": 10.0,
-     "entropy": 0.464,
-     "length": 578.48,
-     "sps": 452.4
+     "entropy": 0.4551,
+     "length": 570.6,
+     "sps": 453.3
     },
     {
-     "steps": 569856,
+     "steps": 579072,
      "return": 10.0,
-     "entropy": 0.5634,
-     "length": 566.11,
-     "sps": 454.2
+     "entropy": 0.5875,
+     "length": 565.04,
+     "sps": 455.8
     },
     {
-     "steps": 577536,
+     "steps": 591360,
      "return": 10.0,
-     "entropy": 0.6165,
-     "length": 563.86,
-     "sps": 455.7
+     "entropy": 0.6434,
+     "length": 567.0,
+     "sps": 458.4
     },
     {
-     "steps": 585216,
-     "return": 10.0,
-     "entropy": 0.6579,
-     "length": 563.08,
-     "sps": 457.2
-    },
-    {
-     "steps": 592896,
-     "return": 10.0,
-     "entropy": 0.7723,
-     "length": 568.03,
-     "sps": 458.7
-    },
-    {
-     "steps": 600576,
-     "return": 8.0,
-     "entropy": 0.9618,
-     "length": 553.1,
-     "sps": 460.0
-    },
-    {
-     "steps": 608256,
-     "return": 4.0,
-     "entropy": 1.0289,
-     "length": 544.6,
-     "sps": 461.4
+     "steps": 603648,
+     "return": 2.0,
+     "entropy": 0.6893,
+     "length": 553.52,
+     "sps": 460.4
     },
     {
      "steps": 615936,
@@ -3937,53 +3788,32 @@ window.ARCADE = {
      "sps": 463.0
     },
     {
-     "steps": 623616,
+     "steps": 628224,
      "return": 4.0,
-     "entropy": 1.2987,
-     "length": 539.92,
-     "sps": 464.5
+     "entropy": 1.1758,
+     "length": 534.33,
+     "sps": 465.8
     },
     {
-     "steps": 631296,
+     "steps": 640512,
      "return": 4.0,
-     "entropy": 0.9558,
-     "length": 522.2,
-     "sps": 466.1
+     "entropy": 0.9775,
+     "length": 494.82,
+     "sps": 468.2
     },
     {
-     "steps": 638976,
+     "steps": 652800,
      "return": 4.0,
-     "entropy": 1.4003,
-     "length": 499.96,
-     "sps": 467.7
+     "entropy": 0.9078,
+     "length": 472.24,
+     "sps": 470.5
     },
     {
-     "steps": 646656,
+     "steps": 665088,
      "return": 4.0,
-     "entropy": 0.8408,
-     "length": 476.16,
-     "sps": 469.4
-    },
-    {
-     "steps": 654336,
-     "return": 4.0,
-     "entropy": 0.9457,
-     "length": 470.49,
-     "sps": 471.0
-    },
-    {
-     "steps": 662016,
-     "return": 4.0,
-     "entropy": 0.919,
-     "length": 468.46,
-     "sps": 472.6
-    },
-    {
-     "steps": 669696,
-     "return": 6.0,
-     "entropy": 0.8758,
-     "length": 462.77,
-     "sps": 474.1
+     "entropy": 0.8938,
+     "length": 462.34,
+     "sps": 473.0
     },
     {
      "steps": 677376,
@@ -3993,53 +3823,32 @@ window.ARCADE = {
      "sps": 475.5
     },
     {
-     "steps": 685056,
-     "return": 6.0,
-     "entropy": 0.4856,
-     "length": 462.69,
-     "sps": 477.1
-    },
-    {
-     "steps": 692736,
+     "steps": 689664,
      "return": 8.0,
-     "entropy": 0.6148,
-     "length": 468.93,
-     "sps": 478.5
+     "entropy": 0.5322,
+     "length": 467.09,
+     "sps": 477.8
     },
     {
-     "steps": 700416,
+     "steps": 701952,
      "return": 8.0,
-     "entropy": 0.603,
-     "length": 466.62,
-     "sps": 479.8
+     "entropy": 0.7275,
+     "length": 458.09,
+     "sps": 479.9
     },
     {
-     "steps": 708096,
-     "return": 6.0,
-     "entropy": 0.6633,
-     "length": 446.34,
-     "sps": 481.1
-    },
-    {
-     "steps": 715776,
-     "return": 6.0,
-     "entropy": 0.8466,
-     "length": 446.74,
+     "steps": 714240,
+     "return": 4.0,
+     "entropy": 0.7477,
+     "length": 447.21,
      "sps": 482.5
     },
     {
-     "steps": 723456,
+     "steps": 726528,
      "return": 6.0,
-     "entropy": 0.4234,
-     "length": 436.58,
-     "sps": 484.0
-    },
-    {
-     "steps": 731136,
-     "return": 4.0,
-     "entropy": 0.3813,
-     "length": 437.28,
-     "sps": 485.4
+     "entropy": 0.462,
+     "length": 436.16,
+     "sps": 484.4
     },
     {
      "steps": 738816,
@@ -4049,53 +3858,32 @@ window.ARCADE = {
      "sps": 486.8
     },
     {
-     "steps": 746496,
+     "steps": 751104,
      "return": 4.0,
-     "entropy": 0.4934,
-     "length": 433.68,
-     "sps": 488.1
+     "entropy": 0.8538,
+     "length": 437.73,
+     "sps": 488.8
     },
     {
-     "steps": 754176,
-     "return": 4.0,
-     "entropy": 1.0136,
-     "length": 435.66,
-     "sps": 489.3
-    },
-    {
-     "steps": 761856,
+     "steps": 763392,
      "return": 2.0,
-     "entropy": 1.3985,
-     "length": 442.38,
-     "sps": 490.5
+     "entropy": 0.9876,
+     "length": 443.24,
+     "sps": 490.8
     },
     {
-     "steps": 769536,
+     "steps": 775680,
      "return": 0.0,
-     "entropy": 1.1799,
-     "length": 458.72,
-     "sps": 491.8
+     "entropy": 1.2618,
+     "length": 467.38,
+     "sps": 492.7
     },
     {
-     "steps": 777216,
-     "return": 0.0,
-     "entropy": 1.3536,
-     "length": 468.73,
-     "sps": 492.9
-    },
-    {
-     "steps": 784896,
-     "return": 2.0,
-     "entropy": 1.4928,
-     "length": 480.84,
-     "sps": 494.1
-    },
-    {
-     "steps": 792576,
+     "steps": 787968,
      "return": 4.0,
-     "entropy": 1.1087,
-     "length": 480.6,
-     "sps": 495.3
+     "entropy": 1.084,
+     "length": 483.73,
+     "sps": 494.4
     },
     {
      "steps": 800256,
@@ -4105,53 +3893,32 @@ window.ARCADE = {
      "sps": 496.4
     },
     {
-     "steps": 807936,
-     "return": 4.0,
-     "entropy": 1.3199,
-     "length": 486.01,
-     "sps": 497.6
-    },
-    {
-     "steps": 815616,
+     "steps": 812544,
      "return": 6.0,
-     "entropy": 0.9268,
-     "length": 459.56,
-     "sps": 498.7
+     "entropy": 1.1479,
+     "length": 468.35,
+     "sps": 498.2
     },
     {
-     "steps": 823296,
-     "return": 10.0,
-     "entropy": 0.6866,
-     "length": 441.76,
+     "steps": 824832,
+     "return": 8.0,
+     "entropy": 0.6718,
+     "length": 431.96,
      "sps": 499.8
     },
     {
-     "steps": 830976,
+     "steps": 837120,
      "return": 6.0,
-     "entropy": 0.7742,
-     "length": 409.44,
-     "sps": 500.5
-    },
-    {
-     "steps": 838656,
-     "return": 6.0,
-     "entropy": 0.8794,
-     "length": 394.33,
+     "entropy": 0.9403,
+     "length": 396.16,
      "sps": 501.5
     },
     {
-     "steps": 846336,
+     "steps": 849408,
      "return": 8.0,
-     "entropy": 1.0373,
-     "length": 391.04,
-     "sps": 502.5
-    },
-    {
-     "steps": 854016,
-     "return": 6.0,
-     "entropy": 1.4291,
-     "length": 390.38,
-     "sps": 503.6
+     "entropy": 1.3196,
+     "length": 388.63,
+     "sps": 503.0
     },
     {
      "steps": 861696,
@@ -4161,53 +3928,32 @@ window.ARCADE = {
      "sps": 504.6
     },
     {
-     "steps": 869376,
+     "steps": 873984,
      "return": 4.0,
-     "entropy": 1.7588,
-     "length": 408.03,
-     "sps": 505.7
+     "entropy": 1.6428,
+     "length": 412.77,
+     "sps": 506.1
     },
     {
-     "steps": 877056,
-     "return": 4.0,
-     "entropy": 1.4342,
-     "length": 411.11,
-     "sps": 506.6
-    },
-    {
-     "steps": 884736,
-     "return": 4.0,
-     "entropy": 1.5779,
-     "length": 398.43,
-     "sps": 507.1
-    },
-    {
-     "steps": 892416,
+     "steps": 886272,
      "return": 2.0,
-     "entropy": 1.5219,
-     "length": 398.34,
-     "sps": 508.1
+     "entropy": 1.6339,
+     "length": 395.59,
+     "sps": 507.3
     },
     {
-     "steps": 900096,
+     "steps": 898560,
      "return": 4.0,
-     "entropy": 1.3767,
-     "length": 395.04,
-     "sps": 509.0
+     "entropy": 1.275,
+     "length": 393.08,
+     "sps": 508.7
     },
     {
-     "steps": 907776,
-     "return": 2.0,
-     "entropy": 0.9472,
-     "length": 395.9,
-     "sps": 509.9
-    },
-    {
-     "steps": 915456,
-     "return": 6.0,
-     "entropy": 1.5528,
-     "length": 388.85,
-     "sps": 510.6
+     "steps": 910848,
+     "return": 4.0,
+     "entropy": 1.8252,
+     "length": 390.79,
+     "sps": 510.1
     },
     {
      "steps": 923136,
@@ -4217,53 +3963,32 @@ window.ARCADE = {
      "sps": 511.4
     },
     {
-     "steps": 930816,
+     "steps": 935424,
      "return": 10.0,
-     "entropy": 0.9862,
-     "length": 372.8,
-     "sps": 512.3
+     "entropy": 1.378,
+     "length": 361.53,
+     "sps": 512.9
     },
     {
-     "steps": 938496,
+     "steps": 947712,
      "return": 12.0,
-     "entropy": 0.838,
-     "length": 357.77,
-     "sps": 513.2
+     "entropy": 1.026,
+     "length": 352.97,
+     "sps": 514.2
     },
     {
-     "steps": 946176,
-     "return": 12.0,
-     "entropy": 0.9173,
-     "length": 353.41,
-     "sps": 514.0
-    },
-    {
-     "steps": 953856,
+     "steps": 960000,
      "return": 10.0,
-     "entropy": 0.9396,
-     "length": 353.55,
-     "sps": 514.8
+     "entropy": 1.2079,
+     "length": 353.33,
+     "sps": 515.4
     },
     {
-     "steps": 961536,
-     "return": 8.0,
-     "entropy": 0.8501,
-     "length": 356.22,
-     "sps": 515.7
-    },
-    {
-     "steps": 969216,
+     "steps": 972288,
      "return": 6.0,
-     "entropy": 1.2636,
-     "length": 361.17,
-     "sps": 516.4
-    },
-    {
-     "steps": 976896,
-     "return": 2.0,
-     "entropy": 1.3222,
-     "length": 367.88,
-     "sps": 517.2
+     "entropy": 0.9597,
+     "length": 367.31,
+     "sps": 516.7
     },
     {
      "steps": 984576,
@@ -4273,53 +3998,32 @@ window.ARCADE = {
      "sps": 518.0
     },
     {
-     "steps": 992256,
-     "return": 6.0,
-     "entropy": 1.118,
-     "length": 382.79,
-     "sps": 518.8
-    },
-    {
-     "steps": 999936,
-     "return": 10.0,
-     "entropy": 0.4525,
-     "length": 379.39,
-     "sps": 519.5
-    },
-    {
-     "steps": 1007616,
-     "return": 14.0,
-     "entropy": 0.6446,
-     "length": 379.87,
-     "sps": 520.3
-    },
-    {
-     "steps": 1015296,
-     "return": 14.0,
-     "entropy": 1.1218,
-     "length": 384.62,
-     "sps": 521.1
-    },
-    {
-     "steps": 1022976,
-     "return": 12.0,
-     "entropy": 0.8436,
-     "length": 387.04,
-     "sps": 521.9
-    },
-    {
-     "steps": 1030656,
-     "return": 12.0,
-     "entropy": 0.9388,
-     "length": 384.03,
-     "sps": 522.6
-    },
-    {
-     "steps": 1038336,
+     "steps": 996864,
      "return": 8.0,
-     "entropy": 0.5587,
-     "length": 387.97,
-     "sps": 523.5
+     "entropy": 0.4201,
+     "length": 383.4,
+     "sps": 519.4
+    },
+    {
+     "steps": 1009152,
+     "return": 14.0,
+     "entropy": 0.7792,
+     "length": 377.88,
+     "sps": 520.6
+    },
+    {
+     "steps": 1021440,
+     "return": 12.0,
+     "entropy": 1.3042,
+     "length": 387.88,
+     "sps": 521.8
+    },
+    {
+     "steps": 1033728,
+     "return": 10.0,
+     "entropy": 0.8164,
+     "length": 382.22,
+     "sps": 522.9
     },
     {
      "steps": 1046016,
@@ -4329,53 +4033,32 @@ window.ARCADE = {
      "sps": 524.0
     },
     {
-     "steps": 1053696,
-     "return": 4.0,
-     "entropy": 1.2681,
-     "length": 373.17,
-     "sps": 524.7
-    },
-    {
-     "steps": 1061376,
+     "steps": 1058304,
      "return": 8.0,
-     "entropy": 0.6969,
-     "length": 372.96,
-     "sps": 525.5
+     "entropy": 0.8448,
+     "length": 373.55,
+     "sps": 525.4
     },
     {
-     "steps": 1069056,
+     "steps": 1070592,
      "return": 6.0,
-     "entropy": 0.7403,
-     "length": 365.69,
-     "sps": 526.2
+     "entropy": 0.7332,
+     "length": 360.31,
+     "sps": 526.4
     },
     {
-     "steps": 1076736,
+     "steps": 1082880,
      "return": 6.0,
-     "entropy": 1.1434,
-     "length": 350.89,
-     "sps": 526.9
+     "entropy": 0.6619,
+     "length": 356.09,
+     "sps": 527.4
     },
     {
-     "steps": 1084416,
-     "return": 8.0,
-     "entropy": 0.8315,
-     "length": 360.57,
-     "sps": 527.6
-    },
-    {
-     "steps": 1092096,
+     "steps": 1095168,
      "return": 4.0,
-     "entropy": 0.8815,
-     "length": 346.99,
-     "sps": 528.3
-    },
-    {
-     "steps": 1099776,
-     "return": 6.0,
-     "entropy": 1.5355,
-     "length": 345.25,
-     "sps": 529.1
+     "entropy": 1.3209,
+     "length": 343.29,
+     "sps": 528.6
     },
     {
      "steps": 1107456,
@@ -4385,53 +4068,32 @@ window.ARCADE = {
      "sps": 529.7
     },
     {
-     "steps": 1115136,
+     "steps": 1119744,
      "return": 4.0,
-     "entropy": 1.2177,
-     "length": 352.53,
-     "sps": 530.3
+     "entropy": 1.6508,
+     "length": 346.92,
+     "sps": 530.6
     },
     {
-     "steps": 1122816,
+     "steps": 1132032,
      "return": 4.0,
-     "entropy": 1.3073,
-     "length": 351.9,
-     "sps": 531.0
-    },
-    {
-     "steps": 1130496,
-     "return": 4.0,
-     "entropy": 1.3012,
-     "length": 358.65,
+     "entropy": 1.3068,
+     "length": 361.28,
      "sps": 531.4
     },
     {
-     "steps": 1138176,
-     "return": 4.0,
-     "entropy": 1.5235,
-     "length": 361.56,
-     "sps": 531.5
-    },
-    {
-     "steps": 1145856,
+     "steps": 1144320,
      "return": 8.0,
-     "entropy": 1.1733,
-     "length": 372.21,
-     "sps": 532.1
+     "entropy": 1.2871,
+     "length": 365.19,
+     "sps": 531.9
     },
     {
-     "steps": 1153536,
-     "return": 12.0,
-     "entropy": 1.9443,
-     "length": 374.91,
-     "sps": 532.8
-    },
-    {
-     "steps": 1161216,
+     "steps": 1156608,
      "return": 10.0,
-     "entropy": 1.1828,
-     "length": 378.04,
-     "sps": 533.4
+     "entropy": 0.9959,
+     "length": 383.0,
+     "sps": 532.9
     },
     {
      "steps": 1168896,
@@ -4441,53 +4103,32 @@ window.ARCADE = {
      "sps": 533.7
     },
     {
-     "steps": 1176576,
-     "return": 12.0,
-     "entropy": 1.19,
-     "length": 375.36,
-     "sps": 534.3
-    },
-    {
-     "steps": 1184256,
+     "steps": 1181184,
      "return": 8.0,
-     "entropy": 1.201,
-     "length": 366.68,
-     "sps": 534.8
+     "entropy": 1.3945,
+     "length": 373.5,
+     "sps": 534.5
     },
     {
-     "steps": 1191936,
+     "steps": 1193472,
      "return": 6.0,
-     "entropy": 0.96,
-     "length": 360.42,
-     "sps": 535.4
+     "entropy": 1.3859,
+     "length": 359.74,
+     "sps": 535.5
     },
     {
-     "steps": 1199616,
-     "return": 6.0,
-     "entropy": 1.1409,
-     "length": 362.97,
-     "sps": 536.0
-    },
-    {
-     "steps": 1207296,
-     "return": 2.0,
-     "entropy": 1.5167,
-     "length": 360.84,
+     "steps": 1205760,
+     "return": 4.0,
+     "entropy": 0.5735,
+     "length": 360.22,
      "sps": 536.4
     },
     {
-     "steps": 1214976,
+     "steps": 1218048,
      "return": 6.0,
-     "entropy": 1.0942,
-     "length": 350.59,
-     "sps": 536.9
-    },
-    {
-     "steps": 1222656,
-     "return": 4.0,
-     "entropy": 1.0181,
-     "length": 349.76,
-     "sps": 537.6
+     "entropy": 0.7655,
+     "length": 351.73,
+     "sps": 537.3
     },
     {
      "steps": 1230336,
@@ -4497,53 +4138,32 @@ window.ARCADE = {
      "sps": 538.1
     },
     {
-     "steps": 1238016,
+     "steps": 1242624,
      "return": 10.0,
-     "entropy": 0.9708,
-     "length": 342.12,
-     "sps": 538.7
+     "entropy": 0.9808,
+     "length": 335.37,
+     "sps": 538.9
     },
     {
-     "steps": 1245696,
-     "return": 10.0,
-     "entropy": 0.9879,
-     "length": 341.89,
-     "sps": 539.2
-    },
-    {
-     "steps": 1253376,
+     "steps": 1254912,
      "return": 8.0,
-     "entropy": 1.4517,
-     "length": 349.03,
-     "sps": 539.7
+     "entropy": 0.8131,
+     "length": 346.37,
+     "sps": 539.8
     },
     {
-     "steps": 1261056,
+     "steps": 1267200,
      "return": 8.0,
-     "entropy": 0.7488,
-     "length": 346.3,
-     "sps": 540.2
+     "entropy": 0.7751,
+     "length": 348.6,
+     "sps": 540.6
     },
     {
-     "steps": 1268736,
-     "return": 4.0,
-     "entropy": 1.3041,
-     "length": 347.61,
-     "sps": 540.8
-    },
-    {
-     "steps": 1276416,
+     "steps": 1279488,
      "return": 6.0,
-     "entropy": 1.393,
-     "length": 353.18,
+     "entropy": 0.7136,
+     "length": 355.19,
      "sps": 541.4
-    },
-    {
-     "steps": 1284096,
-     "return": 8.0,
-     "entropy": 0.9202,
-     "length": 352.94,
-     "sps": 541.8
     },
     {
      "steps": 1291776,
@@ -4553,53 +4173,32 @@ window.ARCADE = {
      "sps": 542.4
     },
     {
-     "steps": 1299456,
-     "return": 14.0,
-     "entropy": 0.7185,
-     "length": 346.07,
-     "sps": 542.9
-    },
-    {
-     "steps": 1307136,
+     "steps": 1304064,
      "return": 16.0,
-     "entropy": 0.8695,
-     "length": 348.92,
-     "sps": 543.5
+     "entropy": 0.6092,
+     "length": 348.32,
+     "sps": 543.2
     },
     {
-     "steps": 1314816,
+     "steps": 1316352,
      "return": 10.0,
-     "entropy": 1.1629,
-     "length": 341.04,
-     "sps": 543.8
+     "entropy": 0.7194,
+     "length": 343.1,
+     "sps": 544.0
     },
     {
-     "steps": 1322496,
-     "return": 6.0,
-     "entropy": 1.2917,
-     "length": 345.05,
-     "sps": 544.3
-    },
-    {
-     "steps": 1330176,
+     "steps": 1328640,
      "return": 4.0,
-     "entropy": 1.1342,
-     "length": 349.02,
-     "sps": 544.8
+     "entropy": 1.065,
+     "length": 348.98,
+     "sps": 544.7
     },
     {
-     "steps": 1337856,
-     "return": 6.0,
-     "entropy": 1.0358,
-     "length": 349.75,
-     "sps": 545.4
-    },
-    {
-     "steps": 1345536,
+     "steps": 1340928,
      "return": 4.0,
-     "entropy": 0.877,
-     "length": 349.07,
-     "sps": 545.4
+     "entropy": 0.9712,
+     "length": 349.69,
+     "sps": 545.3
     },
     {
      "steps": 1353216,
@@ -4609,39 +4208,539 @@ window.ARCADE = {
      "sps": 545.3
     },
     {
-     "steps": 1360896,
+     "steps": 1365504,
+     "return": 6.0,
+     "entropy": 0.9069,
+     "length": 343.1,
+     "sps": 545.0
+    },
+    {
+     "steps": 1377792,
+     "return": 6.0,
+     "entropy": 0.9496,
+     "length": 339.54,
+     "sps": 544.1
+    },
+    {
+     "steps": 1390080,
+     "return": 10.0,
+     "entropy": 0.7758,
+     "length": 335.75,
+     "sps": 544.1
+    },
+    {
+     "steps": 1402368,
      "return": 8.0,
-     "entropy": 0.8612,
-     "length": 340.66,
-     "sps": 545.1
+     "entropy": 0.6613,
+     "length": 339.57,
+     "sps": 543.9
     },
     {
-     "steps": 1368576,
-     "return": 6.0,
-     "entropy": 0.5632,
-     "length": 343.65,
-     "sps": 544.9
+     "steps": 1414656,
+     "return": 8.0,
+     "entropy": 0.8608,
+     "length": 341.57,
+     "sps": 544.0
     },
     {
-     "steps": 1376256,
-     "return": 6.0,
-     "entropy": 0.7741,
-     "length": 339.62,
+     "steps": 1426944,
+     "return": 4.0,
+     "entropy": 1.0831,
+     "length": 347.93,
+     "sps": 544.1
+    },
+    {
+     "steps": 1439232,
+     "return": 2.0,
+     "entropy": 1.2028,
+     "length": 341.95,
      "sps": 544.2
     },
     {
-     "steps": 1382400,
+     "steps": 1451520,
+     "return": 4.0,
+     "entropy": 1.3419,
+     "length": 349.59,
+     "sps": 544.2
+    },
+    {
+     "steps": 1463808,
+     "return": 4.0,
+     "entropy": 1.1192,
+     "length": 353.9,
+     "sps": 544.2
+    },
+    {
+     "steps": 1476096,
+     "return": 4.0,
+     "entropy": 0.6518,
+     "length": 353.82,
+     "sps": 544.4
+    },
+    {
+     "steps": 1488384,
+     "return": 4.0,
+     "entropy": 0.8688,
+     "length": 347.34,
+     "sps": 544.5
+    },
+    {
+     "steps": 1500672,
+     "return": 2.0,
+     "entropy": 1.1579,
+     "length": 342.67,
+     "sps": 544.7
+    },
+    {
+     "steps": 1512960,
+     "return": 6.0,
+     "entropy": 1.7402,
+     "length": 350.43,
+     "sps": 544.7
+    },
+    {
+     "steps": 1525248,
+     "return": 4.0,
+     "entropy": 1.1521,
+     "length": 358.58,
+     "sps": 544.7
+    },
+    {
+     "steps": 1537536,
+     "return": 6.0,
+     "entropy": 1.004,
+     "length": 361.77,
+     "sps": 544.8
+    },
+    {
+     "steps": 1549824,
+     "return": 14.0,
+     "entropy": 1.1932,
+     "length": 377.99,
+     "sps": 545.0
+    },
+    {
+     "steps": 1562112,
+     "return": 16.0,
+     "entropy": 1.0285,
+     "length": 379.44,
+     "sps": 544.9
+    },
+    {
+     "steps": 1574400,
+     "return": 14.0,
+     "entropy": 1.3334,
+     "length": 381.95,
+     "sps": 545.0
+    },
+    {
+     "steps": 1586688,
+     "return": 2.0,
+     "entropy": 1.3318,
+     "length": 369.48,
+     "sps": 544.9
+    },
+    {
+     "steps": 1598976,
+     "return": 2.0,
+     "entropy": 1.5178,
+     "length": 366.78,
+     "sps": 544.8
+    },
+    {
+     "steps": 1611264,
+     "return": 4.0,
+     "entropy": 1.0928,
+     "length": 368.53,
+     "sps": 544.9
+    },
+    {
+     "steps": 1623552,
+     "return": 6.0,
+     "entropy": 1.8527,
+     "length": 372.9,
+     "sps": 545.0
+    },
+    {
+     "steps": 1635840,
+     "return": 12.0,
+     "entropy": 1.1221,
+     "length": 377.32,
+     "sps": 545.0
+    },
+    {
+     "steps": 1648128,
+     "return": 12.0,
+     "entropy": 0.8706,
+     "length": 369.67,
+     "sps": 545.0
+    },
+    {
+     "steps": 1660416,
+     "return": 12.0,
+     "entropy": 1.3869,
+     "length": 357.3,
+     "sps": 545.0
+    },
+    {
+     "steps": 1672704,
      "return": 8.0,
-     "entropy": 1.0692,
-     "length": 339.84,
-     "sps": 544.1
+     "entropy": 1.522,
+     "length": 342.1,
+     "sps": 544.9
+    },
+    {
+     "steps": 1684992,
+     "return": 8.0,
+     "entropy": 0.9745,
+     "length": 347.94,
+     "sps": 545.0
+    },
+    {
+     "steps": 1697280,
+     "return": 2.0,
+     "entropy": 1.2487,
+     "length": 349.36,
+     "sps": 545.1
+    },
+    {
+     "steps": 1709568,
+     "return": 0.0,
+     "entropy": 1.406,
+     "length": 356.97,
+     "sps": 545.2
+    },
+    {
+     "steps": 1721856,
+     "return": 0.0,
+     "entropy": 1.3509,
+     "length": 355.79,
+     "sps": 545.2
+    },
+    {
+     "steps": 1734144,
+     "return": 4.0,
+     "entropy": 1.4545,
+     "length": 358.3,
+     "sps": 545.3
+    },
+    {
+     "steps": 1746432,
+     "return": 6.0,
+     "entropy": 1.2108,
+     "length": 358.46,
+     "sps": 545.3
+    },
+    {
+     "steps": 1758720,
+     "return": 14.0,
+     "entropy": 1.2796,
+     "length": 357.75,
+     "sps": 545.3
+    },
+    {
+     "steps": 1771008,
+     "return": 12.0,
+     "entropy": 1.0336,
+     "length": 355.51,
+     "sps": 545.4
+    },
+    {
+     "steps": 1783296,
+     "return": 8.0,
+     "entropy": 1.1725,
+     "length": 350.59,
+     "sps": 545.3
+    },
+    {
+     "steps": 1795584,
+     "return": 6.0,
+     "entropy": 1.6168,
+     "length": 359.83,
+     "sps": 545.4
+    },
+    {
+     "steps": 1807872,
+     "return": 6.0,
+     "entropy": 1.5026,
+     "length": 359.67,
+     "sps": 545.3
+    },
+    {
+     "steps": 1820160,
+     "return": 6.0,
+     "entropy": 1.0023,
+     "length": 363.91,
+     "sps": 545.3
+    },
+    {
+     "steps": 1832448,
+     "return": 4.0,
+     "entropy": 1.2436,
+     "length": 359.56,
+     "sps": 545.4
+    },
+    {
+     "steps": 1844736,
+     "return": 8.0,
+     "entropy": 1.0733,
+     "length": 354.74,
+     "sps": 545.3
+    },
+    {
+     "steps": 1857024,
+     "return": 12.0,
+     "entropy": 1.3081,
+     "length": 363.19,
+     "sps": 545.4
+    },
+    {
+     "steps": 1869312,
+     "return": 12.0,
+     "entropy": 1.7627,
+     "length": 358.58,
+     "sps": 545.4
+    },
+    {
+     "steps": 1881600,
+     "return": 10.0,
+     "entropy": 1.2448,
+     "length": 355.34,
+     "sps": 545.4
+    },
+    {
+     "steps": 1893888,
+     "return": 8.0,
+     "entropy": 1.4716,
+     "length": 344.12,
+     "sps": 545.4
+    },
+    {
+     "steps": 1906176,
+     "return": 8.0,
+     "entropy": 1.1722,
+     "length": 349.25,
+     "sps": 545.4
+    },
+    {
+     "steps": 1918464,
+     "return": 6.0,
+     "entropy": 0.73,
+     "length": 356.52,
+     "sps": 545.4
+    },
+    {
+     "steps": 1930752,
+     "return": 6.0,
+     "entropy": 1.3809,
+     "length": 353.55,
+     "sps": 545.4
+    },
+    {
+     "steps": 1943040,
+     "return": 6.0,
+     "entropy": 1.3679,
+     "length": 353.16,
+     "sps": 545.4
+    },
+    {
+     "steps": 1955328,
+     "return": 6.0,
+     "entropy": 1.3649,
+     "length": 354.86,
+     "sps": 545.5
+    },
+    {
+     "steps": 1967616,
+     "return": 6.0,
+     "entropy": 1.079,
+     "length": 365.71,
+     "sps": 545.4
+    },
+    {
+     "steps": 1979904,
+     "return": 6.0,
+     "entropy": 2.0898,
+     "length": 380.91,
+     "sps": 545.5
+    },
+    {
+     "steps": 1992192,
+     "return": 10.0,
+     "entropy": 1.2547,
+     "length": 401.67,
+     "sps": 545.6
+    },
+    {
+     "steps": 1999872,
+     "return": 6.0,
+     "entropy": 1.5383,
+     "length": 411.1,
+     "sps": 545.5
     }
    ],
-   "ladder": null,
-   "evaluation_seeds": null,
-   "clips": [],
-   "gifs": [],
-   "progress": null
+   "ladder": [
+    {
+     "tag": "random",
+     "steps": null,
+     "episodes": 8,
+     "return_mean": 50.0,
+     "return_std": 92.58,
+     "return_min": 0.0,
+     "return_max": 200.0,
+     "length_mean": 493.8,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      200.0,
+      200.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "000",
+     "steps": 0,
+     "episodes": 8,
+     "return_mean": 25.0,
+     "return_std": 70.71,
+     "return_min": 0.0,
+     "return_max": 200.0,
+     "length_mean": 508.1,
+     "returns": [
+      0.0,
+      0.0,
+      200.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "005",
+     "steps": 99840,
+     "episodes": 8,
+     "return_mean": 0.0,
+     "return_std": 0.0,
+     "return_min": 0.0,
+     "return_max": 0.0,
+     "length_mean": 493.1,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "015",
+     "steps": 299520,
+     "episodes": 8,
+     "return_mean": 0.0,
+     "return_std": 0.0,
+     "return_min": 0.0,
+     "return_max": 0.0,
+     "length_mean": 467.5,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "035",
+     "steps": 700416,
+     "episodes": 8,
+     "return_mean": 0.0,
+     "return_std": 0.0,
+     "return_min": 0.0,
+     "return_max": 0.0,
+     "length_mean": 447.9,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "065",
+     "steps": 1299456,
+     "episodes": 8,
+     "return_mean": 0.0,
+     "return_std": 0.0,
+     "return_min": 0.0,
+     "return_max": 0.0,
+     "length_mean": 324.8,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "100",
+     "steps": 1999872,
+     "episodes": 8,
+     "return_mean": 0.0,
+     "return_std": 0.0,
+     "return_min": 0.0,
+     "return_max": 0.0,
+     "length_mean": 387.6,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "evaluation_seeds": [
+    50000,
+    50001,
+    50002,
+    50003,
+    50004,
+    50005,
+    50006,
+    50007
+   ],
+   "clips": [
+    "progress.mp4",
+    "step_000.mp4",
+    "step_035.mp4",
+    "step_100.mp4"
+   ],
+   "gifs": [
+    "progress.gif"
+   ],
+   "progress": "progress.mp4"
   },
   "pingpong": {
    "key": "pingpong",

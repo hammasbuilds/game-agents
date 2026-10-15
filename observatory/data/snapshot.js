@@ -1,5 +1,5 @@
 window.SNAPSHOT = {
- "taken_at": "2026-10-15 07:06:00Z",
+ "taken_at": "2026-10-15 07:30:35Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -16,7 +16,7 @@ window.SNAPSHOT = {
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": 2657,
+   "seconds_since_update": 4132,
    "checkpoints": [
     {
      "tag": "000",
@@ -1115,7 +1115,7 @@ window.SNAPSHOT = {
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 13173,
+   "seconds_since_update": 14648,
    "checkpoints": [
     {
      "tag": "000",
@@ -2231,16 +2231,16 @@ window.SNAPSHOT = {
    "title": "Platformer",
    "env_id": "ALE/Kangaroo-v5",
    "blurb": "Climb the ladders, punch the monkeys, reach the top. The legal stand-in for Mario: a platformer with ROMs that ship licensed.",
-   "state": "running",
-   "steps": 1367040,
-   "updates": 890,
-   "sps": 544.9,
+   "state": "finished",
+   "steps": 1999872,
+   "updates": 1302,
+   "sps": 545.5,
    "return_now": 6.0,
-   "entropy_now": 0.9662,
-   "wall_minutes": null,
-   "params": null,
-   "eta_minutes": 19.4,
-   "seconds_since_update": 27,
+   "entropy_now": 1.5383,
+   "wall_minutes": 61.1,
+   "params": 428131,
+   "eta_minutes": null,
+   "seconds_since_update": 343,
    "checkpoints": [
     {
      "tag": "000",
@@ -2261,6 +2261,10 @@ window.SNAPSHOT = {
     {
      "tag": "065",
      "steps": 1299456
+    },
+    {
+     "tag": "100",
+     "steps": 1999872
     }
    ],
    "curve": [
@@ -2272,67 +2276,46 @@ window.SNAPSHOT = {
      "value_loss": 0.5067
     },
     {
-     "steps": 15360,
-     "return": 42.857,
-     "entropy": 2.7115,
-     "sps": 431.3,
-     "value_loss": 111.4701
+     "steps": 19968,
+     "return": 48.78,
+     "entropy": 2.561,
+     "sps": 452.9,
+     "value_loss": 220.6092
     },
     {
-     "steps": 26112,
-     "return": 43.137,
-     "entropy": 2.5503,
-     "sps": 481.0,
-     "value_loss": 0.7384
-    },
-    {
-     "steps": 36864,
-     "return": 38.961,
-     "entropy": 2.0875,
-     "sps": 487.6,
-     "value_loss": 111.1896
-    },
-    {
-     "steps": 47616,
-     "return": 36.0,
+     "steps": 35328,
+     "return": 35.135,
      "entropy": 2.114,
-     "sps": 505.6,
-     "value_loss": 0.2736
+     "sps": 489.2,
+     "value_loss": 110.8854
     },
     {
-     "steps": 58368,
-     "return": 34.0,
-     "entropy": 1.6407,
-     "sps": 493.4,
-     "value_loss": 0.2503
+     "steps": 50688,
+     "return": 32.0,
+     "entropy": 2.0491,
+     "sps": 504.7,
+     "value_loss": 0.2698
     },
     {
-     "steps": 69120,
+     "steps": 66048,
      "return": 24.0,
-     "entropy": 1.0287,
-     "sps": 478.4,
-     "value_loss": 109.6677
+     "entropy": 1.1672,
+     "sps": 484.0,
+     "value_loss": 109.4438
     },
     {
-     "steps": 79872,
+     "steps": 81408,
      "return": 28.0,
-     "entropy": 1.1584,
-     "sps": 465.6,
-     "value_loss": 0.1555
+     "entropy": 1.164,
+     "sps": 464.7,
+     "value_loss": 0.0743
     },
     {
-     "steps": 90624,
-     "return": 20.0,
-     "entropy": 1.2961,
-     "sps": 458.6,
-     "value_loss": 0.0147
-    },
-    {
-     "steps": 101376,
-     "return": 14.0,
-     "entropy": 1.4137,
-     "sps": 449.7,
-     "value_loss": 0.0904
+     "steps": 96768,
+     "return": 16.0,
+     "entropy": 1.4627,
+     "sps": 452.7,
+     "value_loss": 0.002
     },
     {
      "steps": 112128,
@@ -2342,67 +2325,46 @@ window.SNAPSHOT = {
      "value_loss": 0.0047
     },
     {
-     "steps": 122880,
+     "steps": 127488,
      "return": 10.0,
-     "entropy": 1.2789,
-     "sps": 435.9,
-     "value_loss": 111.677
+     "entropy": 0.1207,
+     "sps": 434.5,
+     "value_loss": 25.0497
     },
     {
-     "steps": 133632,
+     "steps": 142848,
      "return": 10.0,
-     "entropy": 0.5171,
-     "sps": 434.8,
-     "value_loss": 0.1118
+     "entropy": 0.4184,
+     "sps": 434.9,
+     "value_loss": 0.0056
     },
     {
-     "steps": 144384,
-     "return": 10.0,
-     "entropy": 0.4594,
-     "sps": 435.8,
-     "value_loss": 0.005
-    },
-    {
-     "steps": 155136,
+     "steps": 158208,
      "return": 8.0,
-     "entropy": 0.5678,
-     "sps": 437.0,
-     "value_loss": 111.8181
+     "entropy": 0.6099,
+     "sps": 437.9,
+     "value_loss": 0.0075
     },
     {
-     "steps": 165888,
-     "return": 12.0,
-     "entropy": 0.5434,
-     "sps": 435.7,
-     "value_loss": 0.0191
+     "steps": 173568,
+     "return": 4.0,
+     "entropy": 0.2145,
+     "sps": 433.7,
+     "value_loss": 0.0777
     },
     {
-     "steps": 176640,
+     "steps": 188928,
      "return": 6.0,
-     "entropy": 0.2382,
-     "sps": 435.1,
-     "value_loss": 0.0245
-    },
-    {
-     "steps": 187392,
-     "return": 6.0,
-     "entropy": 0.3466,
+     "entropy": 0.3809,
      "sps": 436.0,
      "value_loss": 0.0018
     },
     {
-     "steps": 198144,
-     "return": 6.0,
-     "entropy": 0.2984,
-     "sps": 436.3,
-     "value_loss": 0.0006
-    },
-    {
-     "steps": 208896,
-     "return": 2.0,
-     "entropy": 0.3102,
-     "sps": 437.0,
-     "value_loss": 0.0001
+     "steps": 204288,
+     "return": 4.0,
+     "entropy": 0.3044,
+     "sps": 435.9,
+     "value_loss": 0.0002
     },
     {
      "steps": 219648,
@@ -2412,67 +2374,46 @@ window.SNAPSHOT = {
      "value_loss": 0.0002
     },
     {
-     "steps": 230400,
+     "steps": 235008,
      "return": 0.0,
-     "entropy": 0.3976,
-     "sps": 437.2,
-     "value_loss": 0.0001
-    },
-    {
-     "steps": 241152,
-     "return": 0.0,
-     "entropy": 0.3345,
-     "sps": 442.9,
+     "entropy": 0.3591,
+     "sps": 439.3,
      "value_loss": 0.0002
     },
     {
-     "steps": 251904,
+     "steps": 250368,
      "return": 0.0,
-     "entropy": 0.3194,
-     "sps": 448.0,
+     "entropy": 0.3156,
+     "sps": 447.2,
      "value_loss": 0.0001
     },
     {
-     "steps": 262656,
+     "steps": 265728,
      "return": 0.0,
-     "entropy": 0.2827,
-     "sps": 453.4,
+     "entropy": 0.3045,
+     "sps": 454.9,
      "value_loss": 0.0001
     },
     {
-     "steps": 273408,
+     "steps": 281088,
      "return": 0.0,
-     "entropy": 0.4486,
-     "sps": 457.2,
+     "entropy": 0.4567,
+     "sps": 459.3,
      "value_loss": 0.0001
     },
     {
-     "steps": 284160,
-     "return": 0.0,
-     "entropy": 0.4711,
-     "sps": 460.4,
-     "value_loss": 0.0002
+     "steps": 296448,
+     "return": 2.0,
+     "entropy": 0.6262,
+     "sps": 464.5,
+     "value_loss": 0.0031
     },
     {
-     "steps": 294912,
+     "steps": 311808,
      "return": 2.0,
-     "entropy": 0.5414,
-     "sps": 463.9,
-     "value_loss": 0.0063
-    },
-    {
-     "steps": 305664,
-     "return": 2.0,
-     "entropy": 0.6902,
-     "sps": 466.7,
-     "value_loss": 0.0011
-    },
-    {
-     "steps": 316416,
-     "return": 2.0,
-     "entropy": 0.7833,
-     "sps": 469.9,
-     "value_loss": 0.0005
+     "entropy": 0.7004,
+     "sps": 468.3,
+     "value_loss": 0.0006
     },
     {
      "steps": 327168,
@@ -2482,67 +2423,46 @@ window.SNAPSHOT = {
      "value_loss": 111.5601
     },
     {
-     "steps": 337920,
+     "steps": 342528,
      "return": 6.0,
-     "entropy": 0.5416,
-     "sps": 467.6,
-     "value_loss": 0.0253
+     "entropy": 0.924,
+     "sps": 466.4,
+     "value_loss": 0.0054
     },
     {
-     "steps": 348672,
-     "return": 8.0,
-     "entropy": 0.4742,
-     "sps": 464.2,
-     "value_loss": 0.0777
-    },
-    {
-     "steps": 359424,
+     "steps": 357888,
      "return": 10.0,
-     "entropy": 0.2176,
-     "sps": 463.7,
-     "value_loss": 0.0359
+     "entropy": 0.2403,
+     "sps": 463.5,
+     "value_loss": 0.0688
     },
     {
-     "steps": 370176,
-     "return": 8.0,
-     "entropy": 0.2652,
-     "sps": 463.3,
-     "value_loss": 0.0039
+     "steps": 373248,
+     "return": 6.0,
+     "entropy": 0.3107,
+     "sps": 462.0,
+     "value_loss": 0.0024
     },
     {
-     "steps": 380928,
-     "return": 4.0,
-     "entropy": 0.3836,
-     "sps": 461.0,
-     "value_loss": 0.0008
-    },
-    {
-     "steps": 391680,
+     "steps": 388608,
      "return": 2.0,
-     "entropy": 0.4452,
-     "sps": 456.1,
-     "value_loss": 0.0003
+     "entropy": 0.4511,
+     "sps": 459.9,
+     "value_loss": 0.0004
     },
     {
-     "steps": 402432,
+     "steps": 403968,
      "return": 2.0,
-     "entropy": 0.6974,
-     "sps": 452.8,
-     "value_loss": 0.0103
+     "entropy": 0.6544,
+     "sps": 453.0,
+     "value_loss": 0.0066
     },
     {
-     "steps": 413184,
+     "steps": 419328,
      "return": 2.0,
-     "entropy": 0.8692,
-     "sps": 452.4,
-     "value_loss": 0.0012
-    },
-    {
-     "steps": 423936,
-     "return": 4.0,
-     "entropy": 1.0367,
-     "sps": 452.0,
-     "value_loss": 0.0034
+     "entropy": 0.7749,
+     "sps": 452.3,
+     "value_loss": 0.049
     },
     {
      "steps": 434688,
@@ -2552,67 +2472,46 @@ window.SNAPSHOT = {
      "value_loss": 0.0005
     },
     {
-     "steps": 445440,
+     "steps": 450048,
      "return": 4.0,
-     "entropy": 1.4063,
-     "sps": 451.0,
-     "value_loss": 0.0002
-    },
-    {
-     "steps": 456192,
-     "return": 4.0,
-     "entropy": 0.5393,
-     "sps": 450.2,
-     "value_loss": 0.153
-    },
-    {
-     "steps": 466944,
-     "return": 6.0,
-     "entropy": 0.3599,
-     "sps": 450.3,
-     "value_loss": 0.0084
-    },
-    {
-     "steps": 477696,
-     "return": 6.0,
-     "entropy": 0.6338,
+     "entropy": 1.6464,
      "sps": 450.4,
-     "value_loss": 0.0037
+     "value_loss": 111.8456
     },
     {
-     "steps": 488448,
+     "steps": 465408,
      "return": 6.0,
-     "entropy": 0.8358,
-     "sps": 450.6,
-     "value_loss": 0.0008
+     "entropy": 0.3784,
+     "sps": 450.0,
+     "value_loss": 0.0101
     },
     {
-     "steps": 499200,
+     "steps": 480768,
      "return": 6.0,
-     "entropy": 0.936,
-     "sps": 450.7,
-     "value_loss": 0.0006
+     "entropy": 0.6128,
+     "sps": 450.2,
+     "value_loss": 0.0016
     },
     {
-     "steps": 509952,
-     "return": 4.0,
-     "entropy": 1.0105,
-     "sps": 450.5,
+     "steps": 496128,
+     "return": 6.0,
+     "entropy": 0.8586,
+     "sps": 450.3,
+     "value_loss": 0.0005
+    },
+    {
+     "steps": 511488,
+     "return": 2.0,
+     "entropy": 1.3399,
+     "sps": 450.3,
      "value_loss": 0.0003
     },
     {
-     "steps": 520704,
+     "steps": 526848,
      "return": 4.0,
-     "entropy": 1.6984,
-     "sps": 449.9,
-     "value_loss": 0.0043
-    },
-    {
-     "steps": 531456,
-     "return": 2.0,
-     "entropy": 1.957,
+     "entropy": 1.9242,
      "sps": 450.1,
-     "value_loss": 0.0007
+     "value_loss": 0.0016
     },
     {
      "steps": 542208,
@@ -2622,67 +2521,46 @@ window.SNAPSHOT = {
      "value_loss": 111.6161
     },
     {
-     "steps": 552960,
+     "steps": 557568,
      "return": 10.0,
-     "entropy": 0.4444,
-     "sps": 450.3,
-     "value_loss": 0.1511
+     "entropy": 0.5232,
+     "sps": 451.4,
+     "value_loss": 0.0393
     },
     {
-     "steps": 563712,
+     "steps": 572928,
      "return": 10.0,
-     "entropy": 0.5381,
-     "sps": 452.9,
-     "value_loss": 0.0096
+     "entropy": 0.4625,
+     "sps": 454.6,
+     "value_loss": 0.0499
     },
     {
-     "steps": 574464,
-     "return": 8.0,
-     "entropy": 0.3892,
-     "sps": 455.1,
-     "value_loss": 0.0092
-    },
-    {
-     "steps": 585216,
+     "steps": 588288,
      "return": 10.0,
-     "entropy": 0.6579,
-     "sps": 457.2,
-     "value_loss": 0.0018
+     "entropy": 0.8422,
+     "sps": 458.0,
+     "value_loss": 0.0012
     },
     {
-     "steps": 595968,
-     "return": 8.0,
-     "entropy": 0.8899,
-     "sps": 459.1,
-     "value_loss": 0.0006
-    },
-    {
-     "steps": 606720,
+     "steps": 603648,
      "return": 2.0,
-     "entropy": 1.0386,
-     "sps": 461.1,
-     "value_loss": 0.0101
+     "entropy": 0.6893,
+     "sps": 460.4,
+     "value_loss": 111.849
     },
     {
-     "steps": 617472,
+     "steps": 619008,
      "return": 4.0,
-     "entropy": 0.8914,
-     "sps": 463.3,
-     "value_loss": 0.001
+     "entropy": 1.098,
+     "sps": 463.6,
+     "value_loss": 0.0009
     },
     {
-     "steps": 628224,
+     "steps": 634368,
      "return": 4.0,
-     "entropy": 1.1758,
-     "sps": 465.8,
-     "value_loss": 0.0073
-    },
-    {
-     "steps": 638976,
-     "return": 4.0,
-     "entropy": 1.4003,
-     "sps": 467.7,
-     "value_loss": 0.0005
+     "entropy": 1.1416,
+     "sps": 466.9,
+     "value_loss": 0.0015
     },
     {
      "steps": 649728,
@@ -2692,67 +2570,46 @@ window.SNAPSHOT = {
      "value_loss": 0.0003
     },
     {
-     "steps": 660480,
+     "steps": 665088,
      "return": 4.0,
-     "entropy": 1.1526,
-     "sps": 472.1,
-     "value_loss": 0.0032
+     "entropy": 0.8938,
+     "sps": 473.0,
+     "value_loss": 0.0015
     },
     {
-     "steps": 671232,
+     "steps": 680448,
      "return": 6.0,
-     "entropy": 0.676,
-     "sps": 474.2,
-     "value_loss": 111.6069
+     "entropy": 0.5735,
+     "sps": 475.9,
+     "value_loss": 0.0048
     },
     {
-     "steps": 681984,
-     "return": 6.0,
-     "entropy": 0.4856,
-     "sps": 476.3,
-     "value_loss": 0.0038
-    },
-    {
-     "steps": 692736,
+     "steps": 695808,
      "return": 8.0,
-     "entropy": 0.6148,
-     "sps": 478.5,
-     "value_loss": 0.0022
+     "entropy": 0.4968,
+     "sps": 479.0,
+     "value_loss": 0.0016
     },
     {
-     "steps": 703488,
+     "steps": 711168,
      "return": 6.0,
-     "entropy": 0.6168,
-     "sps": 480.3,
-     "value_loss": 0.001
+     "entropy": 0.8051,
+     "sps": 481.8,
+     "value_loss": 0.0003
     },
     {
-     "steps": 714240,
-     "return": 4.0,
-     "entropy": 0.7477,
-     "sps": 482.5,
-     "value_loss": 89.558
-    },
-    {
-     "steps": 724992,
+     "steps": 726528,
      "return": 6.0,
-     "entropy": 0.4258,
-     "sps": 484.2,
-     "value_loss": 0.0042
+     "entropy": 0.462,
+     "sps": 484.4,
+     "value_loss": 0.0031
     },
     {
-     "steps": 735744,
+     "steps": 741888,
      "return": 4.0,
-     "entropy": 0.4107,
-     "sps": 486.1,
-     "value_loss": 0.0011
-    },
-    {
-     "steps": 746496,
-     "return": 4.0,
-     "entropy": 0.4934,
-     "sps": 488.1,
-     "value_loss": 0.0004
+     "entropy": 0.4259,
+     "sps": 487.4,
+     "value_loss": 0.0005
     },
     {
      "steps": 757248,
@@ -2762,67 +2619,46 @@ window.SNAPSHOT = {
      "value_loss": 0.0002
     },
     {
-     "steps": 768000,
+     "steps": 772608,
      "return": 0.0,
-     "entropy": 1.283,
-     "sps": 491.5,
+     "entropy": 1.23,
+     "sps": 492.0,
      "value_loss": 0.0001
     },
     {
-     "steps": 778752,
-     "return": 0.0,
-     "entropy": 1.2496,
-     "sps": 493.1,
-     "value_loss": 0.0388
-    },
-    {
-     "steps": 789504,
+     "steps": 787968,
      "return": 4.0,
-     "entropy": 1.3586,
-     "sps": 494.7,
-     "value_loss": 0.0067
+     "entropy": 1.084,
+     "sps": 494.4,
+     "value_loss": 0.0081
     },
     {
-     "steps": 800256,
+     "steps": 803328,
      "return": 4.0,
-     "entropy": 1.1714,
-     "sps": 496.4,
-     "value_loss": 0.0004
+     "entropy": 1.653,
+     "sps": 497.1,
+     "value_loss": 0.0003
     },
     {
-     "steps": 811008,
-     "return": 4.0,
-     "entropy": 1.3963,
-     "sps": 498.2,
-     "value_loss": 0.0463
-    },
-    {
-     "steps": 821760,
-     "return": 10.0,
-     "entropy": 0.478,
-     "sps": 499.5,
-     "value_loss": 0.17
-    },
-    {
-     "steps": 832512,
+     "steps": 818688,
      "return": 6.0,
-     "entropy": 0.8015,
-     "sps": 500.7,
-     "value_loss": 0.0046
+     "entropy": 1.2495,
+     "sps": 499.1,
+     "value_loss": 96.5121
     },
     {
-     "steps": 843264,
+     "steps": 834048,
      "return": 6.0,
-     "entropy": 1.0465,
-     "sps": 502.3,
-     "value_loss": 43.6273
+     "entropy": 1.023,
+     "sps": 501.0,
+     "value_loss": 0.0026
     },
     {
-     "steps": 854016,
-     "return": 6.0,
-     "entropy": 1.4291,
-     "sps": 503.6,
-     "value_loss": 0.0009
+     "steps": 849408,
+     "return": 8.0,
+     "entropy": 1.3196,
+     "sps": 503.0,
+     "value_loss": 0.0013
     },
     {
      "steps": 864768,
@@ -2832,67 +2668,46 @@ window.SNAPSHOT = {
      "value_loss": 0.0037
     },
     {
-     "steps": 875520,
+     "steps": 880128,
      "return": 4.0,
-     "entropy": 1.6055,
-     "sps": 506.4,
-     "value_loss": 0.0005
-    },
-    {
-     "steps": 886272,
-     "return": 2.0,
-     "entropy": 1.6339,
-     "sps": 507.3,
+     "entropy": 1.3208,
+     "sps": 506.7,
      "value_loss": 0.0002
     },
     {
-     "steps": 897024,
+     "steps": 895488,
      "return": 2.0,
-     "entropy": 1.6871,
+     "entropy": 1.5034,
      "sps": 508.5,
-     "value_loss": 0.0206
+     "value_loss": 112.2239
     },
     {
-     "steps": 907776,
-     "return": 2.0,
-     "entropy": 0.9472,
-     "sps": 509.9,
-     "value_loss": 0.0188
+     "steps": 910848,
+     "return": 4.0,
+     "entropy": 1.8252,
+     "sps": 510.1,
+     "value_loss": 110.5347
     },
     {
-     "steps": 918528,
-     "return": 6.0,
-     "entropy": 1.4827,
-     "sps": 511.0,
-     "value_loss": 0.0045
-    },
-    {
-     "steps": 929280,
+     "steps": 926208,
      "return": 10.0,
-     "entropy": 1.0199,
-     "sps": 512.2,
-     "value_loss": 0.0278
+     "entropy": 0.961,
+     "sps": 511.9,
+     "value_loss": 0.088
     },
     {
-     "steps": 940032,
+     "steps": 941568,
      "return": 12.0,
-     "entropy": 1.0038,
-     "sps": 513.4,
-     "value_loss": 0.006
+     "entropy": 0.9946,
+     "sps": 513.6,
+     "value_loss": 0.0041
     },
     {
-     "steps": 950784,
+     "steps": 956928,
      "return": 10.0,
-     "entropy": 1.3169,
-     "sps": 514.4,
-     "value_loss": 0.0044
-    },
-    {
-     "steps": 961536,
-     "return": 8.0,
-     "entropy": 0.8501,
-     "sps": 515.7,
-     "value_loss": 0.0012
+     "entropy": 1.0043,
+     "sps": 515.2,
+     "value_loss": 0.0023
     },
     {
      "steps": 972288,
@@ -2902,67 +2717,46 @@ window.SNAPSHOT = {
      "value_loss": 0.0004
     },
     {
-     "steps": 983040,
+     "steps": 987648,
      "return": 2.0,
-     "entropy": 1.2658,
-     "sps": 518.0,
-     "value_loss": 0.0014
+     "entropy": 1.5846,
+     "sps": 518.4,
+     "value_loss": 108.7838
     },
     {
-     "steps": 993792,
-     "return": 8.0,
-     "entropy": 1.0285,
-     "sps": 519.0,
-     "value_loss": 0.0831
-    },
-    {
-     "steps": 1004544,
+     "steps": 1003008,
      "return": 12.0,
-     "entropy": 0.2576,
-     "sps": 520.1,
-     "value_loss": 0.1328
+     "entropy": 0.4099,
+     "sps": 520.0,
+     "value_loss": 111.6601
     },
     {
-     "steps": 1015296,
-     "return": 14.0,
-     "entropy": 1.1218,
-     "sps": 521.1,
-     "value_loss": 0.0087
+     "steps": 1018368,
+     "return": 12.0,
+     "entropy": 0.9486,
+     "sps": 521.5,
+     "value_loss": 0.0044
     },
     {
-     "steps": 1026048,
-     "return": 14.0,
-     "entropy": 0.7288,
-     "sps": 522.1,
-     "value_loss": 0.0663
+     "steps": 1033728,
+     "return": 10.0,
+     "entropy": 0.8164,
+     "sps": 522.9,
+     "value_loss": 0.0029
     },
     {
-     "steps": 1036800,
-     "return": 8.0,
-     "entropy": 0.9416,
-     "sps": 523.3,
-     "value_loss": 0.003
-    },
-    {
-     "steps": 1047552,
+     "steps": 1049088,
      "return": 4.0,
-     "entropy": 1.3657,
-     "sps": 524.2,
-     "value_loss": 0.0005
+     "entropy": 0.7206,
+     "sps": 524.4,
+     "value_loss": 0.0006
     },
     {
-     "steps": 1058304,
-     "return": 8.0,
-     "entropy": 0.8448,
-     "sps": 525.4,
-     "value_loss": 0.0315
-    },
-    {
-     "steps": 1069056,
+     "steps": 1064448,
      "return": 6.0,
-     "entropy": 0.7403,
-     "sps": 526.2,
-     "value_loss": 0.0229
+     "entropy": 0.9386,
+     "sps": 525.8,
+     "value_loss": 111.9937
     },
     {
      "steps": 1079808,
@@ -2972,67 +2766,46 @@ window.SNAPSHOT = {
      "value_loss": 0.002
     },
     {
-     "steps": 1090560,
+     "steps": 1095168,
+     "return": 4.0,
+     "entropy": 1.3209,
+     "sps": 528.6,
+     "value_loss": 0.0021
+    },
+    {
+     "steps": 1110528,
+     "return": 4.0,
+     "entropy": 1.1809,
+     "sps": 529.9,
+     "value_loss": 0.0022
+    },
+    {
+     "steps": 1125888,
+     "return": 4.0,
+     "entropy": 0.9519,
+     "sps": 531.1,
+     "value_loss": 0.0015
+    },
+    {
+     "steps": 1141248,
      "return": 8.0,
-     "entropy": 0.9706,
-     "sps": 528.1,
-     "value_loss": 0.0027
+     "entropy": 1.1906,
+     "sps": 531.8,
+     "value_loss": 0.0126
     },
     {
-     "steps": 1101312,
-     "return": 6.0,
-     "entropy": 0.9372,
-     "sps": 529.2,
-     "value_loss": 0.003
-    },
-    {
-     "steps": 1112064,
-     "return": 4.0,
-     "entropy": 1.0966,
-     "sps": 530.0,
-     "value_loss": 0.0017
-    },
-    {
-     "steps": 1122816,
-     "return": 4.0,
-     "entropy": 1.3073,
-     "sps": 531.0,
-     "value_loss": 0.0014
-    },
-    {
-     "steps": 1133568,
-     "return": 4.0,
-     "entropy": 1.2286,
-     "sps": 531.4,
-     "value_loss": 108.3603
-    },
-    {
-     "steps": 1144320,
-     "return": 8.0,
-     "entropy": 1.2871,
-     "sps": 531.9,
-     "value_loss": 0.0038
-    },
-    {
-     "steps": 1155072,
-     "return": 12.0,
-     "entropy": 0.9851,
+     "steps": 1156608,
+     "return": 10.0,
+     "entropy": 0.9959,
      "sps": 532.9,
-     "value_loss": 0.0085
+     "value_loss": 0.0039
     },
     {
-     "steps": 1165824,
-     "return": 12.0,
-     "entropy": 1.0271,
-     "sps": 533.5,
-     "value_loss": 0.0055
-    },
-    {
-     "steps": 1176576,
-     "return": 12.0,
-     "entropy": 1.19,
-     "sps": 534.3,
-     "value_loss": 0.0058
+     "steps": 1171968,
+     "return": 14.0,
+     "entropy": 1.3345,
+     "sps": 534.0,
+     "value_loss": 0.0098
     },
     {
      "steps": 1187328,
@@ -3042,67 +2815,46 @@ window.SNAPSHOT = {
      "value_loss": 0.0045
     },
     {
-     "steps": 1198080,
-     "return": 6.0,
-     "entropy": 1.3043,
-     "sps": 535.8,
-     "value_loss": 0.0014
-    },
-    {
-     "steps": 1208832,
-     "return": 2.0,
-     "entropy": 1.3345,
-     "sps": 536.5,
-     "value_loss": 0.008
-    },
-    {
-     "steps": 1219584,
-     "return": 6.0,
-     "entropy": 1.397,
-     "sps": 537.5,
-     "value_loss": 0.0046
-    },
-    {
-     "steps": 1230336,
+     "steps": 1202688,
      "return": 4.0,
-     "entropy": 0.7849,
-     "sps": 538.1,
-     "value_loss": 0.0014
+     "entropy": 1.7086,
+     "sps": 536.0,
+     "value_loss": 0.0008
     },
     {
-     "steps": 1241088,
-     "return": 10.0,
-     "entropy": 1.5657,
-     "sps": 538.9,
-     "value_loss": 0.0036
+     "steps": 1218048,
+     "return": 6.0,
+     "entropy": 0.7655,
+     "sps": 537.3,
+     "value_loss": 0.0035
     },
     {
-     "steps": 1251840,
-     "return": 8.0,
-     "entropy": 1.0137,
-     "sps": 539.5,
-     "value_loss": 0.0039
-    },
-    {
-     "steps": 1262592,
-     "return": 8.0,
-     "entropy": 1.2275,
-     "sps": 540.4,
-     "value_loss": 0.0015
-    },
-    {
-     "steps": 1273344,
+     "steps": 1233408,
      "return": 4.0,
-     "entropy": 1.3533,
-     "sps": 541.0,
-     "value_loss": 111.3668
+     "entropy": 1.369,
+     "sps": 538.5,
+     "value_loss": 111.7166
     },
     {
-     "steps": 1284096,
+     "steps": 1248768,
      "return": 8.0,
-     "entropy": 0.9202,
-     "sps": 541.8,
-     "value_loss": 0.0372
+     "entropy": 1.8704,
+     "sps": 539.4,
+     "value_loss": 0.0057
+    },
+    {
+     "steps": 1264128,
+     "return": 8.0,
+     "entropy": 1.1347,
+     "sps": 540.5,
+     "value_loss": 0.0009
+    },
+    {
+     "steps": 1279488,
+     "return": 6.0,
+     "entropy": 0.7136,
+     "sps": 541.4,
+     "value_loss": 0.0237
     },
     {
      "steps": 1294848,
@@ -3112,73 +2864,497 @@ window.SNAPSHOT = {
      "value_loss": 0.0194
     },
     {
-     "steps": 1305600,
-     "return": 16.0,
-     "entropy": 1.1303,
-     "sps": 543.4,
-     "value_loss": 0.0092
+     "steps": 1310208,
+     "return": 14.0,
+     "entropy": 1.297,
+     "sps": 543.6,
+     "value_loss": 0.0055
     },
     {
-     "steps": 1316352,
-     "return": 10.0,
-     "entropy": 0.7194,
-     "sps": 544.0,
-     "value_loss": 0.003
-    },
-    {
-     "steps": 1327104,
-     "return": 2.0,
-     "entropy": 0.6531,
+     "steps": 1325568,
+     "return": 4.0,
+     "entropy": 1.1793,
      "sps": 544.6,
-     "value_loss": 0.0028
+     "value_loss": 0.0124
     },
     {
-     "steps": 1337856,
-     "return": 6.0,
-     "entropy": 1.0358,
-     "sps": 545.4,
-     "value_loss": 0.0057
-    },
-    {
-     "steps": 1348608,
-     "return": 6.0,
-     "entropy": 0.7326,
+     "steps": 1340928,
+     "return": 4.0,
+     "entropy": 0.9712,
      "sps": 545.3,
-     "value_loss": 0.0038
+     "value_loss": 0.004
     },
     {
-     "steps": 1359360,
+     "steps": 1356288,
+     "return": 6.0,
+     "entropy": 0.6256,
+     "sps": 545.2,
+     "value_loss": 0.0015
+    },
+    {
+     "steps": 1371648,
+     "return": 6.0,
+     "entropy": 0.7401,
+     "sps": 544.6,
+     "value_loss": 0.0037
+    },
+    {
+     "steps": 1387008,
      "return": 8.0,
-     "entropy": 0.3083,
-     "sps": 545.1,
+     "entropy": 0.9836,
+     "sps": 544.0,
+     "value_loss": 112.3892
+    },
+    {
+     "steps": 1402368,
+     "return": 8.0,
+     "entropy": 0.6613,
+     "sps": 543.9,
+     "value_loss": 0.0084
+    },
+    {
+     "steps": 1417728,
+     "return": 6.0,
+     "entropy": 0.9105,
+     "sps": 544.1,
      "value_loss": 0.0024
     },
     {
-     "steps": 1367040,
+     "steps": 1433088,
+     "return": 4.0,
+     "entropy": 1.5072,
+     "sps": 544.2,
+     "value_loss": 0.003
+    },
+    {
+     "steps": 1448448,
+     "return": 2.0,
+     "entropy": 1.1482,
+     "sps": 544.2,
+     "value_loss": 83.4216
+    },
+    {
+     "steps": 1463808,
+     "return": 4.0,
+     "entropy": 1.1192,
+     "sps": 544.2,
+     "value_loss": 0.0025
+    },
+    {
+     "steps": 1479168,
+     "return": 4.0,
+     "entropy": 0.8932,
+     "sps": 544.5,
+     "value_loss": 0.0009
+    },
+    {
+     "steps": 1494528,
+     "return": 4.0,
+     "entropy": 0.7647,
+     "sps": 544.6,
+     "value_loss": 0.0013
+    },
+    {
+     "steps": 1509888,
      "return": 6.0,
-     "entropy": 0.9662,
+     "entropy": 1.0682,
+     "sps": 544.6,
+     "value_loss": 0.0016
+    },
+    {
+     "steps": 1525248,
+     "return": 4.0,
+     "entropy": 1.1521,
+     "sps": 544.7,
+     "value_loss": 0.0012
+    },
+    {
+     "steps": 1540608,
+     "return": 6.0,
+     "entropy": 1.5888,
+     "sps": 544.7,
+     "value_loss": 0.0012
+    },
+    {
+     "steps": 1555968,
+     "return": 14.0,
+     "entropy": 1.2191,
+     "sps": 545.0,
+     "value_loss": 0.0134
+    },
+    {
+     "steps": 1571328,
+     "return": 16.0,
+     "entropy": 1.1215,
+     "sps": 545.0,
+     "value_loss": 0.0027
+    },
+    {
+     "steps": 1586688,
+     "return": 2.0,
+     "entropy": 1.3318,
      "sps": 544.9,
+     "value_loss": 0.0012
+    },
+    {
+     "steps": 1602048,
+     "return": 2.0,
+     "entropy": 1.7238,
+     "sps": 544.8,
+     "value_loss": 0.0035
+    },
+    {
+     "steps": 1617408,
+     "return": 6.0,
+     "entropy": 0.98,
+     "sps": 544.9,
+     "value_loss": 0.0025
+    },
+    {
+     "steps": 1632768,
+     "return": 12.0,
+     "entropy": 1.2137,
+     "sps": 545.0,
+     "value_loss": 0.0096
+    },
+    {
+     "steps": 1648128,
+     "return": 12.0,
+     "entropy": 0.8706,
+     "sps": 545.0,
+     "value_loss": 0.0032
+    },
+    {
+     "steps": 1663488,
+     "return": 12.0,
+     "entropy": 1.189,
+     "sps": 544.9,
+     "value_loss": 0.0065
+    },
+    {
+     "steps": 1678848,
+     "return": 8.0,
+     "entropy": 1.1636,
+     "sps": 545.0,
+     "value_loss": 0.0028
+    },
+    {
+     "steps": 1694208,
+     "return": 4.0,
+     "entropy": 1.4727,
+     "sps": 545.2,
+     "value_loss": 0.0014
+    },
+    {
+     "steps": 1709568,
+     "return": 0.0,
+     "entropy": 1.406,
+     "sps": 545.2,
+     "value_loss": 0.0006
+    },
+    {
+     "steps": 1724928,
+     "return": 0.0,
+     "entropy": 0.9532,
+     "sps": 545.2,
+     "value_loss": 0.0042
+    },
+    {
+     "steps": 1740288,
+     "return": 4.0,
+     "entropy": 1.5702,
+     "sps": 545.3,
+     "value_loss": 0.0017
+    },
+    {
+     "steps": 1755648,
+     "return": 14.0,
+     "entropy": 1.0518,
+     "sps": 545.3,
+     "value_loss": 0.0084
+    },
+    {
+     "steps": 1771008,
+     "return": 12.0,
+     "entropy": 1.0336,
+     "sps": 545.4,
      "value_loss": 0.0048
+    },
+    {
+     "steps": 1786368,
+     "return": 6.0,
+     "entropy": 1.4095,
+     "sps": 545.4,
+     "value_loss": 0.0024
+    },
+    {
+     "steps": 1801728,
+     "return": 6.0,
+     "entropy": 0.8659,
+     "sps": 545.3,
+     "value_loss": 0.0017
+    },
+    {
+     "steps": 1817088,
+     "return": 4.0,
+     "entropy": 1.4096,
+     "sps": 545.3,
+     "value_loss": 111.4835
+    },
+    {
+     "steps": 1832448,
+     "return": 4.0,
+     "entropy": 1.2436,
+     "sps": 545.4,
+     "value_loss": 112.537
+    },
+    {
+     "steps": 1847808,
+     "return": 8.0,
+     "entropy": 1.5883,
+     "sps": 545.4,
+     "value_loss": 0.005
+    },
+    {
+     "steps": 1863168,
+     "return": 12.0,
+     "entropy": 1.4592,
+     "sps": 545.4,
+     "value_loss": 0.0063
+    },
+    {
+     "steps": 1878528,
+     "return": 10.0,
+     "entropy": 1.7045,
+     "sps": 545.4,
+     "value_loss": 0.0056
+    },
+    {
+     "steps": 1893888,
+     "return": 8.0,
+     "entropy": 1.4716,
+     "sps": 545.4,
+     "value_loss": 0.0044
+    },
+    {
+     "steps": 1909248,
+     "return": 6.0,
+     "entropy": 1.0291,
+     "sps": 545.4,
+     "value_loss": 0.0028
+    },
+    {
+     "steps": 1924608,
+     "return": 6.0,
+     "entropy": 1.5514,
+     "sps": 545.5,
+     "value_loss": 0.0045
+    },
+    {
+     "steps": 1939968,
+     "return": 6.0,
+     "entropy": 1.2496,
+     "sps": 545.4,
+     "value_loss": 0.002
+    },
+    {
+     "steps": 1955328,
+     "return": 6.0,
+     "entropy": 1.3649,
+     "sps": 545.5,
+     "value_loss": 112.4659
+    },
+    {
+     "steps": 1970688,
+     "return": 4.0,
+     "entropy": 1.3677,
+     "sps": 545.5,
+     "value_loss": 0.0027
+    },
+    {
+     "steps": 1986048,
+     "return": 8.0,
+     "entropy": 1.5608,
+     "sps": 545.5,
+     "value_loss": 0.0037
+    },
+    {
+     "steps": 1999872,
+     "return": 6.0,
+     "entropy": 1.5383,
+     "sps": 545.5,
+     "value_loss": 0.0023
     }
    ],
-   "ladder": null,
-   "verdict": null,
+   "ladder": [
+    {
+     "tag": "random",
+     "steps": null,
+     "episodes": 8,
+     "return_mean": 50.0,
+     "return_std": 92.58,
+     "return_min": 0.0,
+     "return_max": 200.0,
+     "length_mean": 493.8,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      200.0,
+      200.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "000",
+     "steps": 0,
+     "episodes": 8,
+     "return_mean": 25.0,
+     "return_std": 70.71,
+     "return_min": 0.0,
+     "return_max": 200.0,
+     "length_mean": 508.1,
+     "returns": [
+      0.0,
+      0.0,
+      200.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "005",
+     "steps": 99840,
+     "episodes": 8,
+     "return_mean": 0.0,
+     "return_std": 0.0,
+     "return_min": 0.0,
+     "return_max": 0.0,
+     "length_mean": 493.1,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "015",
+     "steps": 299520,
+     "episodes": 8,
+     "return_mean": 0.0,
+     "return_std": 0.0,
+     "return_min": 0.0,
+     "return_max": 0.0,
+     "length_mean": 467.5,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "035",
+     "steps": 700416,
+     "episodes": 8,
+     "return_mean": 0.0,
+     "return_std": 0.0,
+     "return_min": 0.0,
+     "return_max": 0.0,
+     "length_mean": 447.9,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "065",
+     "steps": 1299456,
+     "episodes": 8,
+     "return_mean": 0.0,
+     "return_std": 0.0,
+     "return_min": 0.0,
+     "return_max": 0.0,
+     "length_mean": 324.8,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "tag": "100",
+     "steps": 1999872,
+     "episodes": 8,
+     "return_mean": 0.0,
+     "return_std": 0.0,
+     "return_min": 0.0,
+     "return_max": 0.0,
+     "length_mean": 387.6,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "verdict": {
+    "label": "no gain",
+    "detail": "-25.0 against a bar of 50.0, which is two standard errors of the difference over 8 episodes a side"
+   },
    "media_dir": "../docs/media/platformer",
-   "clips": [],
-   "gifs": [],
+   "clips": [
+    "progress.mp4",
+    "step_000.mp4",
+    "step_035.mp4",
+    "step_100.mp4"
+   ],
+   "gifs": [
+    "progress.gif"
+   ],
    "log_tail": [
-    "u790/1302 steps=1213440 return=4.0 sps=536.9 ent=0.9466",
-    "u800/1302 steps=1228800 return=4.0 sps=537.9 ent=1.2165",
-    "u810/1302 steps=1244160 return=10.0 sps=539.0 ent=0.8764",
-    "u820/1302 steps=1259520 return=8.0 sps=540.0 ent=1.1433",
-    "u830/1302 steps=1274880 return=4.0 sps=541.2 ent=1.1923",
-    "u840/1302 steps=1290240 return=12.0 sps=542.3 ent=0.7569",
-    "checkpoint 065 at 1299456 steps, training return 14.0 -> ckpt_065.pt",
-    "u850/1302 steps=1305600 return=16.0 sps=543.4 ent=1.1303",
-    "u860/1302 steps=1320960 return=6.0 sps=544.1 ent=0.8372",
-    "u870/1302 steps=1336320 return=6.0 sps=545.2 ent=0.9694",
-    "u880/1302 steps=1351680 return=6.0 sps=545.3 ent=0.7011",
-    "u890/1302 steps=1367040 return=6.0 sps=544.9 ent=0.9662"
+    "u1220/1302 steps=1873920 return=8.0 sps=545.5 ent=1.2226",
+    "u1230/1302 steps=1889280 return=6.0 sps=545.4 ent=1.4639",
+    "u1240/1302 steps=1904640 return=10.0 sps=545.4 ent=1.0998",
+    "u1250/1302 steps=1920000 return=6.0 sps=545.4 ent=1.5199",
+    "u1260/1302 steps=1935360 return=6.0 sps=545.4 ent=1.1107",
+    "u1270/1302 steps=1950720 return=6.0 sps=545.4 ent=1.5882",
+    "u1280/1302 steps=1966080 return=8.0 sps=545.5 ent=1.2922",
+    "u1290/1302 steps=1981440 return=8.0 sps=545.5 ent=1.2068",
+    "u1300/1302 steps=1996800 return=8.0 sps=545.5 ent=0.9367",
+    "checkpoint 100 at 1999872 steps, training return 6.0 -> ckpt_100.pt",
+    "u1302/1302 steps=1999872 return=6.0 sps=545.5 ent=1.5383",
+    "{"
    ]
   },
   {
@@ -3196,7 +3372,7 @@ window.SNAPSHOT = {
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 9559,
+   "seconds_since_update": 11034,
    "checkpoints": [
     {
      "tag": "000",
@@ -6430,13 +6606,13 @@ window.SNAPSHOT = {
   "media_dir": "../docs/media"
  },
  "machine": {
-  "cpu_percent": 85.6,
-  "python_processes": 46,
+  "cpu_percent": 53.1,
+  "python_processes": 30,
   "gpu": {
    "name": "Quadro RTX 5000",
    "memory_used": "14073 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "17 %"
+   "utilisation": "28 %"
   }
  }
 };
