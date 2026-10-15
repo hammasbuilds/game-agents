@@ -59,16 +59,33 @@ bar**, not from text: an exact measurement that needs no character recognition.
 
 ## Result
 
-Four seeded dungeons per agent, 220 keystrokes each. Descents are counted from
-the screen — a new level is almost entirely unexplored, so the number of
-non-blank map cells collapses when the agent takes a staircase.
+Descents are counted from the screen: a new level is almost entirely unexplored,
+so the number of non-blank map cells collapses when the agent takes a staircase.
+The baseline presses random keys from the same set — a fairer floor than it
+sounds, because Brogue's own `x` and `>` do a lot of work, and an agent that
+beats it has to be adding something those commands do not already give away.
 
-*(filled from `runs/play.json`)*
+See `runs/play.json` and `runs/play_long.json` for the current numbers, and the
+[analytics page](https://hammasbuilds.github.io/game-agents/analytics.html) for
+them per seed.
 
-| agent | descents | map cells named | health at end |
-|---|---:|---:|---:|
-| random keys | | | |
-| explorer | | | |
+**The variance is the headline.** Across two 900-keystroke runs of the same four
+seeds, the random baseline scored 5, 1, 0, 0 descents on one and 0, 0, 0, 1 on
+the other. Four games cannot separate two agents against that, which is why the
+comparison is run over more seeds than feels necessary and why no single-seed
+number here is quoted as a result.
+
+### Three bugs the runs found, each worth more than any tuning
+
+1. **The agent was ending its own games.** `<` on depth 1 does not retreat
+   upstairs — it leaves the dungeon and finishes the run. Whenever the agent was
+   hurt on the first level it resigned, sometimes after eleven keystrokes.
+2. **`>` was never pressed**, because the agent waited to *recognise* a staircase
+   glyph and `>` is not one of the terrain glyphs the atlas labels. It now dives
+   when exploring stops revealing new cells, which needs no glyph at all.
+3. **Two absorbing states.** Retreating upstairs ran 118–201 keystrokes of a
+   300-keystroke game; "explore toward trouble" ran **833 of 900** on a level
+   that was already fully explored, because one monster stayed on screen.
 
 ## Files
 

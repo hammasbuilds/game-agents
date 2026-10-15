@@ -91,6 +91,19 @@
   a { color: var(--accent); }
   .missing { color: var(--warn); font-family: var(--mono); font-size: 14px; }
   figure.chart { margin: 0; }
+  .cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .game-card { display: block; text-decoration: none; color: inherit; background: var(--panel-2);
+               border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+               transition: transform .12s ease, border-color .12s ease; }
+  .game-card:hover, .game-card:focus-visible { transform: translateY(-2px); border-color: var(--accent); }
+  .game-card video, .game-card .placeholder { width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+                                              background: #0c0e12; display: block; }
+  .game-card .placeholder { display: grid; place-items: center; color: var(--ink-dim); font-size: 13px; }
+  .game-card .body { padding: 13px 15px 15px; }
+  .game-card .name { font-weight: 650; font-size: 17px; letter-spacing: -0.01em; }
+  .game-card .desc { color: var(--ink-dim); font-size: 13.5px; margin-top: 5px; }
+  .game-card .score { font-family: var(--mono); font-size: 13px; margin-top: 9px; color: var(--good); }
+  .game-card .score.pending { color: var(--warn); }
   .viewer { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
   .viewer img { width: 224px; height: 224px; image-rendering: pixelated;
                 border-radius: 12px; border: 1px solid var(--line); background: #000; }
@@ -132,6 +145,7 @@
 </div>
 
 <script src="data/results.js"></script>
+<script src="data/arcade.js"></script>
 <script>
 const R = window.RESULTS || {};
 const $ = (s, el = document) => el.querySelector(s);
@@ -142,6 +156,11 @@ const el = (tag, cls, html) => {
   return n;
 };
 const fmt = (v, d = 2) => (v === null || v === undefined || Number.isNaN(v)) ? "—" : Number(v).toFixed(d);
+// Card titles and blurbs come from a data file, so they are escaped before they
+// are put into innerHTML. Leaving this out of this page -- it existed on the
+// other two -- blanked the whole front page with "esc is not defined", which the
+// static checker could not see and the browser found immediately.
+const esc = s => String(s).replace(/[<>&"]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" }[c]));
 
 /* ---------- theme ---------- */
 const themeBtn = $("#theme");
@@ -231,7 +250,7 @@ function curveChart(points, w = 900, h = 260) {
     const v = x0 + (x1 - x0) * i / ticksX, x = X(v);
     grid += `<text x="${x}" y="${h - 10}" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.6">${(v / 1e6).toFixed(1)}M</text>`;
   }
-  const svg = `<svg viewBox="0 0 ${w} ${h}" width="100%" height="auto" role="img"
+  const svg = `<svg viewBox="0 0 ${w} ${h}" width="100%" style="height:auto;display:block" role="img"
        aria-label="Mean episode return against training steps, rising from about 2 to about 9.5">
     ${grid}
     <path d="${d}" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
@@ -242,9 +261,49 @@ function curveChart(points, w = 900, h = 260) {
   return f;
 }
 
+/* ---------- the arcade cards ---------- */
+function renderCards(into) {
+  const games = (window.ARCADE || {}).games || {};
+  const keys = Object.keys(games);
+  if (!keys.length) return;
+  const card = el("div", "card");
+  card.append(el("h2", "", "The arcade"),
+    el("p", "lede", "One network architecture, three very different games. Each card opens that game's own page: the untrained network and the trained one playing the same level side by side, the score at every checkpoint, and the training curve."));
+  const grid = el("div", "cards");
+  for (const k of keys) {
+    const g = games[k];
+    const a = el("a", "game-card");
+    a.href = "game.html?g=" + encodeURIComponent(k);
+    if (g.progress) {
+      const v = document.createElement("video");
+      v.src = "media/" + k + "/" + g.progress;
+      v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
+      v.setAttribute("muted", "");
+      a.append(v);
+    } else {
+      a.append(el("div", "placeholder", g.trained ? "film not made yet" : "training"));
+    }
+    const body = el("div", "body");
+    body.append(el("div", "name", esc(g.title)), el("div", "desc", esc(g.blurb)));
+    const ladder = g.ladder || [];
+    const first = ladder.find(r => r.steps === 0), last = ladder[ladder.length - 1];
+    if (first && last && last !== first) {
+      body.append(el("div", "score",
+        "untrained " + Number(first.return_mean).toFixed(0) + "  →  trained " + Number(last.return_mean).toFixed(0)));
+    } else {
+      body.append(el("div", "score pending", g.trained ? "scoring pending" : "training in progress"));
+    }
+    a.append(body);
+    grid.append(a);
+  }
+  card.append(grid);
+  into.append(card);
+}
+
 /* ---------- overview ---------- */
 function renderOverview() {
   const s = $("#overview");
+  renderCards(s);
   const card = el("div", "card");
   card.append(el("h2", "", "Three games, three methods"),
               el("p", "lede", "Nothing is shared between them on purpose: the interesting question is what each way of playing costs."));
@@ -290,7 +349,8 @@ function renderOverview() {
     for (const n of clips) {
       const f = el("figure");
       const v = document.createElement("video");
-      v.src = "media/" + n; v.controls = true; v.loop = true; v.muted = true; v.playsInline = true;
+      v.src = "media/" + n; v.controls = true; v.loop = true; v.muted = true;
+      v.playsInline = true; v.autoplay = true; v.setAttribute("muted", "");
       v.style.width = "100%"; v.style.borderRadius = "10px"; v.style.border = "1px solid var(--line)";
       f.append(v, el("figcaption", "", n.replace("clip_", "").replace(".mp4", "")));
       box.append(f);

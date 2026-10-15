@@ -109,7 +109,7 @@ $("#theme").addEventListener("click", () => {
 
 /* ===== chart helpers, all inline SVG ===== */
 function svg(w, h, body, label) {
-  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="auto" role="img" aria-label="${esc(label)}">${body}</svg>`;
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="height:auto;display:block" role="img" aria-label="${esc(label)}">${body}</svg>`;
 }
 function axes(x0, y0, x1, y1, ticks, fmtV) {
   let out = "";
@@ -367,7 +367,8 @@ const main = $("#main");
   for (const n of names.filter(x => x.endsWith(".mp4"))) {
     const f = el("figure");
     const v = document.createElement("video");
-    v.src = "media/" + n; v.controls = true; v.loop = true; v.muted = true; v.playsInline = true;
+    v.src = "media/" + n; v.controls = true; v.loop = true; v.muted = true;
+      v.playsInline = true; v.autoplay = true; v.setAttribute("muted", "");
     f.append(v, el("figcaption", "", n.replace("clip_", "").replace(".mp4", "")));
     box.append(f);
   }

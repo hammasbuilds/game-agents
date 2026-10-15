@@ -32,6 +32,26 @@ user32.SetProcessDPIAware()
 WM_KEYDOWN, WM_KEYUP, WM_CHAR = 0x0100, 0x0101, 0x0102
 
 # Virtual-key codes for the keys Brogue needs that are not plain characters.
+gdi32 = ctypes.windll.gdi32
+
+# PrintWindow flag that renders the window's full contents, including the parts
+# another window is covering. Windows 8.1 and later.
+PW_RENDERFULLCONTENT = 0x00000002
+
+
+class BITMAPINFOHEADER(ctypes.Structure):
+    _fields_ = [("biSize", wintypes.DWORD), ("biWidth", wintypes.LONG),
+                ("biHeight", wintypes.LONG), ("biPlanes", wintypes.WORD),
+                ("biBitCount", wintypes.WORD), ("biCompression", wintypes.DWORD),
+                ("biSizeImage", wintypes.DWORD), ("biXPelsPerMeter", wintypes.LONG),
+                ("biYPelsPerMeter", wintypes.LONG), ("biClrUsed", wintypes.DWORD),
+                ("biClrImportant", wintypes.DWORD)]
+
+
+class BITMAPINFO(ctypes.Structure):
+    _fields_ = [("bmiHeader", BITMAPINFOHEADER), ("bmiColors", wintypes.DWORD * 3)]
+
+
 class WindowGone(RuntimeError):
     """The game window is gone or minimised, so there is nothing to capture."""
 
@@ -74,11 +94,80 @@ class BrogueWindow:
 
     # -- output -----------------------------------------------------------
     def grab(self, sct) -> np.ndarray:
+        """A picture of the game, whatever else is happening on the desktop.
+
+        Screenshotting the patch of desktop where the window sits is the obvious
+        way and it is fragile in two directions that matter when a run takes
+        twenty minutes: minimise the window and there is nothing at those
+        coordinates at all, and merely *cover* it and the capture quietly returns
+        the covering window's pixels, so the agent plays on against a picture of
+        something else. One game in a batch stopped at step 52 that way.
+
+        `PrintWindow` with PW_RENDERFULLCONTENT asks the window to draw itself
+        into a bitmap, which is independent of what is in front of it. It does
+        not work for every renderer, so the result is sanity-checked and the
+        desktop grab is kept as the fallback.
+        """
+        printed = self._print_window()
+        if printed is not None:
+            return printed
         x, y, w, h = self.client_rect()
         if w <= 0 or h <= 0 or x <= -30000:
-            raise WindowGone(f"the window is no longer on screen: {(x, y, w, h)}")
+            raise WindowGone(f"the window is minimised or gone: {(x, y, w, h)}")
         shot = sct.grab({"left": x, "top": y, "width": w, "height": h})
         return np.array(Image.frombytes("RGB", shot.size, shot.rgb))
+
+    def _print_window(self) -> np.ndarray | None:
+        """Ask the window to render itself. Returns None if it will not."""
+        if not self.use_print_window:
+            return None
+        r = wintypes.RECT()
+        if not user32.GetClientRect(self.hwnd, ctypes.byref(r)):
+            return None
+        width, height = r.right, r.bottom
+        if width <= 0 or height <= 0:
+            return None
+
+        window_dc = user32.GetDC(self.hwnd)
+        if not window_dc:
+            return None
+        memory_dc = bitmap = None
+        try:
+            memory_dc = gdi32.CreateCompatibleDC(window_dc)
+            bitmap = gdi32.CreateCompatibleBitmap(window_dc, width, height)
+            if not memory_dc or not bitmap:
+                return None
+            gdi32.SelectObject(memory_dc, bitmap)
+            if not user32.PrintWindow(self.hwnd, memory_dc, PW_RENDERFULLCONTENT):
+                return None
+
+            header = BITMAPINFOHEADER()
+            header.biSize = ctypes.sizeof(BITMAPINFOHEADER)
+            header.biWidth = width
+            header.biHeight = -height          # negative: top-down rows
+            header.biPlanes = 1
+            header.biBitCount = 32
+            header.biCompression = 0           # BI_RGB
+            buffer = ctypes.create_string_buffer(width * height * 4)
+            info = BITMAPINFO()
+            info.bmiHeader = header
+            if not gdi32.GetDIBits(memory_dc, bitmap, 0, height, buffer,
+                                   ctypes.byref(info), 0):
+                return None
+            pixels = np.frombuffer(buffer, dtype=np.uint8).reshape(height, width, 4)
+            frame = pixels[:, :, :3][:, :, ::-1]          # BGRA -> RGB
+            # Some renderers hand back an empty bitmap rather than failing; a
+            # Brogue screen is never uniformly one colour.
+            if int(frame.max()) - int(frame.min()) < 8:
+                self.use_print_window = False
+                return None
+            return np.ascontiguousarray(frame)
+        finally:
+            if bitmap:
+                gdi32.DeleteObject(bitmap)
+            if memory_dc:
+                gdi32.DeleteDC(memory_dc)
+            user32.ReleaseDC(self.hwnd, window_dc)
 
     # -- input ------------------------------------------------------------
     def send(self, key: str, hold: float = 0.02) -> None:

@@ -16,7 +16,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = [ROOT / "docs" / "index.html", ROOT / "docs" / "analytics.html"]
+PAGES = [ROOT / "docs" / "index.html", ROOT / "docs" / "analytics.html",
+         ROOT / "docs" / "game.html"]
 
 COLOUR = re.compile(r"^(#[0-9a-fA-F]{3,8}|rgb|hsl|var\(|transparent|currentColor|[a-z-]+)")
 

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Game Agents · game</title>
+<meta name="description" content="One game, from an untrained network to a trained one: the side-by-side video, the checkpoint ladder, and the training curve.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f6f7f9; --panel: #ffffff; --panel-2: #f0f2f5; --ink: #15181d;
+    --ink-dim: #5b636f; --line: #dde1e7; --accent: #2f6df6; --good: #1f8a4c;
+    --warn: #b06a00; --bad: #c0392b;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1014; --panel: #171a20; --panel-2: #1f232b; --ink: #e9ecf1;
+      --ink-dim: #9aa3b2; --line: #2a2f39; --accent: #6f9bff; --good: #4cc98a;
+      --warn: #e0a24a; --bad: #e8705f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1014; --panel: #171a20; --panel-2: #1f232b; --ink: #e9ecf1;
+    --ink-dim: #9aa3b2; --line: #2a2f39; --accent: #6f9bff; --good: #4cc98a;
+    --warn: #e0a24a; --bad: #e8705f;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 16px 80px; }
+  header { padding: 42px 0 8px; }
+  h1 { font-size: clamp(27px, 4.4vw, 38px); margin: 0 0 6px; letter-spacing: -0.02em; }
+  .sub { color: var(--ink-dim); max-width: 68ch; margin: 0; }
+  .back { display: inline-block; margin: 14px 0 0; font-size: 14px; }
+  .theme { position: absolute; top: 18px; right: 18px; background: var(--panel);
+           color: var(--ink); border: 1px solid var(--line); border-radius: 999px;
+           padding: 7px 14px; cursor: pointer; font-size: 13px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+          padding: 20px 22px; margin: 18px 0; }
+  .card h2 { margin: 0 0 4px; font-size: 20px; letter-spacing: -0.01em; }
+  .card h3 { margin: 22px 0 8px; font-size: 13px; text-transform: uppercase;
+             letter-spacing: 0.08em; color: var(--ink-dim); }
+  .lede { color: var(--ink-dim); margin: 6px 0 14px; }
+  video { width: 100%; border-radius: 12px; border: 1px solid var(--line); background: #0c0e12; display: block; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .stat { background: var(--panel-2); border-radius: 12px; padding: 13px 15px; }
+  .stat .n { font-size: 25px; font-weight: 650; font-family: var(--mono); letter-spacing: -0.02em; }
+  .stat .k { color: var(--ink-dim); font-size: 12.5px; margin-top: 3px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th, td { text-align: right; padding: 8px 9px; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--ink-dim); font-weight: 600; font-size: 12.5px;
+       text-transform: uppercase; letter-spacing: 0.05em; }
+  td.num { font-family: var(--mono); }
+  tr.first td { color: var(--ink-dim); }
+  tr.last td { color: var(--good); font-weight: 650; }
+  figure { margin: 0; }
+  figcaption { color: var(--ink-dim); font-size: 12.5px; margin-top: 6px; }
+  .pair { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .note { border-left: 3px solid var(--warn); padding-left: 13px; color: var(--ink-dim); }
+  a { color: var(--accent); }
+  code { font-family: var(--mono); font-size: 0.92em; background: var(--panel-2);
+         padding: 1px 5px; border-radius: 5px; }
+</style>
+</head>
+<body>
+<button class="theme" id="theme">theme</button>
+<div class="wrap">
+  <header>
+    <h1 id="title">…</h1>
+    <p class="sub" id="blurb"></p>
+    <a class="back" href="index.html">← all games</a>
+  </header>
+  <main id="main"></main>
+</div>
+
+<script src="data/arcade.js"></script>
+<script>
+const A = (window.ARCADE || {}).games || {};
+const key = new URLSearchParams(location.search).get("g");
+const G = A[key];
+const $ = s => document.querySelector(s);
+const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c;
+                          if (h !== undefined) n.innerHTML = h; return n; };
+const esc = s => String(s).replace(/[<>&]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]));
+const fmt = (v, d = 2) => (v === null || v === undefined) ? "—" : Number(v).toFixed(d);
+
+try { const t = localStorage.getItem("ga-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+$("#theme").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = cur ? (cur === "dark" ? "light" : "dark") : (dark ? "light" : "dark");
+  document.documentElement.setAttribute("data-theme", next);
+  try { localStorage.setItem("ga-theme", next); } catch (e) {}
+});
+
+function video(src, caption) {
+  const f = el("figure");
+  const v = document.createElement("video");
+  v.src = "media/" + key + "/" + src;
+  // Nothing here should need a click: muted autoplay is allowed everywhere.
+  v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true; v.controls = true;
+  v.setAttribute("muted", "");
+  f.append(v);
+  if (caption) f.append(el("figcaption", "", caption));
+  return f;
+}
+
+function lineChart(points, opts) {
+  const w = 960, h = 260, pad = { l: 58, r: 16, t: 14, b: 32 };
+  if (!points.length) return el("p", "lede", "no curve yet");
+  const xs = points.map(p => p[0]), ys = points.map(p => p[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs);
+  const y0 = Math.min(...ys, 0), y1 = Math.max(...ys);
+  const span = (y1 - y0) || 1;
+  const X = v => pad.l + (v - x0) / ((x1 - x0) || 1) * (w - pad.l - pad.r);
+  const Y = v => h - pad.b - (v - y0) / span * (h - pad.t - pad.b);
+  let body = "";
+  for (let i = 0; i <= 4; i++) {
+    const v = y0 + span * i / 4, y = Y(v);
+    body += `<line x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" stroke="currentColor" stroke-opacity="0.12"/>`
+         + `<text x="${pad.l - 8}" y="${y + 4}" text-anchor="end" font-size="11" fill="currentColor" fill-opacity="0.6">${v.toFixed(0)}</text>`;
+  }
+  const d = points.map((p, i) => (i ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1)).join(" ");
+  body += `<path d="${d}" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>`;
+  for (let i = 0; i <= 4; i++) {
+    const v = x0 + ((x1 - x0) || 1) * i / 4;
+    body += `<text x="${X(v)}" y="${h - 9}" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity="0.6">${(v / 1e6).toFixed(2)}M</text>`;
+  }
+  const f = el("figure", "", `<svg viewBox="0 0 ${w} ${h}" width="100%" style="height:auto;display:block" role="img" aria-label="${esc(opts.label)}">${body}</svg>`);
+  if (opts.caption) f.append(el("figcaption", "", opts.caption));
+  return f;
+}
+
+if (!G) {
+  $("#title").textContent = "Unknown game";
+  $("#main").append(el("p", "lede", "No such game in the arcade."));
+} else {
+  document.title = "Game Agents · " + G.title;
+  $("#title").textContent = G.title;
+  $("#blurb").textContent = G.blurb;
+  const main = $("#main");
+
+  // -- the before and after -------------------------------------------
+  const top = el("div", "card");
+  top.append(el("h2", "", "The same level, before and after"));
+  if (G.progress) {
+    top.append(el("p", "lede", "Every panel is the same seed, played at the same moment by a different checkpoint of the same network. The left one has never been trained."));
+    top.append(video(G.progress, "Untrained, part-way, and finished — playing together."));
+  } else if (G.trained) {
+    top.append(el("p", "lede", "Training is done; the film has not been made yet. Run <code>python -m arcade.progress --game " + key + "</code>."));
+  } else {
+    top.append(el("p", "note", "This game has not finished training yet, so there is nothing honest to show here. The page will fill itself in when it has."));
+  }
+  main.append(top);
+
+  // -- the ladder ------------------------------------------------------
+  if (G.ladder && G.ladder.length) {
+    const c = el("div", "card");
+    c.append(el("h2", "", "Score at each checkpoint"),
+      el("p", "lede", "Every checkpoint plays the same " + (G.evaluation_seeds || []).length +
+        " levels, so the climb is like for like. 'random' is a policy that presses buttons at random; the untrained network is not quite the same thing, since it has opinions, just arbitrary ones."));
+    const t = el("table");
+    t.append(el("thead", "", "<tr><th>checkpoint</th><th>steps trained</th><th>score</th><th>spread</th><th>worst</th><th>best</th></tr>"));
+    const tb = el("tbody");
+    G.ladder.forEach((r, i) => {
+      const cls = i === 0 ? "first" : (i === G.ladder.length - 1 ? "last" : "");
+      const tr = el("tr", cls);
+      const label = r.tag === "random" ? "random keys" : (r.steps === 0 ? "untrained" : r.tag + "%");
+      [label, r.steps === null ? "—" : r.steps.toLocaleString(), fmt(r.return_mean),
+       "± " + fmt(r.return_std), fmt(r.return_min), fmt(r.return_max)]
+        .forEach((v, j) => tr.append(el("td", j ? "num" : "", v)));
+      tb.append(tr);
+    });
+    t.append(tb);
+    c.append(t);
+    main.append(c);
+  }
+
+  // -- training --------------------------------------------------------
+  const tr = el("div", "card");
+  tr.append(el("h2", "", "Training"));
+  if (G.summary) {
+    const g = el("div", "grid");
+    [[G.summary.steps.toLocaleString(), "agent steps"],
+     [(G.summary.wall_seconds / 60).toFixed(0) + " min", "wall clock, " + G.summary.device],
+     [G.summary.params.toLocaleString(), "parameters"],
+     [Math.round(G.summary.steps / G.summary.wall_seconds) + "/s", "steps per second"]]
+      .forEach(([n, k]) => { const s = el("div", "stat"); s.append(el("div", "n", n), el("div", "k", k)); g.append(s); });
+    tr.append(g);
+  }
+  if (G.curve && G.curve.length) {
+    tr.append(lineChart(G.curve.map(p => [p.steps, p.return]), {
+      label: "episode return against training steps",
+      caption: "Mean return over the last 100 training episodes. This is the agent's own experience, not the held-out evaluation above."
+    }));
+  } else {
+    tr.append(el("p", "lede", "No episodes finished yet."));
+  }
+  main.append(tr);
+
+  // -- single clips ----------------------------------------------------
+  const singles = (G.clips || []).filter(n => n.startsWith("step_"));
+  if (singles.length) {
+    const c = el("div", "card");
+    c.append(el("h2", "", "Each checkpoint on its own"));
+    const pair = el("div", "pair");
+    for (const n of singles) {
+      const tag = n.replace("step_", "").replace(".mp4", "");
+      pair.append(video(n, tag === "000" ? "untrained" : "after " + Number(tag) + "% of training"));
+    }
+    c.append(pair);
+    main.append(c);
+  }
+}
+</script>
+</body>
+</html>
