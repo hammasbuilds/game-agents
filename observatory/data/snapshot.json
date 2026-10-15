@@ -1,5 +1,5 @@
 {
- "taken_at": "2026-10-15 05:29:18Z",
+ "taken_at": "2026-10-15 05:50:24Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -8,15 +8,15 @@
    "env_id": "CarRacing-v3",
    "blurb": "Top-down racing. The agent sees the track and steers; an untrained one spins on the grass, a trained one follows the road.",
    "state": "running",
-   "steps": 215040,
-   "updates": 140,
+   "steps": 291840,
+   "updates": 190,
    "sps": 59.5,
-   "return_now": 296.2,
-   "entropy_now": 0.5006,
+   "return_now": 362.58,
+   "entropy_now": 0.4979,
    "wall_minutes": null,
    "params": null,
-   "eta_minutes": 275.9,
-   "seconds_since_update": 133,
+   "eta_minutes": 254.4,
+   "seconds_since_update": 107,
    "checkpoints": [
     {
      "tag": "000",
@@ -1004,6 +1004,356 @@
      "entropy": 0.5006,
      "sps": 59.5,
      "value_loss": 346.5181
+    },
+    {
+     "steps": 216576,
+     "return": 304.131,
+     "entropy": 0.4343,
+     "sps": 59.2,
+     "value_loss": 423.1336
+    },
+    {
+     "steps": 218112,
+     "return": 307.463,
+     "entropy": 0.5027,
+     "sps": 59.2,
+     "value_loss": 434.0385
+    },
+    {
+     "steps": 219648,
+     "return": 307.766,
+     "entropy": 0.4846,
+     "sps": 59.1,
+     "value_loss": 499.2126
+    },
+    {
+     "steps": 221184,
+     "return": 298.216,
+     "entropy": 0.4659,
+     "sps": 59.2,
+     "value_loss": 414.7492
+    },
+    {
+     "steps": 222720,
+     "return": 295.948,
+     "entropy": 0.4406,
+     "sps": 59.1,
+     "value_loss": 449.2897
+    },
+    {
+     "steps": 224256,
+     "return": 301.556,
+     "entropy": 0.5265,
+     "sps": 59.1,
+     "value_loss": 412.8067
+    },
+    {
+     "steps": 225792,
+     "return": 299.58,
+     "entropy": 0.4853,
+     "sps": 59.1,
+     "value_loss": 284.5581
+    },
+    {
+     "steps": 227328,
+     "return": 303.956,
+     "entropy": 0.4315,
+     "sps": 59.1,
+     "value_loss": 342.6182
+    },
+    {
+     "steps": 228864,
+     "return": 321.036,
+     "entropy": 0.4425,
+     "sps": 59.1,
+     "value_loss": 497.4128
+    },
+    {
+     "steps": 230400,
+     "return": 320.024,
+     "entropy": 0.4715,
+     "sps": 59.1,
+     "value_loss": 507.8419
+    },
+    {
+     "steps": 231936,
+     "return": 332.746,
+     "entropy": 0.4214,
+     "sps": 59.1,
+     "value_loss": 497.1736
+    },
+    {
+     "steps": 233472,
+     "return": 339.544,
+     "entropy": 0.4811,
+     "sps": 59.1,
+     "value_loss": 360.6383
+    },
+    {
+     "steps": 235008,
+     "return": 342.868,
+     "entropy": 0.4458,
+     "sps": 59.1,
+     "value_loss": 456.9294
+    },
+    {
+     "steps": 236544,
+     "return": 342.705,
+     "entropy": 0.4075,
+     "sps": 59.0,
+     "value_loss": 531.7839
+    },
+    {
+     "steps": 238080,
+     "return": 340.486,
+     "entropy": 0.4109,
+     "sps": 59.0,
+     "value_loss": 595.151
+    },
+    {
+     "steps": 239616,
+     "return": 343.148,
+     "entropy": 0.4359,
+     "sps": 59.0,
+     "value_loss": 377.6914
+    },
+    {
+     "steps": 241152,
+     "return": 340.477,
+     "entropy": 0.4387,
+     "sps": 59.0,
+     "value_loss": 462.5348
+    },
+    {
+     "steps": 242688,
+     "return": 344.073,
+     "entropy": 0.3863,
+     "sps": 59.0,
+     "value_loss": 353.1421
+    },
+    {
+     "steps": 244224,
+     "return": 355.631,
+     "entropy": 0.4421,
+     "sps": 59.1,
+     "value_loss": 511.012
+    },
+    {
+     "steps": 245760,
+     "return": 363.086,
+     "entropy": 0.4419,
+     "sps": 59.1,
+     "value_loss": 558.826
+    },
+    {
+     "steps": 247296,
+     "return": 366.074,
+     "entropy": 0.4816,
+     "sps": 59.1,
+     "value_loss": 533.7196
+    },
+    {
+     "steps": 248832,
+     "return": 362.75,
+     "entropy": 0.5038,
+     "sps": 59.1,
+     "value_loss": 362.7805
+    },
+    {
+     "steps": 250368,
+     "return": 369.704,
+     "entropy": 0.5142,
+     "sps": 59.1,
+     "value_loss": 587.9217
+    },
+    {
+     "steps": 251904,
+     "return": 377.086,
+     "entropy": 0.4322,
+     "sps": 59.1,
+     "value_loss": 494.9808
+    },
+    {
+     "steps": 253440,
+     "return": 374.99,
+     "entropy": 0.4618,
+     "sps": 59.1,
+     "value_loss": 592.0266
+    },
+    {
+     "steps": 254976,
+     "return": 380.072,
+     "entropy": 0.4644,
+     "sps": 59.2,
+     "value_loss": 402.8402
+    },
+    {
+     "steps": 256512,
+     "return": 376.014,
+     "entropy": 0.4296,
+     "sps": 59.2,
+     "value_loss": 586.2794
+    },
+    {
+     "steps": 258048,
+     "return": 387.537,
+     "entropy": 0.4561,
+     "sps": 59.2,
+     "value_loss": 440.1595
+    },
+    {
+     "steps": 259584,
+     "return": 396.056,
+     "entropy": 0.4679,
+     "sps": 59.2,
+     "value_loss": 459.581
+    },
+    {
+     "steps": 261120,
+     "return": 398.647,
+     "entropy": 0.5294,
+     "sps": 59.3,
+     "value_loss": 488.9712
+    },
+    {
+     "steps": 262656,
+     "return": 398.728,
+     "entropy": 0.536,
+     "sps": 59.2,
+     "value_loss": 526.8425
+    },
+    {
+     "steps": 264192,
+     "return": 405.5,
+     "entropy": 0.6208,
+     "sps": 59.3,
+     "value_loss": 366.9776
+    },
+    {
+     "steps": 265728,
+     "return": 391.099,
+     "entropy": 0.5927,
+     "sps": 59.3,
+     "value_loss": 383.5381
+    },
+    {
+     "steps": 267264,
+     "return": 386.225,
+     "entropy": 0.5715,
+     "sps": 59.3,
+     "value_loss": 254.8101
+    },
+    {
+     "steps": 268800,
+     "return": 379.91,
+     "entropy": 0.5795,
+     "sps": 59.3,
+     "value_loss": 322.4266
+    },
+    {
+     "steps": 270336,
+     "return": 371.087,
+     "entropy": 0.5607,
+     "sps": 59.3,
+     "value_loss": 356.8905
+    },
+    {
+     "steps": 271872,
+     "return": 366.914,
+     "entropy": 0.5075,
+     "sps": 59.3,
+     "value_loss": 364.0366
+    },
+    {
+     "steps": 273408,
+     "return": 364.521,
+     "entropy": 0.5465,
+     "sps": 59.2,
+     "value_loss": 321.1865
+    },
+    {
+     "steps": 274944,
+     "return": 365.54,
+     "entropy": 0.5583,
+     "sps": 59.2,
+     "value_loss": 362.5523
+    },
+    {
+     "steps": 276480,
+     "return": 360.654,
+     "entropy": 0.546,
+     "sps": 59.2,
+     "value_loss": 461.5869
+    },
+    {
+     "steps": 278016,
+     "return": 361.664,
+     "entropy": 0.4938,
+     "sps": 59.2,
+     "value_loss": 347.6773
+    },
+    {
+     "steps": 279552,
+     "return": 360.721,
+     "entropy": 0.4286,
+     "sps": 59.2,
+     "value_loss": 415.2365
+    },
+    {
+     "steps": 281088,
+     "return": 360.283,
+     "entropy": 0.3788,
+     "sps": 59.3,
+     "value_loss": 414.4679
+    },
+    {
+     "steps": 282624,
+     "return": 354.147,
+     "entropy": 0.4582,
+     "sps": 59.3,
+     "value_loss": 446.7153
+    },
+    {
+     "steps": 284160,
+     "return": 352.085,
+     "entropy": 0.4259,
+     "sps": 59.3,
+     "value_loss": 463.4923
+    },
+    {
+     "steps": 285696,
+     "return": 352.069,
+     "entropy": 0.3581,
+     "sps": 59.3,
+     "value_loss": 345.192
+    },
+    {
+     "steps": 287232,
+     "return": 351.379,
+     "entropy": 0.3943,
+     "sps": 59.3,
+     "value_loss": 379.5843
+    },
+    {
+     "steps": 288768,
+     "return": 345.166,
+     "entropy": 0.4461,
+     "sps": 59.4,
+     "value_loss": 330.8363
+    },
+    {
+     "steps": 290304,
+     "return": 351.243,
+     "entropy": 0.493,
+     "sps": 59.4,
+     "value_loss": 408.2802
+    },
+    {
+     "steps": 291840,
+     "return": 362.579,
+     "entropy": 0.4979,
+     "sps": 59.5,
+     "value_loss": 324.2688
     }
    ],
    "ladder": [
@@ -1073,18 +1423,18 @@
     "progress.gif"
    ],
    "log_tail": [
-    "u40/781 steps=61440 return=113.26608164848467 sps=45.4 ent=0.9166",
-    "u50/781 steps=76800 return=139.0034536225248 sps=46.1 ent=0.8816",
-    "u60/781 steps=92160 return=122.92975598742436 sps=48.9 ent=0.8018",
-    "u70/781 steps=107520 return=137.32053276845272 sps=50.9 ent=0.5071",
-    "u80/781 steps=122880 return=181.34485397780696 sps=53.7 ent=0.4647",
     "u90/781 steps=138240 return=222.47628793505544 sps=56.7 ent=0.5708",
     "u100/781 steps=153600 return=232.5104018451354 sps=59.5 ent=0.4616",
     "u110/781 steps=168960 return=234.9518166801329 sps=62.2 ent=0.6349",
     "checkpoint 015 at 179712 steps, training return 260.60443824963806 -> ckpt_015.pt",
     "u120/781 steps=184320 return=273.4731434976088 sps=63.0 ent=0.5421",
     "u130/781 steps=199680 return=315.9071233504654 sps=61.4 ent=0.5315",
-    "u140/781 steps=215040 return=296.20095950346894 sps=59.5 ent=0.5006"
+    "u140/781 steps=215040 return=296.20095950346894 sps=59.5 ent=0.5006",
+    "u150/781 steps=230400 return=320.02399937516066 sps=59.1 ent=0.4715",
+    "u160/781 steps=245760 return=363.085658732665 sps=59.1 ent=0.4419",
+    "u170/781 steps=261120 return=398.64681894384523 sps=59.3 ent=0.5294",
+    "u180/781 steps=276480 return=360.65355300412904 sps=59.2 ent=0.546",
+    "u190/781 steps=291840 return=362.5787089061021 sps=59.5 ent=0.4979"
    ]
   },
   {
@@ -1102,7 +1452,7 @@
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 7370,
+   "seconds_since_update": 8637,
    "checkpoints": [
     {
      "tag": "000",
@@ -2227,7 +2577,7 @@
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": 7338,
+   "seconds_since_update": 76,
    "checkpoints": [],
    "curve": [],
    "ladder": null,
@@ -2236,18 +2586,14 @@
    "clips": [],
    "gifs": [],
    "log_tail": [
-    "u1240/1302 steps=1904640 return=2.79 sps=591.7 ent=2.7247",
-    "u1250/1302 steps=1920000 return=2.79 sps=591.7 ent=2.7627",
-    "u1260/1302 steps=1935360 return=3.14 sps=591.5 ent=2.8099",
-    "u1270/1302 steps=1950720 return=3.06 sps=591.4 ent=2.8126",
-    "u1280/1302 steps=1966080 return=3.06 sps=591.4 ent=2.8025",
-    "u1290/1302 steps=1981440 return=2.56 sps=591.3 ent=2.7874",
-    "u1300/1302 steps=1996800 return=2.55 sps=591.2 ent=2.7223",
-    "checkpoint 100 at 1999872 steps, training return 2.55 -> ckpt_100.pt",
-    "u1302/1302 steps=1999872 return=2.55 sps=591.2 ent=2.7859",
-    "{",
-    "=== Platformer (ALE/Kangaroo-v5) : 2,000,000 steps on 12 envs -> D:\\github\\game-agents\\runs_arcade\\platformer",
-    "checkpoint 000 at step 0 (untrained) -> ckpt_000.pt"
+    "=== train platformer started 2026-10-15 05:47:05Z ===",
+    "=== train platformer started 2026-10-15 05:47:56Z ===",
+    "=== Platformer (ALE/Kangaroo-v5) : 40,000 steps on 4 envs, small x2, lr 0.0003, entropy 0.02 -> D:\\github\\game-agents\\runs_arcade\\platformer",
+    "checkpoint 000 at step 0 (untrained) -> ckpt_000.pt",
+    "checkpoint 005 at 2048 steps, training return 0.0 -> ckpt_005.pt",
+    "u10/156 steps=2560 return=0.0 sps=79.2 ent=2.89",
+    "u20/156 steps=5120 return=0.0 sps=97.8 ent=2.844",
+    "checkpoint 015 at 5888 steps, training return 18.181818181818183 -> ckpt_015.pt"
    ]
   },
   {
@@ -2265,7 +2611,7 @@
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 3756,
+   "seconds_since_update": 5023,
    "checkpoints": [
     {
      "tag": "000",
@@ -5499,13 +5845,13 @@
   "media_dir": "../docs/media"
  },
  "machine": {
-  "cpu_percent": 99.9,
-  "python_processes": 54,
+  "cpu_percent": 87.6,
+  "python_processes": 52,
   "gpu": {
    "name": "Quadro RTX 5000",
-   "memory_used": "14025 MiB",
+   "memory_used": "14073 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "16 %"
+   "utilisation": "85 %"
   }
  }
 }

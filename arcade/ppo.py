@@ -40,6 +40,7 @@ class PPOConfig:
     anneal_lr: bool = True
     torch_threads: int = 4
     width: int = 1
+    arch: str = "nature"              # nature | impala | small
     device: str = "auto"
     # Fractions of training at which to save the weights. 0.0 is the untrained
     # network and is not optional: it is the "step 1" of every demo.
@@ -81,9 +82,13 @@ def resolve_device(choice: str) -> torch.device:
 def save_checkpoint(model, game: Game, cfg: PPOConfig, out_dir: Path, step: int,
                     tag: str, stats: dict) -> Path:
     path = out_dir / f"ckpt_{tag}.pt"
+    # The architecture is saved with the weights: a checkpoint that does not say
+    # what shape it is can only be loaded by guessing, and the guess is wrong the
+    # moment a second architecture exists.
     torch.save({"model": model.state_dict(), "game": game.key, "width": cfg.width,
-                "n_actions": n_actions(game), "obs_shape": obs_shape(),
-                "step": step, "tag": tag, "stats": stats}, path)
+                "arch": cfg.arch, "n_actions": n_actions(game),
+                "obs_shape": obs_shape(), "step": step, "tag": tag,
+                "stats": stats}, path)
     return path
 
 
@@ -97,7 +102,7 @@ def train(game: Game, cfg: PPOConfig, out_dir: Path, seed: int = 0,
 
     shape = obs_shape()
     actions = n_actions(game)
-    model = ActorCritic(shape, actions, width=cfg.width).to(device)
+    model = ActorCritic(shape, actions, width=cfg.width, arch=cfg.arch).to(device)
     opt = torch.optim.Adam(model.parameters(), lr=cfg.lr, eps=1e-5)
 
     batch = cfg.n_envs * cfg.rollout
@@ -202,8 +207,10 @@ def train(game: Game, cfg: PPOConfig, out_dir: Path, seed: int = 0,
     summary = {"game": game.key, "env_id": game.env_id, "updates": len(history),
                "steps": step_count, "wall_seconds": round(time.time() - started, 1),
                "final_return_mean": history[-1]["return_mean"] if history else None,
-               "params": model.n_params(), "width": cfg.width,
+               "params": model.n_params(), "width": cfg.width, "arch": cfg.arch,
                "device": str(device), "envs": cfg.n_envs,
+               "learning_rate": cfg.lr, "entropy_coef": cfg.entropy_coef,
+               "rollout": cfg.rollout, "epochs": cfg.epochs,
                "checkpoints": saved}
     (out_dir / "history.json").write_text(json.dumps(history, indent=1))
     (out_dir / "checkpoints.json").write_text(json.dumps(saved, indent=1))

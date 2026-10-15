@@ -32,8 +32,15 @@ def main() -> None:
     ap.add_argument("--steps", type=int, default=None)
     ap.add_argument("--envs", type=int, default=12)
     ap.add_argument("--width", type=int, default=1)
+    ap.add_argument("--arch", default="nature", choices=["nature", "impala", "small"])
     ap.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"])
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--lr", type=float, default=2.5e-4)
+    ap.add_argument("--entropy", type=float, default=0.01)
+    ap.add_argument("--rollout", type=int, default=128)
+    ap.add_argument("--epochs", type=int, default=4)
+    ap.add_argument("--minibatches", type=int, default=4)
+    ap.add_argument("--out", default=None, help="where to write the run")
     args = ap.parse_args()
 
     if not args.game and not args.all:
@@ -43,11 +50,14 @@ def main() -> None:
     for key in games:
         game = CATALOGUE[key]
         steps = args.steps or BUDGET.get(key, 1_000_000)
-        out = ROOT / "runs_arcade" / key
+        out = Path(args.out) if args.out else ROOT / "runs_arcade" / key
         cfg = PPOConfig(total_steps=steps, n_envs=args.envs, width=args.width,
-                        device=args.device)
+                        arch=args.arch, device=args.device, lr=args.lr,
+                        entropy_coef=args.entropy, rollout=args.rollout,
+                        epochs=args.epochs, minibatches=args.minibatches)
         print(f"\n=== {game.title} ({game.env_id}) : {steps:,} steps on "
-              f"{args.envs} envs -> {out}", flush=True)
+              f"{args.envs} envs, {args.arch} x{args.width}, lr {args.lr}, "
+              f"entropy {args.entropy} -> {out}", flush=True)
         summary = train(game, cfg, out, seed=args.seed)
         print(json.dumps({k: v for k, v in summary.items() if k != "checkpoints"},
                          indent=1))

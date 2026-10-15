@@ -123,7 +123,70 @@ def job_key(kind: str, game: str) -> str:
     return f"{kind}:{game}"
 
 
-def start_job(kind: str, game: str) -> dict:
+# Every training knob the panel may set, with the range it may set it to. The
+# panel sends values, never flags: nothing a request contains becomes part of a
+# command except as the value of a switch named here, and anything outside its
+# range is refused rather than clamped, so a typo is visible instead of silently
+# becoming a different experiment.
+TRAIN_SCHEMA = {
+    "steps": {"flag": "--steps", "type": int, "min": 10_000, "max": 50_000_000,
+              "label": "training steps"},
+    "envs": {"flag": "--envs", "type": int, "min": 1, "max": 32,
+             "label": "parallel games"},
+    "arch": {"flag": "--arch", "type": str, "choices": ("nature", "impala", "small"),
+             "label": "architecture"},
+    "width": {"flag": "--width", "type": int, "min": 1, "max": 8,
+              "label": "channel multiplier"},
+    "lr": {"flag": "--lr", "type": float, "min": 1e-6, "max": 1e-2,
+           "label": "learning rate"},
+    "entropy": {"flag": "--entropy", "type": float, "min": 0.0, "max": 0.2,
+                "label": "entropy bonus"},
+    "rollout": {"flag": "--rollout", "type": int, "min": 16, "max": 1024,
+                "label": "rollout length"},
+    "epochs": {"flag": "--epochs", "type": int, "min": 1, "max": 16,
+               "label": "epochs per batch"},
+    "minibatches": {"flag": "--minibatches", "type": int, "min": 1, "max": 32,
+                    "label": "minibatches"},
+    "device": {"flag": "--device", "type": str, "choices": ("auto", "cpu", "cuda"),
+               "label": "device"},
+    "seed": {"flag": "--seed", "type": int, "min": 0, "max": 10_000_000, "label": "seed"},
+}
+
+
+def build_train_args(config: dict) -> tuple[list[str], dict, str | None]:
+    """Turn a config from the panel into command-line switches, or refuse it."""
+    args: list[str] = []
+    used: dict = {}
+    for key, value in (config or {}).items():
+        rule = TRAIN_SCHEMA.get(key)
+        if rule is None:
+            return [], {}, f"{key!r} is not a setting this panel knows"
+        if value is None or value == "":
+            continue
+        try:
+            typed = rule["type"](value)
+        except (TypeError, ValueError):
+            return [], {}, f"{rule['label']} must be a {rule['type'].__name__}"
+        if "choices" in rule and typed not in rule["choices"]:
+            return [], {}, f"{rule['label']} must be one of {', '.join(rule['choices'])}"
+        if "min" in rule and typed < rule["min"]:
+            return [], {}, f"{rule['label']} must be at least {rule['min']}"
+        if "max" in rule and typed > rule["max"]:
+            return [], {}, f"{rule['label']} must be at most {rule['max']}"
+        args += [rule["flag"], str(typed)]
+        used[key] = typed
+
+    # Minibatches have to divide the batch, or PPO silently trains on ragged
+    # slices and the last one is a different size every update.
+    envs, rollout, minibatches = used.get("envs"), used.get("rollout"), used.get("minibatches")
+    if envs and rollout and minibatches:
+        if (envs * rollout) % minibatches:
+            return [], {}, (f"{envs} games x {rollout} steps is {envs * rollout}, "
+                            f"which {minibatches} minibatches do not divide evenly")
+    return args, used, None
+
+
+def start_job(kind: str, game: str, config: dict | None = None) -> dict:
     """Launch one job, refusing to start a second of the same kind for a game."""
     if game not in known_games():
         return {"ok": False, "error": f"unknown game {game!r}"}
@@ -137,9 +200,17 @@ def start_job(kind: str, game: str) -> dict:
             if game in ("doom", "brogue", "crafter"):
                 return {"ok": False,
                         "error": f"{game} is not one of the arcade runs; it has its own trainer"}
-            args = [python(), "-m", "arcade.train", "--game", game, "--envs", "12"]
+            used = {}
+            extra, used, problem = build_train_args(config or {})
+            if problem:
+                return {"ok": False, "error": problem}
+            args = [python(), "-m", "arcade.train", "--game", game]
+            if "--envs" not in extra:
+                args += ["--envs", "12"]
+            args += extra
             log = ROOT / "runs_arcade" / f"train_{game}.log"
         elif kind == "play":
+            used = {}
             args = [python(), "-m", "observatory.live", "--game", game]
             log = HERE / "logs" / f"play_{game}.log"
         else:
@@ -156,9 +227,11 @@ def start_job(kind: str, game: str) -> dict:
                                    stderr=subprocess.STDOUT, env=env,
                                    creationflags=creation)
         JOBS[key] = {"process": process, "log": str(log), "started": time.time(),
-                     "kind": kind, "game": game, "handle": handle}
+                     "kind": kind, "game": game, "handle": handle,
+                     "config": used if kind == "train" else {}}
     save_registry()
-    return {"ok": True, "pid": process.pid, "log": str(log)}
+    return {"ok": True, "pid": process.pid, "log": str(log),
+            "config": used if kind == "train" else {}}
 
 
 def stop_job(kind: str, game: str) -> dict:
@@ -196,7 +269,8 @@ def job_status() -> list[dict]:
             out.append({"key": key, "kind": job["kind"], "game": job["game"],
                         "running": running, "pid": job["process"].pid,
                         "seconds": round(time.time() - job["started"]),
-                        "adopted": bool(job.get("adopted")), "log": job["log"]})
+                        "adopted": bool(job.get("adopted")),
+                        "config": job.get("config") or {}, "log": job["log"]})
     return out
 
 
@@ -242,7 +316,13 @@ class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         path = urlparse(self.path).path
         if path == "/api/jobs":
-            return self._json({"jobs": job_status(), "games": known_games()})
+            schema = {k: {kk: (list(vv) if isinstance(vv, tuple) else vv)
+                          for kk, vv in rule.items() if kk != "type"}
+                      for k, rule in TRAIN_SCHEMA.items()}
+            for key, rule in TRAIN_SCHEMA.items():
+                schema[key]["kind"] = rule["type"].__name__
+            return self._json({"jobs": job_status(), "games": known_games(),
+                               "schema": schema})
         if path in ("/", "/index.html"):
             # The token is handed to the page it is meant for, and only that
             # page: another origin cannot read this response.
@@ -272,7 +352,7 @@ class Handler(SimpleHTTPRequestHandler):
         game = str(payload.get("game", ""))
 
         if path == "/api/train/start":
-            return self._json(start_job("train", game))
+            return self._json(start_job("train", game, payload.get("config") or {}))
         if path == "/api/train/stop":
             return self._json(stop_job("train", game))
         if path == "/api/play/start":

@@ -26,8 +26,11 @@ class Episode:
 def load(checkpoint: Path) -> tuple[ActorCritic, Game, dict]:
     blob = torch.load(checkpoint, map_location="cpu", weights_only=False)
     game = CATALOGUE[blob["game"]]
+    # Checkpoints written before architectures existed carry no 'arch' and are
+    # all the nature trunk, so that is the default rather than an error.
     model = ActorCritic(tuple(blob["obs_shape"]), int(blob["n_actions"]),
-                        width=int(blob.get("width", 1)))
+                        width=int(blob.get("width", 1)),
+                        arch=str(blob.get("arch", "nature")))
     model.load_state_dict(blob["model"])
     model.eval()
     return model, game, blob
