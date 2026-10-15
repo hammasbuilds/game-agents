@@ -90,3 +90,63 @@ def test_a_checkpoint_without_an_architecture_still_loads():
     assert model.arch == "nature"
     assert isinstance(model.n_params(), int)
     del torch
+
+
+# -- learning-rate schedules ------------------------------------------------
+def test_each_schedule_has_the_shape_its_name_claims():
+    from arcade.ppo import PPOConfig, learning_rate_at
+
+    n = 100
+    def curve(kind):
+        cfg = PPOConfig(lr=1e-3, lr_schedule=kind)
+        return [learning_rate_at(cfg, u, n) for u in range(1, n + 1)]
+
+    constant = curve("constant")
+    assert min(constant) == max(constant) == pytest.approx(1e-3)
+
+    linear = curve("linear")
+    assert linear[0] == pytest.approx(1e-3)
+    assert linear[-1] < 1e-4
+    # straight: the midpoint sits halfway between the ends
+    assert linear[50] == pytest.approx((linear[0] + linear[-1]) / 2, rel=0.05)
+
+    cosine = curve("cosine")
+    # a cosine spends longer near the top than a straight line does
+    assert cosine[25] > linear[25]
+    assert cosine[-1] < linear[-1] + 1e-9
+
+    warm = curve("warmup_cosine")
+    assert warm[0] < warm[5], "warm-up has to start low and rise"
+    assert max(warm) == pytest.approx(1e-3, rel=0.02)
+
+
+def test_an_unknown_schedule_falls_back_rather_than_crashing_a_run():
+    """A bad name should not take down an hour of training; linear is the default
+    everything here was measured with."""
+    from arcade.ppo import PPOConfig, learning_rate_at
+
+    cfg = PPOConfig(lr=1e-3, lr_schedule="spiral")
+    assert learning_rate_at(cfg, 1, 100) == pytest.approx(1e-3)
+    assert learning_rate_at(cfg, 100, 100) < 1e-4
+
+
+# -- sweeps -----------------------------------------------------------------
+def test_a_sweep_needs_something_to_compare():
+    from observatory.server import start_sweep
+
+    assert "at least two" in start_sweep("racing", "lr", ["1e-4"], 300_000, 12, 5)["error"]
+
+
+def test_a_sweep_refuses_a_setting_that_is_not_sweepable():
+    from observatory.server import start_sweep
+
+    assert "cannot be swept" in start_sweep("racing", "rm", ["1", "2"], 300_000, 12, 5)["error"]
+
+
+def test_every_sweep_value_faces_the_same_check_as_a_single_run():
+    """An arm is a training run; a value that would be refused on its own must
+    not slip through because it arrived in a list."""
+    from observatory.server import start_sweep
+
+    result = start_sweep("racing", "lr", ["1e-4", "9.0"], 300_000, 12, 5)
+    assert "at most" in result["error"]

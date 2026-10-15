@@ -10,6 +10,7 @@ is the "before" in every side-by-side clip -- and at a set of fractions after.
 from __future__ import annotations
 
 import json
+import math
 import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -37,7 +38,9 @@ class PPOConfig:
     value_coef: float = 0.5
     entropy_coef: float = 0.01
     max_grad_norm: float = 0.5
-    anneal_lr: bool = True
+    anneal_lr: bool = True            # kept for older callers; see lr_schedule
+    lr_schedule: str = "linear"       # linear | constant | cosine | warmup_cosine
+    warmup: float = 0.05              # share of training spent warming up
     torch_threads: int = 4
     width: int = 1
     arch: str = "nature"              # nature | impala | small
@@ -55,6 +58,44 @@ class Rollout:
         self.rewards = np.zeros((steps, n_envs), dtype=np.float32)
         self.dones = np.zeros((steps, n_envs), dtype=np.float32)
         self.values = np.zeros((steps, n_envs), dtype=np.float32)
+
+
+LR_SCHEDULES = ("linear", "constant", "cosine", "warmup_cosine")
+
+
+def learning_rate_at(cfg: "PPOConfig", update: int, n_updates: int) -> float:
+    """The learning rate for this update, as a shape over the whole run.
+
+    A single number is a schedule too -- the flat one -- and saying which shape
+    is in use beats a boolean called `anneal_lr` that silently means "linear".
+    The shapes:
+
+    * **linear** — full rate at the start, zero at the end. The PPO default, and
+      what every result in this repository was trained with.
+    * **constant** — the same rate throughout. Useful when a run will be
+      continued, since a decayed rate leaves the next run starting from nearly
+      nothing.
+    * **cosine** — a smooth fall that spends longer near the top than linear and
+      lands softly.
+    * **warmup_cosine** — rises over the first few percent, then the cosine fall.
+      Worth having for the wider trunks, where the first updates of a randomly
+      initialised residual stack can be violent enough to matter.
+    """
+    if n_updates <= 1:
+        return cfg.lr
+    progress = (update - 1) / n_updates          # 0 at the first update, ->1 at the last
+    schedule = cfg.lr_schedule if cfg.lr_schedule in LR_SCHEDULES else "linear"
+    if schedule == "constant":
+        return cfg.lr
+    if schedule == "linear":
+        return cfg.lr * (1.0 - progress)
+    if schedule == "cosine":
+        return cfg.lr * 0.5 * (1.0 + math.cos(math.pi * progress))
+    warm = max(1e-6, cfg.warmup)
+    if progress < warm:
+        return cfg.lr * (progress / warm)
+    after = (progress - warm) / max(1e-6, 1.0 - warm)
+    return cfg.lr * 0.5 * (1.0 + math.cos(math.pi * after))
 
 
 def compute_gae(buf: Rollout, last_value: np.ndarray, gamma: float, lam: float):
@@ -130,9 +171,9 @@ def train(game: Game, cfg: PPOConfig, out_dir: Path, seed: int = 0,
 
         obs = envs.reset()
         for update in range(1, n_updates + 1):
-            if cfg.anneal_lr:
-                for group in opt.param_groups:
-                    group["lr"] = cfg.lr * (1.0 - (update - 1) / n_updates)
+            lr_now = learning_rate_at(cfg, update, n_updates)
+            for group in opt.param_groups:
+                group["lr"] = lr_now
 
             for t in range(cfg.rollout):
                 action, logp, value = model.act(torch.from_numpy(obs))
@@ -209,7 +250,8 @@ def train(game: Game, cfg: PPOConfig, out_dir: Path, seed: int = 0,
                "final_return_mean": history[-1]["return_mean"] if history else None,
                "params": model.n_params(), "width": cfg.width, "arch": cfg.arch,
                "device": str(device), "envs": cfg.n_envs,
-               "learning_rate": cfg.lr, "entropy_coef": cfg.entropy_coef,
+               "learning_rate": cfg.lr, "lr_schedule": cfg.lr_schedule,
+               "entropy_coef": cfg.entropy_coef,
                "rollout": cfg.rollout, "epochs": cfg.epochs,
                "checkpoints": saved}
     (out_dir / "history.json").write_text(json.dumps(history, indent=1))

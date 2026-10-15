@@ -147,10 +147,30 @@ TRAIN_SCHEMA = {
                "label": "epochs per batch"},
     "minibatches": {"flag": "--minibatches", "type": int, "min": 1, "max": 32,
                     "label": "minibatches"},
+    "lr_schedule": {"flag": "--lr-schedule", "type": str,
+                    "choices": ("linear", "constant", "cosine", "warmup_cosine"),
+                    "label": "lr schedule"},
     "device": {"flag": "--device", "type": str, "choices": ("auto", "cpu", "cuda"),
                "label": "device"},
     "seed": {"flag": "--seed", "type": int, "min": 0, "max": 10_000_000, "label": "seed"},
 }
+
+
+# Starting points per architecture, offered by the panel when the model changes.
+# They are suggestions the form fills in, not rules: the wider trunks are slower
+# per step and more easily destabilised early, so they start with a gentler rate
+# and a warm-up, while the small one can afford more parallel games.
+PRESETS = {
+    "nature": {"lr": 0.00025, "entropy": 0.01, "envs": 12, "rollout": 128,
+               "epochs": 4, "minibatches": 4, "lr_schedule": "linear", "width": 1},
+    "impala": {"lr": 0.00015, "entropy": 0.01, "envs": 8, "rollout": 256,
+               "epochs": 3, "minibatches": 8, "lr_schedule": "warmup_cosine", "width": 1},
+    "small": {"lr": 0.0004, "entropy": 0.015, "envs": 16, "rollout": 128,
+              "epochs": 4, "minibatches": 4, "lr_schedule": "linear", "width": 1},
+}
+
+SWEEPABLE = ("lr", "entropy", "arch", "width", "rollout", "epochs",
+             "minibatches", "envs", "seed", "lr_schedule")
 
 
 def build_train_args(config: dict) -> tuple[list[str], dict, str | None]:
@@ -232,6 +252,49 @@ def start_job(kind: str, game: str, config: dict | None = None) -> dict:
     save_registry()
     return {"ok": True, "pid": process.pid, "log": str(log),
             "config": used if kind == "train" else {}}
+
+
+def start_sweep(game: str, param: str, values: list, steps: int, envs: int,
+                episodes: int) -> dict:
+    """Queue one training run per value, one after another."""
+    if game not in known_games():
+        return {"ok": False, "error": f"unknown game {game!r}"}
+    if param not in SWEEPABLE:
+        return {"ok": False, "error": f"{param!r} cannot be swept"}
+    cleaned = [str(v).strip() for v in values if str(v).strip()]
+    if len(cleaned) < 2:
+        return {"ok": False, "error": "a sweep needs at least two values to compare"}
+    if len(cleaned) > 6:
+        return {"ok": False, "error": "six arms is the most this will queue at once"}
+    # Each value has to survive the same check a single run's value would.
+    for value in cleaned:
+        _, _, problem = build_train_args({param: value})
+        if problem:
+            return {"ok": False, "error": problem}
+    if not (10_000 <= steps <= 20_000_000):
+        return {"ok": False, "error": "steps per arm must be between 10,000 and 20,000,000"}
+
+    key = job_key("sweep", game)
+    with LOCK:
+        live = JOBS.get(key)
+        if live and live["process"].poll() is None:
+            return {"ok": False, "error": f"a sweep is already running for {game}"}
+        log = ROOT / "runs_arcade" / f"sweep_{game}_{param}.log"
+        log.parent.mkdir(parents=True, exist_ok=True)
+        handle = open(log, "a", encoding="utf-8")
+        args = [python(), "-m", "arcade.sweep", "--game", game, "--param", param,
+                "--values", ",".join(cleaned), "--steps", str(int(steps)),
+                "--envs", str(int(envs)), "--episodes", str(int(episodes))]
+        env = {**os.environ, "PYTHONUTF8": "1"}
+        creation = subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
+        process = subprocess.Popen(args, cwd=str(ROOT), stdout=handle,
+                                   stderr=subprocess.STDOUT, env=env,
+                                   creationflags=creation)
+        JOBS[key] = {"process": process, "log": str(log), "started": time.time(),
+                     "kind": "sweep", "game": game, "handle": handle,
+                     "config": {"param": param, "values": cleaned, "steps": steps}}
+    save_registry()
+    return {"ok": True, "pid": process.pid, "arms": cleaned}
 
 
 def stop_job(kind: str, game: str) -> dict:
@@ -322,7 +385,8 @@ class Handler(SimpleHTTPRequestHandler):
             for key, rule in TRAIN_SCHEMA.items():
                 schema[key]["kind"] = rule["type"].__name__
             return self._json({"jobs": job_status(), "games": known_games(),
-                               "schema": schema})
+                               "schema": schema, "presets": PRESETS,
+                               "sweepable": list(SWEEPABLE)})
         if path in ("/", "/index.html"):
             # The token is handed to the page it is meant for, and only that
             # page: another origin cannot read this response.
@@ -359,6 +423,15 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(start_job("play", game))
         if path == "/api/play/stop":
             return self._json(stop_job("play", game))
+        if path == "/api/sweep/start":
+            return self._json(start_sweep(
+                game, str(payload.get("param", "lr")),
+                payload.get("values") or [],
+                int(payload.get("steps") or 300_000),
+                int(payload.get("envs") or 12),
+                int(payload.get("episodes") or 5)))
+        if path == "/api/sweep/stop":
+            return self._json(stop_job("sweep", game))
         return self._json({"ok": False, "error": "unknown action"}, 404)
 
 

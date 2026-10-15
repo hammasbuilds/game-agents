@@ -183,6 +183,11 @@
     font-family: var(--mono); }
   .field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
   .field .range { color: var(--ink-dim); font-size: 10.5px; margin-top: 4px; font-family: var(--mono); }
+  .lrcurve { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px;
+             padding: 10px 12px; margin-top: 14px; }
+  .sweep { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+           align-items: end; }
+  .sweep .wide { grid-column: span 2; }
   .cfg-foot { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
   .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 26px;
            background: var(--panel); border: 1px solid var(--line); color: var(--ink);
@@ -316,6 +321,8 @@ async function pollJobs() {
     const payload = await res.json();
     JOBS = payload.jobs || [];
     SCHEMA = payload.schema || SCHEMA;
+    PRESETS = payload.presets || PRESETS;
+    SWEEPABLE = payload.sweepable || SWEEPABLE;
   } catch (e) { JOBS = []; }
 }
 
@@ -324,12 +331,109 @@ function jobFor(kind, game) {
 }
 
 const DEFAULTS = { steps: 1000000, envs: 12, arch: "nature", width: 1, lr: 0.00025,
-                   entropy: 0.01, rollout: 128, epochs: 4, minibatches: 4,
-                   device: "auto", seed: 0 };
-const ORDER = ["steps", "envs", "arch", "width", "lr", "entropy", "rollout",
-               "epochs", "minibatches", "device", "seed"];
+                   lr_schedule: "linear", entropy: 0.01, rollout: 128, epochs: 4,
+                   minibatches: 4, device: "auto", seed: 0 };
+const ORDER = ["steps", "envs", "arch", "width", "lr", "lr_schedule", "entropy",
+               "rollout", "epochs", "minibatches", "device", "seed"];
 let SCHEMA = {};
+let PRESETS = {};
+let SWEEPABLE = [];
 let formState = {};
+let sweepState = {};
+
+function lrCurve(state) {
+  // The schedule drawn as the shape it is. A number in a box does not tell you
+  // that 'linear' spends the back half of training at a rate too small to move
+  // anything, or that warmup starts at zero -- the curve does.
+  const n = 120, lr = Number(state.lr) || 0.00025, kind = state.lr_schedule || "linear";
+  const warm = 0.05;
+  const at = i => {
+    const p = i / n;
+    if (kind === "constant") return lr;
+    if (kind === "linear") return lr * (1 - p);
+    if (kind === "cosine") return lr * 0.5 * (1 + Math.cos(Math.PI * p));
+    if (p < warm) return lr * (p / warm);
+    return lr * 0.5 * (1 + Math.cos(Math.PI * ((p - warm) / (1 - warm))));
+  };
+  const w = 520, h = 86, pad = { l: 54, r: 10, t: 8, b: 16 };
+  const ys = Array.from({ length: n + 1 }, (_, i) => at(i));
+  const hi = Math.max(...ys) || 1;
+  const X = i => pad.l + (i / n) * (w - pad.l - pad.r);
+  const Y = v => h - pad.b - (v / hi) * (h - pad.t - pad.b);
+  const d = ys.map((v, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1)).join(" ");
+  const box = el("div", "lrcurve");
+  box.append(el("div", "k", "learning rate over the run — " + esc(kind)));
+  box.insertAdjacentHTML("beforeend", `<svg viewBox="0 0 ${w} ${h}" width="100%"
+    style="height:auto;display:block" role="img" aria-label="learning rate schedule">
+    <line x1="${pad.l}" y1="${Y(0)}" x2="${w - pad.r}" y2="${Y(0)}" stroke="currentColor" stroke-opacity=".12"/>
+    <text x="${pad.l - 7}" y="${Y(hi) + 4}" text-anchor="end" font-size="10" fill="currentColor" fill-opacity=".55">${hi.toExponential(1)}</text>
+    <text x="${pad.l - 7}" y="${Y(0) + 4}" text-anchor="end" font-size="10" fill="currentColor" fill-opacity=".55">0</text>
+    <path d="${d}" fill="none" stroke="var(--accent-2)" stroke-width="2"/>
+    <text x="${w - pad.r}" y="${h - 3}" text-anchor="end" font-size="10" fill="currentColor" fill-opacity=".55">end of training</text>
+  </svg>`);
+  return box;
+}
+
+function sweepPanel(e) {
+  const running = jobFor("sweep", e.key);
+  const box = el("div", "cfg");
+  box.append(el("h3", "", "Sweep one setting"),
+    el("p", "note", running
+      ? "A sweep is running: one arm at a time, each into its own directory."
+      : "Train the same game once per value and score every arm on the same levels. The arms run one after another on purpose — side by side they would be measuring the contention as much as the setting."));
+  const state = sweepState[e.key] = sweepState[e.key] || { param: "lr", values: "1e-4, 2.5e-4, 5e-4", steps: 300000, episodes: 5 };
+  const grid = el("div", "sweep");
+
+  const pick = el("div", "field");
+  pick.append(el("label", "", "setting"));
+  const sel = document.createElement("select");
+  (SWEEPABLE.length ? SWEEPABLE : ["lr"]).forEach(k => {
+    const o = document.createElement("option"); o.value = k; o.textContent = k;
+    if (state.param === k) o.selected = true; sel.append(o);
+  });
+  sel.disabled = !!running;
+  sel.addEventListener("change", () => { state.param = sel.value; render(); });
+  pick.append(sel); grid.append(pick);
+
+  const vals = el("div", "field wide");
+  vals.append(el("label", "", "values, comma separated"));
+  const input = document.createElement("input");
+  input.type = "text"; input.value = state.values; input.disabled = !!running;
+  input.addEventListener("change", () => { state.values = input.value; });
+  vals.append(input); grid.append(vals);
+
+  [["steps", "steps per arm"], ["episodes", "scoring episodes"]].forEach(([key, label]) => {
+    const f = el("div", "field");
+    f.append(el("label", "", label));
+    const inp = document.createElement("input");
+    inp.type = "number"; inp.value = state[key]; inp.disabled = !!running;
+    inp.addEventListener("change", () => { state[key] = parseInt(inp.value, 10); });
+    f.append(inp); grid.append(f);
+  });
+  box.append(grid);
+
+  const foot = el("div", "cfg-foot");
+  const btn = el("button", "btn " + (running ? "stop" : "go"),
+    running ? "■ stop sweep" : "▶ run sweep");
+  btn.addEventListener("click", async () => {
+    btn.disabled = true;
+    const r = running
+      ? await api("api/sweep/stop", { game: e.key })
+      : await api("api/sweep/start", { game: e.key, param: state.param,
+          values: String(state.values).split(",").map(v => v.trim()).filter(Boolean),
+          steps: state.steps, episodes: state.episodes });
+    toast(r.ok ? (running ? "sweep stopped" : `sweep queued: ${(r.arms || []).join(", ")}`) : r.error, !r.ok);
+    await pollJobs(); render();
+  });
+  foot.append(btn);
+  if (running) {
+    const cfg = running.config || {};
+    foot.append(el("span", "chip running",
+      `<span class="d"></span>${esc(cfg.param)} over ${(cfg.values || []).length} arms · ${Math.round(running.seconds / 60)}m`));
+  }
+  box.append(foot);
+  return box;
+}
 
 function configForm(e) {
   const running = jobFor("train", e.key);
@@ -368,6 +472,15 @@ function configForm(e) {
     input.addEventListener("change", () => {
       state[key] = rule.kind === "float" ? parseFloat(input.value) :
                    (rule.choices ? input.value : parseInt(input.value, 10));
+      // Choosing a model fills in a starting point for the rest: the wider
+      // trunks are slower per step and more easily destabilised early, so they
+      // want a gentler rate and a warm-up. They are suggestions, and every one
+      // of them stays editable.
+      if (key === "arch" && PRESETS[state.arch]) {
+        Object.assign(state, PRESETS[state.arch], { arch: state.arch });
+        toast("filled in the usual starting point for " + state.arch);
+      }
+      render();
     });
     wrap.append(input);
     if (rule.min !== undefined)
@@ -375,6 +488,7 @@ function configForm(e) {
     fields.append(wrap);
   }
   box.append(fields);
+  box.append(lrCurve(live || state));
 
   const foot = el("div", "cfg-foot");
   if (!running) {
@@ -521,7 +635,10 @@ function renderProject(key) {
   main.append(head);
   main.append(el("p", "lede", esc(e.blurb || e.detail || "")));
   main.append(controls(e));
-  if (e.kind === "arcade" && CONTROLLED) main.append(configForm(e));
+  if (e.kind === "arcade" && CONTROLLED) {
+    main.append(configForm(e));
+    main.append(sweepPanel(e));
+  }
 
   if (e.kind === "arcade") renderArcadeProject(main, e);
   else renderHandBuilt(main, e);
