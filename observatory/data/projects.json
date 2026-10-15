@@ -1,0 +1,184 @@
+{
+ "checked": "2026-10-15 15:28:58Z",
+ "projects": {
+  "game-agents": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/game-agents",
+   "visibility": "PUBLIC",
+   "live_status": 200
+  },
+  "traffic-agents": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null,
+   "github_note": "no remote: this checkout has never been pushed"
+  },
+  "urdunlp": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/urdunlp",
+   "visibility": "PUBLIC",
+   "live_status": null
+  },
+  "suite-auditor": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/suite-auditor",
+   "visibility": "PUBLIC",
+   "live_status": null
+  },
+  "assay-drift": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/assay-drift",
+   "visibility": "PUBLIC",
+   "live_status": null
+  },
+  "blast-radius": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/blast-radius",
+   "visibility": "PUBLIC",
+   "live_status": null
+  },
+  "flake-detective": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/flake-detective",
+   "visibility": "PUBLIC",
+   "live_status": null
+  },
+  "agent-tools": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/agentic-ai-llm",
+   "visibility": "PUBLIC",
+   "live_status": null
+  },
+  "paklaw": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/pak-law-assistant",
+   "visibility": "PUBLIC",
+   "live_status": null
+  },
+  "repo-recon": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/repo-recon",
+   "visibility": "PUBLIC",
+   "live_status": null
+  },
+  "studyloop": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/studyloop",
+   "visibility": "PUBLIC",
+   "live_status": 200
+  },
+  "analyst-in-a-box": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/analyst-in-a-box",
+   "visibility": "PUBLIC",
+   "live_status": 200
+  },
+  "llm-control-room": {
+   "launcher_exists": true,
+   "github": "https://github.com/hammasbuilds/llm-control-room",
+   "visibility": "PUBLIC",
+   "live_status": 200
+  },
+  "job-radar": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": "PRIVATE",
+   "live_status": null,
+   "github_note": "private repository \u2014 no public link"
+  },
+  "trial-by-ai": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": "PRIVATE",
+   "live_status": null,
+   "github_note": "private repository \u2014 no public link"
+  },
+  "psyscreen": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": "PRIVATE",
+   "live_status": null,
+   "github_note": "private repository \u2014 no public link"
+  },
+  "dalil": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": "PRIVATE",
+   "live_status": null,
+   "github_note": "private repository \u2014 no public link"
+  },
+  "scholarcritic": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  },
+  "research-lab": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  },
+  "studio-psyreason": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  },
+  "studio-contradiction-ledger": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  },
+  "studio-witnessdrift": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  },
+  "studio-fraudtrail": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  },
+  "studio-timelineforge": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  },
+  "studio-deescalate": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  },
+  "studio-urdu-legal-reason": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  },
+  "studio-interrogation-logic": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  },
+  "studio-protocolcheck": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  },
+  "studio-scholarcritic": {
+   "launcher_exists": true,
+   "github": null,
+   "visibility": null,
+   "live_status": null
+  }
+ }
+}

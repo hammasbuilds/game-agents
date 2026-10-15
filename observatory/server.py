@@ -35,6 +35,8 @@ ROOT = Path(__file__).resolve().parents[1]
 HERE = Path(__file__).resolve().parent
 PY = ROOT / ".venv" / "Scripts" / "python.exe"
 
+from observatory import projects                                  # noqa: E402
+
 TOKEN = secrets.token_urlsafe(18)
 JOBS: dict[str, dict] = {}
 LOCK = threading.Lock()
@@ -113,14 +115,218 @@ def python() -> str:
     return str(PY) if PY.exists() else sys.executable
 
 
+# The arcade games are listed by importing the catalogue, which imports ale-py.
+# Started with an interpreter that does not have it -- easy to do, this box has
+# several -- that import raised inside the request handler, the socket closed
+# with no response at all, and the page's own error handling turned a missing
+# dependency into an empty job list with nothing said. The failure is now a
+# value the page can show.
+GAMES_PROBLEM: str | None = None
+
+
 def known_games() -> list[str]:
+    global GAMES_PROBLEM
     sys.path.insert(0, str(ROOT))
-    from arcade.envs import CATALOGUE
+    try:
+        from arcade.envs import CATALOGUE
+    except Exception as exc:
+        GAMES_PROBLEM = (f"{type(exc).__name__}: {exc} — this interpreter "
+                         f"({sys.executable}) cannot load the arcade games")
+        return ["doom", "brogue", "crafter"]
+    GAMES_PROBLEM = None
     return sorted(CATALOGUE) + ["doom", "brogue", "crafter"]
 
 
 def job_key(kind: str, game: str) -> str:
     return f"{kind}:{game}"
+
+
+# -- the projects on this machine -------------------------------------------
+PROJECT_JOBS: dict[str, dict] = {}
+
+
+def project_rows() -> list[dict]:
+    """Every project, with what is true about it right now.
+
+    The status is deliberately three-valued rather than a boolean. "Started from
+    here and answering" is a different fact from "something is answering on that
+    port", and on this machine they come apart: five ports are claimed by two
+    projects each, so a page that painted a green dot for an answering port would
+    cheerfully report StudyLoop as up while the pak-law demo holds 8765.
+    """
+    verified = projects.snapshot()
+    conflicts = projects.port_conflicts()
+    rows = []
+    for project in projects.CATALOGUE:
+        row = projects.as_dict(project, verified)
+        job = PROJECT_JOBS.get(project.id)
+        ours = bool(job and job["process"].poll() is None)
+        answering = projects.port_answering(project.port)
+        row.update({
+            "started_here": ours,
+            "pid": job["process"].pid if ours else None,
+            "seconds": round(time.time() - job["started"]) if ours else None,
+            "port_answering": answering,
+            "status": ("running" if ours and answering else
+                       "starting" if ours else
+                       "port in use" if answering else "stopped"),
+            "shares_port_with": [i for i in conflicts.get(project.port or 0, [])
+                                 if i != project.id],
+            "log": job["log"] if job else None,
+        })
+        rows.append(row)
+    return rows
+
+
+def save_project_registry() -> None:
+    rows = [{"id": pid, "pid": j["process"].pid, "started": j["started"],
+             "log": j["log"]}
+            for pid, j in PROJECT_JOBS.items() if j["process"].poll() is None]
+    projects.JOB_FILE.parent.mkdir(parents=True, exist_ok=True)
+    projects.JOB_FILE.write_text(json.dumps(rows, indent=1))
+
+
+def load_project_registry() -> None:
+    """Re-adopt project servers this panel started before it was last closed."""
+    try:
+        rows = json.loads(projects.JOB_FILE.read_text())
+    except (OSError, json.JSONDecodeError):
+        return
+    for row in rows:
+        if row["id"] not in projects.BY_ID or not _alive(row["pid"]):
+            continue
+        PROJECT_JOBS[row["id"]] = {"process": Adopted(row["pid"]),
+                                   "started": row["started"], "log": row["log"],
+                                   "adopted": True}
+        print(f"  adopted project {row['id']} (pid {row['pid']})", flush=True)
+
+
+def start_project(project_id: str) -> dict:
+    """Start one project, exactly as its desktop shortcut would.
+
+    The launcher comes from the catalogue; the request only names which row. A
+    .bat gets its own console window, which is how these have always been run and
+    means closing that window still stops the server.
+    """
+    project = projects.BY_ID.get(project_id)
+    if project is None:
+        return {"ok": False, "error": f"unknown project {project_id!r}"}
+    existing = PROJECT_JOBS.get(project_id)
+    if existing and existing["process"].poll() is None:
+        return {"ok": False, "error": f"{project.name} was already started from here",
+                "url": project_url(project)}
+    if projects.port_answering(project.port):
+        # Something already has the port. A second server on the same port fails
+        # inside the launcher's own console window, where nobody sees it.
+        others = [i for i in projects.port_conflicts().get(project.port, [])
+                  if i != project_id]
+        extra = f" (also claimed by {', '.join(others)})" if others else ""
+        return {"ok": False,
+                "error": f"port {project.port} is already answering{extra}; open it, "
+                         f"or stop whatever is on it first",
+                "url": project_url(project)}
+
+    launcher = project.launcher
+    if isinstance(launcher, str):
+        path = Path(launcher)
+        if not path.exists():
+            return {"ok": False, "error": f"the launcher has moved: {launcher}"}
+        args = ["cmd", "/c", str(path)]
+        cwd = project.cwd or str(path.parent)
+    else:
+        args = list(launcher)
+        cwd = project.cwd or str(ROOT)
+
+    log = HERE / "logs" / f"project_{project_id}.log"
+    log.parent.mkdir(parents=True, exist_ok=True)
+    handle = open(log, "a", encoding="utf-8")
+    handle.write(f"\n=== {project_id} started "
+                 f"{datetime.now(timezone.utc):%Y-%m-%d %H:%M:%SZ} ===\n")
+    handle.flush()
+    env = {**os.environ, "PYTHONUTF8": "1"}
+    creation = 0
+    if os.name == "nt":
+        creation = subprocess.CREATE_NEW_CONSOLE | subprocess.CREATE_NEW_PROCESS_GROUP
+    try:
+        process = subprocess.Popen(args, cwd=cwd, env=env, creationflags=creation)
+    except OSError as exc:
+        handle.close()
+        return {"ok": False, "error": f"could not start it: {exc}"}
+    PROJECT_JOBS[project_id] = {"process": process, "started": time.time(),
+                                "log": str(log), "handle": handle}
+    save_project_registry()
+    return {"ok": True, "pid": process.pid, "url": project_url(project),
+            "kind": project.kind}
+
+
+def openable_urls() -> set[str]:
+    """Every address the panel is allowed to hand to a browser.
+
+    The desktop window has no address bar and no tabs, so a link in it has to be
+    opened by this process instead. That turns "open a link" into "run a browser
+    on a string from a web page", which is only safe if the string cannot be
+    anything the page likes: the set is built from the catalogue, so a request
+    can pick one of these and nothing else.
+    """
+    urls: set[str] = set()
+    for project in projects.CATALOGUE:
+        if project.port:
+            urls.add(f"http://127.0.0.1:{project.port}/")
+        if project.live:
+            urls.add(project.live)
+        urls.update(project.pages.values())
+    verified = projects.snapshot().get("projects", {})
+    for row in verified.values():
+        if row.get("github"):
+            urls.add(row["github"])
+    return urls
+
+
+def open_url(url: str) -> dict:
+    allowed = openable_urls()
+    if url not in allowed:
+        return {"ok": False, "error": "that address is not one of this panel's links"}
+    import webbrowser
+    return {"ok": bool(webbrowser.open(url)), "url": url}
+
+
+def project_url(project) -> str | None:
+    return f"http://127.0.0.1:{project.port}/" if project.port else None
+
+
+def stop_project(project_id: str) -> dict:
+    project = projects.BY_ID.get(project_id)
+    if project is None:
+        return {"ok": False, "error": f"unknown project {project_id!r}"}
+    job = PROJECT_JOBS.get(project_id)
+    if not job or job["process"].poll() is not None:
+        if projects.port_answering(project.port):
+            return {"ok": False,
+                    "error": f"something is answering on {project.port}, but this "
+                             f"panel did not start it, so this panel will not kill "
+                             f"it — close its own window"}
+        return {"ok": False, "error": f"{project.name} is not running"}
+    process = job["process"]
+    try:
+        # The launcher is a .bat holding a server: killing the shell alone leaves
+        # the server behind, so the whole tree goes.
+        subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"],
+                       capture_output=True, timeout=25)
+        process.wait(timeout=10)
+    except Exception:
+        try:
+            process.kill()
+        except Exception:
+            pass
+    finally:
+        try:
+            if job.get("handle"):
+                job["handle"].close()
+        except Exception:
+            pass
+    PROJECT_JOBS.pop(project_id, None)
+    save_project_registry()
+    return {"ok": True, "stopped": project_id}
 
 
 # Every training knob the panel may set, with the range it may set it to. The
@@ -356,9 +562,37 @@ def refresh_snapshot() -> None:
         time.sleep(20)
 
 
+def docs_path(path: str) -> str | None:
+    """Where a /docs/... request maps to on disk, or None if it is not one.
+
+    The page is served out of observatory/ and asks for the films at
+    docs/media/..., where the dashboard keeps them. Served from here that was a
+    404 for every clip on the overview -- quietly, because a card with no film
+    falls back to a label rather than complaining.
+
+    It is a function rather than a method so the path handling can be tested
+    without a live socket, and so the one rule that matters -- nothing outside
+    docs/ is reachable through this prefix -- is in one readable place.
+    """
+    clean = path.split("?", 1)[0].split("#", 1)[0]
+    if not clean.startswith("/docs/"):
+        return None
+    base = (ROOT / "docs").resolve()
+    target = (base / clean[len("/docs/"):].lstrip("/")).resolve()
+    try:
+        target.relative_to(base)
+    except ValueError:
+        return None
+    return str(target)
+
+
 class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(HERE), **kwargs)
+
+    def translate_path(self, path):
+        """Serve /docs/... from the repository, not from this folder."""
+        return docs_path(path) or super().translate_path(path)
 
     def log_message(self, fmt, *args):  # quieter than the default
         if "/api/" in (self.path or ""):
@@ -384,9 +618,16 @@ class Handler(SimpleHTTPRequestHandler):
                       for k, rule in TRAIN_SCHEMA.items()}
             for key, rule in TRAIN_SCHEMA.items():
                 schema[key]["kind"] = rule["type"].__name__
-            return self._json({"jobs": job_status(), "games": known_games(),
+            games = known_games()
+            return self._json({"jobs": job_status(), "games": games,
                                "schema": schema, "presets": PRESETS,
-                               "sweepable": list(SWEEPABLE)})
+                               "sweepable": list(SWEEPABLE),
+                               "problem": GAMES_PROBLEM})
+        if path == "/api/projects":
+            return self._json({"projects": project_rows(),
+                               "groups": projects.GROUPS,
+                               "conflicts": {str(k): v for k, v
+                                             in projects.port_conflicts().items()}})
         if path in ("/", "/index.html"):
             # The token is handed to the page it is meant for, and only that
             # page: another origin cannot read this response.
@@ -430,6 +671,12 @@ class Handler(SimpleHTTPRequestHandler):
                 int(payload.get("steps") or 300_000),
                 int(payload.get("envs") or 12),
                 int(payload.get("episodes") or 5)))
+        if path == "/api/open":
+            return self._json(open_url(str(payload.get("url", ""))))
+        if path == "/api/projects/start":
+            return self._json(start_project(str(payload.get("project", ""))))
+        if path == "/api/projects/stop":
+            return self._json(stop_project(str(payload.get("project", ""))))
         if path == "/api/sweep/stop":
             return self._json(stop_job("sweep", game))
         return self._json({"ok": False, "error": "unknown action"}, 404)
@@ -442,6 +689,7 @@ def main() -> None:
     args = ap.parse_args()
 
     load_registry()
+    load_project_registry()
     threading.Thread(target=refresh_snapshot, daemon=True).start()
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     url = f"http://127.0.0.1:{args.port}/"

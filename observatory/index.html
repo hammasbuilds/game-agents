@@ -195,6 +195,27 @@
            font-size: 13.5px; z-index: 40; max-width: min(620px, 92vw); }
   .toast.bad { border-color: color-mix(in srgb, var(--bad) 55%, var(--line)); }
   figure { margin: 0; }
+  /* the launcher */
+  .pgrid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); }
+  .pcard { background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+           padding: 15px 16px 14px; display: flex; flex-direction: column; gap: 9px; }
+  .pcard h3 { margin: 0; font-size: 15.5px; letter-spacing: -.01em; }
+  .pcard .blurb { color: var(--dim); font-size: 12.8px; line-height: 1.5; margin: 0; }
+  .pcard .io { color: var(--dim); font-size: 12px; margin: 0; font-family: var(--mono); }
+  .pcard .io b { color: var(--ink); font-weight: 600; }
+  .pcard .warn-line { color: var(--warn); font-size: 12px; margin: 0; }
+  .prow { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; margin-top: auto; }
+  .plink { font-size: 12px; padding: 6px 11px; border-radius: 9px; text-decoration: none;
+           border: 1px solid var(--line); color: var(--ink); background: var(--panel-2);
+           display: inline-flex; gap: 6px; align-items: center; }
+  .plink:hover { border-color: var(--accent); }
+  .plink.off { opacity: .45; cursor: not-allowed; }
+  .ptitle { display: flex; gap: 9px; align-items: baseline; justify-content: space-between; }
+  .ptitle .port { font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
+  .groupline { display: flex; align-items: center; gap: 12px; margin: 26px 0 12px; }
+  .groupline h2 { margin: 0; font-size: 17px; }
+  .groupline .rule { flex: 1; height: 1px; background: var(--line); }
+  .groupline .count { font-family: var(--mono); font-size: 12px; color: var(--dim); }
   @media (max-width: 560px) { .head h2 { font-size: 23px; } }
 </style>
 </head>
@@ -208,6 +229,7 @@
         <div class="sub" id="taken">…</div>
       </div>
     </div>
+    <button class="pill" id="nav-projects">projects &amp; tools</button>
     <button class="pill" id="refresh"><span class="dot" id="dot"></span><span id="refresh-label">live</span></button>
     <button class="pill" id="theme">theme</button>
   </div>
@@ -297,6 +319,9 @@ function film(src, caption) {
 
 /* ---------- control: only when served by observatory/server.py ---------- */
 const CONTROLLED = typeof window.OBS_TOKEN === "string";
+// The desktop shell has no address bar and no tabs: links have to be handed to
+// the system browser by the server rather than opened here.
+const DESKTOP = typeof window.pywebview !== "undefined";
 let JOBS = [];
 
 function toast(message, bad = false) {
@@ -320,6 +345,12 @@ async function pollJobs() {
     const res = await fetch("api/jobs");
     const payload = await res.json();
     JOBS = payload.jobs || [];
+    // A dependency the panel's interpreter lacks is a thing to say out loud,
+    // once, rather than an empty list of games that looks like "nothing to do".
+    if (payload.problem && !window.__gamesWarned) {
+      window.__gamesWarned = true;
+      toast(payload.problem, true);
+    }
     SCHEMA = payload.schema || SCHEMA;
     PRESETS = payload.presets || PRESETS;
     SWEEPABLE = payload.sweepable || SWEEPABLE;
@@ -793,6 +824,190 @@ function renderHandBuilt(main, e) {
 }
 
 /* ---------- routing ---------- */
+/* ---------- projects and tools ----------
+   Every project on this machine, with the one command that starts it. The links
+   are plain anchors so they still work with this file opened off disk; the
+   start and stop buttons need the local server, because only it can run
+   anything, and they say so rather than failing silently. */
+let PROJECTS = null;
+
+async function loadProjects() {
+  try {
+    const r = await fetch("api/projects");
+    PROJECTS = await r.json();
+  } catch (e) { PROJECTS = { error: String(e) }; }
+  return PROJECTS;
+}
+
+const STATUS_WORD = {
+  running: "running", starting: "starting…",
+  "port in use": "port busy", stopped: "stopped",
+};
+
+function projectCard(p) {
+  const card = el("div", "pcard");
+  const title = el("div", "ptitle");
+  title.append(el("h3", "", esc(p.name)),
+               el("span", "port", p.port ? ":" + p.port : "desktop app"));
+  card.append(title);
+
+  const chips = el("div", "prow");
+  chips.style.marginTop = "0";
+  const word = STATUS_WORD[p.status] || p.status;
+  chips.append(el("span", "chip " + cls(p.status), `<span class="d"></span>${esc(word)}`));
+  if (p.private) chips.append(el("span", "chip", "private"));
+  if (p.visibility === "PUBLIC") chips.append(el("span", "chip", "public"));
+  card.append(chips);
+
+  card.append(el("p", "blurb", esc(p.blurb)));
+  if (p.io_hint) card.append(el("p", "io", esc(p.io_hint)));
+
+  /* Honest warnings, not decoration. A port two projects both claim is the
+     difference between opening StudyLoop and opening the pak-law demo. */
+  if (p.launcher_exists === false)
+    card.append(el("p", "warn-line", "the launcher has moved: " + esc(p.launcher)));
+  if ((p.shares_port_with || []).length)
+    card.append(el("p", "warn-line",
+      `shares port ${p.port} with ${p.shares_port_with.map(esc).join(", ")} — ` +
+      `whichever started first owns it`));
+  if (p.status === "port in use")
+    card.append(el("p", "warn-line",
+      "something is already answering on this port; this panel did not start it"));
+
+  const row = el("div", "prow");
+
+  if (p.kind === "web") {
+    const open = el("button", "btn go", p.port_answering ? "open in browser" : "start &amp; open");
+    open.type = "button";
+    open.addEventListener("click", () => startAndOpen(p, open));
+    row.append(open);
+  } else {
+    const open = el("button", "btn go", "launch");
+    open.type = "button";
+    open.addEventListener("click", () => startAndOpen(p, open));
+    row.append(open);
+  }
+  if (p.started_here) {
+    const stop = el("button", "btn", "stop");
+    stop.type = "button";
+    stop.addEventListener("click", async () => {
+      stop.disabled = true;
+      const r = await api("api/projects/stop", { project: p.id });
+      toast(r.ok ? `stopped ${p.name}` : r.error, !r.ok);
+      await loadProjects(); render();
+    });
+    row.append(stop);
+  }
+
+  const link = (label, href, title) => {
+    const a = el("a", "plink", esc(label));
+    a.href = href; a.target = "_blank"; a.rel = "noopener";
+    if (title) a.title = title;
+    // In the desktop window there are no tabs to open into, so the server opens
+    // the system browser instead -- for addresses it already knows, never for
+    // one this page made up.
+    a.addEventListener("click", ev => {
+      if (!DESKTOP) return;
+      ev.preventDefault();
+      api("api/open", { url: href }).then(r => { if (!r.ok) toast(r.error, true); });
+    });
+    return a;
+  };
+  if (p.github) row.append(link("repo", p.github, p.github));
+  if (p.live) row.append(link("live page", p.live,
+    p.live_status === 200 ? "answered 200 when last checked" : p.live));
+  for (const [label, href] of Object.entries(p.pages || {})) row.append(link(label, href, href));
+  if (p.id === "game-agents") {
+    const a = el("a", "plink", "dashboard on this machine");
+    a.href = "#/"; a.addEventListener("click", () => { location.hash = ""; });
+    row.append(a);
+  }
+  if (!p.github) {
+    const why = el("span", "plink off",
+      (p.visibility === "PRIVATE" || p.private) ? "repo private" : "not pushed");
+    row.append(why);
+  }
+  card.append(row);
+  return card;
+}
+
+function openUrl(url) {
+  if (DESKTOP) {
+    api("api/open", { url }).then(r => { if (!r.ok) toast(r.error, true); });
+  } else {
+    window.open(url, "_blank");
+  }
+}
+
+async function startAndOpen(p, button) {
+  if (p.port_answering) { openUrl("http://127.0.0.1:" + p.port + "/"); return; }
+  if (!CONTROLLED) {
+    toast("open this page from python -m observatory.server to start things", true);
+    return;
+  }
+  button.disabled = true;
+  button.innerHTML = "starting…";
+  const r = await api("api/projects/start", { project: p.id });
+  if (!r.ok) {
+    toast(r.error, true);
+    button.disabled = false; button.innerHTML = "start &amp; open";
+    await loadProjects(); render();
+    return;
+  }
+  toast(`${p.name} starting — its own window opens too; close that to stop it`);
+  /* Wait for the port to actually answer before opening a tab: these launchers
+     spend a few seconds finding an interpreter, and a tab opened immediately
+     lands on a connection refused. */
+  if (p.port) {
+    for (let i = 0; i < 40; i++) {
+      await new Promise(r => setTimeout(r, 700));
+      const latest = await loadProjects();
+      const now = (latest.projects || []).find(q => q.id === p.id);
+      if (now && now.port_answering) { openUrl("http://127.0.0.1:" + p.port + "/"); break; }
+      if (now && !now.started_here) { toast(`${p.name} stopped before it answered — see ${now.log || "its log"}`, true); break; }
+    }
+  }
+  await loadProjects(); render();
+}
+
+function renderProjects() {
+  const main = $("#main");
+  main.textContent = "";
+  const back = el("button", "back", "← all agents");
+  back.addEventListener("click", () => { location.hash = ""; });
+  main.append(back);
+  main.append(el("div", "head", "<h2>Projects &amp; tools</h2>"));
+  main.append(el("p", "lede",
+    "Everything on this machine that has a page, startable from here instead of a "
+    + "desktop shortcut: the launcher is the same one the shortcut pointed at. "
+    + "Each card carries its repository, its published page where there is one, "
+    + "and what it takes in and gives back."));
+
+  if (!PROJECTS || PROJECTS.error) {
+    main.append(el("p", "empty",
+      "The project list comes from the local server. Start it with "
+      + "<code>python -m observatory.server</code> and reload."));
+    return;
+  }
+  const rows = PROJECTS.projects || [];
+  const checked = (rows[0] || {}).checked;
+  if (checked) main.append(el("p", "note",
+    `repository and published-page facts checked ${esc(checked)} — rerun `
+    + `<code>python -m observatory.scan_projects</code> after anything moves`));
+
+  for (const group of (PROJECTS.groups || [])) {
+    const mine = rows.filter(r => r.group === group);
+    if (!mine.length) continue;
+    const line = el("div", "groupline");
+    line.append(el("h2", "", esc(group)), el("div", "rule"),
+                el("span", "count", mine.length + (mine.length === 1 ? " project" : " projects")));
+    main.append(line);
+    const grid = el("div", "pgrid");
+    mine.forEach(p => grid.append(projectCard(p)));
+    main.append(grid);
+  }
+}
+
 function render() {
   const s = S();
   if (!s.taken_at) { $("#main").append(el("p", "empty", "No snapshot yet — run python -m observatory.collect")); return; }
@@ -807,7 +1022,9 @@ function render() {
   bits.forEach(b => mach.append(el("span", "", b)));
 
   const key = location.hash.replace(/^#\/?/, "");
-  if (key && find(key)) renderProject(key); else renderOverview();
+  if (key === "projects") renderProjects();
+  else if (key && find(key)) renderProject(key);
+  else renderOverview();
 }
 window.addEventListener("hashchange", render);
 
@@ -820,7 +1037,14 @@ function reload() {
   // Cache-buster, so this also works opened straight off disk where fetching a
   // local file is blocked.
   s.src = "data/snapshot.js?t=" + Date.now();
-  s.onload = () => { render(); s.remove(); };
+  s.onload = () => {
+    // The launcher view is driven by /api/projects, not by the snapshot, so it
+    // needs its own refresh; without this the live reload would re-render it
+    // from a stale list and a card would claim "stopped" seconds after starting.
+    if (location.hash.replace(/^#\/?/, "") === "projects") loadProjects().then(render);
+    else render();
+    s.remove();
+  };
   document.body.append(s);
 }
 $("#refresh").addEventListener("click", () => {
@@ -829,6 +1053,12 @@ $("#refresh").addEventListener("click", () => {
   $("#refresh-label").textContent = auto ? "live" : "paused";
   if (auto) reload();
 });
+$("#nav-projects").addEventListener("click", async () => {
+  if (!PROJECTS) await loadProjects();
+  location.hash = "#/projects";
+  render();
+});
+loadProjects().then(() => { if (location.hash.replace(/^#\/?/, "") === "projects") render(); });
 pollJobs().then(render);
 setInterval(reload, 15000);
 </script>

@@ -138,10 +138,42 @@ HTML rather than read from the data.
 python ui/export.py && python ui/check_page.py
 ```
 
+## Projects & tools
+
+The panel's second half is a launcher for everything on this machine that has a
+page. Twenty-nine of them, the same launchers the desktop shortcuts pointed at,
+grouped and startable from one place — with the three things a shortcut cannot
+tell you.
+
+```bash
+python -m observatory.scan_projects    # check the catalogue against the machine
+python -m observatory.server --open    # the panel, with the launcher in it
+```
+
+| it says | because |
+|---|---|
+| whether a port is answering, separately from whether this panel started it | five ports on this box are claimed by two projects each — 8765 by StudyLoop and the pak-law demo, 8781 by the traffic panel and the PsyReason studio — so "something is answering" is not "your project is up" |
+| the repository, only when it is public | 12 of the 29 are public; a GitHub link to a private repo is a 404 for everybody but its owner, so the private ones say *repo private* rather than offering a dead link |
+| the published page, only when it answered | 4 have one. The other 25 were checked and have none, and are shown that way rather than linked hopefully |
+| what it takes in and gives back | one line per project, so the card says what the thing is *for* before you start it |
+
+Start is the same launcher the shortcut ran, in its own console window, and the
+tab opens only once the port actually answers — these launchers spend a few
+seconds finding an interpreter, and a tab opened immediately lands on a
+connection refused. Stop kills the process tree, and only for something this
+panel started: a server it did not start is reported, not killed.
+
+Nothing a request contains becomes a command. A POST names an id, the catalogue
+supplies the launcher, and the desktop window's links are opened by the server
+from a fixed set of 42 addresses built from that same catalogue.
+
+The scan is dated, because every line of it is a measurement of this machine at
+one moment — a checkout moves, a repo goes public, a launcher is renamed.
+
 ## Tests
 
 ```bash
-python -m pytest tests -q        # 14 passed
+python -m pytest tests -q        # 41 passed
 ```
 
 The agents are judged by playing — that is what the evaluation scripts are for.

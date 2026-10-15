@@ -50,6 +50,9 @@ def main() -> None:
 
     port = args.port or free_port()
     control.load_registry()
+    # Project servers started from the panel outlive the window too, and a panel
+    # that forgot them would offer to start a second one on the same port.
+    control.load_project_registry()
     threading.Thread(target=control.refresh_snapshot, daemon=True).start()
     httpd = ThreadingHTTPServer(("127.0.0.1", port), control.Handler)
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
