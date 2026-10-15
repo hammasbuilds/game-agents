@@ -1,5 +1,5 @@
 {
- "taken_at": "2026-10-15 04:54:00Z",
+ "taken_at": "2026-10-15 05:06:59Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -8,15 +8,15 @@
    "env_id": "CarRacing-v3",
    "blurb": "Top-down racing. The agent sees the track and steers; an untrained one spins on the grass, a trained one follows the road.",
    "state": "running",
-   "steps": 61440,
-   "updates": 40,
-   "sps": 45.4,
-   "return_now": 113.27,
-   "entropy_now": 0.9166,
+   "steps": 122880,
+   "updates": 80,
+   "sps": 53.7,
+   "return_now": 181.34,
+   "entropy_now": 0.4647,
    "wall_minutes": null,
    "params": null,
-   "eta_minutes": 418.0,
-   "seconds_since_update": 282,
+   "eta_minutes": 334.3,
+   "seconds_since_update": 122,
    "checkpoints": [
     {
      "tag": "000",
@@ -300,6 +300,286 @@
      "entropy": 0.9166,
      "sps": 45.4,
      "value_loss": 203.2607
+    },
+    {
+     "steps": 62976,
+     "return": 119.862,
+     "entropy": 0.9486,
+     "sps": 45.4,
+     "value_loss": 146.3336
+    },
+    {
+     "steps": 64512,
+     "return": 124.016,
+     "entropy": 0.9319,
+     "sps": 45.3,
+     "value_loss": 107.0258
+    },
+    {
+     "steps": 66048,
+     "return": 122.324,
+     "entropy": 0.9686,
+     "sps": 45.3,
+     "value_loss": 166.5036
+    },
+    {
+     "steps": 67584,
+     "return": 128.186,
+     "entropy": 0.923,
+     "sps": 45.3,
+     "value_loss": 143.2085
+    },
+    {
+     "steps": 69120,
+     "return": 133.127,
+     "entropy": 0.8822,
+     "sps": 45.3,
+     "value_loss": 151.6092
+    },
+    {
+     "steps": 70656,
+     "return": 140.286,
+     "entropy": 0.9509,
+     "sps": 45.3,
+     "value_loss": 141.7838
+    },
+    {
+     "steps": 72192,
+     "return": 143.035,
+     "entropy": 0.9559,
+     "sps": 45.5,
+     "value_loss": 84.5526
+    },
+    {
+     "steps": 73728,
+     "return": 145.186,
+     "entropy": 0.974,
+     "sps": 45.7,
+     "value_loss": 66.6991
+    },
+    {
+     "steps": 75264,
+     "return": 142.067,
+     "entropy": 0.8882,
+     "sps": 45.9,
+     "value_loss": 69.8956
+    },
+    {
+     "steps": 76800,
+     "return": 139.003,
+     "entropy": 0.8816,
+     "sps": 46.1,
+     "value_loss": 66.3426
+    },
+    {
+     "steps": 78336,
+     "return": 128.862,
+     "entropy": 0.8481,
+     "sps": 46.3,
+     "value_loss": 69.9474
+    },
+    {
+     "steps": 79872,
+     "return": 127.508,
+     "entropy": 0.7926,
+     "sps": 46.5,
+     "value_loss": 77.3543
+    },
+    {
+     "steps": 81408,
+     "return": 129.317,
+     "entropy": 0.78,
+     "sps": 46.9,
+     "value_loss": 82.4669
+    },
+    {
+     "steps": 82944,
+     "return": 127.227,
+     "entropy": 0.7378,
+     "sps": 47.2,
+     "value_loss": 74.9037
+    },
+    {
+     "steps": 84480,
+     "return": 124.583,
+     "entropy": 0.8272,
+     "sps": 47.5,
+     "value_loss": 82.1759
+    },
+    {
+     "steps": 86016,
+     "return": 119.485,
+     "entropy": 0.8118,
+     "sps": 47.8,
+     "value_loss": 72.6434
+    },
+    {
+     "steps": 87552,
+     "return": 117.273,
+     "entropy": 0.743,
+     "sps": 48.1,
+     "value_loss": 145.7137
+    },
+    {
+     "steps": 89088,
+     "return": 119.46,
+     "entropy": 0.7913,
+     "sps": 48.3,
+     "value_loss": 133.5074
+    },
+    {
+     "steps": 90624,
+     "return": 120.959,
+     "entropy": 0.8729,
+     "sps": 48.6,
+     "value_loss": 127.9582
+    },
+    {
+     "steps": 92160,
+     "return": 122.93,
+     "entropy": 0.8018,
+     "sps": 48.9,
+     "value_loss": 152.5793
+    },
+    {
+     "steps": 93696,
+     "return": 122.197,
+     "entropy": 0.7876,
+     "sps": 49.1,
+     "value_loss": 167.3845
+    },
+    {
+     "steps": 95232,
+     "return": 117.872,
+     "entropy": 0.6643,
+     "sps": 49.3,
+     "value_loss": 124.0294
+    },
+    {
+     "steps": 96768,
+     "return": 122.678,
+     "entropy": 0.7579,
+     "sps": 49.5,
+     "value_loss": 108.2004
+    },
+    {
+     "steps": 98304,
+     "return": 122.442,
+     "entropy": 0.5857,
+     "sps": 49.7,
+     "value_loss": 135.9267
+    },
+    {
+     "steps": 99840,
+     "return": 123.609,
+     "entropy": 0.6785,
+     "sps": 49.9,
+     "value_loss": 113.9112
+    },
+    {
+     "steps": 101376,
+     "return": 130.703,
+     "entropy": 0.6623,
+     "sps": 50.2,
+     "value_loss": 146.9132
+    },
+    {
+     "steps": 102912,
+     "return": 133.982,
+     "entropy": 0.5073,
+     "sps": 50.4,
+     "value_loss": 97.7059
+    },
+    {
+     "steps": 104448,
+     "return": 133.648,
+     "entropy": 0.4603,
+     "sps": 50.5,
+     "value_loss": 98.8499
+    },
+    {
+     "steps": 105984,
+     "return": 137.015,
+     "entropy": 0.5007,
+     "sps": 50.7,
+     "value_loss": 107.629
+    },
+    {
+     "steps": 107520,
+     "return": 137.321,
+     "entropy": 0.5071,
+     "sps": 50.9,
+     "value_loss": 136.6353
+    },
+    {
+     "steps": 109056,
+     "return": 141.158,
+     "entropy": 0.5343,
+     "sps": 51.0,
+     "value_loss": 135.171
+    },
+    {
+     "steps": 110592,
+     "return": 142.97,
+     "entropy": 0.518,
+     "sps": 51.2,
+     "value_loss": 132.7754
+    },
+    {
+     "steps": 112128,
+     "return": 149.4,
+     "entropy": 0.5402,
+     "sps": 51.3,
+     "value_loss": 170.4838
+    },
+    {
+     "steps": 113664,
+     "return": 149.427,
+     "entropy": 0.5507,
+     "sps": 51.6,
+     "value_loss": 118.0387
+    },
+    {
+     "steps": 115200,
+     "return": 148.092,
+     "entropy": 0.562,
+     "sps": 52.0,
+     "value_loss": 239.4493
+    },
+    {
+     "steps": 116736,
+     "return": 153.065,
+     "entropy": 0.6052,
+     "sps": 52.3,
+     "value_loss": 190.4676
+    },
+    {
+     "steps": 118272,
+     "return": 161.127,
+     "entropy": 0.4992,
+     "sps": 52.7,
+     "value_loss": 214.4203
+    },
+    {
+     "steps": 119808,
+     "return": 163.192,
+     "entropy": 0.5409,
+     "sps": 53.0,
+     "value_loss": 159.1006
+    },
+    {
+     "steps": 121344,
+     "return": 172.078,
+     "entropy": 0.5086,
+     "sps": 53.4,
+     "value_loss": 165.785
+    },
+    {
+     "steps": 122880,
+     "return": 181.345,
+     "entropy": 0.4647,
+     "sps": 53.7,
+     "value_loss": 211.6993
     }
    ],
    "ladder": null,
@@ -314,7 +594,11 @@
     "u20/781 steps=30720 return=-26.414701151379568 sps=46.0 ent=1.3116",
     "u30/781 steps=46080 return=46.80339192663467 sps=46.1 ent=1.1368",
     "checkpoint 005 at 59904 steps, training return 103.61589195523365 -> ckpt_005.pt",
-    "u40/781 steps=61440 return=113.26608164848467 sps=45.4 ent=0.9166"
+    "u40/781 steps=61440 return=113.26608164848467 sps=45.4 ent=0.9166",
+    "u50/781 steps=76800 return=139.0034536225248 sps=46.1 ent=0.8816",
+    "u60/781 steps=92160 return=122.92975598742436 sps=48.9 ent=0.8018",
+    "u70/781 steps=107520 return=137.32053276845272 sps=50.9 ent=0.5071",
+    "u80/781 steps=122880 return=181.34485397780696 sps=53.7 ent=0.4647"
    ]
   },
   {
@@ -332,7 +616,7 @@
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 5256,
+   "seconds_since_update": 6032,
    "checkpoints": [
     {
      "tag": "000",
@@ -1457,7 +1741,7 @@
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": 5224,
+   "seconds_since_update": 6000,
    "checkpoints": [],
    "curve": [],
    "ladder": null,
@@ -1495,7 +1779,7 @@
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 1642,
+   "seconds_since_update": 2418,
    "checkpoints": [
     {
      "tag": "000",
@@ -4729,13 +5013,13 @@
   "media_dir": "../docs/media"
  },
  "machine": {
-  "cpu_percent": 90.4,
-  "python_processes": 48,
+  "cpu_percent": 58.4,
+  "python_processes": 50,
   "gpu": {
    "name": "Quadro RTX 5000",
-   "memory_used": "14029 MiB",
+   "memory_used": "11649 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "16 %"
+   "utilisation": "1 %"
   }
  }
 }
