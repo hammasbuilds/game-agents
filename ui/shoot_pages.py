@@ -20,7 +20,9 @@ PAGES = [
     ("analytics", "analytics.html"),
     ("game-boxing", "game.html?g=boxing"),
 ]
-EXTRA_PAGES = [("observatory", ROOT / "observatory" / "index.html")]
+EXTRA_PAGES = [("observatory", ROOT / "observatory" / "index.html"),
+               ("observatory-boxing", ROOT / "observatory" / "index.html"),
+               ("observatory-doom", ROOT / "observatory" / "index.html")]
 
 
 def main() -> int:
@@ -41,7 +43,8 @@ def main() -> int:
         except Exception:
             browser = pw.chromium.launch()
         try:
-            jobs = [(n, (ROOT / "docs" / t.split("?")[0]), t) for n, t in PAGES] +                    [(n, p, p.name) for n, p in EXTRA_PAGES]
+            jobs = [(n, (ROOT / "docs" / t.split("?")[0]), t) for n, t in PAGES] +                    [(n, p, p.name + ("#/" + n.split("-", 1)[1] if "-" in n else ""))
+                    for n, p in EXTRA_PAGES]
             for name, base, target in jobs:
                 page = browser.new_page(viewport={"width": 1280, "height": 1000})
                 errors: list[str] = []
@@ -51,6 +54,8 @@ def main() -> int:
                 url = base.as_uri()
                 if "?" in target:
                     url += "?" + target.split("?", 1)[1]
+                if "#" in target:
+                    url += "#" + target.split("#", 1)[1]
                 page.goto(url, wait_until="load")
                 page.wait_for_timeout(1200)
 

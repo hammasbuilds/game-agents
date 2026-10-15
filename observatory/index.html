@@ -4,90 +4,175 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agent Observatory</title>
-<meta name="description" content="Operational view of every game-playing agent: what is training, how fast, and whether it is actually learning.">
+<meta name="description" content="Every game-playing agent in one place: what is training, what it learned, and the films that prove it.">
 <style>
   :root {
     color-scheme: dark light;
-    --bg: #0b0d11; --panel: #14171d; --panel-2: #1b1f27; --ink: #e8ecf3;
-    --ink-dim: #8e98a8; --line: #262b35; --accent: #5b8cff;
-    --ok: #3ecf8e; --warn: #e8b04a; --bad: #e8705f; --idle: #6b7484;
+    --bg: #0a0c10;
+    --bg-tint: radial-gradient(1200px 600px at 20% -10%, #15203a 0%, transparent 60%),
+               radial-gradient(900px 500px at 90% 0%, #1a1630 0%, transparent 55%);
+    --panel: #12151c;
+    --panel-2: #181c25;
+    --panel-3: #1f2430;
+    --ink: #eef1f7;
+    --ink-dim: #949db0;
+    --ink-faint: #6b7484;
+    --line: #242a36;
+    --accent: #6d8dff;
+    --accent-2: #46d6c4;
+    --ok: #3ddc97;
+    --warn: #f0b45e;
+    --bad: #f2715f;
+    --idle: #6b7484;
     --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.28);
+    --r: 16px;
   }
   @media (prefers-color-scheme: light) {
     :root:not([data-theme="dark"]) {
-      --bg: #f5f6f8; --panel: #ffffff; --panel-2: #eef1f5; --ink: #141820;
-      --ink-dim: #5d6673; --line: #dfe3ea; --accent: #2f6df6;
-      --ok: #16885a; --warn: #a2690a; --bad: #c0392b; --idle: #7a8291;
+      --bg: #f4f6fa;
+      --bg-tint: radial-gradient(1200px 600px at 20% -10%, #dfe7ff 0%, transparent 60%),
+                 radial-gradient(900px 500px at 90% 0%, #e8e2ff 0%, transparent 55%);
+      --panel: #ffffff; --panel-2: #f3f5f9; --panel-3: #e9edf4;
+      --ink: #121722; --ink-dim: #5b6575; --line: #e0e5ee;
+      --accent: #3a63f0; --accent-2: #0f9c90; --ok: #12875c; --warn: #9a6512;
+      --bad: #c2402f; --idle: #7b8495;
+      --shadow: 0 1px 2px rgba(20,30,60,.06), 0 10px 26px rgba(20,30,60,.08);
     }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink);
-         font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 18px 70px; }
-  header { display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline;
-           justify-content: space-between; padding: 30px 0 6px; }
-  h1 { font-size: 25px; margin: 0; letter-spacing: -0.02em; }
-  .meta { color: var(--ink-dim); font-family: var(--mono); font-size: 12.5px; }
-  .machine { display: flex; gap: 18px; flex-wrap: wrap; color: var(--ink-dim);
-             font-family: var(--mono); font-size: 12.5px; margin: 4px 0 18px; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); background-image: var(--bg-tint);
+    background-attachment: fixed; color: var(--ink);
+    font: 15.5px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ---------- top bar ---------- */
+  .top { display: flex; align-items: center; gap: 16px; padding: 26px 0 18px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 11px; margin-right: auto; }
+  .logo { width: 34px; height: 34px; border-radius: 10px; flex: none;
+          background: linear-gradient(135deg, var(--accent), var(--accent-2));
+          box-shadow: 0 4px 14px rgba(109,141,255,.35); }
+  .brand h1 { font-size: 19px; margin: 0; letter-spacing: -0.02em; }
+  .brand .sub { font-size: 12px; color: var(--ink-dim); font-family: var(--mono); }
+  .pill { background: var(--panel); border: 1px solid var(--line); color: var(--ink);
+          border-radius: 999px; padding: 7px 14px; font-size: 12.5px; cursor: pointer;
+          display: inline-flex; align-items: center; gap: 7px; }
+  .pill:hover { border-color: var(--accent); }
+  .dot { width: 7px; height: 7px; border-radius: 99px; background: var(--ok); flex: none;
+         box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
+  .dot.off { background: var(--idle); box-shadow: none; }
+
+  .machine { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .machine span { font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim);
+                  background: var(--panel); border: 1px solid var(--line);
+                  border-radius: 999px; padding: 4px 11px; }
   .machine b { color: var(--ink); font-weight: 600; }
-  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
-           padding: 16px 18px; margin-bottom: 16px; }
-  .panel h2 { margin: 0 0 3px; font-size: 16px; letter-spacing: -0.01em; }
-  .panel p.lede { margin: 0 0 12px; color: var(--ink-dim); font-size: 13.5px; }
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  th, td { text-align: right; padding: 8px 9px; border-bottom: 1px solid var(--line); }
-  th:first-child, td:first-child, th.l, td.l { text-align: left; }
-  th { color: var(--ink-dim); font-weight: 600; font-size: 11.5px;
-       text-transform: uppercase; letter-spacing: 0.06em; }
-  td.num { font-family: var(--mono); }
-  tr.run { cursor: pointer; }
-  tr.run:hover td { background: var(--panel-2); }
-  tr.open td { background: var(--panel-2); }
-  .chip { display: inline-block; font-family: var(--mono); font-size: 11px;
-          padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; }
-  .chip.running { color: var(--accent); }
+
+  /* ---------- cards ---------- */
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+  .card { position: relative; background: var(--panel); border: 1px solid var(--line);
+          border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow);
+          cursor: pointer; text-align: left; padding: 0; color: inherit; font: inherit;
+          transition: transform .16s cubic-bezier(.2,.7,.3,1), border-color .16s, box-shadow .16s; }
+  .card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+                box-shadow: 0 2px 4px rgba(0,0,0,.4), 0 16px 36px rgba(0,0,0,.35); }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .thumb { position: relative; aspect-ratio: 16/9; background: #0a0c10; display: block; width: 100%; }
+  .thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb .none { position: absolute; inset: 0; display: grid; place-items: center;
+                 color: var(--ink-dim); font-size: 12.5px; font-family: var(--mono);
+                 background: linear-gradient(135deg, var(--panel-2), var(--panel-3)); }
+  .thumb .veil { position: absolute; inset: auto 0 0 0; height: 54%; pointer-events: none;
+                 background: linear-gradient(to top, rgba(6,8,12,.92), transparent); }
+  .thumb .delta { position: absolute; left: 12px; bottom: 10px; font-family: var(--mono);
+                  font-size: 12px; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.8); }
+  .card .body { padding: 13px 15px 15px; }
+  .card .name { font-weight: 640; font-size: 16.5px; letter-spacing: -0.01em; display: flex;
+                align-items: center; gap: 8px; justify-content: space-between; }
+  .card .where { color: var(--ink-dim); font-size: 12px; font-family: var(--mono); margin-top: 2px; }
+  .card .blurb { color: var(--ink-dim); font-size: 13px; margin-top: 8px;
+                 display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .card .foot { display: flex; align-items: center; gap: 8px; margin-top: 11px; flex-wrap: wrap; }
+
+  .chip { font-family: var(--mono); font-size: 11px; padding: 3px 9px; border-radius: 999px;
+          border: 1px solid currentColor; display: inline-flex; align-items: center; gap: 6px; }
+  .chip.running, .chip.starting { color: var(--accent); }
   .chip.finished { color: var(--ok); }
   .chip.stalled { color: var(--bad); }
   .chip.notstarted { color: var(--idle); }
   .chip.learned { color: var(--ok); }
   .chip.insidenoise { color: var(--warn); }
   .chip.nogain { color: var(--bad); }
-  .bar { width: 130px; height: 7px; border-radius: 99px; background: var(--panel-2);
-         overflow: hidden; display: inline-block; vertical-align: middle; }
-  .bar span { display: block; height: 100%; background: var(--accent); }
-  .detail { padding: 0 !important; }
-  .detail-inner { padding: 14px 10px 18px; display: grid; gap: 16px;
-                  grid-template-columns: minmax(320px, 1.4fr) minmax(260px, 1fr); }
-  @media (max-width: 860px) { .detail-inner { grid-template-columns: 1fr; } }
-  pre { background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
-        padding: 10px 12px; overflow-x: auto; font-family: var(--mono);
-        font-size: 11.5px; line-height: 1.45; margin: 0; color: var(--ink-dim); }
-  .k { color: var(--ink-dim); font-size: 12px; text-transform: uppercase;
-       letter-spacing: 0.06em; margin: 0 0 6px; }
-  .verdict { font-size: 13px; color: var(--ink-dim); margin-top: 8px; }
+  .chip.plain { color: var(--ink-dim); }
+  .chip .d { width: 6px; height: 6px; border-radius: 99px; background: currentColor; }
+
+  .bar { height: 5px; border-radius: 99px; background: var(--panel-3); overflow: hidden; flex: 1; min-width: 60px; }
+  .bar span { display: block; height: 100%; border-radius: 99px;
+              background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+
+  /* ---------- detail ---------- */
+  .back { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font: inherit;
+          font-size: 13.5px; padding: 0; margin-bottom: 14px; display: inline-flex; gap: 7px; }
+  .back:hover { color: var(--ink); }
+  .head { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+  .head h2 { font-size: 28px; margin: 0; letter-spacing: -0.025em; }
+  .head .where { color: var(--ink-dim); font-family: var(--mono); font-size: 12.5px; }
+  .lede { color: var(--ink-dim); margin: 0 0 20px; max-width: 72ch; }
+
+  .tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+           margin-bottom: 20px; }
+  .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 13px;
+          padding: 13px 15px; }
+  .tile .n { font-size: 23px; font-weight: 650; font-family: var(--mono); letter-spacing: -0.03em;
+             font-variant-numeric: tabular-nums; }
+  .tile .k { color: var(--ink-dim); font-size: 11.5px; margin-top: 3px; letter-spacing: .03em; }
+
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r);
+           padding: 18px 20px; margin-bottom: 18px; box-shadow: var(--shadow); }
+  .panel h3 { margin: 0 0 3px; font-size: 15.5px; letter-spacing: -0.01em; }
+  .panel p.note { margin: 0 0 14px; color: var(--ink-dim); font-size: 13px; }
+  .cols { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: right; padding: 8px 9px; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child, .l { text-align: left; }
+  th { color: var(--ink-dim); font-weight: 600; font-size: 11px; text-transform: uppercase;
+       letter-spacing: .07em; }
+  td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  tr.hi td { color: var(--ok); font-weight: 640; }
+  tr.lo td { color: var(--ink-dim); }
+
+  .films { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .film { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .film video { width: 100%; display: block; background: #07090d; }
+  .film .cap { padding: 8px 11px; font-size: 12px; color: var(--ink-dim); font-family: var(--mono); }
+  pre { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px;
+        overflow-x: auto; font-family: var(--mono); font-size: 11.5px; line-height: 1.5;
+        margin: 0; color: var(--ink-dim); }
+  .k { color: var(--ink-dim); font-size: 11px; text-transform: uppercase; letter-spacing: .07em;
+       margin: 0 0 7px; }
   .empty { color: var(--ink-dim); font-size: 13.5px; }
-  a { color: var(--accent); }
-  .controls { display: flex; gap: 10px; align-items: center; }
-  button { background: var(--panel-2); color: var(--ink); border: 1px solid var(--line);
-           border-radius: 999px; padding: 6px 13px; cursor: pointer; font-size: 12.5px; }
-  .dot { width: 7px; height: 7px; border-radius: 99px; background: var(--ok);
-         display: inline-block; margin-right: 6px; }
-  .dot.off { background: var(--idle); }
+  figure { margin: 0; }
+  @media (max-width: 560px) { .head h2 { font-size: 23px; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <div>
-      <h1>Agent Observatory</h1>
-      <div class="meta" id="taken">…</div>
+  <div class="top">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <h1>Agent Observatory</h1>
+        <div class="sub" id="taken">…</div>
+      </div>
     </div>
-    <div class="controls">
-      <button id="refresh"><span class="dot" id="dot"></span><span id="refresh-label">auto-refresh on</span></button>
-      <button id="theme">theme</button>
-    </div>
-  </header>
+    <button class="pill" id="refresh"><span class="dot" id="dot"></span><span id="refresh-label">live</span></button>
+    <button class="pill" id="theme">theme</button>
+  </div>
   <div class="machine" id="machine"></div>
   <main id="main"></main>
 </div>
@@ -98,11 +183,15 @@ const $ = s => document.querySelector(s);
 const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c;
                           if (h !== undefined) n.innerHTML = h; return n; };
 const esc = s => String(s ?? "").replace(/[<>&"]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" }[c]));
-const num = (v, d = 2) => (v === null || v === undefined) ? "—" : Number(v).toFixed(d);
+const num = (v, d = 2) => (v === null || v === undefined || v === "") ? "—" : Number(v).toFixed(d);
 const int = v => (v === null || v === undefined) ? "—" : Number(v).toLocaleString();
 const BUDGET = { boxing: 2000000, platformer: 2000000, racing: 1200000, pingpong: 2000000 };
+const cls = s => String(s).replace(/[^a-z]/g, "");
 
-try { const t = localStorage.getItem("obs-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+/* ---------- theme ---------- */
+try {
+  document.documentElement.setAttribute("data-theme", localStorage.getItem("obs-theme") || "dark");
+} catch (e) { document.documentElement.setAttribute("data-theme", "dark"); }
 $("#theme").addEventListener("click", () => {
   const cur = document.documentElement.getAttribute("data-theme");
   const next = cur === "dark" ? "light" : "dark";
@@ -110,166 +199,329 @@ $("#theme").addEventListener("click", () => {
   try { localStorage.setItem("obs-theme", next); } catch (e) {}
 });
 
-/* ---------- sparkline ---------- */
-function spark(points, w = 150, h = 34, key = "return") {
-  const ys = points.map(p => p[key]).filter(v => v !== null && v !== undefined);
-  if (ys.length < 2) return "";
-  const lo = Math.min(...ys), hi = Math.max(...ys), span = (hi - lo) || 1;
-  const d = ys.map((v, i) => (i ? "L" : "M") + (i / (ys.length - 1) * w).toFixed(1)
-    + " " + (h - (v - lo) / span * h).toFixed(1)).join(" ");
-  return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" style="display:block">
-    <path d="${d}" fill="none" stroke="var(--accent)" stroke-width="1.6"/></svg>`;
-}
-
-/* ---------- bigger chart for the detail panel ---------- */
-function chart(points, key, label, colour) {
-  const ys = points.map(p => p[key]).filter(v => v !== null && v !== undefined);
-  if (ys.length < 2) return el("p", "empty", "not enough data for " + label);
-  const w = 520, h = 150, pad = { l: 44, r: 8, t: 10, b: 20 };
-  const xs = points.map(p => p.steps);
+/* ---------- small charts ---------- */
+function area(points, key, label, colour) {
+  const pts = points.filter(p => p[key] !== null && p[key] !== undefined);
+  if (pts.length < 2) return el("p", "empty", "not enough data for " + label);
+  const w = 560, h = 170, pad = { l: 46, r: 10, t: 12, b: 22 };
+  const xs = pts.map(p => p.steps), ys = pts.map(p => p[key]);
   const x0 = Math.min(...xs), x1 = Math.max(...xs);
   const lo = Math.min(...ys), hi = Math.max(...ys), span = (hi - lo) || 1;
   const X = v => pad.l + (v - x0) / ((x1 - x0) || 1) * (w - pad.l - pad.r);
   const Y = v => h - pad.b - (v - lo) / span * (h - pad.t - pad.b);
-  let body = "";
+  const id = "g" + Math.random().toString(36).slice(2, 8);
+  let body = `<defs><linearGradient id="${id}" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="${colour}" stop-opacity=".34"/>
+      <stop offset="100%" stop-color="${colour}" stop-opacity="0"/></linearGradient></defs>`;
   [lo, (lo + hi) / 2, hi].forEach(v => {
-    body += `<line x1="${pad.l}" y1="${Y(v)}" x2="${w - pad.r}" y2="${Y(v)}" stroke="currentColor" stroke-opacity="0.1"/>`
-         + `<text x="${pad.l - 6}" y="${Y(v) + 3.5}" text-anchor="end" font-size="10" fill="currentColor" fill-opacity="0.55">${v.toFixed(1)}</text>`;
+    body += `<line x1="${pad.l}" y1="${Y(v)}" x2="${w - pad.r}" y2="${Y(v)}" stroke="currentColor" stroke-opacity=".09"/>`
+         + `<text x="${pad.l - 7}" y="${Y(v) + 3.5}" text-anchor="end" font-size="10" fill="currentColor" fill-opacity=".5">${v.toFixed(1)}</text>`;
   });
-  const pts = points.filter(p => p[key] !== null && p[key] !== undefined);
-  body += `<path d="${pts.map((p, i) => (i ? "L" : "M") + X(p.steps).toFixed(1) + " " + Y(p[key]).toFixed(1)).join(" ")}"
-           fill="none" stroke="${colour}" stroke-width="1.8"/>`;
-  body += `<text x="${pad.l}" y="${h - 5}" font-size="10" fill="currentColor" fill-opacity="0.55">${(x0 / 1e6).toFixed(2)}M</text>`
-       + `<text x="${w - pad.r}" y="${h - 5}" text-anchor="end" font-size="10" fill="currentColor" fill-opacity="0.55">${(x1 / 1e6).toFixed(2)}M steps</text>`;
-  const f = el("figure", "", `<svg viewBox="0 0 ${w} ${h}" width="100%" style="height:auto;display:block" role="img" aria-label="${esc(label)}">${body}</svg>`);
-  f.style.margin = "0";
+  const line = pts.map((p, i) => (i ? "L" : "M") + X(p.steps).toFixed(1) + " " + Y(p[key]).toFixed(1)).join(" ");
+  body += `<path d="${line} L ${X(x1).toFixed(1)} ${h - pad.b} L ${X(x0).toFixed(1)} ${h - pad.b} Z" fill="url(#${id})"/>`;
+  body += `<path d="${line}" fill="none" stroke="${colour}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  body += `<text x="${pad.l}" y="${h - 6}" font-size="10" fill="currentColor" fill-opacity=".5">${(x0 / 1e6).toFixed(2)}M</text>`
+       + `<text x="${w - pad.r}" y="${h - 6}" text-anchor="end" font-size="10" fill="currentColor" fill-opacity=".5">${(x1 / 1e6).toFixed(2)}M steps</text>`;
+  const f = el("figure");
   f.append(el("div", "k", label));
+  f.insertAdjacentHTML("beforeend",
+    `<svg viewBox="0 0 ${w} ${h}" width="100%" style="height:auto;display:block" role="img" aria-label="${esc(label)}">${body}</svg>`);
   return f;
 }
 
-/* ---------- rendering ---------- */
-let openKey = null;
-
-function render() {
-  const S = window.SNAPSHOT;
-  const main = $("#main");
-  main.textContent = "";
-  if (!S) { main.append(el("p", "empty", "No snapshot yet — run python -m observatory.collect")); return; }
-
-  $("#taken").textContent = "snapshot " + S.taken_at;
-  const m = S.machine || {};
-  const bits = [];
-  if (m.cpu_percent !== null && m.cpu_percent !== undefined) bits.push(`cpu <b>${m.cpu_percent}%</b>`);
-  if (m.python_processes) bits.push(`python procs <b>${m.python_processes}</b>`);
-  if (m.gpu) bits.push(`gpu <b>${esc(m.gpu.name)}</b> ${esc(m.gpu.memory_used)} / ${esc(m.gpu.memory_total)} · ${esc(m.gpu.utilisation)}`);
-  $("#machine").innerHTML = bits.join("");
-  $("#machine").textContent = "";
-  bits.forEach(b => $("#machine").append(el("span", "", b)));
-
-  // -- training runs --------------------------------------------------
-  const runs = el("div", "panel");
-  runs.append(el("h2", "", "Training runs"),
-    el("p", "lede", "Click a row for its curves, checkpoints and log. The verdict compares the finished network with the untrained one and asks whether the gain clears their combined spread — a run that cannot clear it is not called a win."));
-  const t = el("table");
-  t.append(el("thead", "", `<tr>
-      <th class="l">game</th><th class="l">state</th><th class="l">progress</th>
-      <th>steps</th><th>steps/s</th><th>eta</th><th>return</th><th>entropy</th>
-      <th class="l">trend</th><th class="l">verdict</th></tr>`));
-  const tb = el("tbody");
-  for (const r of S.arcade) {
-    const tr = el("tr", "run" + (openKey === r.key ? " open" : ""));
-    const budget = BUDGET[r.key];
-    const pct = budget ? Math.min(100, 100 * r.steps / budget) : 0;
-    const stateClass = r.state.replace(/[^a-z]/g, "");
-    const v = r.verdict;
-    tr.innerHTML = `
-      <td class="l">${esc(r.title)}<div class="k" style="margin:2px 0 0">${esc(r.env_id)}</div></td>
-      <td class="l"><span class="chip ${stateClass}">${esc(r.state)}</span></td>
-      <td class="l"><span class="bar"><span style="width:${pct.toFixed(1)}%"></span></span></td>
-      <td class="num">${int(r.steps)}</td>
-      <td class="num">${r.sps ?? "—"}</td>
-      <td class="num">${r.eta_minutes ? r.eta_minutes + "m" : (r.wall_minutes ? r.wall_minutes + "m total" : "—")}</td>
-      <td class="num">${num(r.return_now, 1)}</td>
-      <td class="num">${num(r.entropy_now, 2)}</td>
-      <td class="l">${spark(r.curve)}</td>
-      <td class="l">${v ? `<span class="chip ${v.label.replace(/[^a-z]/g, "")}">${esc(v.label)}</span>` : "—"}</td>`;
-    tr.addEventListener("click", () => { openKey = openKey === r.key ? null : r.key; render(); });
-    tb.append(tr);
-
-    if (openKey === r.key) {
-      const row = el("tr");
-      const cell = el("td", "detail");
-      cell.colSpan = 10;
-      const inner = el("div", "detail-inner");
-
-      const left = el("div");
-      if (r.curve && r.curve.length > 1) {
-        left.append(chart(r.curve, "return", "episode return", "var(--accent)"));
-        left.append(chart(r.curve, "entropy", "policy entropy — falling means it is committing to actions", "var(--warn)"));
-      } else {
-        left.append(el("p", "empty", "no finished episodes yet"));
-      }
-
-      const right = el("div");
-      if (r.ladder && r.ladder.length) {
-        right.append(el("div", "k", "checkpoint ladder, same levels for every row"));
-        const lt = el("table");
-        lt.append(el("thead", "", "<tr><th class='l'>checkpoint</th><th>steps</th><th>score</th><th>spread</th></tr>"));
-        const ltb = el("tbody");
-        for (const row2 of r.ladder) {
-          const label = row2.tag === "random" ? "random keys" : (row2.steps === 0 ? "untrained" : row2.tag + "%");
-          ltb.append(el("tr", "", `<td class="l">${esc(label)}</td>
-            <td class="num">${row2.steps === null ? "—" : int(row2.steps)}</td>
-            <td class="num">${num(row2.return_mean, 2)}</td>
-            <td class="num">± ${num(row2.return_std, 2)}</td>`));
-        }
-        lt.append(ltb);
-        right.append(lt);
-        if (v) right.append(el("div", "verdict", esc(v.detail)));
-      } else {
-        right.append(el("p", "empty", "no checkpoint ladder yet — it is scored once training finishes"));
-      }
-      if (r.checkpoints && r.checkpoints.length) {
-        right.append(el("div", "k", "saved weights"),
-          el("div", "", r.checkpoints.map(c => `<span class="chip">${esc(c.tag)}</span>`).join(" ")));
-      }
-      if (r.log_tail && r.log_tail.length) {
-        left.append(el("div", "k", "log"), el("pre", "", esc(r.log_tail.slice(-8).join("\n"))));
-      }
-      inner.append(left, right);
-      cell.append(inner);
-      row.append(cell);
-      tb.append(row);
-    }
-  }
-  t.append(tb);
-  runs.append(t);
-  main.append(runs);
-
-  // -- the hand-built agents -------------------------------------------
-  const projects = el("div", "panel");
-  projects.append(el("h2", "", "Hand-built agents"),
-    el("p", "lede", "These are not trained on a curve: one learns, one plans with no weights at all, and one plays a program that has no API. Each is shown against the floor it has to beat."));
-  const pt = el("table");
-  pt.append(el("thead", "", "<tr><th class='l'>agent</th><th class='l'>game</th><th class='l'>result</th><th class='l'>floor</th><th class='l'>detail</th></tr>"));
-  const ptb = el("tbody");
-  for (const p of S.projects) {
-    ptb.append(el("tr", "", `<td class="l">${esc(p.title)}</td><td class="l">${esc(p.env_id)}</td>
-      <td class="l num">${esc(p.headline)}</td><td class="l num">${esc(p.baseline)}</td>
-      <td class="l">${esc(p.detail)}</td>`));
-  }
-  pt.append(ptb);
-  projects.append(pt);
-  main.append(projects);
+function bars(rows, opts = {}) {
+  const w = 560, rowH = 26, pad = { l: opts.labelWidth || 150, r: 60, t: 4, b: 4 };
+  const max = opts.max || Math.max(...rows.map(r => Math.abs(r.value))) || 1;
+  const h = pad.t + pad.b + rows.length * rowH;
+  let body = "";
+  rows.forEach((r, i) => {
+    const y = pad.t + i * rowH;
+    const len = Math.max(2, (w - pad.l - pad.r) * (Math.abs(r.value) / max));
+    body += `<text x="${pad.l - 9}" y="${y + 16}" text-anchor="end" font-size="12" fill="currentColor" fill-opacity=".8">${esc(r.label)}</text>`
+         + `<rect x="${pad.l}" y="${y + 6}" width="${len}" height="${rowH - 13}" rx="4" fill="${r.colour || "var(--accent)"}"/>`
+         + `<text x="${pad.l + len + 8}" y="${y + 16}" font-size="11.5" font-family="${"ui-monospace,monospace"}" fill="currentColor" fill-opacity=".72">${esc(r.text ?? r.value)}</text>`;
+  });
+  const f = el("figure");
+  if (opts.label) f.append(el("div", "k", opts.label));
+  f.insertAdjacentHTML("beforeend",
+    `<svg viewBox="0 0 ${w} ${h}" width="100%" style="height:auto;display:block" role="img" aria-label="${esc(opts.label || "bars")}">${body}</svg>`);
+  return f;
 }
 
-/* ---------- auto refresh ---------- */
+function film(src, caption) {
+  const box = el("div", "film");
+  const v = document.createElement("video");
+  v.src = src; v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
+  v.controls = true; v.setAttribute("muted", "");
+  box.append(v, el("div", "cap", esc(caption)));
+  return box;
+}
+
+/* ---------- data helpers ---------- */
+const S = () => window.SNAPSHOT || {};
+function allEntries() {
+  const s = S();
+  return [...(s.arcade || []), ...(s.projects || [])];
+}
+function find(key) { return allEntries().find(e => e.key === key); }
+
+function deltaText(e) {
+  if (e.kind === "project") return `${e.headline ?? "—"} vs ${e.baseline ?? "—"}`;
+  const l = e.ladder || [];
+  const first = l.find(r => r.steps === 0), last = l[l.length - 1];
+  if (first && last && last !== first)
+    return `untrained ${num(first.return_mean, 1)}  →  trained ${num(last.return_mean, 1)}`;
+  if (e.state === "running" || e.state === "starting") return `return ${num(e.return_now, 1)}`;
+  return "";
+}
+
+/* ---------- overview ---------- */
+function renderOverview() {
+  const main = $("#main");
+  main.textContent = "";
+  const intro = el("p", "lede",
+    "Every agent in the workshop. Each card opens only that project: what it is doing now, the films of it playing, and the numbers underneath them.");
+  main.append(intro);
+
+  const grid = el("div", "grid");
+  for (const e of allEntries()) {
+    const card = el("button", "card");
+    card.type = "button";
+    const thumb = el("div", "thumb");
+    const clip = e.kind === "arcade"
+      ? (e.clips || []).find(c => c === "progress.mp4")
+      : ((S().analytics || {}).project_clips || []).find(c => c.includes(e.key));
+    if (clip) {
+      const v = document.createElement("video");
+      v.src = (e.kind === "arcade" ? e.media_dir : (S().analytics || {}).media_dir) + "/" + clip;
+      v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true;
+      v.setAttribute("muted", "");
+      thumb.append(v);
+    } else {
+      thumb.append(el("div", "none", e.state === "finished" ? "film pending" : esc(e.state || "no film")));
+    }
+    thumb.append(el("div", "veil"));
+    const d = deltaText(e);
+    if (d) thumb.append(el("div", "delta", esc(d)));
+    const body = el("div", "body");
+    const v = e.verdict;
+    body.append(
+      el("div", "name", `<span>${esc(e.title)}</span>`),
+      el("div", "where", esc(e.env_id)),
+      el("div", "blurb", esc(e.blurb || e.detail || "")),
+    );
+    const foot = el("div", "foot");
+    foot.append(el("span", "chip " + cls(e.state), `<span class="d"></span>${esc(e.state)}`));
+    if (v) foot.append(el("span", "chip " + cls(v.label), esc(v.label)));
+    if (e.kind === "arcade" && BUDGET[e.key]) {
+      const pct = Math.min(100, 100 * (e.steps || 0) / BUDGET[e.key]);
+      foot.append(el("span", "bar", `<span style="width:${pct.toFixed(1)}%"></span>`));
+    }
+    body.append(foot);
+    card.append(thumb, body);
+    card.addEventListener("click", () => { location.hash = "#/" + e.key; });
+    grid.append(card);
+  }
+  main.append(grid);
+}
+
+/* ---------- one project ---------- */
+function renderProject(key) {
+  const main = $("#main");
+  main.textContent = "";
+  const e = find(key);
+  if (!e) { location.hash = ""; return; }
+
+  const back = el("button", "back", "← all projects");
+  back.addEventListener("click", () => { location.hash = ""; });
+  main.append(back);
+
+  const head = el("div", "head");
+  head.append(el("h2", "", esc(e.title)), el("div", "where", esc(e.env_id)));
+  const v = e.verdict;
+  head.append(el("span", "chip " + cls(e.state), `<span class="d"></span>${esc(e.state)}`));
+  if (v) head.append(el("span", "chip " + cls(v.label), esc(v.label)));
+  main.append(head);
+  main.append(el("p", "lede", esc(e.blurb || e.detail || "")));
+
+  if (e.kind === "arcade") renderArcadeProject(main, e);
+  else renderHandBuilt(main, e);
+}
+
+function renderArcadeProject(main, e) {
+  const tiles = el("div", "tiles");
+  const l = e.ladder || [];
+  const first = l.find(r => r.steps === 0), last = l[l.length - 1];
+  const pairs = [
+    [int(e.steps), "agent steps"],
+    [e.sps ? e.sps + "/s" : "—", "steps per second"],
+    [e.wall_minutes ? e.wall_minutes + "m" : (e.eta_minutes ? "~" + e.eta_minutes + "m left" : "—"),
+     e.wall_minutes ? "wall clock" : "estimate"],
+    [e.params ? int(e.params) : "—", "parameters"],
+  ];
+  if (first && last && last !== first) {
+    pairs.push([num(first.return_mean, 1), "untrained score"]);
+    pairs.push([num(last.return_mean, 1), "trained score"]);
+  }
+  pairs.forEach(([n, k]) => { const t = el("div", "tile"); t.append(el("div", "n", n), el("div", "k", k)); tiles.append(t); });
+  main.append(tiles);
+
+  // films
+  const clips = e.clips || [];
+  if (clips.length) {
+    const p = el("div", "panel");
+    p.append(el("h3", "", "The same level, before and after"),
+      el("p", "note", "Every panel is the same seed played by a different checkpoint of the same network. The left one has never been trained."));
+    const films = el("div", "films");
+    const progress = clips.find(c => c === "progress.mp4");
+    if (progress) films.append(film(e.media_dir + "/" + progress, "all checkpoints, side by side"));
+    clips.filter(c => c.startsWith("step_")).forEach(c => {
+      const tag = c.replace("step_", "").replace(".mp4", "");
+      films.append(film(e.media_dir + "/" + c, tag === "000" ? "untrained" : "after " + Number(tag) + "% of training"));
+    });
+    p.append(films);
+    main.append(p);
+  }
+
+  const cols = el("div", "cols");
+  // curves
+  const left = el("div", "panel");
+  left.append(el("h3", "", "Training"));
+  if (e.curve && e.curve.length > 1) {
+    left.append(area(e.curve, "return", "episode return", "var(--accent)"));
+    left.append(area(e.curve, "entropy", "policy entropy — falling means it is committing", "var(--warn)"));
+  } else left.append(el("p", "empty", "no finished episodes yet"));
+  if (e.log_tail && e.log_tail.length) {
+    left.append(el("div", "k", "log"), el("pre", "", esc(e.log_tail.slice(-7).join("\n"))));
+  }
+  cols.append(left);
+
+  // ladder
+  const right = el("div", "panel");
+  right.append(el("h3", "", "Score at each checkpoint"),
+    el("p", "note", "Every row plays the same levels, so the climb is like for like."));
+  if (l.length) {
+    const t = el("table");
+    t.append(el("thead", "", "<tr><th>checkpoint</th><th>steps</th><th>score</th><th>spread</th></tr>"));
+    const tb = el("tbody");
+    l.forEach((r, i) => {
+      const label = r.tag === "random" ? "random keys" : (r.steps === 0 ? "untrained" : r.tag + "%");
+      const klass = i === l.length - 1 ? "hi" : (r.tag === "random" ? "lo" : "");
+      tb.append(el("tr", klass, `<td class="l">${esc(label)}</td><td class="num">${r.steps === null ? "—" : int(r.steps)}</td>
+        <td class="num">${num(r.return_mean)}</td><td class="num">± ${num(r.return_std)}</td>`));
+    });
+    t.append(tb);
+    right.append(t);
+    if (e.verdict) right.append(el("p", "note", "<b>" + esc(e.verdict.label) + ".</b> " + esc(e.verdict.detail)));
+  } else right.append(el("p", "empty", "scored once training finishes"));
+  cols.append(right);
+  main.append(cols);
+}
+
+function renderHandBuilt(main, e) {
+  const A = S().analytics || {};
+  const tiles = el("div", "tiles");
+  [[esc(e.headline), "result"], [esc(e.baseline), "floor it beats"]].forEach(([n, k]) => {
+    const t = el("div", "tile"); t.append(el("div", "n", n), el("div", "k", k)); tiles.append(t);
+  });
+  main.append(tiles);
+
+  const clip = (A.project_clips || []).find(c => c.includes(e.key));
+  if (clip) {
+    const p = el("div", "panel");
+    p.append(el("h3", "", "Playing"), el("div", "films", ""));
+    p.lastChild.append(film(A.media_dir + "/" + clip, e.title));
+    main.append(p);
+  }
+
+  if (e.key === "doom") {
+    const p = el("div", "panel");
+    p.append(el("h3", "", "Held-out maps"), el("p", "note", "30 maps the policy never trained on, same maps for every agent."));
+    const rows = (A.doom || {}).rows || e.rows || [];
+    p.append(bars(rows.map(r => ({ label: r.agent, value: r.return_mean ?? r.mean,
+      text: num(r.return_mean ?? r.mean, 2),
+      colour: String(r.agent).startsWith("ppo") ? "var(--ok)" : "var(--idle)" })), { label: "kills per episode" }));
+    if ((A.doom || {}).curve && A.doom.curve.length > 1) p.append(area(A.doom.curve, "return", "training", "var(--accent)"));
+    if ((A.doom || {}).kaggle) {
+      const k = A.doom.kaggle;
+      const t = el("table");
+      t.append(el("thead", "", "<tr><th>arm on a GPU</th><th>parameters</th><th>steps/s</th><th>kills</th></tr>"));
+      const tb = el("tbody");
+      Object.entries(k).forEach(([name, val]) => tb.append(el("tr", name === "wide" ? "hi" : "", `
+        <td class="l">${esc(name)}</td><td class="num">${int(val.params)}</td>
+        <td class="num">${val.steps_per_second}</td><td class="num">${num(val.best_policy_mean)}</td>`)));
+      t.append(tb);
+      p.append(el("div", "k", "was the laptop-sized network a compromise?"), t);
+    }
+    main.append(p);
+  }
+
+  if (e.key === "crafter") {
+    const p = el("div", "panel");
+    const ab = ((A.crafter || {}).ab || [])[0];
+    p.append(el("h3", "", "Where the score comes from"),
+      el("p", "note", "Share of episodes in which each achievement fired. The zeros are the whole reason the score is 12% and not 40%."));
+    if (ab && ab.success_rates) {
+      p.append(bars(Object.entries(ab.success_rates).sort((a, b) => b[1] - a[1])
+        .map(([k, v]) => ({ label: k, value: v, text: v.toFixed(0) + "%",
+          colour: v === 0 ? "var(--bad)" : v > 60 ? "var(--ok)" : "var(--accent)" })),
+        { max: 100, labelWidth: 160 }));
+    }
+    const perc = (A.crafter || {}).perception;
+    if (perc) {
+      p.append(bars(perc.tile_accuracy.map(t => ({ label: t.daylight, value: 100 * t.tile_accuracy,
+        text: (100 * t.tile_accuracy).toFixed(2) + "%",
+        colour: t.tile_accuracy > 0.999 ? "var(--ok)" : "var(--warn)" })),
+        { max: 100, labelWidth: 160, label: "decoder accuracy by how dark it is" }));
+    }
+    main.append(p);
+  }
+
+  if (e.key === "brogue") {
+    const p = el("div", "panel");
+    p.append(el("h3", "", "Per game"), el("p", "note", "900 keystrokes per game, same seeds for both agents."));
+    const eps = (A.brogue || {}).episodes || [];
+    if (eps.length) {
+      const t = el("table");
+      t.append(el("thead", "", "<tr><th>agent</th><th>seed</th><th>descents</th><th>map named</th><th>health at end</th></tr>"));
+      const tb = el("tbody");
+      eps.forEach(r => tb.append(el("tr", r.agent === "explorer" ? "hi" : "lo", `
+        <td class="l">${esc(r.agent)}</td><td class="num">${r.seed}</td><td class="num">${r.descents}</td>
+        <td class="num">${r.coverage === null || r.coverage === undefined ? "—" : (100 * r.coverage).toFixed(1) + "%"}</td>
+        <td class="num">${num(r.health, 2)}</td>`)));
+      t.append(tb);
+      p.append(t);
+    }
+    main.append(p);
+  }
+}
+
+/* ---------- routing ---------- */
+function render() {
+  const s = S();
+  if (!s.taken_at) { $("#main").append(el("p", "empty", "No snapshot yet — run python -m observatory.collect")); return; }
+  $("#taken").textContent = "snapshot " + s.taken_at;
+  const m = s.machine || {};
+  const bits = [];
+  if (m.cpu_percent !== null && m.cpu_percent !== undefined) bits.push(`cpu <b>${m.cpu_percent}%</b>`);
+  if (m.python_processes) bits.push(`python <b>${m.python_processes}</b>`);
+  if (m.gpu) bits.push(`gpu <b>${esc(m.gpu.name)}</b> ${esc(m.gpu.memory_used)} / ${esc(m.gpu.memory_total)} · ${esc(m.gpu.utilisation)}`);
+  const mach = $("#machine");
+  mach.textContent = "";
+  bits.forEach(b => mach.append(el("span", "", b)));
+
+  const key = location.hash.replace(/^#\/?/, "");
+  if (key && find(key)) renderProject(key); else renderOverview();
+}
+window.addEventListener("hashchange", render);
+
+/* ---------- live refresh ---------- */
 let auto = true;
 function reload() {
   if (!auto) return;
   const s = document.createElement("script");
-  // A cache-buster, because this also has to work when the page is opened
-  // straight off disk, where fetch() of a local file is blocked.
+  // Cache-buster, so this also works opened straight off disk where fetching a
+  // local file is blocked.
   s.src = "data/snapshot.js?t=" + Date.now();
   s.onload = () => { render(); s.remove(); };
   document.body.append(s);
@@ -277,7 +529,7 @@ function reload() {
 $("#refresh").addEventListener("click", () => {
   auto = !auto;
   $("#dot").className = "dot" + (auto ? "" : " off");
-  $("#refresh-label").textContent = auto ? "auto-refresh on" : "auto-refresh off";
+  $("#refresh-label").textContent = auto ? "live" : "paused";
   if (auto) reload();
 });
 render();

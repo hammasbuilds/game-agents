@@ -1,5 +1,5 @@
 window.SNAPSHOT = {
- "taken_at": "2026-10-15 04:27:02Z",
+ "taken_at": "2026-10-15 04:38:52Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -7,24 +7,167 @@ window.SNAPSHOT = {
    "title": "Car racing",
    "env_id": "CarRacing-v3",
    "blurb": "Top-down racing. The agent sees the track and steers; an untrained one spins on the grass, a trained one follows the road.",
-   "state": "not started",
-   "steps": 0,
-   "updates": 0,
-   "sps": null,
-   "return_now": null,
-   "entropy_now": null,
+   "state": "running",
+   "steps": 30720,
+   "updates": 20,
+   "sps": 46.0,
+   "return_now": -26.41,
+   "entropy_now": 1.3116,
    "wall_minutes": null,
    "params": null,
-   "eta_minutes": null,
-   "seconds_since_update": null,
-   "checkpoints": [],
-   "curve": [],
+   "eta_minutes": 423.7,
+   "seconds_since_update": 56,
+   "checkpoints": [
+    {
+     "tag": "000",
+     "steps": 0
+    }
+   ],
+   "curve": [
+    {
+     "steps": 3072,
+     "return": -44.781,
+     "entropy": 1.6002,
+     "sps": 52.9,
+     "value_loss": 5.4665
+    },
+    {
+     "steps": 4608,
+     "return": -44.781,
+     "entropy": 1.5927,
+     "sps": 53.9,
+     "value_loss": 6.0825
+    },
+    {
+     "steps": 6144,
+     "return": -48.502,
+     "entropy": 1.5795,
+     "sps": 53.1,
+     "value_loss": 6.4344
+    },
+    {
+     "steps": 7680,
+     "return": -48.502,
+     "entropy": 1.5693,
+     "sps": 53.0,
+     "value_loss": 4.2939
+    },
+    {
+     "steps": 9216,
+     "return": -48.522,
+     "entropy": 1.5705,
+     "sps": 52.5,
+     "value_loss": 9.0379
+    },
+    {
+     "steps": 10752,
+     "return": -48.522,
+     "entropy": 1.5693,
+     "sps": 50.4,
+     "value_loss": 5.2626
+    },
+    {
+     "steps": 12288,
+     "return": -52.973,
+     "entropy": 1.5398,
+     "sps": 47.9,
+     "value_loss": 61.5432
+    },
+    {
+     "steps": 13824,
+     "return": -52.973,
+     "entropy": 1.5086,
+     "sps": 48.6,
+     "value_loss": 11.4548
+    },
+    {
+     "steps": 15360,
+     "return": -49.742,
+     "entropy": 1.4794,
+     "sps": 48.0,
+     "value_loss": 51.5106
+    },
+    {
+     "steps": 16896,
+     "return": -49.388,
+     "entropy": 1.4729,
+     "sps": 47.4,
+     "value_loss": 52.1449
+    },
+    {
+     "steps": 18432,
+     "return": -44.04,
+     "entropy": 1.4538,
+     "sps": 47.4,
+     "value_loss": 40.5339
+    },
+    {
+     "steps": 19968,
+     "return": -46.591,
+     "entropy": 1.4338,
+     "sps": 47.4,
+     "value_loss": 61.1705
+    },
+    {
+     "steps": 21504,
+     "return": -45.475,
+     "entropy": 1.4298,
+     "sps": 47.1,
+     "value_loss": 66.5879
+    },
+    {
+     "steps": 23040,
+     "return": -41.493,
+     "entropy": 1.4343,
+     "sps": 46.9,
+     "value_loss": 37.4445
+    },
+    {
+     "steps": 24576,
+     "return": -40.381,
+     "entropy": 1.41,
+     "sps": 46.7,
+     "value_loss": 38.8437
+    },
+    {
+     "steps": 26112,
+     "return": -35.998,
+     "entropy": 1.376,
+     "sps": 46.4,
+     "value_loss": 50.1809
+    },
+    {
+     "steps": 27648,
+     "return": -33.574,
+     "entropy": 1.3444,
+     "sps": 46.3,
+     "value_loss": 40.1782
+    },
+    {
+     "steps": 29184,
+     "return": -26.792,
+     "entropy": 1.3045,
+     "sps": 46.1,
+     "value_loss": 29.3379
+    },
+    {
+     "steps": 30720,
+     "return": -26.415,
+     "entropy": 1.3116,
+     "sps": 46.0,
+     "value_loss": 55.0033
+    }
+   ],
    "ladder": null,
    "verdict": null,
+   "media_dir": "../docs/media/racing",
    "clips": [],
+   "gifs": [],
    "log_tail": [
     "=== Car racing (CarRacing-v3) : 1,200,000 steps on 12 envs -> D:\\github\\game-agents\\runs_arcade\\racing",
-    "checkpoint 000 at step 0 (untrained) -> ckpt_000.pt"
+    "checkpoint 000 at step 0 (untrained) -> ckpt_000.pt",
+    "u10/781 steps=15360 return=-49.74182147953037 sps=48.0 ent=1.4794",
+    "u20/781 steps=30720 return=-26.414701151379568 sps=46.0 ent=1.3116"
    ]
   },
   {
@@ -42,7 +185,7 @@ window.SNAPSHOT = {
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 3636,
+   "seconds_since_update": 4346,
    "checkpoints": [
     {
      "tag": "000",
@@ -1127,25 +1270,29 @@ window.SNAPSHOT = {
     "label": "no gain",
     "detail": "-0.5 against the untrained network over 8 episodes"
    },
+   "media_dir": "../docs/media/boxing",
    "clips": [
     "progress.mp4",
     "step_000.mp4",
     "step_035.mp4",
     "step_100.mp4"
    ],
+   "gifs": [
+    "progress.gif"
+   ],
    "log_tail": [
-    "  File \"C:\\Users\\dell\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\multiprocessing\\connection.py\", line 337, in _recv_bytes",
-    "    raise EOFError",
-    "  File \"D:\\github\\game-agents\\arcade\\vec.py\", line 46, in _worker",
-    "    cmd, data = remote.recv()",
-    "                ^^^^^^^^^^^^^",
-    "EOFError",
-    "  File \"C:\\Users\\dell\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\multiprocessing\\connection.py\", line 250, in recv",
-    "    buf = self._recv_bytes()",
-    "          ^^^^^^^^^^^^^^^^^^",
-    "  File \"C:\\Users\\dell\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\multiprocessing\\connection.py\", line 337, in _recv_bytes",
-    "    raise EOFError",
-    "EOFError"
+    "u1240/1302 steps=1904640 return=2.79 sps=591.7 ent=2.7247",
+    "u1250/1302 steps=1920000 return=2.79 sps=591.7 ent=2.7627",
+    "u1260/1302 steps=1935360 return=3.14 sps=591.5 ent=2.8099",
+    "u1270/1302 steps=1950720 return=3.06 sps=591.4 ent=2.8126",
+    "u1280/1302 steps=1966080 return=3.06 sps=591.4 ent=2.8025",
+    "u1290/1302 steps=1981440 return=2.56 sps=591.3 ent=2.7874",
+    "u1300/1302 steps=1996800 return=2.55 sps=591.2 ent=2.7223",
+    "checkpoint 100 at 1999872 steps, training return 2.55 -> ckpt_100.pt",
+    "u1302/1302 steps=1999872 return=2.55 sps=591.2 ent=2.7859",
+    "{",
+    "=== Platformer (ALE/Kangaroo-v5) : 2,000,000 steps on 12 envs -> D:\\github\\game-agents\\runs_arcade\\platformer",
+    "checkpoint 000 at step 0 (untrained) -> ckpt_000.pt"
    ]
   },
   {
@@ -1163,25 +1310,27 @@ window.SNAPSHOT = {
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": null,
+   "seconds_since_update": 4313,
    "checkpoints": [],
    "curve": [],
    "ladder": null,
    "verdict": null,
+   "media_dir": "../docs/media/platformer",
    "clips": [],
+   "gifs": [],
    "log_tail": [
-    "  File \"C:\\Users\\dell\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\multiprocessing\\connection.py\", line 337, in _recv_bytes",
-    "    raise EOFError",
-    "  File \"D:\\github\\game-agents\\arcade\\vec.py\", line 46, in _worker",
-    "    cmd, data = remote.recv()",
-    "                ^^^^^^^^^^^^^",
-    "EOFError",
-    "  File \"C:\\Users\\dell\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\multiprocessing\\connection.py\", line 250, in recv",
-    "    buf = self._recv_bytes()",
-    "          ^^^^^^^^^^^^^^^^^^",
-    "  File \"C:\\Users\\dell\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\multiprocessing\\connection.py\", line 337, in _recv_bytes",
-    "    raise EOFError",
-    "EOFError"
+    "u1240/1302 steps=1904640 return=2.79 sps=591.7 ent=2.7247",
+    "u1250/1302 steps=1920000 return=2.79 sps=591.7 ent=2.7627",
+    "u1260/1302 steps=1935360 return=3.14 sps=591.5 ent=2.8099",
+    "u1270/1302 steps=1950720 return=3.06 sps=591.4 ent=2.8126",
+    "u1280/1302 steps=1966080 return=3.06 sps=591.4 ent=2.8025",
+    "u1290/1302 steps=1981440 return=2.56 sps=591.3 ent=2.7874",
+    "u1300/1302 steps=1996800 return=2.55 sps=591.2 ent=2.7223",
+    "checkpoint 100 at 1999872 steps, training return 2.55 -> ckpt_100.pt",
+    "u1302/1302 steps=1999872 return=2.55 sps=591.2 ent=2.7859",
+    "{",
+    "=== Platformer (ALE/Kangaroo-v5) : 2,000,000 steps on 12 envs -> D:\\github\\game-agents\\runs_arcade\\platformer",
+    "checkpoint 000 at step 0 (untrained) -> ckpt_000.pt"
    ]
   },
   {
@@ -1199,7 +1348,7 @@ window.SNAPSHOT = {
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 22,
+   "seconds_since_update": 731,
    "checkpoints": [
     {
      "tag": "000",
@@ -2147,20 +2296,22 @@ window.SNAPSHOT = {
    ],
    "ladder": null,
    "verdict": null,
+   "media_dir": "../docs/media/pingpong",
    "clips": [],
+   "gifs": [],
    "log_tail": [
-    "{",
-    " \"game\": \"pingpong\",",
-    " \"env_id\": \"ALE/Pong-v5\",",
-    " \"updates\": 1302,",
-    " \"steps\": 1999872,",
-    " \"wall_seconds\": 3574.1,",
-    " \"final_return_mean\": -14.4,",
-    " \"params\": 425047,",
-    " \"width\": 1,",
-    " \"device\": \"cpu\",",
-    " \"envs\": 12",
-    "}"
+    "u1220/1302 steps=1873920 return=-14.35 sps=559.8 ent=1.1804",
+    "u1230/1302 steps=1889280 return=-14.44 sps=560.1 ent=1.1808",
+    "u1240/1302 steps=1904640 return=-14.16 sps=560.2 ent=1.2135",
+    "u1250/1302 steps=1920000 return=-14.03 sps=560.3 ent=1.2305",
+    "u1260/1302 steps=1935360 return=-14.18 sps=560.6 ent=1.2063",
+    "u1270/1302 steps=1950720 return=-14.27 sps=560.3 ent=1.2396",
+    "u1280/1302 steps=1966080 return=-14.28 sps=560.1 ent=1.212",
+    "u1290/1302 steps=1981440 return=-14.4 sps=560.1 ent=1.2106",
+    "u1300/1302 steps=1996800 return=-14.4 sps=559.9 ent=1.213",
+    "checkpoint 100 at 1999872 steps, training return -14.4 -> ckpt_100.pt",
+    "u1302/1302 steps=1999872 return=-14.4 sps=559.8 ent=1.2063",
+    "{"
    ]
   }
  ],
@@ -2237,14 +2388,2056 @@ window.SNAPSHOT = {
    ]
   }
  ],
+ "analytics": {
+  "doom": {
+   "rows": [
+    {
+     "agent": "random",
+     "episodes": 30,
+     "return_mean": 0.0,
+     "return_std": 0.91,
+     "return_min": -1.0,
+     "return_max": 2.0,
+     "steps_mean": 78.3,
+     "returns": [
+      0.0,
+      0.0,
+      0.0,
+      -1.0,
+      0.0,
+      -1.0,
+      0.0,
+      0.0,
+      -1.0,
+      1.0,
+      0.0,
+      -1.0,
+      -1.0,
+      2.0,
+      0.0,
+      1.0,
+      -1.0,
+      -1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -1.0,
+      2.0,
+      0.0,
+      1.0,
+      2.0,
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    {
+     "agent": "spray",
+     "episodes": 30,
+     "return_mean": 1.23,
+     "return_std": 0.82,
+     "return_min": 0.0,
+     "return_max": 2.0,
+     "steps_mean": 89.8,
+     "returns": [
+      1.0,
+      2.0,
+      0.0,
+      2.0,
+      1.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      1.0,
+      0.0,
+      2.0,
+      1.0,
+      2.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      2.0,
+      2.0,
+      1.0,
+      1.0,
+      2.0,
+      2.0,
+      1.0,
+      0.0,
+      1.0,
+      2.0
+     ]
+    },
+    {
+     "agent": "ppo-greedy",
+     "episodes": 30,
+     "return_mean": 9.8,
+     "return_std": 1.47,
+     "return_min": 6.0,
+     "return_max": 12.0,
+     "steps_mean": 181.2,
+     "returns": [
+      9.0,
+      11.0,
+      10.0,
+      11.0,
+      11.0,
+      11.0,
+      9.0,
+      11.0,
+      11.0,
+      11.0,
+      7.0,
+      9.0,
+      9.0,
+      9.0,
+      11.0,
+      9.0,
+      9.0,
+      10.0,
+      6.0,
+      10.0,
+      11.0,
+      11.0,
+      8.0,
+      9.0,
+      11.0,
+      11.0,
+      9.0,
+      12.0,
+      7.0,
+      11.0
+     ]
+    },
+    {
+     "agent": "ppo-sampled",
+     "episodes": 30,
+     "return_mean": 9.23,
+     "return_std": 1.33,
+     "return_min": 7.0,
+     "return_max": 12.0,
+     "steps_mean": 167.6,
+     "returns": [
+      11.0,
+      10.0,
+      9.0,
+      12.0,
+      10.0,
+      11.0,
+      9.0,
+      9.0,
+      10.0,
+      10.0,
+      8.0,
+      8.0,
+      8.0,
+      9.0,
+      10.0,
+      8.0,
+      8.0,
+      10.0,
+      7.0,
+      9.0,
+      11.0,
+      10.0,
+      8.0,
+      7.0,
+      10.0,
+      10.0,
+      7.0,
+      8.0,
+      9.0,
+      11.0
+     ]
+    }
+   ],
+   "curve": [
+    {
+     "steps": 1536,
+     "return": 0.33
+    },
+    {
+     "steps": 7680,
+     "return": 0.56
+    },
+    {
+     "steps": 13824,
+     "return": 1.69
+    },
+    {
+     "steps": 19968,
+     "return": 2.28
+    },
+    {
+     "steps": 26112,
+     "return": 2.01
+    },
+    {
+     "steps": 32256,
+     "return": 2.15
+    },
+    {
+     "steps": 38400,
+     "return": 2.77
+    },
+    {
+     "steps": 44544,
+     "return": 3.24
+    },
+    {
+     "steps": 50688,
+     "return": 3.32
+    },
+    {
+     "steps": 56832,
+     "return": 3.25
+    },
+    {
+     "steps": 62976,
+     "return": 3.41
+    },
+    {
+     "steps": 69120,
+     "return": 3.79
+    },
+    {
+     "steps": 75264,
+     "return": 3.76
+    },
+    {
+     "steps": 81408,
+     "return": 3.83
+    },
+    {
+     "steps": 87552,
+     "return": 4.11
+    },
+    {
+     "steps": 93696,
+     "return": 3.91
+    },
+    {
+     "steps": 99840,
+     "return": 3.72
+    },
+    {
+     "steps": 105984,
+     "return": 3.76
+    },
+    {
+     "steps": 112128,
+     "return": 3.87
+    },
+    {
+     "steps": 118272,
+     "return": 3.89
+    },
+    {
+     "steps": 124416,
+     "return": 3.98
+    },
+    {
+     "steps": 130560,
+     "return": 3.91
+    },
+    {
+     "steps": 136704,
+     "return": 3.9
+    },
+    {
+     "steps": 142848,
+     "return": 4.15
+    },
+    {
+     "steps": 148992,
+     "return": 4.28
+    },
+    {
+     "steps": 155136,
+     "return": 4.41
+    },
+    {
+     "steps": 161280,
+     "return": 4.42
+    },
+    {
+     "steps": 167424,
+     "return": 4.29
+    },
+    {
+     "steps": 173568,
+     "return": 4.6
+    },
+    {
+     "steps": 179712,
+     "return": 4.7
+    },
+    {
+     "steps": 185856,
+     "return": 4.78
+    },
+    {
+     "steps": 192000,
+     "return": 4.96
+    },
+    {
+     "steps": 198144,
+     "return": 4.92
+    },
+    {
+     "steps": 204288,
+     "return": 4.89
+    },
+    {
+     "steps": 210432,
+     "return": 5.03
+    },
+    {
+     "steps": 216576,
+     "return": 5.08
+    },
+    {
+     "steps": 222720,
+     "return": 4.68
+    },
+    {
+     "steps": 228864,
+     "return": 4.66
+    },
+    {
+     "steps": 235008,
+     "return": 4.58
+    },
+    {
+     "steps": 241152,
+     "return": 4.51
+    },
+    {
+     "steps": 247296,
+     "return": 4.5
+    },
+    {
+     "steps": 253440,
+     "return": 4.5
+    },
+    {
+     "steps": 259584,
+     "return": 4.61
+    },
+    {
+     "steps": 265728,
+     "return": 4.86
+    },
+    {
+     "steps": 271872,
+     "return": 4.98
+    },
+    {
+     "steps": 278016,
+     "return": 4.91
+    },
+    {
+     "steps": 284160,
+     "return": 4.98
+    },
+    {
+     "steps": 290304,
+     "return": 4.98
+    },
+    {
+     "steps": 296448,
+     "return": 5.13
+    },
+    {
+     "steps": 302592,
+     "return": 5.19
+    },
+    {
+     "steps": 308736,
+     "return": 5.31
+    },
+    {
+     "steps": 314880,
+     "return": 5.22
+    },
+    {
+     "steps": 321024,
+     "return": 4.89
+    },
+    {
+     "steps": 327168,
+     "return": 5.02
+    },
+    {
+     "steps": 333312,
+     "return": 5.38
+    },
+    {
+     "steps": 339456,
+     "return": 6.03
+    },
+    {
+     "steps": 345600,
+     "return": 6.0
+    },
+    {
+     "steps": 351744,
+     "return": 6.0
+    },
+    {
+     "steps": 357888,
+     "return": 6.18
+    },
+    {
+     "steps": 364032,
+     "return": 6.17
+    },
+    {
+     "steps": 370176,
+     "return": 5.99
+    },
+    {
+     "steps": 376320,
+     "return": 5.79
+    },
+    {
+     "steps": 382464,
+     "return": 5.71
+    },
+    {
+     "steps": 388608,
+     "return": 5.64
+    },
+    {
+     "steps": 394752,
+     "return": 5.64
+    },
+    {
+     "steps": 400896,
+     "return": 5.69
+    },
+    {
+     "steps": 407040,
+     "return": 5.56
+    },
+    {
+     "steps": 413184,
+     "return": 5.53
+    },
+    {
+     "steps": 419328,
+     "return": 5.46
+    },
+    {
+     "steps": 425472,
+     "return": 5.26
+    },
+    {
+     "steps": 431616,
+     "return": 5.31
+    },
+    {
+     "steps": 437760,
+     "return": 5.16
+    },
+    {
+     "steps": 443904,
+     "return": 5.18
+    },
+    {
+     "steps": 450048,
+     "return": 5.27
+    },
+    {
+     "steps": 456192,
+     "return": 5.13
+    },
+    {
+     "steps": 462336,
+     "return": 5.03
+    },
+    {
+     "steps": 468480,
+     "return": 5.1
+    },
+    {
+     "steps": 474624,
+     "return": 5.15
+    },
+    {
+     "steps": 480768,
+     "return": 5.17
+    },
+    {
+     "steps": 486912,
+     "return": 5.48
+    },
+    {
+     "steps": 493056,
+     "return": 5.93
+    },
+    {
+     "steps": 499200,
+     "return": 6.16
+    },
+    {
+     "steps": 505344,
+     "return": 6.66
+    },
+    {
+     "steps": 511488,
+     "return": 6.82
+    },
+    {
+     "steps": 517632,
+     "return": 6.71
+    },
+    {
+     "steps": 523776,
+     "return": 6.85
+    },
+    {
+     "steps": 529920,
+     "return": 7.0
+    },
+    {
+     "steps": 536064,
+     "return": 7.13
+    },
+    {
+     "steps": 542208,
+     "return": 6.92
+    },
+    {
+     "steps": 548352,
+     "return": 6.57
+    },
+    {
+     "steps": 554496,
+     "return": 6.16
+    },
+    {
+     "steps": 560640,
+     "return": 5.96
+    },
+    {
+     "steps": 566784,
+     "return": 6.0
+    },
+    {
+     "steps": 572928,
+     "return": 6.18
+    },
+    {
+     "steps": 579072,
+     "return": 6.16
+    },
+    {
+     "steps": 585216,
+     "return": 6.03
+    },
+    {
+     "steps": 591360,
+     "return": 6.09
+    },
+    {
+     "steps": 597504,
+     "return": 6.08
+    },
+    {
+     "steps": 603648,
+     "return": 6.1
+    },
+    {
+     "steps": 609792,
+     "return": 6.22
+    },
+    {
+     "steps": 615936,
+     "return": 6.36
+    },
+    {
+     "steps": 622080,
+     "return": 6.56
+    },
+    {
+     "steps": 628224,
+     "return": 6.68
+    },
+    {
+     "steps": 634368,
+     "return": 6.62
+    },
+    {
+     "steps": 640512,
+     "return": 6.56
+    },
+    {
+     "steps": 646656,
+     "return": 6.26
+    },
+    {
+     "steps": 652800,
+     "return": 6.13
+    },
+    {
+     "steps": 658944,
+     "return": 6.21
+    },
+    {
+     "steps": 665088,
+     "return": 6.21
+    },
+    {
+     "steps": 671232,
+     "return": 6.22
+    },
+    {
+     "steps": 677376,
+     "return": 6.04
+    },
+    {
+     "steps": 683520,
+     "return": 6.14
+    },
+    {
+     "steps": 689664,
+     "return": 6.22
+    },
+    {
+     "steps": 695808,
+     "return": 6.18
+    },
+    {
+     "steps": 701952,
+     "return": 6.25
+    },
+    {
+     "steps": 708096,
+     "return": 6.21
+    },
+    {
+     "steps": 714240,
+     "return": 6.28
+    },
+    {
+     "steps": 720384,
+     "return": 6.36
+    },
+    {
+     "steps": 726528,
+     "return": 6.61
+    },
+    {
+     "steps": 732672,
+     "return": 6.64
+    },
+    {
+     "steps": 738816,
+     "return": 6.54
+    },
+    {
+     "steps": 744960,
+     "return": 6.67
+    },
+    {
+     "steps": 751104,
+     "return": 6.72
+    },
+    {
+     "steps": 757248,
+     "return": 6.97
+    },
+    {
+     "steps": 763392,
+     "return": 7.17
+    },
+    {
+     "steps": 769536,
+     "return": 7.49
+    },
+    {
+     "steps": 775680,
+     "return": 7.52
+    },
+    {
+     "steps": 781824,
+     "return": 7.44
+    },
+    {
+     "steps": 787968,
+     "return": 7.2
+    },
+    {
+     "steps": 794112,
+     "return": 7.08
+    },
+    {
+     "steps": 800256,
+     "return": 7.0
+    },
+    {
+     "steps": 806400,
+     "return": 6.93
+    },
+    {
+     "steps": 812544,
+     "return": 6.99
+    },
+    {
+     "steps": 818688,
+     "return": 7.14
+    },
+    {
+     "steps": 824832,
+     "return": 7.39
+    },
+    {
+     "steps": 830976,
+     "return": 7.57
+    },
+    {
+     "steps": 837120,
+     "return": 7.61
+    },
+    {
+     "steps": 843264,
+     "return": 7.32
+    },
+    {
+     "steps": 849408,
+     "return": 7.01
+    },
+    {
+     "steps": 855552,
+     "return": 6.65
+    },
+    {
+     "steps": 861696,
+     "return": 6.51
+    },
+    {
+     "steps": 867840,
+     "return": 6.71
+    },
+    {
+     "steps": 873984,
+     "return": 6.66
+    },
+    {
+     "steps": 880128,
+     "return": 6.61
+    },
+    {
+     "steps": 886272,
+     "return": 6.64
+    },
+    {
+     "steps": 892416,
+     "return": 6.65
+    },
+    {
+     "steps": 898560,
+     "return": 6.65
+    },
+    {
+     "steps": 904704,
+     "return": 6.78
+    },
+    {
+     "steps": 910848,
+     "return": 7.03
+    },
+    {
+     "steps": 916992,
+     "return": 7.0
+    },
+    {
+     "steps": 923136,
+     "return": 6.91
+    },
+    {
+     "steps": 929280,
+     "return": 6.74
+    },
+    {
+     "steps": 935424,
+     "return": 6.42
+    },
+    {
+     "steps": 941568,
+     "return": 6.38
+    },
+    {
+     "steps": 947712,
+     "return": 6.64
+    },
+    {
+     "steps": 953856,
+     "return": 6.8
+    },
+    {
+     "steps": 960000,
+     "return": 6.94
+    },
+    {
+     "steps": 966144,
+     "return": 6.86
+    },
+    {
+     "steps": 972288,
+     "return": 6.75
+    },
+    {
+     "steps": 978432,
+     "return": 6.92
+    },
+    {
+     "steps": 984576,
+     "return": 7.04
+    },
+    {
+     "steps": 990720,
+     "return": 7.12
+    },
+    {
+     "steps": 996864,
+     "return": 7.34
+    },
+    {
+     "steps": 1003008,
+     "return": 7.35
+    },
+    {
+     "steps": 1009152,
+     "return": 7.61
+    },
+    {
+     "steps": 1015296,
+     "return": 7.75
+    },
+    {
+     "steps": 1021440,
+     "return": 7.93
+    },
+    {
+     "steps": 1027584,
+     "return": 7.88
+    },
+    {
+     "steps": 1033728,
+     "return": 7.91
+    },
+    {
+     "steps": 1039872,
+     "return": 7.74
+    },
+    {
+     "steps": 1046016,
+     "return": 7.55
+    },
+    {
+     "steps": 1052160,
+     "return": 7.53
+    },
+    {
+     "steps": 1058304,
+     "return": 7.61
+    },
+    {
+     "steps": 1064448,
+     "return": 7.73
+    },
+    {
+     "steps": 1070592,
+     "return": 7.76
+    },
+    {
+     "steps": 1076736,
+     "return": 7.92
+    },
+    {
+     "steps": 1082880,
+     "return": 7.87
+    },
+    {
+     "steps": 1089024,
+     "return": 8.0
+    },
+    {
+     "steps": 1095168,
+     "return": 8.11
+    },
+    {
+     "steps": 1101312,
+     "return": 7.96
+    },
+    {
+     "steps": 1107456,
+     "return": 7.79
+    },
+    {
+     "steps": 1113600,
+     "return": 7.63
+    },
+    {
+     "steps": 1119744,
+     "return": 7.72
+    },
+    {
+     "steps": 1125888,
+     "return": 8.05
+    },
+    {
+     "steps": 1132032,
+     "return": 8.36
+    },
+    {
+     "steps": 1138176,
+     "return": 8.35
+    },
+    {
+     "steps": 1144320,
+     "return": 8.23
+    },
+    {
+     "steps": 1150464,
+     "return": 8.15
+    },
+    {
+     "steps": 1156608,
+     "return": 7.9
+    },
+    {
+     "steps": 1162752,
+     "return": 7.69
+    },
+    {
+     "steps": 1168896,
+     "return": 7.67
+    },
+    {
+     "steps": 1175040,
+     "return": 7.96
+    },
+    {
+     "steps": 1181184,
+     "return": 8.13
+    },
+    {
+     "steps": 1187328,
+     "return": 7.93
+    },
+    {
+     "steps": 1193472,
+     "return": 7.81
+    },
+    {
+     "steps": 1199616,
+     "return": 7.84
+    },
+    {
+     "steps": 1205760,
+     "return": 7.98
+    },
+    {
+     "steps": 1211904,
+     "return": 7.9
+    },
+    {
+     "steps": 1218048,
+     "return": 7.8
+    },
+    {
+     "steps": 1224192,
+     "return": 7.87
+    },
+    {
+     "steps": 1230336,
+     "return": 7.82
+    },
+    {
+     "steps": 1236480,
+     "return": 7.49
+    },
+    {
+     "steps": 1242624,
+     "return": 7.51
+    },
+    {
+     "steps": 1248768,
+     "return": 7.7
+    },
+    {
+     "steps": 1254912,
+     "return": 7.99
+    },
+    {
+     "steps": 1261056,
+     "return": 8.03
+    },
+    {
+     "steps": 1267200,
+     "return": 8.16
+    },
+    {
+     "steps": 1273344,
+     "return": 8.47
+    },
+    {
+     "steps": 1279488,
+     "return": 8.54
+    },
+    {
+     "steps": 1285632,
+     "return": 7.91
+    },
+    {
+     "steps": 1291776,
+     "return": 7.63
+    },
+    {
+     "steps": 1297920,
+     "return": 7.58
+    },
+    {
+     "steps": 1304064,
+     "return": 7.77
+    },
+    {
+     "steps": 1310208,
+     "return": 7.96
+    },
+    {
+     "steps": 1316352,
+     "return": 8.2
+    },
+    {
+     "steps": 1322496,
+     "return": 8.3
+    },
+    {
+     "steps": 1328640,
+     "return": 8.26
+    },
+    {
+     "steps": 1334784,
+     "return": 8.36
+    },
+    {
+     "steps": 1340928,
+     "return": 8.32
+    },
+    {
+     "steps": 1347072,
+     "return": 8.48
+    },
+    {
+     "steps": 1353216,
+     "return": 8.29
+    },
+    {
+     "steps": 1359360,
+     "return": 8.45
+    },
+    {
+     "steps": 1365504,
+     "return": 8.47
+    },
+    {
+     "steps": 1371648,
+     "return": 8.16
+    },
+    {
+     "steps": 1377792,
+     "return": 7.99
+    },
+    {
+     "steps": 1383936,
+     "return": 8.17
+    },
+    {
+     "steps": 1390080,
+     "return": 8.39
+    },
+    {
+     "steps": 1396224,
+     "return": 8.73
+    },
+    {
+     "steps": 1402368,
+     "return": 8.62
+    },
+    {
+     "steps": 1408512,
+     "return": 8.52
+    },
+    {
+     "steps": 1414656,
+     "return": 8.48
+    },
+    {
+     "steps": 1420800,
+     "return": 8.56
+    },
+    {
+     "steps": 1426944,
+     "return": 8.6
+    },
+    {
+     "steps": 1433088,
+     "return": 8.63
+    },
+    {
+     "steps": 1439232,
+     "return": 8.59
+    },
+    {
+     "steps": 1445376,
+     "return": 8.71
+    },
+    {
+     "steps": 1451520,
+     "return": 8.9
+    },
+    {
+     "steps": 1457664,
+     "return": 8.86
+    },
+    {
+     "steps": 1463808,
+     "return": 8.59
+    },
+    {
+     "steps": 1469952,
+     "return": 8.51
+    },
+    {
+     "steps": 1476096,
+     "return": 8.89
+    },
+    {
+     "steps": 1482240,
+     "return": 9.06
+    },
+    {
+     "steps": 1488384,
+     "return": 8.99
+    },
+    {
+     "steps": 1494528,
+     "return": 8.84
+    },
+    {
+     "steps": 1500672,
+     "return": 8.68
+    },
+    {
+     "steps": 1506816,
+     "return": 8.75
+    },
+    {
+     "steps": 1512960,
+     "return": 8.91
+    },
+    {
+     "steps": 1519104,
+     "return": 8.98
+    },
+    {
+     "steps": 1525248,
+     "return": 9.06
+    },
+    {
+     "steps": 1531392,
+     "return": 8.96
+    },
+    {
+     "steps": 1537536,
+     "return": 8.95
+    },
+    {
+     "steps": 1543680,
+     "return": 9.02
+    },
+    {
+     "steps": 1549824,
+     "return": 8.89
+    },
+    {
+     "steps": 1555968,
+     "return": 8.91
+    },
+    {
+     "steps": 1562112,
+     "return": 8.92
+    },
+    {
+     "steps": 1568256,
+     "return": 9.0
+    },
+    {
+     "steps": 1574400,
+     "return": 9.0
+    },
+    {
+     "steps": 1580544,
+     "return": 8.84
+    },
+    {
+     "steps": 1586688,
+     "return": 8.86
+    },
+    {
+     "steps": 1592832,
+     "return": 8.9
+    },
+    {
+     "steps": 1598976,
+     "return": 9.04
+    },
+    {
+     "steps": 1605120,
+     "return": 9.1
+    },
+    {
+     "steps": 1611264,
+     "return": 9.07
+    },
+    {
+     "steps": 1617408,
+     "return": 8.88
+    },
+    {
+     "steps": 1623552,
+     "return": 8.75
+    },
+    {
+     "steps": 1629696,
+     "return": 8.78
+    },
+    {
+     "steps": 1635840,
+     "return": 8.83
+    },
+    {
+     "steps": 1641984,
+     "return": 9.04
+    },
+    {
+     "steps": 1648128,
+     "return": 8.9
+    },
+    {
+     "steps": 1654272,
+     "return": 8.96
+    },
+    {
+     "steps": 1660416,
+     "return": 8.88
+    },
+    {
+     "steps": 1666560,
+     "return": 8.86
+    },
+    {
+     "steps": 1672704,
+     "return": 8.84
+    },
+    {
+     "steps": 1678848,
+     "return": 8.67
+    },
+    {
+     "steps": 1684992,
+     "return": 8.76
+    },
+    {
+     "steps": 1691136,
+     "return": 8.91
+    },
+    {
+     "steps": 1697280,
+     "return": 8.85
+    },
+    {
+     "steps": 1703424,
+     "return": 8.88
+    },
+    {
+     "steps": 1709568,
+     "return": 8.88
+    },
+    {
+     "steps": 1715712,
+     "return": 8.72
+    },
+    {
+     "steps": 1721856,
+     "return": 8.78
+    },
+    {
+     "steps": 1728000,
+     "return": 8.7
+    },
+    {
+     "steps": 1734144,
+     "return": 8.84
+    },
+    {
+     "steps": 1740288,
+     "return": 8.84
+    },
+    {
+     "steps": 1746432,
+     "return": 9.01
+    },
+    {
+     "steps": 1752576,
+     "return": 9.0
+    },
+    {
+     "steps": 1758720,
+     "return": 8.93
+    },
+    {
+     "steps": 1764864,
+     "return": 8.94
+    },
+    {
+     "steps": 1771008,
+     "return": 8.89
+    },
+    {
+     "steps": 1777152,
+     "return": 8.77
+    },
+    {
+     "steps": 1783296,
+     "return": 8.95
+    },
+    {
+     "steps": 1789440,
+     "return": 9.09
+    },
+    {
+     "steps": 1795584,
+     "return": 9.09
+    },
+    {
+     "steps": 1801728,
+     "return": 9.22
+    },
+    {
+     "steps": 1807872,
+     "return": 9.26
+    },
+    {
+     "steps": 1814016,
+     "return": 9.25
+    },
+    {
+     "steps": 1820160,
+     "return": 9.16
+    },
+    {
+     "steps": 1826304,
+     "return": 8.94
+    },
+    {
+     "steps": 1832448,
+     "return": 8.88
+    },
+    {
+     "steps": 1838592,
+     "return": 9.03
+    },
+    {
+     "steps": 1844736,
+     "return": 9.14
+    },
+    {
+     "steps": 1850880,
+     "return": 9.17
+    },
+    {
+     "steps": 1857024,
+     "return": 9.3
+    },
+    {
+     "steps": 1863168,
+     "return": 9.27
+    },
+    {
+     "steps": 1869312,
+     "return": 9.2
+    },
+    {
+     "steps": 1875456,
+     "return": 9.01
+    },
+    {
+     "steps": 1881600,
+     "return": 9.07
+    },
+    {
+     "steps": 1887744,
+     "return": 9.15
+    },
+    {
+     "steps": 1893888,
+     "return": 9.2
+    },
+    {
+     "steps": 1900032,
+     "return": 9.36
+    },
+    {
+     "steps": 1906176,
+     "return": 9.17
+    },
+    {
+     "steps": 1912320,
+     "return": 9.2
+    },
+    {
+     "steps": 1918464,
+     "return": 9.18
+    },
+    {
+     "steps": 1924608,
+     "return": 9.24
+    },
+    {
+     "steps": 1930752,
+     "return": 9.11
+    },
+    {
+     "steps": 1936896,
+     "return": 9.1
+    },
+    {
+     "steps": 1943040,
+     "return": 9.3
+    },
+    {
+     "steps": 1949184,
+     "return": 9.32
+    },
+    {
+     "steps": 1955328,
+     "return": 9.35
+    },
+    {
+     "steps": 1961472,
+     "return": 9.31
+    },
+    {
+     "steps": 1967616,
+     "return": 9.29
+    },
+    {
+     "steps": 1973760,
+     "return": 9.19
+    },
+    {
+     "steps": 1979904,
+     "return": 9.29
+    },
+    {
+     "steps": 1986048,
+     "return": 9.28
+    },
+    {
+     "steps": 1992192,
+     "return": 9.55
+    },
+    {
+     "steps": 1998336,
+     "return": 9.56
+    }
+   ],
+   "kaggle": {
+    "control": {
+     "params": 219476,
+     "width": 1,
+     "device": "cuda",
+     "wall_seconds": 1653.9,
+     "steps": 1199616,
+     "steps_per_second": 725.3,
+     "eval": {
+      "random": {
+       "mean": 0.03,
+       "sd": 1.0
+      },
+      "spray": {
+       "mean": 0.77,
+       "sd": 0.68
+      },
+      "ppo-greedy": {
+       "mean": 8.53,
+       "sd": 1.22
+      },
+      "ppo-sampled": {
+       "mean": 8.2,
+       "sd": 1.03
+      }
+     },
+     "best_policy_mean": 8.53
+    },
+    "wide": {
+     "params": 3446084,
+     "width": 4,
+     "device": "cuda",
+     "wall_seconds": 1694.1,
+     "steps": 1199616,
+     "steps_per_second": 708.1,
+     "eval": {
+      "random": {
+       "mean": 0.03,
+       "sd": 1.0
+      },
+      "spray": {
+       "mean": 0.77,
+       "sd": 0.68
+      },
+      "ppo-greedy": {
+       "mean": 10.43,
+       "sd": 1.38
+      },
+      "ppo-sampled": {
+       "mean": 9.93,
+       "sd": 1.08
+      }
+     },
+     "best_policy_mean": 10.43
+    }
+   }
+  },
+  "crafter": {
+   "ab": [
+    {
+     "agent": "planner",
+     "episodes": 30,
+     "length": 3000,
+     "score": 12.55,
+     "reward_mean": 8.07,
+     "reward_std": 3.03,
+     "achievements_mean": 15.0,
+     "distinct_achievements": 15,
+     "steps_mean": 254.3,
+     "died": 30,
+     "success_rates": {
+      "collect_coal": 36.7,
+      "collect_diamond": 0.0,
+      "collect_drink": 86.7,
+      "collect_iron": 0.0,
+      "collect_sapling": 100.0,
+      "collect_stone": 73.3,
+      "collect_wood": 96.7,
+      "defeat_skeleton": 0.0,
+      "defeat_zombie": 53.3,
+      "eat_cow": 40.0,
+      "eat_plant": 0.0,
+      "make_iron_pickaxe": 0.0,
+      "make_iron_sword": 0.0,
+      "make_stone_pickaxe": 3.3,
+      "make_stone_sword": 3.3,
+      "make_wood_pickaxe": 80.0,
+      "make_wood_sword": 76.7,
+      "place_furnace": 40.0,
+      "place_plant": 46.7,
+      "place_stone": 66.7,
+      "place_table": 93.3,
+      "wake_up": 0.0
+     },
+     "self_tracking": {
+      "precision": 1.0,
+      "recall": 0.993
+     },
+     "goal_share": {
+      "shelter": 0.207,
+      "collect_wood": 0.142,
+      "flee": 0.119,
+      "mine_adjacent_stone": 0.08,
+      "mine_adjacent_tree": 0.075,
+      "place_table": 0.048,
+      "collect_stone": 0.045,
+      "collect_drink": 0.04,
+      "drink_critical": 0.039,
+      "forage_for_food": 0.029,
+      "sapling_adjacent": 0.026,
+      "explore": 0.026
+     }
+    }
+   ],
+   "all": [
+    {
+     "agent": "random",
+     "episodes": 10,
+     "length": 3000,
+     "score": 1.13,
+     "reward_mean": 0.9,
+     "reward_std": 1.14,
+     "achievements_mean": 5.0,
+     "distinct_achievements": 5,
+     "steps_mean": 144.9,
+     "died": 10,
+     "success_rates": {
+      "collect_coal": 0.0,
+      "collect_diamond": 0.0,
+      "collect_drink": 10.0,
+      "collect_iron": 0.0,
+      "collect_sapling": 40.0,
+      "collect_stone": 0.0,
+      "collect_wood": 0.0,
+      "defeat_skeleton": 0.0,
+      "defeat_zombie": 0.0,
+      "eat_cow": 10.0,
+      "eat_plant": 0.0,
+      "make_iron_pickaxe": 0.0,
+      "make_iron_sword": 0.0,
+      "make_stone_pickaxe": 0.0,
+      "make_stone_sword": 0.0,
+      "make_wood_pickaxe": 0.0,
+      "make_wood_sword": 0.0,
+      "place_furnace": 0.0,
+      "place_plant": 40.0,
+      "place_stone": 0.0,
+      "place_table": 0.0,
+      "wake_up": 80.0
+     },
+     "self_tracking": {
+      "precision": null,
+      "recall": 0.0
+     },
+     "goal_share": {}
+    },
+    {
+     "agent": "forager",
+     "episodes": 10,
+     "length": 3000,
+     "score": 1.25,
+     "reward_mean": 1.7,
+     "reward_std": 0.97,
+     "achievements_mean": 5.0,
+     "distinct_achievements": 5,
+     "steps_mean": 180.4,
+     "died": 10,
+     "success_rates": {
+      "collect_coal": 0.0,
+      "collect_diamond": 0.0,
+      "collect_drink": 50.0,
+      "collect_iron": 0.0,
+      "collect_sapling": 100.0,
+      "collect_stone": 0.0,
+      "collect_wood": 90.0,
+      "defeat_skeleton": 0.0,
+      "defeat_zombie": 10.0,
+      "eat_cow": 10.0,
+      "eat_plant": 0.0,
+      "make_iron_pickaxe": 0.0,
+      "make_iron_sword": 0.0,
+      "make_stone_pickaxe": 0.0,
+      "make_stone_sword": 0.0,
+      "make_wood_pickaxe": 0.0,
+      "make_wood_sword": 0.0,
+      "place_furnace": 0.0,
+      "place_plant": 0.0,
+      "place_stone": 0.0,
+      "place_table": 0.0,
+      "wake_up": 0.0
+     },
+     "self_tracking": {
+      "precision": null,
+      "recall": 0.0
+     },
+     "goal_share": {}
+    },
+    {
+     "agent": "planner",
+     "episodes": 10,
+     "length": 3000,
+     "score": 12.73,
+     "reward_mean": 7.9,
+     "reward_std": 2.57,
+     "achievements_mean": 15.0,
+     "distinct_achievements": 15,
+     "steps_mean": 255.0,
+     "died": 10,
+     "success_rates": {
+      "collect_coal": 30.0,
+      "collect_diamond": 0.0,
+      "collect_drink": 80.0,
+      "collect_iron": 0.0,
+      "collect_sapling": 100.0,
+      "collect_stone": 90.0,
+      "collect_wood": 100.0,
+      "defeat_skeleton": 0.0,
+      "defeat_zombie": 20.0,
+      "eat_cow": 20.0,
+      "eat_plant": 0.0,
+      "make_iron_pickaxe": 0.0,
+      "make_iron_sword": 0.0,
+      "make_stone_pickaxe": 10.0,
+      "make_stone_sword": 10.0,
+      "make_wood_pickaxe": 90.0,
+      "make_wood_sword": 60.0,
+      "place_furnace": 40.0,
+      "place_plant": 40.0,
+      "place_stone": 90.0,
+      "place_table": 100.0,
+      "wake_up": 0.0
+     },
+     "self_tracking": {
+      "precision": 1.0,
+      "recall": 1.0
+     },
+     "goal_share": {
+      "shelter": 0.376,
+      "collect_wood": 0.156,
+      "place_table": 0.113,
+      "mine_adjacent_tree": 0.098,
+      "mine_adjacent_stone": 0.062,
+      "collect_stone": 0.036,
+      "flee": 0.026,
+      "sapling_adjacent": 0.026,
+      "drink_critical": 0.026,
+      "stock_stone_for_night": 0.015,
+      "drink_adjacent": 0.014,
+      "place_furnace": 0.01
+     }
+    }
+   ],
+   "perception": {
+    "episodes": 2,
+    "steps_per_episode": 300,
+    "tile_accuracy": [
+     {
+      "daylight": "all",
+      "frames": 328,
+      "tile_accuracy": 0.9999,
+      "worst_frame": 0.9683
+     },
+     {
+      "daylight": "day",
+      "frames": 238,
+      "tile_accuracy": 1.0,
+      "worst_frame": 1.0
+     },
+     {
+      "daylight": "dusk",
+      "frames": 56,
+      "tile_accuracy": 1.0,
+      "worst_frame": 1.0
+     },
+     {
+      "daylight": "night",
+      "frames": 28,
+      "tile_accuracy": 1.0,
+      "worst_frame": 1.0
+     },
+     {
+      "daylight": "midnight",
+      "frames": 6,
+      "tile_accuracy": 0.9947,
+      "worst_frame": 0.9683
+     }
+    ],
+    "inventory_slot_accuracy": 0.9167,
+    "top_confusions": [
+     {
+      "true": "grass",
+      "decoded": "arrow",
+      "count": 1
+     },
+     {
+      "true": "stone",
+      "decoded": "arrow",
+      "count": 1
+     }
+    ]
+   }
+  },
+  "brogue": {
+   "episodes": [
+    {
+     "agent": "random",
+     "seed": 21,
+     "descents": 0,
+     "coverage": 0.805,
+     "health": 0.995
+    },
+    {
+     "agent": "random",
+     "seed": 22,
+     "descents": 0,
+     "coverage": 0.8261,
+     "health": 0.995
+    },
+    {
+     "agent": "random",
+     "seed": 23,
+     "descents": 0,
+     "coverage": 0.8008,
+     "health": 0.995
+    },
+    {
+     "agent": "random",
+     "seed": 24,
+     "descents": 1,
+     "coverage": 0.8075,
+     "health": 0.995
+    },
+    {
+     "agent": "explorer",
+     "seed": 21,
+     "descents": 3,
+     "coverage": 0.5765,
+     "health": 0.0
+    },
+    {
+     "agent": "explorer",
+     "seed": 22,
+     "descents": 6,
+     "coverage": 0.6182,
+     "health": 0.0
+    },
+    {
+     "agent": "explorer",
+     "seed": 23,
+     "descents": 9,
+     "coverage": 0.3669,
+     "health": 0.0
+    },
+    {
+     "agent": "explorer",
+     "seed": 24,
+     "descents": 0,
+     "coverage": 0.808,
+     "health": 0.995
+    }
+   ]
+  },
+  "iterations": {
+   "_comment": "What each change actually measured, in the order it happened. Episode counts are recorded because they decide what the difference means: on Crafter, 10 episodes moves the score by about +-2 points on its own, which is the size of most of these steps. Differences inside that band are marked as noise rather than claimed as progress.",
+   "crafter": {
+    "metric": "Crafter score (geometric mean of 22 achievement rates)",
+    "steps": [
+     {
+      "label": "first working planner",
+      "score": 1.77,
+      "episodes": 3,
+      "achievements": 5,
+      "survived": 185,
+      "note": "78% of steps spent exploring, back and forth over the same twenty tiles",
+      "reliable": false
+     },
+     {
+      "label": "committed exploration",
+      "score": 2.08,
+      "episodes": 3,
+      "achievements": 6,
+      "survived": 212,
+      "note": "covered ground at last, then died on the first night",
+      "reliable": false
+     },
+     {
+      "label": "urgency-ordered goal ladder",
+      "score": 14.13,
+      "episodes": 3,
+      "achievements": 14,
+      "survived": 258,
+      "note": "stopped walking past trees to reach a distant cow; the big one",
+      "reliable": false
+     },
+     {
+      "label": "night shelter",
+      "score": 12.29,
+      "episodes": 3,
+      "achievements": 13,
+      "survived": 289,
+      "note": "survived longer, scored the same -- 3 episodes cannot tell these apart",
+      "reliable": false
+     },
+     {
+      "label": "committed shelter plan",
+      "score": 13.33,
+      "episodes": 8,
+      "achievements": 15,
+      "survived": 234,
+      "note": "sealing stopped oscillating between open sides",
+      "reliable": false
+     },
+     {
+      "label": "break out at dawn",
+      "score": 13.87,
+      "episodes": 10,
+      "achievements": 15,
+      "survived": 278,
+      "note": "stopped starving behind its own wall",
+      "reliable": false
+     },
+     {
+      "label": "same code, 30 episodes",
+      "score": 12.02,
+      "episodes": 30,
+      "achievements": 15,
+      "survived": 261,
+      "note": "the honest measurement of the line above: the 13.87 was noise",
+      "reliable": true
+     },
+     {
+      "label": "needs before shelter, two-walled nooks",
+      "score": 12.55,
+      "episodes": 30,
+      "achievements": 15,
+      "survived": 254,
+      "note": "inside noise overall, but ahead on 7 of 15 individual achievement rates",
+      "reliable": true
+     }
+    ],
+    "baselines": [
+     {
+      "label": "random",
+      "score": 1.13,
+      "episodes": 10
+     },
+     {
+      "label": "forager (wander and press do)",
+      "score": 1.25,
+      "episodes": 10
+     }
+    ],
+    "published": [
+     {
+      "label": "PPO (benchmark paper)",
+      "score": 4.6
+     },
+     {
+      "label": "DreamerV3 (benchmark paper)",
+      "score": 14.0
+     },
+     {
+      "label": "human experts (benchmark paper)",
+      "score": 50.5
+     }
+    ]
+   },
+   "doom": {
+    "metric": "kills per episode on defend_the_center, 30 held-out maps",
+    "steps": [
+     {
+      "label": "random",
+      "score": 0.0,
+      "episodes": 30,
+      "reliable": true
+     },
+     {
+      "label": "scripted turn-and-shoot",
+      "score": 1.23,
+      "episodes": 30,
+      "reliable": true
+     },
+     {
+      "label": "PPO, 2M steps, CPU",
+      "score": 9.8,
+      "episodes": 30,
+      "reliable": true
+     }
+    ],
+    "throughput": [
+     {
+      "label": "first working trainer",
+      "sps": 153,
+      "note": "a single environment in one process did 1,305"
+     },
+     {
+      "label": "uint8 frames instead of float32 stacks",
+      "sps": 167,
+      "note": "16x less data on the pipe, no change: wrong suspect"
+     },
+     {
+      "label": "1 ms timer resolution in the trainer",
+      "sps": 223,
+      "note": "still wrong: the resolution is per process"
+     },
+     {
+      "label": "1 ms timer resolution in each worker",
+      "sps": 1530,
+      "note": "the workers were the ones sleeping in recv()"
+     },
+     {
+      "label": "with the policy in the loop (the real run)",
+      "sps": 577,
+      "note": "2M steps in 59 minutes"
+     }
+    ]
+   },
+   "brogue": {
+    "metric": "staircases descended per 300 keystrokes",
+    "steps": [
+     {
+      "label": "explorer, waiting to recognise a staircase",
+      "score": 0.0,
+      "episodes": 6,
+      "note": "'>' is not one of the terrain glyphs the atlas labels, so it never saw one",
+      "reliable": true
+     },
+     {
+      "label": "dive when exploring stops paying",
+      "score": 0.17,
+      "episodes": 6,
+      "note": "pressed '>' once and went back to exploring, undoing the travel",
+      "reliable": true
+     },
+     {
+      "label": "commit eight presses to a dive",
+      "score": 1.0,
+      "episodes": 1,
+      "note": "Brogue's '>' travels first and descends only on arrival",
+      "reliable": false
+     }
+    ],
+    "decoder": [
+     {
+      "label": "fixed 9x16 lattice",
+      "prototypes": 1924,
+      "note": "in a font of about ninety glyphs"
+     },
+     {
+      "label": "aligned by repetition",
+      "prototypes": 929,
+      "note": "stable in x, ambiguous in y"
+     },
+     {
+      "label": "fractional cells, resampled",
+      "prototypes": 234,
+      "note": "119 of them cover 96% of the screen"
+     }
+    ]
+   }
+  },
+  "project_clips": [
+   "clip_brogue.mp4",
+   "clip_crafter.mp4",
+   "clip_doom.mp4"
+  ],
+  "media_dir": "../docs/media"
+ },
  "machine": {
-  "cpu_percent": 97.9,
-  "python_processes": 48,
+  "cpu_percent": 100.0,
+  "python_processes": 50,
   "gpu": {
    "name": "Quadro RTX 5000",
    "memory_used": "14029 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "91 %"
+   "utilisation": "58 %"
   }
  }
 };

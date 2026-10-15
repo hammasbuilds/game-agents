@@ -45,12 +45,22 @@ def age_seconds(path: Path) -> float | None:
         return None
 
 
+PROGRESS = re.compile(r"^(u\d+/|checkpoint |=== |\{)")
+
+
 def tail(path: Path, lines: int = 12) -> list[str]:
+    """The last few lines that say something about progress.
+
+    A raw tail shows whatever the process said last, which after a batch is
+    killed is a stack trace about a closed pipe -- true, but not what the run
+    did. Progress lines are preferred and the raw tail is the fallback.
+    """
     try:
-        text = path.read_text(errors="replace").splitlines()
+        text = [l for l in path.read_text(errors="replace").splitlines() if l.strip()]
     except OSError:
         return []
-    return [line for line in text[-lines:] if line.strip()]
+    progress = [l for l in text if PROGRESS.match(l)]
+    return (progress or text)[-lines:]
 
 
 def thin(history: list[dict], keep: int = 120) -> list[dict]:
@@ -122,8 +132,23 @@ def arcade_runs() -> list[dict]:
         if not total and last:
             # Mid-run: the budget is in the trainer, so infer from the log line.
             total = None
-        state = "finished" if summary else ("running" if history else "not started")
-        idle = age_seconds(run_dir / "history.json") if history else None
+        # A run writes history every ten updates, so between launching and its
+        # first write there is a window -- minutes, for the slower games -- where
+        # the files say "nothing here" and the truth is "warming up". Reporting
+        # that as 'not started' is exactly the kind of lie an operational view
+        # must not tell, so the log's own freshness is consulted too.
+        log_age = age_seconds(log) if log else None
+        starting = (log_age is not None and log_age < STALE_AFTER
+                    and (run_dir / "ckpt_000.pt").exists())
+        if summary:
+            state = "finished"
+        elif history:
+            state = "running"
+        elif starting:
+            state = "starting"
+        else:
+            state = "not started"
+        idle = age_seconds(run_dir / "history.json") if history else log_age
         if state == "running" and idle is not None and idle > STALE_AFTER:
             state = "stalled"
 
@@ -154,7 +179,10 @@ def arcade_runs() -> list[dict]:
             "curve": thin(history),
             "ladder": ladder,
             "verdict": (lambda v: {"label": v.label, "detail": v.detail} if v else None)(judge(ladder)),
+            "media_dir": f"../docs/media/{key}",
             "clips": sorted(p.name for p in (ROOT / "docs" / "media" / key).glob("*.mp4"))
+            if (ROOT / "docs" / "media" / key).exists() else [],
+            "gifs": sorted(p.name for p in (ROOT / "docs" / "media" / key).glob("*.gif"))
             if (ROOT / "docs" / "media" / key).exists() else [],
             "log_tail": tail(log) if log else [],
         })
@@ -218,6 +246,43 @@ def project_runs() -> list[dict]:
     return out
 
 
+def analytics() -> dict:
+    """Everything the analytics view needs, read from the same run artefacts.
+
+    This is deliberately not a second copy of the numbers: each entry points at
+    the file some run wrote, so a figure here cannot drift away from the run that
+    produced it.
+    """
+    media = ROOT / "docs" / "media"
+    doom_eval = read(ROOT / "projects/01-doom-pixel-rl/runs/defend_the_center/eval.json")
+    doom_hist = read(ROOT / "projects/01-doom-pixel-rl/runs/defend_the_center/history.json") or []
+    crafter_ab = read(ROOT / "projects/02-crafter-planner/runs/ab_new.json")
+    crafter_all = read(ROOT / "projects/02-crafter-planner/runs/eval_all.json")
+    crafter_perception = read(ROOT / "projects/02-crafter-planner/runs/perception.json")
+    brogue_long = read(ROOT / "projects/03-brogue-screen-agent/runs/play_long.json")
+    iterations = read(ROOT / "docs" / "data" / "iterations.json")
+    kaggle = read(ROOT / "projects/01-doom-pixel-rl/runs_kaggle/width_comparison.json")
+
+    doom_curve = [{"steps": r["steps"], "return": round(r["return_mean"], 2)}
+                  for r in doom_hist[::4] if r.get("return_mean") is not None]
+    brogue_rows = []
+    for agent in (brogue_long or {}).get("agents", []):
+        for e in agent.get("episodes", []):
+            brogue_rows.append({"agent": agent["agent"], "seed": e["seed"],
+                                "descents": e["descents"],
+                                "coverage": e.get("coverage_mean"),
+                                "health": e.get("health_final")})
+
+    return {
+        "doom": {"rows": (doom_eval or {}).get("rows"), "curve": doom_curve, "kaggle": kaggle},
+        "crafter": {"ab": crafter_ab, "all": crafter_all, "perception": crafter_perception},
+        "brogue": {"episodes": brogue_rows},
+        "iterations": iterations,
+        "project_clips": sorted(p.name for p in media.glob("clip_*.mp4")) if media.exists() else [],
+        "media_dir": "../docs/media",
+    }
+
+
 def machine() -> dict:
     """What the box is doing, so a slow run has somewhere to point."""
     info = {"cpu_percent": None, "python_processes": None, "gpu": None}
@@ -251,6 +316,7 @@ def snapshot() -> dict:
         "taken_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ"),
         "arcade": arcade_runs(),
         "projects": project_runs(),
+        "analytics": analytics(),
         "machine": machine(),
     }
 
@@ -269,7 +335,8 @@ def main() -> None:
     while True:
         data = snapshot()
         write(data)
-        running = [r["key"] for r in data["arcade"] if r["state"] in ("running", "stalled")]
+        running = [f"{r['key']}:{r['state']}" for r in data["arcade"]
+                   if r["state"] in ("running", "starting", "stalled")]
         print(f"{data['taken_at']}  arcade={len(data['arcade'])} "
               f"projects={len(data['projects'])} running={running or 'none'}", flush=True)
         if not args.watch:
