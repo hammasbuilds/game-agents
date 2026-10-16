@@ -11,12 +11,12 @@ grass while the trained one follows the road.
 
 There are two halves:
 
-- **[The arcade](arcade/)** — car racing, boxing, a platformer and table tennis,
-  all learned by one network with one PPO implementation, with a checkpoint
-  ladder from untrained to finished.
-- **Three one-off agents** — one learns DOOM from pixels, one plans its way
-  through Crafter with no weights at all, and one plays an ordinary Windows
-  program through screenshots and keystrokes.
+- **[The arcade](arcade/)** — one network and one PPO implementation across
+  several games, each with a checkpoint ladder from untrained to finished.
+- **Four one-off agents** — one learns DOOM from pixels across three maps, one
+  teaches a MuJoCo robot to walk, one plans its way through Crafter with no
+  weights at all, and one plays an ordinary Windows program through screenshots
+  and keystrokes.
 
 **[Live dashboard →](https://hammasbuilds.github.io/game-agents/)** ·
 **[Analytics →](https://hammasbuilds.github.io/game-agents/analytics.html)** —
@@ -59,21 +59,79 @@ than asserting it.
 They deliberately share no method. The point of three is to show three ways of
 getting a machine to play something — and what each one actually costs.
 
-| | | |
-|:---:|:---:|:---:|
-| ![DOOM](docs/media/clip_doom.gif) | ![Crafter](docs/media/clip_crafter.gif) | ![Brogue](docs/media/clip_brogue.gif) |
-| PPO from pixels, 12 kills in this episode | the planner, 8 achievements, no training | screenshots and keystrokes, reached depth 3 |
+![DOOM: an untrained network and a trained one defending the same room](docs/media/doom/defend_the_center_640x480.gif)
+
+*DOOM, recorded at the resolution the game renders rather than the one the agent
+thinks in. Left: the network before a single gradient step. Right: the same
+network after 2M steps of PPO on a laptop CPU. The agent sees 60×80 greyscale in
+both.*
+
+![Crafter: a random agent and the planner, same seed](docs/media/crafter/planner_vs_random.gif)
+
+*Crafter, 512×512. Left: random, 3 achievements. Right: the planner, 12 — and it
+never trains anything. Both start from the same seed.*
+
+| | |
+|:---:|:---:|
+| ![Brogue](docs/media/clip_brogue.gif) | ![racing](docs/media/racing/progress.gif) |
+| Brogue CE through screenshots and keystrokes, reached depth 3 | car racing: untrained, 180k and 419k steps on the same track |
 
 | project | game | how it plays | result |
 |---|---|---|---|
-| [01 — DOOM from pixels](projects/01-doom-pixel-rl) | ViZDoom (Freedoom data) | PPO trained from scratch on raw frames, CPU only | **9.80 kills/episode** vs 1.23 for a hand-written baseline, 30 held-out maps |
+| [01 — DOOM from pixels](projects/01-doom-pixel-rl) | ViZDoom (Freedoom data) | PPO trained from scratch on raw frames, CPU only | three maps, all three beaten: see below |
 | [02 — Crafter, planned](projects/02-crafter-planner) | Crafter | tile decoding → map → goal ladder, **no training at all** | **12.73%** Crafter score vs 1.13% random; 15 of 22 achievements |
 | [03 — Brogue, through the screen](projects/03-brogue-screen-agent) | Brogue CE | screenshots in, keystrokes out, no API | names 77–94% of the dungeon view, explores and descends |
+| [04 — a robot learns to walk](projects/04-mujoco-walk) | MuJoCo Walker2d | PPO with a Gaussian policy — an action is a torque per joint | training; the untrained robot and the trained one walk the same episode |
 
-Every game is free and open: ViZDoom ships Freedoom, Crafter is a pip install,
-Brogue CE is a GPL release download. No ROMs, nothing commercial, nothing
-patched. The games themselves are not committed — `scripts/get_brogue.py`
-fetches Brogue, and the other two are Python packages.
+### DOOM, three maps
+
+The same agent, the same hyper-parameters and the same evaluation on three
+different scenarios — which is the only way to tell *this agent learned DOOM*
+from *this agent learned one room*. Every verdict compares against the better of
+the two hand-written baselines and the bar is two standard errors of the
+difference.
+
+| map | what it asks for | best baseline | PPO | verdict |
+|---|---|---:|---:|---|
+| defend the center | shoot what comes at you, 3 buttons | 1.2 kills | **9.8** | learned — +8.6 against a bar of 0.6 |
+| health gathering | stay alive on acid, find medkits | 380 | **1,930** | learned — +1,550 against a bar of 169 |
+| deadly corridor | walk a defended corridor, 4 buttons | −22.9 | **234** | learned — +257 against a bar of 84 |
+
+![health gathering: an untrained agent in a wall, a trained one walking the medkit line](docs/media/doom/health_gathering_640x480.gif)
+
+*Health gathering. The floor is acid and health drains the whole time; the only
+way to last is to keep finding medkits. Left: untrained, 348 ticks. Right:
+trained, 1,884 — out of a 2,100-tick episode cap.*
+
+Health gathering is also the clearest failure of the three. The first run
+collapsed to a deterministic policy inside 92,000 steps and scored **below a
+random agent** — 310 against random's 367, with the entropy of its action
+distribution at 0.0017 out of a possible 1.10. Raising the entropy bonus from
+0.01 to 0.03 and halving the learning rate turned that into 1,930.
+
+## Where the games come from
+
+**None of these games were written here.** They are real games, downloaded and
+run unmodified; the code in this repository is the agents that play them and the
+harness that measures them.
+
+| game | what it is | where it comes from | what it renders |
+|---|---|---|---|
+| DOOM | the 1993 engine, with the free **Freedoom** data | `vizdoom` (pip), data shipped with it | 640×480 textured 3D |
+| Crafter | a 2021 open-source survival game | `crafter` (pip) | any size; 512×512 here |
+| Brogue CE | a GPL roguelike, the real Windows build | `scripts/get_brogue.py` downloads the release | an 80×30 character grid |
+| Car racing | Gymnasium's Box2D `CarRacing-v3` | `gymnasium[box2d]` (pip) | 600×400 |
+| Walker2d | a MuJoCo robot | `mujoco` + `gymnasium` (pip) | any size; 480×480 here |
+| Boxing · Kangaroo · Pong *(retired)* | **Atari 2600**, 1977–1982 | ROMs shipped under licence with `ale-py` | 160×210, 128 colours |
+
+No commercial ROMs, nothing patched, nothing emulated by hand. The games are not
+committed to this repository — each one is a package install or a download.
+
+The Atari three are retired from the showcase for exactly the reason their
+resolution column suggests: a 1980 console cannot be made to look good next to a
+640×480 DOOM render, however well the agent plays. They keep their entries,
+their checkpoint ladders and their numbers — including the two unflattering
+ones — on the dashboard under *retired*.
 
 ## What each project is really about
 

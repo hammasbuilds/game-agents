@@ -33,6 +33,18 @@ from evaluate import load_policy                                 # noqa: E402
 from film import side_by_side, write_clip                        # noqa: E402
 
 
+# What a scenario's reward actually counts. Calling all three "kills" was wrong
+# for two of them: health gathering pays for staying alive and deadly corridor
+# pays for distance down the corridor.
+UNITS = {
+    "defend_the_center": "kills",
+    "basic": "reward",
+    "health_gathering": "ticks survived",
+    "health_gathering_supreme": "ticks survived",
+    "deadly_corridor": "distance reward",
+}
+
+
 def record(agent, cfg: EnvConfig, seed: int, max_steps: int = 2000):
     """One episode, keeping every colour frame the game drew."""
     env = DoomEnv(EnvConfig(**{**cfg.__dict__, "seed": seed}))
@@ -65,6 +77,8 @@ def main() -> None:
     ap.add_argument("--policy", default=None)
     ap.add_argument("--seeds", type=int, nargs="+", default=[7])
     ap.add_argument("--fps", type=int, default=12)
+    ap.add_argument("--concat", type=int, default=1,
+                    help="join this many episodes end to end, for short scenarios")
     ap.add_argument("--width", type=int, default=640)
     ap.add_argument("--gif-width", type=int, default=340, dest="gif_width")
     ap.add_argument("--gif-frames", type=int, default=60, dest="gif_frames",
@@ -86,12 +100,20 @@ def main() -> None:
                 returns.append(ret)
                 print(f"  {name:<14} seed {seed}: return {ret:>6.1f}  "
                       f"{steps} steps  {len(frames)} frames", flush=True)
-            # Longest run of the set is the one worth watching.
-            best = int(np.argmax([len(f) for f in runs]))
+            # Deadly corridor is over in about twenty agent steps -- two
+            # seconds of film -- so short episodes are joined end to end rather
+            # than shown one at a time. Everywhere else the longest single run
+            # is the one worth watching.
+            if args.concat > 1:
+                joined = [frame for run in runs[:args.concat] for frame in run]
+                runs, best = [joined], 0
+            else:
+                best = int(np.argmax([len(f) for f in runs]))
             mean = float(np.mean(returns))
+            unit = UNITS.get(args.scenario, "reward")
             strips.append((name,
                            f"{args.scenario.replace('_', ' ')} · "
-                           f"{mean:.1f} kills over {len(returns)} run"
+                           f"{mean:.1f} {unit} over {len(returns)} run"
                            f"{'s' if len(returns) > 1 else ''} at {args.resolution}",
                            runs[best]))
 

@@ -79,6 +79,9 @@
   td.num, th.num { font-family: var(--mono); }
   .shots { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
   .shots figure { margin: 0; }
+  .films { display: grid; gap: 16px; margin-top: 10px; }
+  .films video { width: 100%; border-radius: 10px; background: #0c0e12; }
+  .films figcaption { color: var(--ink-dim); font-size: 12.5px; margin-top: 6px; }
   .shots img { width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block;
                image-rendering: pixelated; background: #000; }
   .shots figcaption { color: var(--ink-dim); font-size: 12px; margin-top: 5px; font-family: var(--mono); }
@@ -117,6 +120,7 @@
   .controls input[type="range"] { flex: 1; accent-color: var(--accent); }
   @media (max-width: 560px) { header { padding-top: 64px; } }
 </style>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
 <button class="theme" id="theme">theme</button>
@@ -134,6 +138,7 @@
     <button data-tab="doom">01 · DOOM</button>
     <button data-tab="crafter">02 · Crafter</button>
     <button data-tab="brogue">03 · Brogue</button>
+    <button data-tab="walker">04 · Walking</button>
     <button data-tab="bugs">What broke</button>
     <a class="analytics-link" href="analytics.html">Analytics →</a>
   </nav>
@@ -142,6 +147,7 @@
   <section id="doom" hidden></section>
   <section id="crafter" hidden></section>
   <section id="brogue" hidden></section>
+  <section id="walker" hidden></section>
   <section id="bugs" hidden></section>
 </div>
 
@@ -405,15 +411,29 @@ function renderDoom() {
   const c = el("div", "card");
   c.append(el("h2", "", "01 · DOOM from pixels"),
            el("p", "lede", "ViZDoom embeds the original DOOM engine and ships the free Freedoom data, so nothing commercial is needed. The agent sees four stacked 60×80 greyscale frames and presses one of three buttons. PPO, written out rather than imported, 219,476 parameters, trained on CPU."));
-  const ev = R.doom && R.doom.eval;
-  if (ev && ev.rows) {
-    const rows = ev.rows.map(r => [r.agent, fmt(r.return_mean), fmt(r.return_std), r.return_min, r.return_max, fmt(r.steps_mean, 0)]);
-    const best = ev.rows.reduce((bi, r, i, a) => r.return_mean > a[bi].return_mean ? i : bi, 0);
-    c.append(el("h3", "", "defend_the_center · " + ev.episodes + " held-out episodes, same maps for every agent"),
-             table(["agent", "mean", "sd", "min", "max", "steps"], rows, best));
-  } else c.append(missing("the DOOM evaluation"));
-  if (R.doom && R.doom.curve && R.doom.curve.length) {
-    c.append(el("h3", "", "Training"), curveChart(R.doom.curve));
+  /* One block per scenario the agent has been trained on. The same code, the
+     same hyper-parameters and the same evaluation, three different maps --
+     which is the only way to tell "this agent learned DOOM" from "this agent
+     learned one room". */
+  const scenarios = (R.doom && R.doom.scenarios) || {};
+  const names = Object.keys(scenarios);
+  if (!names.length) c.append(missing("the DOOM evaluation"));
+  for (const name of names) {
+    const run = scenarios[name];
+    const ev = run.eval;
+    c.append(el("h3", "", name.replace(/_/g, " ")));
+    if (ev && ev.rows) {
+      const rows = ev.rows.map(r => [r.agent, fmt(r.return_mean), fmt(r.return_std),
+                                     r.return_min, r.return_max, fmt(r.steps_mean, 0)]);
+      const best = ev.rows.reduce((bi, r, i, a) => r.return_mean > a[bi].return_mean ? i : bi, 0);
+      c.append(el("p", "lede", ev.episodes + " held-out episodes, the same maps for every agent"),
+               table(["agent", "mean", "sd", "min", "max", "steps"], rows, best));
+    } else {
+      c.append(el("p", "lede", "trained for " +
+        Number(run.training.steps).toLocaleString() + " steps in " +
+        Math.round(run.training.wall_seconds / 60) + " minutes; evaluation pending"));
+    }
+    if (run.curve && run.curve.length) c.append(curveChart(run.curve));
   }
   s.append(c);
 
@@ -422,6 +442,23 @@ function renderDoom() {
     el("p", "", "The first working trainer ran at <strong>153 steps/s</strong> while a single environment in the same process did 1,305. Four rounds of profiling, each disproving the obvious answer: the pipe payload (16× smaller changed nothing), the machine being busy (17% idle), the Windows timer resolution set in the trainer (nothing). The instrumented worker gave it up — <code>env.step</code> took 13 ms inside a worker and 0.7 ms in the parent, for identical code."),
     el("p", "", "A worker sleeps in <code>recv()</code> between steps and every wake-up is rounded up to the scheduler tick. Since Windows 10 2004 that resolution is <em>per process</em>, so <code>timeBeginPeriod(1)</code> has to be called in the worker, which is the one place the earlier attempt had not tried. 292 → 1,530 steps/s."));
   if (R.media && R.media.doom && R.media.doom.length) t.append(shots(R.media.doom, "doom"));
+  /* The films, at the resolution the game renders. Each one is the untrained
+     network and the trained one on the same map, and the caption carries the
+     score measured at that resolution rather than the training log's. */
+  const films = (R.media && R.media.doom_films) || [];
+  if (films.length) {
+    const box = el("div", "films");
+    films.forEach(f => {
+      const fig = el("figure");
+      const v = document.createElement("video");
+      v.src = "media/doom/" + f.file;
+      v.controls = true; v.loop = true; v.muted = true; v.playsInline = true;
+      v.setAttribute("muted", "");
+      fig.append(v, el("figcaption", "", esc(f.caption)));
+      box.append(fig);
+    });
+    t.append(el("h3", "", "Untrained and trained, same map"), box);
+  }
   s.append(t);
 }
 
@@ -546,6 +583,30 @@ function renderBrogue() {
   s.append(d);
 }
 
+/* ---------- the walking robot ---------- */
+function renderWalker() {
+  const s = $("#walker");
+  const c = el("div", "card");
+  c.append(el("h2", "", "04 · A robot learns to walk"),
+    el("p", "lede", "MuJoCo, and the only agent here whose actions are not buttons: one torque per joint, six real numbers at a time, so the policy outputs a mean and a learned spread per joint instead of a softmax. Observations are normalised from a running estimate that travels in the checkpoint — a policy restored without it reads its inputs in different units from the ones it trained on, and looks exactly like a policy that has forgotten how to walk."));
+  const runs = (R.walker && R.walker.runs) || {};
+  const names = Object.keys(runs);
+  if (!names.length) { c.append(missing("the walking run")); s.append(c); return; }
+  for (const name of names) {
+    const run = runs[name];
+    const t = run.training || {};
+    c.append(el("h3", "", t.env_id || name));
+    c.append(el("p", "lede",
+      Number(t.steps || 0).toLocaleString() + " steps · " +
+      Math.round((t.wall_seconds || 0) / 60) + " minutes on CPU · " +
+      Number(t.params || 0).toLocaleString() + " parameters · final return " +
+      (t.final_return_mean === null || t.final_return_mean === undefined
+        ? "pending" : fmt(t.final_return_mean, 0))));
+    if (run.curve && run.curve.length) c.append(curveChart(run.curve));
+  }
+  s.append(c);
+}
+
 /* ---------- bugs ---------- */
 function renderBugs() {
   const s = $("#bugs");
@@ -562,11 +623,13 @@ function renderBugs() {
       "<strong>The shelter plan kept mining for thirty steps</strong> with seven stone already in the bag, because mining had been the right answer once.",
       "<strong>Then it starved behind its own wall,</strong> because nothing opened the box again at dawn.",
       "<strong>153 steps/s against a single environment's 1,305</strong> — four profiling rounds before the per-process timer resolution turned up in the worker.",
+      "<strong>The same DOOM weights score 9.67 at 160×120, 7.07 at 320×240 and 12.40 at 640×480</strong> over fifteen seeds — identical network, identical 60×80 input. The agent's frame is a box filter of the screen, and the renderer antialiases differently at each resolution, so the render size is part of the agent's input whether anybody meant it to be. Films now quote the score measured at the resolution being filmed.",
+      "<strong>Health gathering collapsed to a deterministic policy inside 92k steps</strong> and sat <em>below</em> a random agent: 310 against random's 367, entropy 0.0017 of a possible 1.10. Raising the entropy bonus from 0.01 to 0.03 and halving the learning rate recovered it to 726.",
     ].map(x => "<li>" + x + "</li>").join("")));
   s.append(c);
 }
 
-renderOverview(); renderDoom(); renderCrafter(); renderBrogue(); renderBugs();
+renderOverview(); renderDoom(); renderCrafter(); renderBrogue(); renderWalker(); renderBugs();
 $("#meta").textContent = "built from commit " + (R.generated || "unknown")
   + " · every figure here is read from a run artefact, not typed in";
 const want = location.hash.slice(1);

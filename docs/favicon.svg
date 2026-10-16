@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#0e1014"/>
+  <!-- a d-pad and a button: a game controller, drawn rather than an emoji, so
+       it renders the same on every machine -->
+  <rect x="10" y="27" width="22" height="7" rx="2" fill="#6f9bff"/>
+  <rect x="17.5" y="19.5" width="7" height="22" rx="2" fill="#6f9bff"/>
+  <circle cx="46" cy="25" r="5" fill="#4cc98a"/>
+  <circle cx="46" cy="39" r="5" fill="#e0a24a"/>
+</svg>

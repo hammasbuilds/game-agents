@@ -153,14 +153,50 @@ def brogue_frames(count: int = 4) -> list[str]:
 
 # -- results --------------------------------------------------------------
 def collect() -> dict:
-    doom_eval = read_json(ROOT / "projects/01-doom-pixel-rl/runs/defend_the_center/eval.json")
-    doom_hist = read_json(ROOT / "projects/01-doom-pixel-rl/runs/defend_the_center/history.json")
-    doom_train = read_json(ROOT / "projects/01-doom-pixel-rl/runs/defend_the_center/train_summary.json")
+    # Every DOOM scenario that has been trained, not just the first one. The
+    # page used to name defend_the_center three times over because the exporter
+    # only ever looked there, so a second scenario could finish training and
+    # leave no trace anywhere a reader could see.
+    doom_dir = ROOT / "projects/01-doom-pixel-rl/runs"
+    doom_runs = {}
+    for scenario_dir in sorted(p for p in doom_dir.glob("*") if p.is_dir()):
+        summary = read_json(scenario_dir / "train_summary.json")
+        if not summary:
+            continue
+        # Smoke runs live in the same directory and have summaries too. A
+        # sixteen-thousand-step debug run is not a result, and listing it beside
+        # the real ones on the page invites a reader to compare them.
+        if summary.get("steps", 0) < 100_000:
+            continue
+        history = read_json(scenario_dir / "history.json") or []
+        doom_runs[scenario_dir.name] = {
+            "eval": read_json(scenario_dir / "eval.json"),
+            "training": summary,
+            "curve": [{"steps": r["steps"], "return": round(r["return_mean"], 2)}
+                      for r in history if r.get("return_mean") is not None][::2],
+        }
+    doom_eval = read_json(doom_dir / "defend_the_center/eval.json")
+    doom_hist = read_json(doom_dir / "defend_the_center/history.json")
+    doom_train = read_json(doom_dir / "defend_the_center/train_summary.json")
     kaggle = read_json(ROOT / "projects/01-doom-pixel-rl/runs_kaggle/width_comparison.json")
     crafter_eval = read_json(ROOT / "projects/02-crafter-planner/runs/eval_all.json")
     crafter_perc = read_json(ROOT / "projects/02-crafter-planner/runs/perception.json")
     ab_head = read_json(ROOT / "projects/02-crafter-planner/runs/ab_head.json")
     ab_new = read_json(ROOT / "projects/02-crafter-planner/runs/ab_new.json")
+    walker_dir = ROOT / "projects/04-mujoco-walk/runs"
+    walker_runs = {}
+    for run_dir in sorted(p for p in walker_dir.glob("*") if p.is_dir()):
+        summary = read_json(run_dir / "train_summary.json")
+        if not summary or summary.get("steps", 0) < 100_000:
+            continue
+        history = read_json(run_dir / "history.json") or []
+        walker_runs[run_dir.name] = {
+            "training": summary,
+            "eval": read_json(run_dir / "eval.json"),
+            "curve": [{"steps": r["steps"], "return": r["return_mean"]}
+                      for r in history if r.get("return_mean") is not None][::4],
+        }
+
     brogue_play = read_json(ROOT / "projects/03-brogue-screen-agent/runs/play.json")
     brogue_explorer = read_json(ROOT / "projects/03-brogue-screen-agent/runs/play_explorer.json")
 
@@ -174,10 +210,11 @@ def collect() -> dict:
         "generated": subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT,
                                     capture_output=True, text=True).stdout.strip(),
         "doom": {"eval": doom_eval, "curve": curve[::2], "training": doom_train,
-                 "kaggle": kaggle},
+                 "kaggle": kaggle, "scenarios": doom_runs},
         "crafter": {"eval": crafter_eval, "perception": crafter_perc,
                     "ab": {"head": ab_head, "new": ab_new}},
         "brogue": {"play": brogue_play, "explorer": brogue_explorer},
+        "walker": {"runs": walker_runs},
     }
 
 
@@ -186,6 +223,19 @@ def main() -> None:
     DATA.mkdir(parents=True, exist_ok=True)
 
     media = {"doom": [], "crafter": [], "crafter_decoded": [], "brogue": []}
+    # The films are listed from the directory rather than named here, so a
+    # scenario filmed later appears on the page without an edit, and one that
+    # was never filmed does not leave a broken video element behind.
+    film_dir = MEDIA / "doom"
+    captions = {
+        "defend_the_center": "defend the center — shoot what comes at you",
+        "health_gathering": "health gathering — the floor is acid; keep finding medkits",
+        "deadly_corridor": "deadly corridor — three episodes end to end, it is over in seconds",
+    }
+    media["doom_films"] = [
+        {"file": path.name,
+         "caption": captions.get(path.stem.replace("_640x480", ""), path.stem)}
+        for path in sorted(film_dir.glob("*.mp4"))] if film_dir.exists() else []
     try:
         media["doom"] = doom_frames()
     except Exception as exc:                      # a missing game must not stop the page
