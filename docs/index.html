@@ -96,7 +96,8 @@
                border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
                transition: transform .12s ease, border-color .12s ease; }
   .game-card:hover, .game-card:focus-visible { transform: translateY(-2px); border-color: var(--accent); }
-  .game-card video, .game-card .placeholder { width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+  .game-card video, .game-card .placeholder { width: 100%; aspect-ratio: 16 / 7; object-fit: contain;
+    background: #0c0e12;
                                               background: #0c0e12; display: block; }
   .game-card .placeholder { display: grid; place-items: center; color: var(--ink-dim); font-size: 13px; }
   .game-card .body { padding: 13px 15px 15px; }
@@ -207,7 +208,15 @@ function table(headers, rows, bestIndex) {
   const tb = el("tbody");
   rows.forEach((r, i) => {
     const tr = el("tr", i === bestIndex ? "best" : "");
-    r.forEach((c, j) => tr.append(el("td", j ? "num" : "", c)));
+    r.forEach((c, j) => {
+      // A cell may be a node rather than a string. Building a link as a node
+      // keeps the href out of the page source, where the static checker reads
+      // every href as a file this page ships -- and reported a template literal
+      // as a missing file.
+      const td = el("td", j ? "num" : "");
+      if (c instanceof Node) td.append(c); else td.innerHTML = c;
+      tr.append(td);
+    });
     tb.append(tr);
   });
   t.append(thead, tb);
@@ -262,15 +271,23 @@ function curveChart(points, w = 900, h = 260) {
 }
 
 /* ---------- the arcade cards ---------- */
+function gameLink(key, title) {
+  const a = el("a", "", esc(title));
+  a.setAttribute("href", "game.html?g=" + encodeURIComponent(key));
+  return a;
+}
+
 function renderCards(into) {
   const games = (window.ARCADE || {}).games || {};
   const keys = Object.keys(games);
   if (!keys.length) return;
   const card = el("div", "card");
+  const live = keys.filter(k => !games[k].retired);
+  const retired = keys.filter(k => games[k].retired);
   card.append(el("h2", "", "The arcade"),
-    el("p", "lede", "One network architecture, three very different games. Each card opens that game's own page: the untrained network and the trained one playing the same level side by side, the score at every checkpoint, and the training curve."));
+    el("p", "lede", "One network architecture, one PPO, one evaluation protocol. Each card opens that game's own page: the untrained network and the trained one playing the same level side by side, the score at every checkpoint, and the training curve."));
   const grid = el("div", "cards");
-  for (const k of keys) {
+  for (const k of live) {
     const g = games[k];
     const a = el("a", "game-card");
     a.href = "game.html?g=" + encodeURIComponent(k);
@@ -297,6 +314,28 @@ function renderCards(into) {
     grid.append(a);
   }
   card.append(grid);
+
+  /* Retired games keep their numbers. They left the front page because of how
+     the Atari 2600 looks at demo size, not because of how they scored -- and two
+     of these three scored badly, which is exactly why they are listed here
+     rather than quietly dropped. */
+  if (retired.length) {
+    const rows = retired.map(k => {
+      const g = games[k];
+      const ladder = g.ladder || [];
+      const first = ladder.find(r => r.steps === 0), last = ladder[ladder.length - 1];
+      return [
+        gameLink(k, g.title),
+        esc(g.env_id),
+        first ? Number(first.return_mean).toFixed(1) : "—",
+        last && last !== first ? Number(last.return_mean).toFixed(1) : "—",
+        esc(g.retired),
+      ];
+    });
+    card.append(el("h3", "", "Retired from the showcase"),
+      el("p", "lede", "Still trained, still scored, still openable. Moved off the front page for how the game looks, not for how the agent did."),
+      table(["game", "environment", "untrained", "trained", "why it is here"], rows));
+  }
   into.append(card);
 }
 

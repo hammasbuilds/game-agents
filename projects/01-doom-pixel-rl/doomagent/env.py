@@ -23,9 +23,36 @@ ACTION_SETS: dict[str, list[list[int]]] = {
     "defend_the_center": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
     # health_gathering.cfg declares MOVE_FORWARD, TURN_LEFT, TURN_RIGHT
     "health_gathering": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+    "health_gathering_supreme": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+    # deadly_corridor.cfg declares MOVE_LEFT, MOVE_RIGHT, ATTACK, MOVE_FORWARD,
+    # MOVE_BACKWARD, TURN_LEFT, TURN_RIGHT -- seven buttons, and a wider softmax
+    # is the one change that reliably costs a CPU run its budget. Four of them
+    # are enough to walk the corridor and shoot what is in it.
+    "deadly_corridor": [
+        [0, 0, 0, 1, 0, 0, 0],   # forward
+        [0, 0, 0, 0, 0, 1, 0],   # turn left
+        [0, 0, 0, 0, 0, 0, 1],   # turn right
+        [0, 0, 1, 0, 0, 0, 0],   # attack
+    ],
 }
 
 H, W = 60, 80
+
+# What the game renders, separately from what the agent is fed. The agent always
+# gets 60x80; the screen it is cut from does not have to be 160x120, and when the
+# point is a film rather than a training step it should not be -- a recording of
+# the 160x120 buffer is the reason these demos looked like 1996.
+#
+# Every option here is an exact multiple of 80x60, so the agent's frame is a
+# clean box filter of the screen in all of them rather than a resampled
+# approximation of one.
+RESOLUTIONS = {
+    "160x120": vzd.ScreenResolution.RES_160X120,     # 2x -- what training uses
+    "320x240": vzd.ScreenResolution.RES_320X240,     # 4x
+    "640x480": vzd.ScreenResolution.RES_640X480,     # 8x -- what films use
+    "800x600": vzd.ScreenResolution.RES_800X600,     # 10x
+    "1280x960": vzd.ScreenResolution.RES_1280X960,   # 16x
+}
 
 
 @dataclass
@@ -35,19 +62,29 @@ class EnvConfig:
     stack: int = 4
     seed: int | None = None
     window: bool = False
+    resolution: str = "160x120"
 
 
 def _downsample(screen: np.ndarray) -> np.ndarray:
-    """3x120x160 uint8 RGB -> 60x80 uint8 greyscale.
+    """3xHRxWR uint8 RGB -> 60x80 uint8 greyscale.
 
-    Plain 2x2 box filter and the ITU-R 601 luma weights; cv2 is not a dependency
-    of this project and for a 120x160 frame numpy is quicker than the import.
-    Staying in uint8 is not a detail: these frames cross a process boundary every
-    step, and sending them as float32 made the rollout 2.5x slower than the game.
+    A box filter over whatever the screen resolution is, using the ITU-R 601 luma
+    weights; cv2 is not a dependency of this project and for frames this size
+    numpy is quicker than the import. Staying in uint8 is not a detail: these
+    frames cross a process boundary every step, and sending them as float32 made
+    the rollout 2.5x slower than the game.
+
+    The factor is derived from the frame rather than fixed at 2, so the same
+    agent can be fed from a 160x120 screen while training and a 640x480 one while
+    being filmed, and sees the same thing either way: the mean over a block is
+    the mean over its sub-blocks.
     """
     rgb = screen.astype(np.float32)
     grey = 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]
-    return grey.reshape(H, 2, W, 2).mean(axis=(1, 3)).astype(np.uint8)
+    fy, fx = grey.shape[0] // H, grey.shape[1] // W
+    if fy * H != grey.shape[0] or fx * W != grey.shape[1]:
+        raise ValueError(f"screen {grey.shape} is not a whole multiple of {H}x{W}")
+    return grey.reshape(H, fy, W, fx).mean(axis=(1, 3)).astype(np.uint8)
 
 
 class DoomEnv:
@@ -59,7 +96,10 @@ class DoomEnv:
             raise ValueError(f"unknown scenario {cfg.scenario!r}; have {sorted(ACTION_SETS)}")
         game = vzd.DoomGame()
         game.load_config(os.path.join(vzd.scenarios_path, f"{cfg.scenario}.cfg"))
-        game.set_screen_resolution(vzd.ScreenResolution.RES_160X120)
+        if cfg.resolution not in RESOLUTIONS:
+            raise ValueError(f"unknown resolution {cfg.resolution!r}; "
+                             f"have {sorted(RESOLUTIONS)}")
+        game.set_screen_resolution(RESOLUTIONS[cfg.resolution])
         game.set_screen_format(vzd.ScreenFormat.CRCGCB)
         game.set_window_visible(cfg.window)
         if cfg.seed is not None:
@@ -85,6 +125,13 @@ class DoomEnv:
         if state is None:  # episode just finished; the last frame still stands
             return self.frames[-1]
         return _downsample(state.screen_buffer)
+
+    def screen_rgb(self) -> np.ndarray | None:
+        """The full-resolution colour frame, for recording. None between episodes."""
+        state = self.game.get_state()
+        if state is None:
+            return None
+        return np.transpose(state.screen_buffer, (1, 2, 0)).copy()
 
     def _observe(self) -> np.ndarray:
         self.frames = np.roll(self.frames, -1, axis=0)

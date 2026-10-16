@@ -36,7 +36,18 @@ class Game:
     # How much improvement is worth reporting: the score a random policy gets,
     # measured rather than assumed, filled in by `python -m arcade.baseline`.
     random_score: float | None = None
+    # Why this game is no longer in the showcase, if it is not. Retired games
+    # still train, still evaluate and keep every number they earned -- they are
+    # moved out of the front page, not deleted, because a result that is
+    # inconvenient to show is still a result.
+    retired: str | None = None
 
+
+# Why the three Atari games left the showcase. Not a judgement about the
+# agents, which trained fine and kept their numbers: a judgement about what a
+# 1980 console looks like beside a 640x480 DOOM render in the same README.
+RETIRED_LOOK = ("Atari 2600: 160x210 from a 128-colour palette, which reads as "
+                "mush at the size a demo is watched")
 
 CATALOGUE: dict[str, Game] = {
     "racing": Game(
@@ -54,6 +65,7 @@ CATALOGUE: dict[str, Game] = {
         blurb="Hand to hand. Score is punches landed minus punches taken, so it "
               "runs from -100 to +100 and reads at a glance.",
         kwargs={"frameskip": 1, "repeat_action_probability": 0.0},
+        retired=RETIRED_LOOK,
     ),
     "platformer": Game(
         key="platformer",
@@ -62,6 +74,7 @@ CATALOGUE: dict[str, Game] = {
         blurb="Climb the ladders, punch the monkeys, reach the top. The legal "
               "stand-in for Mario: a platformer with ROMs that ship licensed.",
         kwargs={"frameskip": 1, "repeat_action_probability": 0.0},
+        retired=RETIRED_LOOK,
     ),
     # Pong is here as insurance for the demo rather than for its own sake. The
     # other three are games where a laptop-sized budget may buy only a modest
@@ -75,6 +88,7 @@ CATALOGUE: dict[str, Game] = {
         blurb="Score runs from -21 to +21, so there is nowhere for a weak agent "
               "to hide: it starts losing every rally and ends winning them.",
         kwargs={"frameskip": 1, "repeat_action_probability": 0.0},
+        retired=RETIRED_LOOK,
     ),
 }
 
@@ -103,6 +117,15 @@ class SkipIntro(gym.Wrapper):
         info = dict(info)
         info["intro_reward"] = carried
         return obs, info
+
+
+def showcase() -> list[str]:
+    """The games the dashboard leads with: the ones worth looking at."""
+    return [key for key, game in CATALOGUE.items() if not game.retired]
+
+
+def retired() -> list[str]:
+    return [key for key, game in CATALOGUE.items() if game.retired]
 
 
 def make(game: Game, seed: int | None = None, render: bool = False) -> gym.Env:

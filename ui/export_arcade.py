@@ -75,9 +75,14 @@ def main() -> None:
             "clips": clips,
             "gifs": gifs,
             "progress": "progress.mp4" if "progress.mp4" in clips else None,
+            # Retired games keep every number they earned and leave the front
+            # page. The page needs the reason, not just the flag, or a reader
+            # is left to guess whether the result was bad or the game was ugly.
+            "retired": game.retired,
         }
         print(f"{key:<11} {state:<13} updates={len(history):>5} "
-              f"ladder={'yes' if ladder else 'no':<4} clips={len(clips)}")
+              f"ladder={'yes' if ladder else 'no':<4} clips={len(clips)}"
+              f"{'  RETIRED' if game.retired else ''}")
 
     DATA.mkdir(parents=True, exist_ok=True)
     payload = {"games": games}
