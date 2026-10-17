@@ -36,5 +36,31 @@ like 1996 while the game underneath did not.
 
 ## Results
 
-Filled in from the run artefacts once training finishes; nothing is typed in
-here by hand.
+1,998,848 steps in 43 minutes on a laptop CPU, 11,085
+parameters, 4,239 episodes of experience.
+
+| checkpoint | steps | return | ± se | episode length |
+|---|---:|---:|---:|---:|
+| ckpt_000 | 0 | 65 | 0.6 | 89 |
+| ckpt_049 | 100,352 | 430 | 0.8 | 185 |
+| ckpt_146 | 299,008 | 883 | 28.1 | 268 |
+| ckpt_342 | 700,416 | 4,494 | 11.5 | 1000 |
+| ckpt_634 | 1,298,432 | 4,242 | 243.8 | 949 |
+| ckpt_976 | 1,998,848 | 3,637 | 392.8 | 784 |
+
+*Scored on 12 selection episodes, the same ones for every row.*
+
+The best checkpoint is **ckpt_342** at
+700,416 steps. Re-scored on 12 held-out episodes it
+returns **4,498 ± 14.2**, against
+**65.1 ± 0.5** for the same network before any
+training: learned, +4,433 against a bar of 28.4.
+
+**The run peaked in the middle and got worse.** It reached its best at
+700,416 steps and lost 858 return by the end of
+training. That is why the scoring here picks a checkpoint instead of taking the
+last one, and why choosing it uses a different set of episodes from the ones the
+chosen checkpoint is reported on — picking the highest scorer and then quoting
+that same score reports the winner's luck as its skill.
+
+The film shows the chosen checkpoint, not the final file on disk.

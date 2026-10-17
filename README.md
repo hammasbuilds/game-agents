@@ -109,6 +109,47 @@ random agent** — 310 against random's 367, with the entropy of its action
 distribution at 0.0017 out of a possible 1.10. Raising the entropy bonus from
 0.01 to 0.03 and halving the learning rate turned that into 1,930.
 
+## How everything here is scored
+
+One file, [`protocol.py`](protocol.py), decides what every number in this
+repository means. Three rules, each of them written down because this repository
+got it wrong first:
+
+**The last checkpoint is not the trained agent.** Both long runs peaked in the
+middle and got worse — the walker reached 4,494 at 700k steps and finished at
+3,637 by 2M; racing peaked at 60k and declined for the next 360k. Reporting the
+final checkpoint reports whichever point training happened to stop at, so the
+ladder is scored and a checkpoint is *chosen*.
+
+**Choosing a checkpoint is itself a measurement, so it gets its own episodes.**
+Picking the highest scorer on a set of episodes and then quoting that same score
+reports the winner's luck as its skill. The ladder is scored on selection seeds;
+the winner is re-scored on a disjoint set of reporting seeds; the reported
+number is the second one.
+
+**A gain counts only if it is larger than the uncertainty of the difference** —
+two standard errors of it, not two standard deviations. An earlier version of
+this repository compared means against the sum of their standard deviations and
+called real learning noise.
+
+A missing error bar is not a bar of zero. The Crafter score is a geometric mean
+over achievement rates and has no standard error, so its row on the dashboard
+says *no error bar* rather than claiming a win it cannot support.
+
+| | measured against | episodes | verdict |
+|---|---|---:|---|
+| DOOM · defend the center | the better hand-written baseline | 30 | learned, +8.6 vs a bar of 0.6 |
+| DOOM · health gathering | the better hand-written baseline | 20 | learned, +1,550 vs 169 |
+| DOOM · deadly corridor | the better hand-written baseline | 20 | learned, +257 vs 84 |
+| Crafter · planner | a random agent | 10 | 12.73% vs 1.13%, no error bar |
+| Brogue · explorer | random keystrokes | 6 | **inside noise** on descents, −0.3 vs a bar of 1.3 |
+| Walker2d | the same network, untrained | 12 | learned, +4,433 vs a bar of 28 |
+
+The Brogue row is the reason the table exists. The explorer names the dungeon
+and dives on purpose, and over 300 keystrokes it still does not descend more
+often than random keystrokes do. That is the result; the dashboard prints it in
+the same table as the wins.
+
 ## Where the games come from
 
 **None of these games were written here.** They are real games, downloaded and

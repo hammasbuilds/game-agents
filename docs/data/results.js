@@ -1,5 +1,5 @@
 window.RESULTS = {
- "generated": "6644907",
+ "generated": "78c9ce3",
  "doom": {
   "eval": {
    "scenario": "defend_the_center",
@@ -12885,7 +12885,1393 @@ window.RESULTS = {
   }
  },
  "walker": {
-  "runs": {}
+  "runs": {
+   "walker2d": {
+    "training": {
+     "env_id": "Walker2d-v5",
+     "steps": 1998848,
+     "updates": 976,
+     "episodes": 4239,
+     "final_return_mean": 3794.35,
+     "wall_seconds": 2594.5,
+     "params": 11085
+    },
+    "eval": {
+     "select_seeds": [
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011
+     ],
+     "report_seeds": [
+      9000,
+      9001,
+      9002,
+      9003,
+      9004,
+      9005,
+      9006,
+      9007,
+      9008,
+      9009,
+      9010,
+      9011
+     ],
+     "ladder": [
+      {
+       "checkpoint": "ckpt_000.pt",
+       "episodes": 12,
+       "return_mean": 64.94,
+       "return_std": 2.09,
+       "return_se": 0.6,
+       "return_min": 62.56,
+       "return_max": 70.34,
+       "steps_mean": 89.2,
+       "seeds": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011
+       ],
+       "returns": [
+        70.34,
+        63.65,
+        64.17,
+        63.92,
+        66.91,
+        64.55,
+        64.88,
+        64.72,
+        63.48,
+        66.45,
+        62.56,
+        63.69
+       ],
+       "steps": 0
+      },
+      {
+       "checkpoint": "ckpt_049.pt",
+       "episodes": 12,
+       "return_mean": 430.21,
+       "return_std": 2.89,
+       "return_se": 0.83,
+       "return_min": 426.35,
+       "return_max": 435.02,
+       "steps_mean": 184.9,
+       "seeds": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011
+       ],
+       "returns": [
+        435.02,
+        429.64,
+        432.36,
+        430.07,
+        426.35,
+        426.76,
+        429.24,
+        433.88,
+        431.33,
+        427.17,
+        432.81,
+        427.93
+       ],
+       "steps": 100352
+      },
+      {
+       "checkpoint": "ckpt_146.pt",
+       "episodes": 12,
+       "return_mean": 883.39,
+       "return_std": 97.46,
+       "return_se": 28.14,
+       "return_min": 771.28,
+       "return_max": 1093.27,
+       "steps_mean": 268.5,
+       "seeds": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011
+       ],
+       "returns": [
+        906.6,
+        857.82,
+        1093.27,
+        1058.7,
+        800.67,
+        829.82,
+        871.52,
+        873.61,
+        812.03,
+        857.81,
+        867.57,
+        771.28
+       ],
+       "steps": 299008
+      },
+      {
+       "checkpoint": "ckpt_342.pt",
+       "episodes": 12,
+       "return_mean": 4494.43,
+       "return_std": 39.69,
+       "return_se": 11.46,
+       "return_min": 4397.73,
+       "return_max": 4530.0,
+       "steps_mean": 1000.0,
+       "seeds": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011
+       ],
+       "returns": [
+        4485.11,
+        4458.57,
+        4529.28,
+        4530.0,
+        4453.88,
+        4501.09,
+        4513.7,
+        4506.01,
+        4513.47,
+        4526.18,
+        4518.09,
+        4397.73
+       ],
+       "steps": 700416
+      },
+      {
+       "checkpoint": "ckpt_634.pt",
+       "episodes": 12,
+       "return_mean": 4242.45,
+       "return_std": 844.63,
+       "return_se": 243.82,
+       "return_min": 1562.35,
+       "return_max": 4546.01,
+       "steps_mean": 948.6,
+       "seeds": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011
+       ],
+       "returns": [
+        4477.25,
+        4546.01,
+        4481.8,
+        4470.96,
+        1562.35,
+        4540.75,
+        4497.95,
+        4508.36,
+        4459.03,
+        4443.04,
+        4452.75,
+        4469.2
+       ],
+       "steps": 1298432
+      },
+      {
+       "checkpoint": "ckpt_976.pt",
+       "episodes": 12,
+       "return_mean": 3636.73,
+       "return_std": 1360.7,
+       "return_se": 392.8,
+       "return_min": 1649.12,
+       "return_max": 4810.87,
+       "steps_mean": 784.4,
+       "seeds": [
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011
+       ],
+       "returns": [
+        1658.15,
+        4804.64,
+        4810.87,
+        4800.5,
+        1649.12,
+        4644.88,
+        4474.18,
+        1783.3,
+        2341.94,
+        4535.54,
+        3625.29,
+        4512.39
+       ],
+       "steps": 1998848
+      }
+     ],
+     "best": {
+      "checkpoint": "ckpt_342.pt",
+      "episodes": 12,
+      "return_mean": 4497.88,
+      "return_std": 49.17,
+      "return_se": 14.2,
+      "return_min": 4415.57,
+      "return_max": 4594.44,
+      "steps_mean": 1000.0,
+      "seeds": [
+       9000,
+       9001,
+       9002,
+       9003,
+       9004,
+       9005,
+       9006,
+       9007,
+       9008,
+       9009,
+       9010,
+       9011
+      ],
+      "returns": [
+       4479.87,
+       4463.58,
+       4415.57,
+       4455.13,
+       4572.81,
+       4475.52,
+       4521.81,
+       4506.89,
+       4480.1,
+       4594.44,
+       4505.46,
+       4503.42
+      ],
+      "steps": 700416
+     },
+     "untrained": {
+      "checkpoint": "ckpt_000.pt",
+      "episodes": 12,
+      "return_mean": 65.09,
+      "return_std": 1.62,
+      "return_se": 0.47,
+      "return_min": 63.15,
+      "return_max": 68.11,
+      "steps_mean": 90.2,
+      "seeds": [
+       9000,
+       9001,
+       9002,
+       9003,
+       9004,
+       9005,
+       9006,
+       9007,
+       9008,
+       9009,
+       9010,
+       9011
+      ],
+      "returns": [
+       67.62,
+       65.02,
+       63.75,
+       65.22,
+       63.65,
+       68.11,
+       63.49,
+       66.17,
+       65.17,
+       65.85,
+       63.91,
+       63.15
+      ],
+      "steps": 0
+     },
+     "final": {
+      "checkpoint": "ckpt_976.pt",
+      "episodes": 12,
+      "return_mean": 3636.73,
+      "return_std": 1360.7,
+      "return_se": 392.8,
+      "return_min": 1649.12,
+      "return_max": 4810.87,
+      "steps_mean": 784.4,
+      "seeds": [
+       2000,
+       2001,
+       2002,
+       2003,
+       2004,
+       2005,
+       2006,
+       2007,
+       2008,
+       2009,
+       2010,
+       2011
+      ],
+      "returns": [
+       1658.15,
+       4804.64,
+       4810.87,
+       4800.5,
+       1649.12,
+       4644.88,
+       4474.18,
+       1783.3,
+       2341.94,
+       4535.54,
+       3625.29,
+       4512.39
+      ],
+      "steps": 1998848
+     },
+     "verdict": {
+      "challenger": "trained",
+      "baseline": "untrained",
+      "challenger_mean": 4497.88,
+      "baseline_mean": 65.09,
+      "gain": 4432.79,
+      "bar": 28.41,
+      "label": "learned",
+      "episodes": 12
+     },
+     "peaked_early": true,
+     "decline_after_peak": 857.7,
+     "env_id": "Walker2d-v5"
+    },
+    "curve": [
+     {
+      "steps": 2048,
+      "return": 2.57
+     },
+     {
+      "steps": 10240,
+      "return": 63.74
+     },
+     {
+      "steps": 18432,
+      "return": 214.21
+     },
+     {
+      "steps": 26624,
+      "return": 286.33
+     },
+     {
+      "steps": 34816,
+      "return": 321.01
+     },
+     {
+      "steps": 43008,
+      "return": 294.14
+     },
+     {
+      "steps": 51200,
+      "return": 373.86
+     },
+     {
+      "steps": 59392,
+      "return": 363.91
+     },
+     {
+      "steps": 67584,
+      "return": 380.81
+     },
+     {
+      "steps": 75776,
+      "return": 385.36
+     },
+     {
+      "steps": 83968,
+      "return": 383.02
+     },
+     {
+      "steps": 92160,
+      "return": 408.35
+     },
+     {
+      "steps": 100352,
+      "return": 402.32
+     },
+     {
+      "steps": 108544,
+      "return": 414.69
+     },
+     {
+      "steps": 116736,
+      "return": 413.15
+     },
+     {
+      "steps": 124928,
+      "return": 413.55
+     },
+     {
+      "steps": 133120,
+      "return": 395.56
+     },
+     {
+      "steps": 141312,
+      "return": 435.98
+     },
+     {
+      "steps": 149504,
+      "return": 453.06
+     },
+     {
+      "steps": 157696,
+      "return": 456.97
+     },
+     {
+      "steps": 165888,
+      "return": 500.28
+     },
+     {
+      "steps": 174080,
+      "return": 470.24
+     },
+     {
+      "steps": 182272,
+      "return": 480.32
+     },
+     {
+      "steps": 190464,
+      "return": 496.63
+     },
+     {
+      "steps": 198656,
+      "return": 506.5
+     },
+     {
+      "steps": 206848,
+      "return": 556.39
+     },
+     {
+      "steps": 215040,
+      "return": 629.71
+     },
+     {
+      "steps": 223232,
+      "return": 652.92
+     },
+     {
+      "steps": 231424,
+      "return": 638.39
+     },
+     {
+      "steps": 239616,
+      "return": 635.84
+     },
+     {
+      "steps": 247808,
+      "return": 636.1
+     },
+     {
+      "steps": 256000,
+      "return": 692.52
+     },
+     {
+      "steps": 264192,
+      "return": 724.93
+     },
+     {
+      "steps": 272384,
+      "return": 676.18
+     },
+     {
+      "steps": 280576,
+      "return": 779.56
+     },
+     {
+      "steps": 288768,
+      "return": 787.26
+     },
+     {
+      "steps": 296960,
+      "return": 837.56
+     },
+     {
+      "steps": 305152,
+      "return": 834.84
+     },
+     {
+      "steps": 313344,
+      "return": 1023.5
+     },
+     {
+      "steps": 321536,
+      "return": 1030.31
+     },
+     {
+      "steps": 329728,
+      "return": 1048.93
+     },
+     {
+      "steps": 337920,
+      "return": 1076.89
+     },
+     {
+      "steps": 346112,
+      "return": 1471.89
+     },
+     {
+      "steps": 354304,
+      "return": 1284.44
+     },
+     {
+      "steps": 362496,
+      "return": 1638.53
+     },
+     {
+      "steps": 370688,
+      "return": 1904.32
+     },
+     {
+      "steps": 378880,
+      "return": 2125.33
+     },
+     {
+      "steps": 387072,
+      "return": 1833.78
+     },
+     {
+      "steps": 395264,
+      "return": 1877.75
+     },
+     {
+      "steps": 403456,
+      "return": 1980.96
+     },
+     {
+      "steps": 411648,
+      "return": 2249.03
+     },
+     {
+      "steps": 419840,
+      "return": 1877.41
+     },
+     {
+      "steps": 428032,
+      "return": 2068.63
+     },
+     {
+      "steps": 436224,
+      "return": 2607.58
+     },
+     {
+      "steps": 444416,
+      "return": 2894.12
+     },
+     {
+      "steps": 452608,
+      "return": 2113.98
+     },
+     {
+      "steps": 460800,
+      "return": 1921.28
+     },
+     {
+      "steps": 468992,
+      "return": 2818.09
+     },
+     {
+      "steps": 477184,
+      "return": 3311.91
+     },
+     {
+      "steps": 485376,
+      "return": 2452.44
+     },
+     {
+      "steps": 493568,
+      "return": 2017.2
+     },
+     {
+      "steps": 501760,
+      "return": 2164.76
+     },
+     {
+      "steps": 509952,
+      "return": 1981.72
+     },
+     {
+      "steps": 518144,
+      "return": 2504.09
+     },
+     {
+      "steps": 526336,
+      "return": 2715.48
+     },
+     {
+      "steps": 534528,
+      "return": 2552.67
+     },
+     {
+      "steps": 542720,
+      "return": 2572.39
+     },
+     {
+      "steps": 550912,
+      "return": 2737.55
+     },
+     {
+      "steps": 559104,
+      "return": 2864.74
+     },
+     {
+      "steps": 567296,
+      "return": 2419.22
+     },
+     {
+      "steps": 575488,
+      "return": 2732.12
+     },
+     {
+      "steps": 583680,
+      "return": 3100.9
+     },
+     {
+      "steps": 591872,
+      "return": 2356.54
+     },
+     {
+      "steps": 600064,
+      "return": 2358.86
+     },
+     {
+      "steps": 608256,
+      "return": 1517.95
+     },
+     {
+      "steps": 616448,
+      "return": 2212.95
+     },
+     {
+      "steps": 624640,
+      "return": 2594.65
+     },
+     {
+      "steps": 632832,
+      "return": 2972.95
+     },
+     {
+      "steps": 641024,
+      "return": 3112.57
+     },
+     {
+      "steps": 649216,
+      "return": 3336.87
+     },
+     {
+      "steps": 657408,
+      "return": 2772.75
+     },
+     {
+      "steps": 665600,
+      "return": 3113.83
+     },
+     {
+      "steps": 673792,
+      "return": 3164.36
+     },
+     {
+      "steps": 681984,
+      "return": 2943.57
+     },
+     {
+      "steps": 690176,
+      "return": 3173.88
+     },
+     {
+      "steps": 698368,
+      "return": 2630.25
+     },
+     {
+      "steps": 706560,
+      "return": 2634.95
+     },
+     {
+      "steps": 714752,
+      "return": 3600.79
+     },
+     {
+      "steps": 722944,
+      "return": 3237.96
+     },
+     {
+      "steps": 731136,
+      "return": 2587.74
+     },
+     {
+      "steps": 739328,
+      "return": 2950.46
+     },
+     {
+      "steps": 747520,
+      "return": 2770.09
+     },
+     {
+      "steps": 755712,
+      "return": 2311.39
+     },
+     {
+      "steps": 763904,
+      "return": 2865.56
+     },
+     {
+      "steps": 772096,
+      "return": 2321.26
+     },
+     {
+      "steps": 780288,
+      "return": 2758.06
+     },
+     {
+      "steps": 788480,
+      "return": 3246.67
+     },
+     {
+      "steps": 796672,
+      "return": 3118.37
+     },
+     {
+      "steps": 804864,
+      "return": 3303.82
+     },
+     {
+      "steps": 813056,
+      "return": 3189.09
+     },
+     {
+      "steps": 821248,
+      "return": 2842.43
+     },
+     {
+      "steps": 829440,
+      "return": 2389.32
+     },
+     {
+      "steps": 837632,
+      "return": 1892.74
+     },
+     {
+      "steps": 845824,
+      "return": 2845.84
+     },
+     {
+      "steps": 854016,
+      "return": 3149.66
+     },
+     {
+      "steps": 862208,
+      "return": 2693.0
+     },
+     {
+      "steps": 870400,
+      "return": 2481.35
+     },
+     {
+      "steps": 878592,
+      "return": 2316.92
+     },
+     {
+      "steps": 886784,
+      "return": 2592.83
+     },
+     {
+      "steps": 894976,
+      "return": 3182.36
+     },
+     {
+      "steps": 903168,
+      "return": 3417.67
+     },
+     {
+      "steps": 911360,
+      "return": 3305.42
+     },
+     {
+      "steps": 919552,
+      "return": 3265.21
+     },
+     {
+      "steps": 927744,
+      "return": 3655.63
+     },
+     {
+      "steps": 935936,
+      "return": 3789.6
+     },
+     {
+      "steps": 944128,
+      "return": 3422.81
+     },
+     {
+      "steps": 952320,
+      "return": 2952.92
+     },
+     {
+      "steps": 960512,
+      "return": 2895.78
+     },
+     {
+      "steps": 968704,
+      "return": 3179.34
+     },
+     {
+      "steps": 976896,
+      "return": 2762.48
+     },
+     {
+      "steps": 985088,
+      "return": 3108.33
+     },
+     {
+      "steps": 993280,
+      "return": 3179.96
+     },
+     {
+      "steps": 1001472,
+      "return": 3333.48
+     },
+     {
+      "steps": 1009664,
+      "return": 3571.23
+     },
+     {
+      "steps": 1017856,
+      "return": 2865.57
+     },
+     {
+      "steps": 1026048,
+      "return": 3048.94
+     },
+     {
+      "steps": 1034240,
+      "return": 3363.77
+     },
+     {
+      "steps": 1042432,
+      "return": 3333.78
+     },
+     {
+      "steps": 1050624,
+      "return": 2736.21
+     },
+     {
+      "steps": 1058816,
+      "return": 2335.55
+     },
+     {
+      "steps": 1067008,
+      "return": 2570.9
+     },
+     {
+      "steps": 1075200,
+      "return": 2713.03
+     },
+     {
+      "steps": 1083392,
+      "return": 3227.18
+     },
+     {
+      "steps": 1091584,
+      "return": 3696.25
+     },
+     {
+      "steps": 1099776,
+      "return": 3777.51
+     },
+     {
+      "steps": 1107968,
+      "return": 3555.77
+     },
+     {
+      "steps": 1116160,
+      "return": 3060.85
+     },
+     {
+      "steps": 1124352,
+      "return": 3025.68
+     },
+     {
+      "steps": 1132544,
+      "return": 3431.25
+     },
+     {
+      "steps": 1140736,
+      "return": 3357.01
+     },
+     {
+      "steps": 1148928,
+      "return": 3197.92
+     },
+     {
+      "steps": 1157120,
+      "return": 3079.8
+     },
+     {
+      "steps": 1165312,
+      "return": 3204.02
+     },
+     {
+      "steps": 1173504,
+      "return": 3456.6
+     },
+     {
+      "steps": 1181696,
+      "return": 3219.84
+     },
+     {
+      "steps": 1189888,
+      "return": 2587.98
+     },
+     {
+      "steps": 1198080,
+      "return": 3318.34
+     },
+     {
+      "steps": 1206272,
+      "return": 2429.18
+     },
+     {
+      "steps": 1214464,
+      "return": 2548.42
+     },
+     {
+      "steps": 1222656,
+      "return": 2789.96
+     },
+     {
+      "steps": 1230848,
+      "return": 2531.61
+     },
+     {
+      "steps": 1239040,
+      "return": 2110.8
+     },
+     {
+      "steps": 1247232,
+      "return": 2909.71
+     },
+     {
+      "steps": 1255424,
+      "return": 3375.95
+     },
+     {
+      "steps": 1263616,
+      "return": 2775.14
+     },
+     {
+      "steps": 1271808,
+      "return": 2674.85
+     },
+     {
+      "steps": 1280000,
+      "return": 2904.37
+     },
+     {
+      "steps": 1288192,
+      "return": 3366.96
+     },
+     {
+      "steps": 1296384,
+      "return": 3663.31
+     },
+     {
+      "steps": 1304576,
+      "return": 3759.91
+     },
+     {
+      "steps": 1312768,
+      "return": 3523.58
+     },
+     {
+      "steps": 1320960,
+      "return": 3341.14
+     },
+     {
+      "steps": 1329152,
+      "return": 3416.62
+     },
+     {
+      "steps": 1337344,
+      "return": 3872.65
+     },
+     {
+      "steps": 1345536,
+      "return": 3741.33
+     },
+     {
+      "steps": 1353728,
+      "return": 3034.29
+     },
+     {
+      "steps": 1361920,
+      "return": 3180.92
+     },
+     {
+      "steps": 1370112,
+      "return": 3661.33
+     },
+     {
+      "steps": 1378304,
+      "return": 3253.42
+     },
+     {
+      "steps": 1386496,
+      "return": 3301.71
+     },
+     {
+      "steps": 1394688,
+      "return": 2598.22
+     },
+     {
+      "steps": 1402880,
+      "return": 2598.56
+     },
+     {
+      "steps": 1411072,
+      "return": 3153.78
+     },
+     {
+      "steps": 1419264,
+      "return": 3146.18
+     },
+     {
+      "steps": 1427456,
+      "return": 3031.37
+     },
+     {
+      "steps": 1435648,
+      "return": 3499.79
+     },
+     {
+      "steps": 1443840,
+      "return": 3322.74
+     },
+     {
+      "steps": 1452032,
+      "return": 3203.51
+     },
+     {
+      "steps": 1460224,
+      "return": 3658.3
+     },
+     {
+      "steps": 1468416,
+      "return": 3075.85
+     },
+     {
+      "steps": 1476608,
+      "return": 2950.48
+     },
+     {
+      "steps": 1484800,
+      "return": 3363.47
+     },
+     {
+      "steps": 1492992,
+      "return": 2919.94
+     },
+     {
+      "steps": 1501184,
+      "return": 3329.01
+     },
+     {
+      "steps": 1509376,
+      "return": 3717.78
+     },
+     {
+      "steps": 1517568,
+      "return": 3244.61
+     },
+     {
+      "steps": 1525760,
+      "return": 2972.99
+     },
+     {
+      "steps": 1533952,
+      "return": 3425.66
+     },
+     {
+      "steps": 1542144,
+      "return": 3688.63
+     },
+     {
+      "steps": 1550336,
+      "return": 3141.45
+     },
+     {
+      "steps": 1558528,
+      "return": 3527.37
+     },
+     {
+      "steps": 1566720,
+      "return": 3698.02
+     },
+     {
+      "steps": 1574912,
+      "return": 3370.31
+     },
+     {
+      "steps": 1583104,
+      "return": 3613.09
+     },
+     {
+      "steps": 1591296,
+      "return": 3848.28
+     },
+     {
+      "steps": 1599488,
+      "return": 3950.73
+     },
+     {
+      "steps": 1607680,
+      "return": 2688.14
+     },
+     {
+      "steps": 1615872,
+      "return": 2440.77
+     },
+     {
+      "steps": 1624064,
+      "return": 2981.8
+     },
+     {
+      "steps": 1632256,
+      "return": 3193.55
+     },
+     {
+      "steps": 1640448,
+      "return": 3142.45
+     },
+     {
+      "steps": 1648640,
+      "return": 3357.49
+     },
+     {
+      "steps": 1656832,
+      "return": 3370.22
+     },
+     {
+      "steps": 1665024,
+      "return": 3491.94
+     },
+     {
+      "steps": 1673216,
+      "return": 3194.23
+     },
+     {
+      "steps": 1681408,
+      "return": 3120.75
+     },
+     {
+      "steps": 1689600,
+      "return": 3434.62
+     },
+     {
+      "steps": 1697792,
+      "return": 3844.52
+     },
+     {
+      "steps": 1705984,
+      "return": 4176.13
+     },
+     {
+      "steps": 1714176,
+      "return": 4003.61
+     },
+     {
+      "steps": 1722368,
+      "return": 3790.2
+     },
+     {
+      "steps": 1730560,
+      "return": 3796.97
+     },
+     {
+      "steps": 1738752,
+      "return": 3626.6
+     },
+     {
+      "steps": 1746944,
+      "return": 3775.96
+     },
+     {
+      "steps": 1755136,
+      "return": 3816.59
+     },
+     {
+      "steps": 1763328,
+      "return": 3486.43
+     },
+     {
+      "steps": 1771520,
+      "return": 2987.15
+     },
+     {
+      "steps": 1779712,
+      "return": 3259.04
+     },
+     {
+      "steps": 1787904,
+      "return": 2629.79
+     },
+     {
+      "steps": 1796096,
+      "return": 2848.49
+     },
+     {
+      "steps": 1804288,
+      "return": 989.72
+     },
+     {
+      "steps": 1812480,
+      "return": 1135.83
+     },
+     {
+      "steps": 1820672,
+      "return": 2361.08
+     },
+     {
+      "steps": 1828864,
+      "return": 2557.26
+     },
+     {
+      "steps": 1837056,
+      "return": 2114.38
+     },
+     {
+      "steps": 1845248,
+      "return": 2168.61
+     },
+     {
+      "steps": 1853440,
+      "return": 3035.2
+     },
+     {
+      "steps": 1861632,
+      "return": 3051.06
+     },
+     {
+      "steps": 1869824,
+      "return": 2496.85
+     },
+     {
+      "steps": 1878016,
+      "return": 3334.36
+     },
+     {
+      "steps": 1886208,
+      "return": 3358.77
+     },
+     {
+      "steps": 1894400,
+      "return": 3317.18
+     },
+     {
+      "steps": 1902592,
+      "return": 2738.26
+     },
+     {
+      "steps": 1910784,
+      "return": 3432.27
+     },
+     {
+      "steps": 1918976,
+      "return": 3984.15
+     },
+     {
+      "steps": 1927168,
+      "return": 3716.42
+     },
+     {
+      "steps": 1935360,
+      "return": 3644.15
+     },
+     {
+      "steps": 1943552,
+      "return": 3179.11
+     },
+     {
+      "steps": 1951744,
+      "return": 3061.58
+     },
+     {
+      "steps": 1959936,
+      "return": 3015.31
+     },
+     {
+      "steps": 1968128,
+      "return": 3475.64
+     },
+     {
+      "steps": 1976320,
+      "return": 3655.9
+     },
+     {
+      "steps": 1984512,
+      "return": 3959.2
+     },
+     {
+      "steps": 1992704,
+      "return": 3807.88
+     }
+    ]
+   }
+  }
  },
  "media": {
   "doom": [
@@ -12908,9 +14294,9 @@ window.RESULTS = {
    "gras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras",
    "gras gras gras gras gras tree tree gras wate\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ntabl gras gras gras gras gras tree gras gras\ngras gras gras gras tree gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras",
    "path gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras tabl gras gras\ngras gras tabl gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\nston tree gras gras tree gras tabl gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras tabl gras",
-   "path path ston ston ston path ston ston ston\npath path ston ston ston path diam ston ston\npath ston ston ston ston path iron iron ston\nston ston ston path path path path path iron\nston ston ston ston furn path path path path\nston ston ston ston ston path iron path path\nston ston ston ston ston path diam ston ston",
-   "gras gras sand sand wate wate wate wate wate\ngras gras tree sand wate wate wate wate wate\ngras gras gras sand sand wate wate wate wate\ngras gras ston gras sand wate wate wate wate\ngras gras gras gras gras gras wate wate wate\ngras tabl gras gras gras gras wate wate ston\ngras gras gras gras gras gras gras wate ston",
-   "gras gras gras gras gras gras sand sand sand\ngras gras gras gras sand sand sand wate wate\ngras gras tree sand sand wate wate wate wate\ngras gras ston sand sand wate wate wate wate\ngras gras gras tree sand wate wate wate wate\ngras ston gras gras ston sand wate wate wate\ngras gras gras ston gras sand wate wate wate"
+   "path path ston ston ston path ston ston ston\npath path ston ston ston path diam ston ston\npath ston ston ston ston path iron iron ston\nston ston ston path path path path path iron\nston ston ston ston furn path path path path\nston ston ston ston ston path iron path path\nston ston ston ston ston ston diam ston ston",
+   "gras gras tree sand sand wate wate wate wate\ngras gras gras sand sand wate wate wate wate\ngras gras gras tree sand wate wate wate wate\ngras gras gras ston sand sand wate wate wate\ngras gras gras gras gras sand wate wate wate\ngras gras gras gras gras gras gras wate wate\ngras gras tabl gras gras gras gras wate wate",
+   "iron iron ston ston ston ston ston ston gras\ngras gras gras ston iron gras gras gras gras\ngras gras gras gras gras gras sand sand sand\ngras gras gras ston sand sand ston wate wate\ngras gras tree sand sand wate wate wate wate\ngras gras ston sand sand wate wate wate wate\ngras gras gras tree sand wate wate wate wate"
   ],
   "brogue": [
    "brogue_0.png",
