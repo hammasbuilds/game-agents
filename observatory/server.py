@@ -623,6 +623,11 @@ class Handler(SimpleHTTPRequestHandler):
                                "schema": schema, "presets": PRESETS,
                                "sweepable": list(SWEEPABLE),
                                "problem": GAMES_PROBLEM})
+        if path == "/api/demos":
+            from observatory import demos as demo_index
+            import importlib
+            importlib.reload(demo_index)      # a film recorded since startup counts
+            return self._json({"demos": demo_index.as_dicts()})
         if path == "/api/projects":
             return self._json({"projects": project_rows(),
                                "groups": projects.GROUPS,

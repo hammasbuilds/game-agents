@@ -1,5 +1,5 @@
 window.SNAPSHOT = {
- "taken_at": "2026-10-16 06:47:06Z",
+ "taken_at": "2026-10-17 08:01:41Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -7,7 +7,7 @@ window.SNAPSHOT = {
    "title": "Car racing",
    "env_id": "CarRacing-v3",
    "blurb": "Top-down racing. The agent sees the track and steers; an untrained one spins on the grass, a trained one follows the road.",
-   "state": "stopped",
+   "state": "stalled",
    "steps": 414720,
    "updates": 270,
    "sps": 60.1,
@@ -16,7 +16,7 @@ window.SNAPSHOT = {
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": 87923,
+   "seconds_since_update": 178799,
    "checkpoints": [
     {
      "tag": "000",
@@ -982,97 +982,77 @@ window.SNAPSHOT = {
     {
      "tag": "random",
      "steps": null,
-     "episodes": 6,
-     "return_mean": -49.43,
-     "return_std": 19.56,
-     "return_min": -78.5,
+     "episodes": 2,
+     "return_mean": -29.63,
+     "return_std": 9.26,
+     "return_min": -36.18,
      "return_max": -23.08,
      "length_mean": 238.0,
      "returns": [
       -23.08,
-      -36.18,
-      -78.5,
-      -51.95,
-      -62.36,
-      -44.49
+      -36.18
      ]
     },
     {
      "tag": "000",
      "steps": 0,
-     "episodes": 6,
-     "return_mean": -53.72,
-     "return_std": 16.04,
-     "return_min": -74.24,
-     "return_max": -32.09,
+     "episodes": 2,
+     "return_mean": -48.59,
+     "return_std": 16.7,
+     "return_min": -60.4,
+     "return_max": -36.78,
      "length_mean": 238.0,
      "returns": [
-      -53.9,
-      -74.24,
-      -62.0,
-      -32.09,
-      -62.36,
-      -37.76
+      -36.78,
+      -60.4
      ]
     },
     {
      "tag": "005",
      "steps": 59904,
-     "episodes": 6,
-     "return_mean": 134.96,
-     "return_std": 55.42,
-     "return_min": 60.63,
-     "return_max": 223.49,
+     "episodes": 2,
+     "return_mean": 330.24,
+     "return_std": 29.88,
+     "return_min": 309.11,
+     "return_max": 351.37,
      "length_mean": 238.0,
      "returns": [
-      223.49,
-      167.98,
-      109.62,
-      60.63,
-      127.55,
-      120.49
+      309.11,
+      351.37
      ]
     },
     {
      "tag": "015",
      "steps": 179712,
-     "episodes": 6,
-     "return_mean": 300.8,
-     "return_std": 160.55,
-     "return_min": 32.95,
-     "return_max": 514.0,
+     "episodes": 2,
+     "return_mean": 294.1,
+     "return_std": 32.05,
+     "return_min": 271.44,
+     "return_max": 316.76,
      "length_mean": 238.0,
      "returns": [
-      288.56,
-      514.0,
-      403.35,
-      269.24,
-      296.69,
-      32.95
+      271.44,
+      316.76
      ]
     },
     {
      "tag": "035",
      "steps": 419328,
-     "episodes": 6,
-     "return_mean": 375.95,
-     "return_std": 158.61,
-     "return_min": 219.88,
-     "return_max": 670.68,
+     "episodes": 2,
+     "return_mean": 262.71,
+     "return_std": 80.15,
+     "return_min": 206.04,
+     "return_max": 319.38,
      "length_mean": 238.0,
      "returns": [
-      394.73,
-      219.88,
-      670.68,
-      312.28,
-      382.74,
-      275.37
+      319.38,
+      206.04
      ]
     }
    ],
    "verdict": {
     "label": "learned",
-    "detail": "+429.7 against a bar of 130.2, which is two standard errors of the difference over 6 episodes a side"
+    "detail": "+311.3 against a bar of 115.8, which is two standard errors of the difference over 2 episodes a side"
    },
    "media_dir": "../docs/media/racing",
    "clips": [
@@ -1115,7 +1095,7 @@ window.SNAPSHOT = {
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 98439,
+   "seconds_since_update": 189315,
    "checkpoints": [
     {
      "tag": "000",
@@ -2240,7 +2220,7 @@ window.SNAPSHOT = {
    "wall_minutes": 61.1,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 84134,
+   "seconds_since_update": 175010,
    "checkpoints": [
     {
      "tag": "000",
@@ -3372,7 +3352,7 @@ window.SNAPSHOT = {
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 94825,
+   "seconds_since_update": 185701,
    "checkpoints": [
     {
      "tag": "000",
@@ -6606,13 +6586,13 @@ window.SNAPSHOT = {
   "media_dir": "../docs/media"
  },
  "machine": {
-  "cpu_percent": 7.6,
-  "python_processes": 50,
+  "cpu_percent": 96.0,
+  "python_processes": 90,
   "gpu": {
    "name": "Quadro RTX 5000",
-   "memory_used": "0 MiB",
+   "memory_used": "10665 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "0 %"
+   "utilisation": "23 %"
   }
  }
 };
