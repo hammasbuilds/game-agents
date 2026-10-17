@@ -8,44 +8,38 @@
   50002,
   50003,
   50004,
-  50005,
-  50006,
-  50007
+  50005
  ],
  "ladder": [
   {
    "tag": "random",
    "steps": null,
-   "episodes": 8,
-   "return_mean": 50.0,
-   "return_std": 92.58,
+   "episodes": 6,
+   "return_mean": 66.67,
+   "return_std": 103.28,
    "return_min": 0.0,
    "return_max": 200.0,
-   "length_mean": 493.8,
+   "length_mean": 454.2,
    "returns": [
     0.0,
     0.0,
     0.0,
     200.0,
     200.0,
-    0.0,
-    0.0,
     0.0
    ]
   },
   {
    "tag": "000",
    "steps": 0,
-   "episodes": 8,
-   "return_mean": 25.0,
-   "return_std": 70.71,
+   "episodes": 6,
+   "return_mean": 0.0,
+   "return_std": 0.0,
    "return_min": 0.0,
-   "return_max": 200.0,
-   "length_mean": 508.1,
+   "return_max": 0.0,
+   "length_mean": 427.5,
    "returns": [
     0.0,
-    0.0,
-    200.0,
     0.0,
     0.0,
     0.0,
@@ -56,15 +50,13 @@
   {
    "tag": "005",
    "steps": 99840,
-   "episodes": 8,
+   "episodes": 6,
    "return_mean": 0.0,
    "return_std": 0.0,
    "return_min": 0.0,
    "return_max": 0.0,
-   "length_mean": 493.1,
+   "length_mean": 437.2,
    "returns": [
-    0.0,
-    0.0,
     0.0,
     0.0,
     0.0,
@@ -76,15 +68,13 @@
   {
    "tag": "015",
    "steps": 299520,
-   "episodes": 8,
+   "episodes": 6,
    "return_mean": 0.0,
    "return_std": 0.0,
    "return_min": 0.0,
    "return_max": 0.0,
-   "length_mean": 467.5,
+   "length_mean": 472.2,
    "returns": [
-    0.0,
-    0.0,
     0.0,
     0.0,
     0.0,
@@ -96,15 +86,13 @@
   {
    "tag": "035",
    "steps": 700416,
-   "episodes": 8,
+   "episodes": 6,
    "return_mean": 0.0,
    "return_std": 0.0,
    "return_min": 0.0,
    "return_max": 0.0,
-   "length_mean": 447.9,
+   "length_mean": 463.5,
    "returns": [
-    0.0,
-    0.0,
     0.0,
     0.0,
     0.0,
@@ -116,15 +104,13 @@
   {
    "tag": "065",
    "steps": 1299456,
-   "episodes": 8,
+   "episodes": 6,
    "return_mean": 0.0,
    "return_std": 0.0,
    "return_min": 0.0,
    "return_max": 0.0,
-   "length_mean": 324.8,
+   "length_mean": 332.5,
    "returns": [
-    0.0,
-    0.0,
     0.0,
     0.0,
     0.0,
@@ -136,22 +122,22 @@
   {
    "tag": "100",
    "steps": 1999872,
-   "episodes": 8,
-   "return_mean": 0.0,
-   "return_std": 0.0,
+   "episodes": 6,
+   "return_mean": 33.33,
+   "return_std": 81.65,
    "return_min": 0.0,
-   "return_max": 0.0,
-   "length_mean": 387.6,
+   "return_max": 200.0,
+   "length_mean": 395.5,
    "returns": [
     0.0,
     0.0,
     0.0,
     0.0,
-    0.0,
-    0.0,
-    0.0,
+    200.0,
     0.0
    ]
   }
- ]
+ ],
+ "measurement": "ladder",
+ "episodes_per_checkpoint": 6
 }

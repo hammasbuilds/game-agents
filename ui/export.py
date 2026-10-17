@@ -258,7 +258,17 @@ def main() -> None:
     payload["media"] = media
     payload["episode"] = payload_episode
     payload["iterations"] = read_json(DATA / "iterations.json")
-    payload["clips"] = sorted(p.name for p in MEDIA.glob("clip_*"))
+    # Not glob("clip_*"): that froze this list to the three first recordings and
+    # left the rebuilt films, DOOM's other two maps and the walking robot out of
+    # the page entirely. The demonstration index knows every film and what each
+    # one shows.
+    sys.path.insert(0, str(ROOT))
+    from observatory.demos import as_dicts as demo_rows
+    payload["clips"] = [
+        {"file": row["url"].replace("/docs/media/", ""), "title": row["title"],
+         "detail": row["detail"]}
+        for row in demo_rows()
+        if "first recording" not in row["title"] and row["title"] != "The reel"]
     (DATA / "results.json").write_text(json.dumps(payload, indent=1))
     # The same payload as a script, so the page also works when opened straight
     # off disk: fetch() of a local JSON file is blocked by the browser, and a

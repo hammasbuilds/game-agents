@@ -1,5 +1,5 @@
 window.SNAPSHOT = {
- "taken_at": "2026-10-17 08:01:41Z",
+ "taken_at": "2026-10-17 08:22:37Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -16,7 +16,7 @@ window.SNAPSHOT = {
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": 178799,
+   "seconds_since_update": 180055,
    "checkpoints": [
     {
      "tag": "000",
@@ -1095,7 +1095,7 @@ window.SNAPSHOT = {
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 189315,
+   "seconds_since_update": 190571,
    "checkpoints": [
     {
      "tag": "000",
@@ -2038,147 +2038,133 @@ window.SNAPSHOT = {
     {
      "tag": "random",
      "steps": null,
-     "episodes": 8,
-     "return_mean": 0.5,
-     "return_std": 5.83,
+     "episodes": 6,
+     "return_mean": -0.83,
+     "return_std": 6.05,
      "return_min": -10.0,
-     "return_max": 7.0,
-     "length_mean": 1782.0,
+     "return_max": 6.0,
+     "length_mean": 1781.3,
      "returns": [
       -4.0,
       6.0,
       -3.0,
       -10.0,
       5.0,
-      1.0,
-      2.0,
-      7.0
+      1.0
      ]
     },
     {
      "tag": "000",
      "steps": 0,
-     "episodes": 8,
-     "return_mean": 2.12,
-     "return_std": 3.27,
-     "return_min": -1.0,
-     "return_max": 9.0,
-     "length_mean": 1782.0,
+     "episodes": 6,
+     "return_mean": 1.0,
+     "return_std": 3.29,
+     "return_min": -3.0,
+     "return_max": 6.0,
+     "length_mean": 1781.3,
      "returns": [
-      0.0,
-      -1.0,
-      4.0,
       3.0,
-      9.0,
-      0.0,
-      0.0,
-      2.0
+      2.0,
+      -1.0,
+      -3.0,
+      6.0,
+      -1.0
      ]
     },
     {
      "tag": "005",
      "steps": 99840,
-     "episodes": 8,
-     "return_mean": 3.0,
-     "return_std": 4.41,
-     "return_min": -2.0,
-     "return_max": 12.0,
-     "length_mean": 1782.0,
+     "episodes": 6,
+     "return_mean": 3.17,
+     "return_std": 2.86,
+     "return_min": 0.0,
+     "return_max": 8.0,
+     "length_mean": 1781.3,
      "returns": [
-      3.0,
-      -1.0,
+      8.0,
+      2.0,
       5.0,
-      0.0,
-      3.0,
-      12.0,
-      4.0,
-      -2.0
+      2.0,
+      2.0,
+      0.0
      ]
     },
     {
      "tag": "015",
      "steps": 299520,
-     "episodes": 8,
-     "return_mean": -3.5,
-     "return_std": 8.4,
-     "return_min": -14.0,
-     "return_max": 9.0,
-     "length_mean": 1782.0,
+     "episodes": 6,
+     "return_mean": 1.33,
+     "return_std": 2.8,
+     "return_min": -2.0,
+     "return_max": 6.0,
+     "length_mean": 1781.3,
      "returns": [
-      -14.0,
-      -3.0,
-      9.0,
-      4.0,
-      -11.0,
-      3.0,
-      -12.0,
-      -4.0
+      -1.0,
+      1.0,
+      6.0,
+      -2.0,
+      2.0,
+      2.0
      ]
     },
     {
      "tag": "035",
      "steps": 700416,
-     "episodes": 8,
-     "return_mean": 2.12,
-     "return_std": 6.31,
-     "return_min": -6.0,
-     "return_max": 12.0,
-     "length_mean": 1782.0,
+     "episodes": 6,
+     "return_mean": 1.5,
+     "return_std": 9.61,
+     "return_min": -16.0,
+     "return_max": 10.0,
+     "length_mean": 1781.3,
      "returns": [
+      9.0,
+      5.0,
+      -2.0,
       3.0,
-      8.0,
-      0.0,
-      -6.0,
-      -6.0,
-      12.0,
-      1.0,
-      5.0
+      10.0,
+      -16.0
      ]
     },
     {
      "tag": "065",
      "steps": 1299456,
-     "episodes": 8,
-     "return_mean": -2.12,
+     "episodes": 6,
+     "return_mean": -3.17,
      "return_std": 5.0,
-     "return_min": -13.0,
-     "return_max": 4.0,
-     "length_mean": 1782.0,
+     "return_min": -10.0,
+     "return_max": 3.0,
+     "length_mean": 1781.3,
      "returns": [
-      -4.0,
-      -2.0,
+      -5.0,
       1.0,
-      4.0,
-      -2.0,
-      -13.0,
+      -10.0,
+      -7.0,
       -1.0,
-      0.0
+      3.0
      ]
     },
     {
      "tag": "100",
      "steps": 1999872,
-     "episodes": 8,
-     "return_mean": 1.62,
-     "return_std": 3.5,
-     "return_min": -2.0,
-     "return_max": 9.0,
-     "length_mean": 1782.0,
+     "episodes": 6,
+     "return_mean": 0.5,
+     "return_std": 3.27,
+     "return_min": -4.0,
+     "return_max": 6.0,
+     "length_mean": 1781.3,
      "returns": [
       0.0,
-      0.0,
-      4.0,
+      -4.0,
+      -1.0,
       1.0,
-      9.0,
-      2.0,
-      -2.0,
-      -1.0
+      6.0,
+      1.0
      ]
     }
    ],
    "verdict": {
     "label": "no gain",
-    "detail": "-0.5 against a bar of 3.4, which is two standard errors of the difference over 8 episodes a side"
+    "detail": "-0.5 against a bar of 3.8, which is two standard errors of the difference over 6 episodes a side"
    },
    "media_dir": "../docs/media/boxing",
    "clips": [
@@ -2220,7 +2206,7 @@ window.SNAPSHOT = {
    "wall_minutes": 61.1,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 175010,
+   "seconds_since_update": 176266,
    "checkpoints": [
     {
      "tag": "000",
@@ -3170,36 +3156,32 @@ window.SNAPSHOT = {
     {
      "tag": "random",
      "steps": null,
-     "episodes": 8,
-     "return_mean": 50.0,
-     "return_std": 92.58,
+     "episodes": 6,
+     "return_mean": 66.67,
+     "return_std": 103.28,
      "return_min": 0.0,
      "return_max": 200.0,
-     "length_mean": 493.8,
+     "length_mean": 454.2,
      "returns": [
       0.0,
       0.0,
       0.0,
       200.0,
       200.0,
-      0.0,
-      0.0,
       0.0
      ]
     },
     {
      "tag": "000",
      "steps": 0,
-     "episodes": 8,
-     "return_mean": 25.0,
-     "return_std": 70.71,
+     "episodes": 6,
+     "return_mean": 0.0,
+     "return_std": 0.0,
      "return_min": 0.0,
-     "return_max": 200.0,
-     "length_mean": 508.1,
+     "return_max": 0.0,
+     "length_mean": 427.5,
      "returns": [
       0.0,
-      0.0,
-      200.0,
       0.0,
       0.0,
       0.0,
@@ -3210,15 +3192,13 @@ window.SNAPSHOT = {
     {
      "tag": "005",
      "steps": 99840,
-     "episodes": 8,
+     "episodes": 6,
      "return_mean": 0.0,
      "return_std": 0.0,
      "return_min": 0.0,
      "return_max": 0.0,
-     "length_mean": 493.1,
+     "length_mean": 437.2,
      "returns": [
-      0.0,
-      0.0,
       0.0,
       0.0,
       0.0,
@@ -3230,15 +3210,13 @@ window.SNAPSHOT = {
     {
      "tag": "015",
      "steps": 299520,
-     "episodes": 8,
+     "episodes": 6,
      "return_mean": 0.0,
      "return_std": 0.0,
      "return_min": 0.0,
      "return_max": 0.0,
-     "length_mean": 467.5,
+     "length_mean": 472.2,
      "returns": [
-      0.0,
-      0.0,
       0.0,
       0.0,
       0.0,
@@ -3250,15 +3228,13 @@ window.SNAPSHOT = {
     {
      "tag": "035",
      "steps": 700416,
-     "episodes": 8,
+     "episodes": 6,
      "return_mean": 0.0,
      "return_std": 0.0,
      "return_min": 0.0,
      "return_max": 0.0,
-     "length_mean": 447.9,
+     "length_mean": 463.5,
      "returns": [
-      0.0,
-      0.0,
       0.0,
       0.0,
       0.0,
@@ -3270,15 +3246,13 @@ window.SNAPSHOT = {
     {
      "tag": "065",
      "steps": 1299456,
-     "episodes": 8,
+     "episodes": 6,
      "return_mean": 0.0,
      "return_std": 0.0,
      "return_min": 0.0,
      "return_max": 0.0,
-     "length_mean": 324.8,
+     "length_mean": 332.5,
      "returns": [
-      0.0,
-      0.0,
       0.0,
       0.0,
       0.0,
@@ -3290,27 +3264,25 @@ window.SNAPSHOT = {
     {
      "tag": "100",
      "steps": 1999872,
-     "episodes": 8,
-     "return_mean": 0.0,
-     "return_std": 0.0,
+     "episodes": 6,
+     "return_mean": 33.33,
+     "return_std": 81.65,
      "return_min": 0.0,
-     "return_max": 0.0,
-     "length_mean": 387.6,
+     "return_max": 200.0,
+     "length_mean": 395.5,
      "returns": [
       0.0,
       0.0,
       0.0,
       0.0,
-      0.0,
-      0.0,
-      0.0,
+      200.0,
       0.0
      ]
     }
    ],
    "verdict": {
-    "label": "no gain",
-    "detail": "-25.0 against a bar of 50.0, which is two standard errors of the difference over 8 episodes a side"
+    "label": "inside noise",
+    "detail": "+33.3 against a bar of 66.7, which is two standard errors of the difference over 6 episodes a side \u2014 too small to claim"
    },
    "media_dir": "../docs/media/platformer",
    "clips": [
@@ -3352,7 +3324,7 @@ window.SNAPSHOT = {
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 185701,
+   "seconds_since_update": 186957,
    "checkpoints": [
     {
      "tag": "000",
@@ -4302,79 +4274,71 @@ window.SNAPSHOT = {
     {
      "tag": "random",
      "steps": null,
-     "episodes": 8,
-     "return_mean": -20.38,
-     "return_std": 0.74,
+     "episodes": 6,
+     "return_mean": -20.17,
+     "return_std": 0.75,
      "return_min": -21.0,
      "return_max": -19.0,
-     "length_mean": 912.6,
+     "length_mean": 898.0,
      "returns": [
       -21.0,
       -20.0,
       -20.0,
       -19.0,
       -20.0,
-      -21.0,
-      -21.0,
       -21.0
      ]
     },
     {
      "tag": "000",
      "steps": 0,
-     "episodes": 8,
-     "return_mean": -20.0,
-     "return_std": 1.31,
+     "episodes": 6,
+     "return_mean": -20.5,
+     "return_std": 0.84,
      "return_min": -21.0,
-     "return_max": -18.0,
-     "length_mean": 935.5,
+     "return_max": -19.0,
+     "length_mean": 906.3,
      "returns": [
       -21.0,
       -20.0,
       -21.0,
-      -18.0,
-      -20.0,
       -21.0,
-      -21.0,
-      -18.0
+      -19.0,
+      -21.0
      ]
     },
     {
      "tag": "005",
      "steps": 99840,
-     "episodes": 8,
-     "return_mean": -19.88,
-     "return_std": 0.83,
+     "episodes": 6,
+     "return_mean": -20.5,
+     "return_std": 0.84,
      "return_min": -21.0,
-     "return_max": -18.0,
-     "length_mean": 949.5,
+     "return_max": -19.0,
+     "length_mean": 891.5,
      "returns": [
       -20.0,
-      -20.0,
-      -20.0,
-      -20.0,
       -21.0,
-      -20.0,
-      -20.0,
-      -18.0
+      -21.0,
+      -21.0,
+      -21.0,
+      -19.0
      ]
     },
     {
      "tag": "015",
      "steps": 299520,
-     "episodes": 8,
-     "return_mean": -20.75,
-     "return_std": 0.46,
+     "episodes": 6,
+     "return_mean": -20.33,
+     "return_std": 0.82,
      "return_min": -21.0,
-     "return_max": -20.0,
-     "length_mean": 842.6,
+     "return_max": -19.0,
+     "length_mean": 900.0,
      "returns": [
-      -21.0,
       -20.0,
       -21.0,
-      -21.0,
+      -19.0,
       -20.0,
-      -21.0,
       -21.0,
       -21.0
      ]
@@ -4382,67 +4346,61 @@ window.SNAPSHOT = {
     {
      "tag": "035",
      "steps": 700416,
-     "episodes": 8,
-     "return_mean": -20.5,
-     "return_std": 0.76,
+     "episodes": 6,
+     "return_mean": -19.33,
+     "return_std": 1.03,
      "return_min": -21.0,
-     "return_max": -19.0,
-     "length_mean": 1060.6,
+     "return_max": -18.0,
+     "length_mean": 1093.0,
      "returns": [
-      -21.0,
-      -21.0,
+      -18.0,
       -19.0,
-      -21.0,
+      -19.0,
       -20.0,
-      -20.0,
       -21.0,
-      -21.0
+      -19.0
      ]
     },
     {
      "tag": "065",
      "steps": 1299456,
-     "episodes": 8,
-     "return_mean": -15.75,
-     "return_std": 7.38,
+     "episodes": 6,
+     "return_mean": -17.83,
+     "return_std": 3.6,
      "return_min": -21.0,
-     "return_max": -2.0,
-     "length_mean": 1794.5,
+     "return_max": -11.0,
+     "length_mean": 1655.3,
      "returns": [
-      -20.0,
-      -20.0,
-      -2.0,
-      -18.0,
+      -21.0,
+      -19.0,
+      -11.0,
       -20.0,
       -19.0,
-      -6.0,
-      -21.0
+      -17.0
      ]
     },
     {
      "tag": "100",
      "steps": 1999872,
-     "episodes": 8,
-     "return_mean": -16.62,
-     "return_std": 2.62,
-     "return_min": -21.0,
-     "return_max": -13.0,
-     "length_mean": 2240.6,
+     "episodes": 6,
+     "return_mean": -16.67,
+     "return_std": 5.75,
+     "return_min": -20.0,
+     "return_max": -5.0,
+     "length_mean": 2058.5,
      "returns": [
       -19.0,
+      -19.0,
+      -5.0,
       -18.0,
-      -15.0,
-      -15.0,
-      -21.0,
-      -17.0,
-      -15.0,
-      -13.0
+      -20.0,
+      -19.0
      ]
     }
    ],
    "verdict": {
-    "label": "learned",
-    "detail": "+3.4 against a bar of 2.1, which is two standard errors of the difference over 8 episodes a side"
+    "label": "inside noise",
+    "detail": "+3.8 against a bar of 4.7, which is two standard errors of the difference over 6 episodes a side \u2014 too small to claim"
    },
    "media_dir": "../docs/media/pingpong",
    "clips": [
@@ -6586,13 +6544,14 @@ window.SNAPSHOT = {
   "media_dir": "../docs/media"
  },
  "machine": {
-  "cpu_percent": 96.0,
+  "cpu_percent": 99.9,
   "python_processes": 90,
   "gpu": {
    "name": "Quadro RTX 5000",
    "memory_used": "10665 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "23 %"
+   "utilisation": "6 %"
   }
  }
 };
+ 

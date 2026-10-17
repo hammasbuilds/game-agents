@@ -1,5 +1,5 @@
 {
- "generated": "78c9ce3",
+ "generated": "fe4aa5a",
  "doom": {
   "eval": {
    "scenario": "defend_the_center",
@@ -14294,9 +14294,9 @@
    "gras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras",
    "gras gras gras gras gras tree tree gras wate\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ntabl gras gras gras gras gras tree gras gras\ngras gras gras gras tree gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras",
    "path gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras tabl gras gras\ngras gras tabl gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\nston tree gras gras tree gras tabl gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras tabl gras",
-   "path path ston ston ston path ston ston ston\npath path ston ston ston path diam ston ston\npath ston ston ston ston path iron iron ston\nston ston ston path path path path path iron\nston ston ston ston furn path path path path\nston ston ston ston ston path iron path path\nston ston ston ston ston ston diam ston ston",
-   "gras gras tree sand sand wate wate wate wate\ngras gras gras sand sand wate wate wate wate\ngras gras gras tree sand wate wate wate wate\ngras gras gras ston sand sand wate wate wate\ngras gras gras gras gras sand wate wate wate\ngras gras gras gras gras gras gras wate wate\ngras gras tabl gras gras gras gras wate wate",
-   "iron iron ston ston ston ston ston ston gras\ngras gras gras ston iron gras gras gras gras\ngras gras gras gras gras gras sand sand sand\ngras gras gras ston sand sand ston wate wate\ngras gras tree sand sand wate wate wate wate\ngras gras ston sand sand wate wate wate wate\ngras gras gras tree sand wate wate wate wate"
+   "path path ston ston ston path ston ston ston\npath path ston ston ston path diam ston ston\npath ston ston ston ston path iron iron ston\nston ston ston path path path path path iron\nston ston ston ston furn path path path path\nston ston ston ston ston path iron path path\nston ston ston ston ston path diam ston ston",
+   "gras gras sand sand wate wate wate wate wate\ngras gras tree sand wate wate wate wate wate\ngras gras gras sand sand wate wate wate wate\ngras gras ston gras sand wate wate wate wate\ngras gras gras gras gras gras wate wate wate\ngras tabl gras gras gras gras wate wate ston\ngras gras gras gras gras gras gras wate ston",
+   "gras gras gras gras gras gras sand sand sand\ngras gras gras gras sand sand sand wate wate\ngras gras tree sand sand wate wate wate wate\ngras gras ston sand sand wate wate wate wate\ngras gras gras tree sand wate wate wate wate\ngras ston gras gras ston sand wate wate wate\ngras gras gras ston gras sand wate wate wate"
   ],
   "brogue": [
    "brogue_0.png",
@@ -14394,25 +14394,25 @@
    "place_table",
    "collect_wood",
    "mine_adjacent_tree",
-   "flee",
-   "place_table",
-   "collect_wood",
-   "mine_adjacent_tree",
-   "collect_wood",
-   "mine_adjacent_tree",
-   "place_table",
-   "place_table",
-   "mine_adjacent_tree",
    "make_wood_pickaxe",
    "collect_wood",
-   "make_wood_sword",
+   "mine_adjacent_tree",
+   "collect_wood",
+   "collect_wood",
    "mine_adjacent_tree",
    "collect_stone",
    "collect_stone",
    "collect_stone",
    "collect_stone",
+   "mine_adjacent_stone",
+   "mine_adjacent_stone",
+   "mine_adjacent_stone",
    "collect_stone",
-   "collect_stone"
+   "mine_adjacent_stone",
+   "collect_stone",
+   "collect_stone",
+   "place_stone",
+   "mine_adjacent_stone"
   ],
   "daylight": [
    0.81,
@@ -14566,39 +14566,8 @@
    },
    {
     "sapling": 1,
-    "wood": 6
-   },
-   {
-    "sapling": 1,
-    "wood": 4
-   },
-   {
-    "sapling": 1,
-    "wood": 4
-   },
-   {
-    "sapling": 1,
-    "wood": 5
-   },
-   {
-    "sapling": 1,
-    "wood": 5
-   },
-   {
-    "sapling": 1,
-    "wood": 6
-   },
-   {
-    "sapling": 1,
-    "wood": 7
-   },
-   {
-    "sapling": 1,
-    "wood": 5
-   },
-   {
-    "sapling": 1,
-    "wood": 6
+    "wood": 5,
+    "wood_pickaxe": 1
    },
    {
     "sapling": 1,
@@ -14607,8 +14576,15 @@
    },
    {
     "sapling": 1,
-    "wood": 6,
-    "wood_pickaxe": 1
+    "wood": 5,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 5,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
    },
    {
     "sapling": 1,
@@ -14637,18 +14613,78 @@
    {
     "sapling": 1,
     "wood": 6,
+    "coal": 1,
     "wood_pickaxe": 1,
     "wood_sword": 1
    },
    {
     "sapling": 1,
     "wood": 6,
+    "coal": 1,
     "wood_pickaxe": 1,
     "wood_sword": 1
    },
    {
     "sapling": 1,
     "wood": 6,
+    "stone": 1,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 2,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 3,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 3,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 4,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 5,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 6,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 5,
+    "coal": 1,
     "wood_pickaxe": 1,
     "wood_sword": 1
    }
@@ -14901,11 +14937,55 @@
   }
  },
  "clips": [
-  "clip_brogue.gif",
-  "clip_brogue.mp4",
-  "clip_crafter.gif",
-  "clip_crafter.mp4",
-  "clip_doom.gif",
-  "clip_doom.mp4"
+  {
+   "file": "doom/defend_the_center_640x480.mp4",
+   "title": "DOOM \u2014 defend the center",
+   "detail": "untrained and trained on the same map, filmed at 640\u00d7480 while the agent sees 60\u00d780 greyscale"
+  },
+  {
+   "file": "doom/health_gathering_640x480.mp4",
+   "title": "DOOM \u2014 health gathering",
+   "detail": "the floor is acid: untrained 348 ticks, trained 1,884 of a possible 2,100"
+  },
+  {
+   "file": "doom/deadly_corridor_640x480.mp4",
+   "title": "DOOM \u2014 deadly corridor",
+   "detail": "three episodes end to end, because each one is over in about twenty agent steps"
+  },
+  {
+   "file": "crafter/planner_vs_random.mp4",
+   "title": "Crafter \u2014 planner vs random",
+   "detail": "same seed, 512\u00d7512: random unlocks 3 achievements, the planner 12, and it trains nothing"
+  },
+  {
+   "file": "brogue/seed1.mp4",
+   "title": "Brogue \u2014 what the agent reads",
+   "detail": "the window beside the decoded dungeon: every lit cell named from a glyph atlas, ? where the decoder is unsure"
+  },
+  {
+   "file": "walker/walker2d.mp4",
+   "title": "Walker2d \u2014 a robot learns to walk",
+   "detail": "the untrained network and the chosen checkpoint, same episode; the camera tracks the robot"
+  },
+  {
+   "file": "racing/progress.mp4",
+   "title": "Car racing \u2014 the ladder",
+   "detail": "untrained, 180k and 419k steps driving the same track at the same moment"
+  },
+  {
+   "file": "boxing/progress.mp4",
+   "title": "Boxing \u2014 the ladder (retired)",
+   "detail": "kept for its numbers: the trained agent gained nothing over its untrained checkpoint"
+  },
+  {
+   "file": "platformer/progress.mp4",
+   "title": "Kangaroo \u2014 the ladder (retired)",
+   "detail": "kept for its numbers: it ended worse than untrained, collapsed onto one button"
+  },
+  {
+   "file": "pingpong/progress.mp4",
+   "title": "Table tennis \u2014 the ladder (retired)",
+   "detail": "from losing every rally to winning them"
+  }
  ]
 }
