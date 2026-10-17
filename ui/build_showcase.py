@@ -84,7 +84,12 @@ GAMES = [
     Game(folder="05-racing", title="Car racing", game="CarRacing-v3 (Box2D)",
          source="`gymnasium[box2d]` on PyPI",
          method="the shared arcade PPO: 84×84 greyscale, four stacked frames",
-         eval_path="runs_arcade/racing/eval.json", shared=True,
+         eval_path="runs_arcade/racing_r2/eval.json", shared=True,
+         notes="Two rounds: 419k steps, then 899k with a gentler learning rate "
+               "and double the entropy bonus. The second scored 637.7 ± 33.5 "
+               "against the first's 578.9 ± 49.5 — +58.8 against a bar of "
+               "119.6, inside noise. The extra budget bought nothing "
+               "measurable, and that is the result for this game.",
          commands=["python -m arcade.train --game racing --steps 900000",
                    "python -m arcade.evaluate --game racing --episodes 12",
                    "python -m arcade.progress --game racing"]),
@@ -190,12 +195,19 @@ Gain **{row['gain']:+,.2f}** against {bar} — {row['verdict']}.
 
 Best: **{best['checkpoint'].replace('.pt', '')}**, re-scored on {len(data['report_seeds'])} held-out episodes: **{best['return_mean']:,.2f} ± {best['return_se']:.2f}** against **{untrained['return_mean']:,.2f} ± {untrained['return_se']:.2f}** untrained — {v['label']}, {v['gain']:+,.2f} against a bar of {v['bar']:.2f}.
 """
+        if data.get("none_beat_the_baseline"):
+            block += (os.linesep + "Not one trained checkpoint beat the network "
+                      "they all started from, and a random policy beats every "
+                      "one of them. That is the result for this game."
+                      + os.linesep)
         if data.get("peaked_early"):
             block += (f"\nThis run peaked in the middle: it lost "
                       f"{data['decline_after_peak']:,.0f} return between its best "
                       f"checkpoint and the end of training.\n")
+        label = ("no trained checkpoint beat the untrained network"
+                 if data.get("none_beat_the_baseline") else v["label"])
         summary = (f"**{best['return_mean']:,.0f}** vs {untrained['return_mean']:,.0f} "
-                   f"untrained — {v['label']}")
+                   f"untrained — {label}")
         return summary, block
 
     if "rows" in data:

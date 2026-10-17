@@ -162,8 +162,11 @@ def collect() -> list[dict]:
         # against the same network before any of it, and a row that says
         # "untrained" has to mean that network.
         floor = (data.get("random_floor") or {}).get("return_mean")
+        label = data.get("game", run_dir.name)
+        if run_dir.name != label:
+            label = f"{label} ({run_dir.name.split('_', 1)[-1]})"
         rows.append(row(
-            "arcade", data.get("game", run_dir.name), "PPO (best checkpoint)",
+            "arcade", label, "PPO (best checkpoint)",
             "untrained network",
             best["return_mean"], untrained["return_mean"],
             best["return_se"], untrained["return_se"], best["episodes"], "episode return",
@@ -172,7 +175,10 @@ def collect() -> list[dict]:
             peaked_early=data.get("peaked_early"),
             decline_after_peak=data.get("decline_after_peak"),
             random_floor=round(floor, 2) if floor is not None else None,
-            best_checkpoint=best["checkpoint"].replace(".pt", "")))
+            best_checkpoint=best["checkpoint"].replace(".pt", ""),
+            none_beat_the_baseline=data.get("none_beat_the_baseline")))
+        if data.get("none_beat_the_baseline"):
+            rows[-1]["verdict"] = "no checkpoint beat the untrained network"
 
     return rows
 

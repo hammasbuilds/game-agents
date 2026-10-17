@@ -308,7 +308,8 @@ function renderScoreboard(into) {
     (r.gain >= 0 ? "+" : "") + fmt(r.gain, 1) +
       (r.bar === null || r.bar === undefined ? " vs —" : " vs " + fmt(r.bar, 1)),
     '<span class="tag ' + (r.verdict === "learned" ? "good" :
-      r.verdict.startsWith("worse") ? "bad" : "flat") + '">' + esc(r.verdict) + "</span>",
+      (r.verdict.startsWith("worse") || r.verdict.startsWith("no checkpoint"))
+        ? "bad" : "flat") + '">' + esc(r.verdict) + "</span>",
   ]);
   card.append(table(["project", "game", "baseline", "agent", "gain vs bar", "verdict"], body));
 
@@ -406,6 +407,22 @@ function renderCards(into) {
   if (retired.length) {
     const rows = retired.map(k => {
       const g = games[k];
+      /* The evaluation, not the film ladder: the ladder beside the films is
+         scored on a couple of episodes to choose what to film. Where an
+         evaluation exists it is the number every other row on this page uses. */
+      const ev = g.evaluation;
+      if (ev && ev.verdict) {
+        return [
+          gameLink(k, g.title),
+          esc(g.env_id),
+          fmt(ev.untrained.return_mean, 1),
+          fmt(ev.best.return_mean, 1),
+          esc(ev.none_beat_the_baseline
+              ? "no trained checkpoint beat the untrained network"
+              : ev.verdict.label + ", " + fmt(ev.verdict.gain, 1) + " vs a bar of "
+                + fmt(ev.verdict.bar, 1)),
+        ];
+      }
       const ladder = g.ladder || [];
       const first = ladder.find(r => r.steps === 0), last = ladder[ladder.length - 1];
       return [
@@ -418,7 +435,7 @@ function renderCards(into) {
     });
     card.append(el("h3", "", "Retired from the showcase"),
       el("p", "lede", "Still trained, still scored, still openable. Moved off the front page for how the game looks, not for how the agent did."),
-      table(["game", "environment", "untrained", "trained", "why it is here"], rows));
+      table(["game", "environment", "untrained", "best trained", "verdict"], rows));
   }
   into.append(card);
 }

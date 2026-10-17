@@ -40,21 +40,30 @@ answers. Every row is scored on the same levels as its own untrained checkpoint,
 and the verdict compares the two against **two standard errors of the
 difference**, so a gain smaller than its own uncertainty is not called a win.
 
-| game | untrained | trained | verdict |
+| game | untrained | best trained checkpoint | verdict |
 |---|---:|---:|---|
-| **Car racing** | −53.7 | **+376.0** | learned — +429.7 against a bar of 130.2 |
-| Table tennis | −20.0 | −16.6 | learned — +3.4 against a bar of 2.1 |
-| Boxing | 2.1 | 1.6 | no gain — −0.5 against a bar of 3.4 |
-| Platformer | 25.0 | 0.0 | **worse than untrained** — it collapsed onto one button |
+| **Car racing** | −37.9 | **637.7** | learned — +676 against a bar of 68 |
+| Table tennis | −20.2 | **−13.0** | learned — +7.2 against a bar of 2.9 |
+| Boxing | −0.9 | 1.7 | inside noise — +2.6 against a bar of 4.5 |
+| Platformer | 50.0 | 30.0 | **no trained checkpoint beat the untrained network** |
+
+*Twenty held-out episodes per row: every checkpoint scored on the same episodes,
+the best one chosen on a separate set. For scale, a random policy scores −45 at
+racing, −20.4 at table tennis, and 50 at the platformer — where it beats every
+trained checkpoint.*
 
 That spread is the result, not an embarrassment to tidy away. Racing pays the
 agent for every metre of road, so it learns from the first episode and ends up
 driving. Kangaroo pays nothing until a ladder climb and a punch happen in
 sequence, which random play almost never completes — so nothing pulls the
-gradient anywhere, the policy narrows onto a single action, and two million steps
-produce something worse than the network you started with. The
-[arcade README](arcade/) shows the action counts that prove the collapse rather
-than asserting it.
+gradient anywhere and the policy narrows onto a single action. Scored properly,
+**every trained Kangaroo checkpoint returns zero** while the untrained network
+returns 50: two million steps produced something worse than the network they
+started from, and worse than random play. The [arcade README](arcade/) shows the
+action counts behind the collapse.
+
+Boxing is the quieter non-result: two million steps, and the gain does not clear
+its own uncertainty.
 
 They deliberately share no method. The point of three is to show three ways of
 getting a machine to play something — and what each one actually costs.
@@ -121,14 +130,22 @@ so real, but only just. Reporting the final checkpoint reports whichever point
 training happened to stop at, so the ladder is scored and a checkpoint is
 *chosen*.
 
-Racing taught the other half of this. Its film ladder appeared to decline from
-330 at 60k steps to 263 at 419k, and that decline was written up here. It was
-scored on **two tracks**, because the ladder beside the films exists to choose
-what to film and had been run with two episodes. Under the protocol — six
-selection episodes and six held out — the same checkpoints rise monotonically
-and the last one scores **632.5 ± 92.7** against an untrained **−41.7 ± 6.6**.
-CarRacing's spread between tracks is enormous; two of them say nothing. The film
-ladder now labels itself *film-grade* and the page prefers the evaluation.
+Racing taught the other half of this, twice. Its film ladder appeared to decline
+from 330 at 60k steps to 263 at 419k, and that decline was written up here. It
+had been scored on **two tracks**, because the ladder beside the films exists to
+choose what to film. Scored properly the same checkpoints rise the whole way.
+Then the re-scoring itself turned out to be comparing against a random policy
+while calling it "untrained" — the floor had been left in the candidate list,
+first, where the baseline is read from. Both claims are corrected here:
+twenty held-out episodes, baseline the untrained network, racing scores
+**637.7 ± 33.5** against
+**-37.9 ± 4.8**.
+
+A second racing run with more than twice the steps, a gentler learning rate and
+double the entropy bonus scored 637.7 ± 33.5
+against the first run's 578.9 ± 49.5 —
+**+58.8 against a bar of 119.6, inside noise.** The extra budget bought nothing
+that can be measured.
 
 **Choosing a checkpoint is itself a measurement, so it gets its own episodes.**
 Picking the highest scorer on a set of episodes and then quoting that same score
@@ -153,7 +170,10 @@ says *no error bar* rather than claiming a win it cannot support.
 | Crafter · planner | a random agent | 10 | 12.73% vs 1.13%, no error bar |
 | Brogue · explorer | random keystrokes | 6 | **inside noise** on descents, −0.3 vs a bar of 1.3 |
 | Walker2d | the same network, untrained | 12 | learned, +4,433 vs a bar of 28 |
-| Car racing | the same network, untrained | 6 | learned, +674 vs a bar of 186 |
+| Car racing | the same network, untrained | 20 | learned, +676 vs a bar of 68 |
+| Table tennis | the same network, untrained | 20 | learned, +7.2 vs a bar of 2.9 |
+| Boxing | the same network, untrained | 20 | **inside noise**, +2.6 vs a bar of 4.5 |
+| Kangaroo | the same network, untrained | 20 | **no trained checkpoint beat it** |
 
 The Brogue row is the reason the table exists. The explorer names the dungeon
 and dives on purpose, and over 300 keystrokes it still does not descend more

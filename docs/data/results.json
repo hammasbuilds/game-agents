@@ -1,5 +1,5 @@
 {
- "generated": "fe4aa5a",
+ "generated": "2927a06",
  "doom": {
   "eval": {
    "scenario": "defend_the_center",
@@ -14394,25 +14394,25 @@
    "place_table",
    "collect_wood",
    "mine_adjacent_tree",
+   "flee",
+   "place_table",
+   "collect_wood",
+   "mine_adjacent_tree",
+   "collect_wood",
+   "mine_adjacent_tree",
+   "place_table",
+   "place_table",
+   "mine_adjacent_tree",
    "make_wood_pickaxe",
    "collect_wood",
-   "mine_adjacent_tree",
-   "collect_wood",
-   "collect_wood",
+   "make_wood_sword",
    "mine_adjacent_tree",
    "collect_stone",
    "collect_stone",
    "collect_stone",
    "collect_stone",
-   "mine_adjacent_stone",
-   "mine_adjacent_stone",
-   "mine_adjacent_stone",
    "collect_stone",
-   "mine_adjacent_stone",
-   "collect_stone",
-   "collect_stone",
-   "place_stone",
-   "mine_adjacent_stone"
+   "collect_stone"
   ],
   "daylight": [
    0.81,
@@ -14566,8 +14566,39 @@
    },
    {
     "sapling": 1,
-    "wood": 5,
-    "wood_pickaxe": 1
+    "wood": 6
+   },
+   {
+    "sapling": 1,
+    "wood": 4
+   },
+   {
+    "sapling": 1,
+    "wood": 4
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 6
+   },
+   {
+    "sapling": 1,
+    "wood": 7
+   },
+   {
+    "sapling": 1,
+    "wood": 5
+   },
+   {
+    "sapling": 1,
+    "wood": 6
    },
    {
     "sapling": 1,
@@ -14576,15 +14607,8 @@
    },
    {
     "sapling": 1,
-    "wood": 5,
-    "wood_pickaxe": 1,
-    "wood_sword": 1
-   },
-   {
-    "sapling": 1,
-    "wood": 5,
-    "wood_pickaxe": 1,
-    "wood_sword": 1
+    "wood": 6,
+    "wood_pickaxe": 1
    },
    {
     "sapling": 1,
@@ -14613,78 +14637,18 @@
    {
     "sapling": 1,
     "wood": 6,
-    "coal": 1,
     "wood_pickaxe": 1,
     "wood_sword": 1
    },
    {
     "sapling": 1,
     "wood": 6,
-    "coal": 1,
     "wood_pickaxe": 1,
     "wood_sword": 1
    },
    {
     "sapling": 1,
     "wood": 6,
-    "stone": 1,
-    "coal": 1,
-    "wood_pickaxe": 1,
-    "wood_sword": 1
-   },
-   {
-    "sapling": 1,
-    "wood": 6,
-    "stone": 2,
-    "coal": 1,
-    "wood_pickaxe": 1,
-    "wood_sword": 1
-   },
-   {
-    "sapling": 1,
-    "wood": 6,
-    "stone": 3,
-    "coal": 1,
-    "wood_pickaxe": 1,
-    "wood_sword": 1
-   },
-   {
-    "sapling": 1,
-    "wood": 6,
-    "stone": 3,
-    "coal": 1,
-    "wood_pickaxe": 1,
-    "wood_sword": 1
-   },
-   {
-    "sapling": 1,
-    "wood": 6,
-    "stone": 4,
-    "coal": 1,
-    "wood_pickaxe": 1,
-    "wood_sword": 1
-   },
-   {
-    "sapling": 1,
-    "wood": 6,
-    "stone": 5,
-    "coal": 1,
-    "wood_pickaxe": 1,
-    "wood_sword": 1
-   },
-   {
-    "sapling": 1,
-    "wood": 6,
-    "stone": 6,
-    "coal": 1,
-    "wood_pickaxe": 1,
-    "wood_sword": 1
-   },
-   {
-    "sapling": 1,
-    "wood": 6,
-    "stone": 5,
-    "coal": 1,
     "wood_pickaxe": 1,
     "wood_sword": 1
    }

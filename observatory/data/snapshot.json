@@ -1,5 +1,5 @@
 {
- "taken_at": "2026-10-17 08:22:37Z",
+ "taken_at": "2026-10-17 10:58:26Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -7,7 +7,7 @@
    "title": "Car racing",
    "env_id": "CarRacing-v3",
    "blurb": "Top-down racing. The agent sees the track and steers; an untrained one spins on the grass, a trained one follows the road.",
-   "state": "stalled",
+   "state": "stopped",
    "steps": 414720,
    "updates": 270,
    "sps": 60.1,
@@ -16,7 +16,7 @@
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": 180055,
+   "seconds_since_update": 189404,
    "checkpoints": [
     {
      "tag": "000",
@@ -1095,7 +1095,7 @@
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 190571,
+   "seconds_since_update": 199920,
    "checkpoints": [
     {
      "tag": "000",
@@ -2206,7 +2206,7 @@
    "wall_minutes": 61.1,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 176266,
+   "seconds_since_update": 185615,
    "checkpoints": [
     {
      "tag": "000",
@@ -3324,7 +3324,7 @@
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 186957,
+   "seconds_since_update": 196306,
    "checkpoints": [
     {
      "tag": "000",
@@ -6544,13 +6544,13 @@
   "media_dir": "../docs/media"
  },
  "machine": {
-  "cpu_percent": 99.9,
-  "python_processes": 90,
+  "cpu_percent": 78.5,
+  "python_processes": 117,
   "gpu": {
    "name": "Quadro RTX 5000",
    "memory_used": "10665 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "6 %"
+   "utilisation": "25 %"
   }
  }
-} 
+}
