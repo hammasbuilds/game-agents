@@ -1965,6 +1965,281 @@ window.ARCADE = {
      ]
     }
    ],
+   "ladder_measurement": null,
+   "evaluation": {
+    "select_seeds": [
+     2000,
+     2001,
+     2002,
+     2003,
+     2004,
+     2005
+    ],
+    "report_seeds": [
+     9000,
+     9001,
+     9002,
+     9003,
+     9004,
+     9005
+    ],
+    "ladder": [
+     {
+      "checkpoint": "random",
+      "episodes": 6,
+      "return_mean": -43.77,
+      "return_std": 18.78,
+      "return_se": 7.67,
+      "return_min": -66.01,
+      "return_max": -22.76,
+      "steps_mean": 238.0,
+      "seeds": [
+       2000,
+       2001,
+       2002,
+       2003,
+       2004,
+       2005
+      ],
+      "returns": [
+       -61.33,
+       -52.45,
+       -22.76,
+       -66.01,
+       -24.29,
+       -35.77
+      ],
+      "steps": null
+     },
+     {
+      "checkpoint": "ckpt_000.pt",
+      "episodes": 6,
+      "return_mean": -55.85,
+      "return_std": 17.43,
+      "return_se": 7.12,
+      "return_min": -74.09,
+      "return_max": -26.16,
+      "steps_mean": 238.0,
+      "seeds": [
+       2000,
+       2001,
+       2002,
+       2003,
+       2004,
+       2005
+      ],
+      "returns": [
+       -57.96,
+       -66.63,
+       -45.57,
+       -26.16,
+       -64.7,
+       -74.09
+      ],
+      "steps": 0
+     },
+     {
+      "checkpoint": "ckpt_005.pt",
+      "episodes": 6,
+      "return_mean": 187.27,
+      "return_std": 116.33,
+      "return_se": 47.49,
+      "return_min": 71.67,
+      "return_max": 335.98,
+      "steps_mean": 238.0,
+      "seeds": [
+       2000,
+       2001,
+       2002,
+       2003,
+       2004,
+       2005
+      ],
+      "returns": [
+       335.98,
+       217.06,
+       76.1,
+       71.67,
+       117.12,
+       305.7
+      ],
+      "steps": 59904
+     },
+     {
+      "checkpoint": "ckpt_015.pt",
+      "episodes": 6,
+      "return_mean": 340.13,
+      "return_std": 149.29,
+      "return_se": 60.95,
+      "return_min": 140.69,
+      "return_max": 511.06,
+      "steps_mean": 238.0,
+      "seeds": [
+       2000,
+       2001,
+       2002,
+       2003,
+       2004,
+       2005
+      ],
+      "returns": [
+       511.06,
+       358.9,
+       441.12,
+       412.25,
+       140.69,
+       176.78
+      ],
+      "steps": 179712
+     },
+     {
+      "checkpoint": "ckpt_035.pt",
+      "episodes": 6,
+      "return_mean": 468.27,
+      "return_std": 213.1,
+      "return_se": 87.0,
+      "return_min": 278.19,
+      "return_max": 852.74,
+      "steps_mean": 238.0,
+      "seeds": [
+       2000,
+       2001,
+       2002,
+       2003,
+       2004,
+       2005
+      ],
+      "returns": [
+       578.4,
+       365.99,
+       361.27,
+       278.19,
+       373.01,
+       852.74
+      ],
+      "steps": 419328
+     }
+    ],
+    "best": {
+     "checkpoint": "ckpt_035.pt",
+     "episodes": 6,
+     "return_mean": 632.5,
+     "return_std": 227.07,
+     "return_se": 92.7,
+     "return_min": 286.25,
+     "return_max": 820.79,
+     "steps_mean": 238.0,
+     "seeds": [
+      9000,
+      9001,
+      9002,
+      9003,
+      9004,
+      9005
+     ],
+     "returns": [
+      779.56,
+      733.45,
+      286.25,
+      405.0,
+      769.96,
+      820.79
+     ]
+    },
+    "untrained": {
+     "checkpoint": "random",
+     "episodes": 6,
+     "return_mean": -41.66,
+     "return_std": 16.21,
+     "return_se": 6.62,
+     "return_min": -63.42,
+     "return_max": -28.05,
+     "steps_mean": 238.0,
+     "seeds": [
+      9000,
+      9001,
+      9002,
+      9003,
+      9004,
+      9005
+     ],
+     "returns": [
+      -28.8,
+      -28.05,
+      -35.63,
+      -61.1,
+      -32.96,
+      -63.42
+     ]
+    },
+    "final": {
+     "checkpoint": "ckpt_035.pt",
+     "episodes": 6,
+     "return_mean": 468.27,
+     "return_std": 213.1,
+     "return_se": 87.0,
+     "return_min": 278.19,
+     "return_max": 852.74,
+     "steps_mean": 238.0,
+     "seeds": [
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005
+     ],
+     "returns": [
+      578.4,
+      365.99,
+      361.27,
+      278.19,
+      373.01,
+      852.74
+     ],
+     "steps": 419328
+    },
+    "verdict": {
+     "challenger": "trained",
+     "baseline": "untrained",
+     "challenger_mean": 632.5,
+     "baseline_mean": -41.66,
+     "gain": 674.16,
+     "bar": 185.88,
+     "label": "learned",
+     "episodes": 6
+    },
+    "peaked_early": false,
+    "game": "racing",
+    "env_id": "CarRacing-v3",
+    "untrained_network": {
+     "checkpoint": "ckpt_000.pt",
+     "episodes": 6,
+     "return_mean": -55.85,
+     "return_std": 17.43,
+     "return_se": 7.12,
+     "return_min": -74.09,
+     "return_max": -26.16,
+     "steps_mean": 238.0,
+     "seeds": [
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005
+     ],
+     "returns": [
+      -57.96,
+      -66.63,
+      -45.57,
+      -26.16,
+      -64.7,
+      -74.09
+     ],
+     "steps": 0
+    }
+   },
    "evaluation_seeds": [
     50000,
     50001
@@ -3323,6 +3598,8 @@ window.ARCADE = {
      ]
     }
    ],
+   "ladder_measurement": null,
+   "evaluation": null,
    "evaluation_seeds": [
     50000,
     50001,
@@ -4699,6 +4976,8 @@ window.ARCADE = {
      ]
     }
    ],
+   "ladder_measurement": null,
+   "evaluation": null,
    "evaluation_seeds": [
     50000,
     50001,
@@ -6069,6 +6348,8 @@ window.ARCADE = {
      ]
     }
    ],
+   "ladder_measurement": null,
+   "evaluation": null,
    "evaluation_seeds": [
     50000,
     50001,

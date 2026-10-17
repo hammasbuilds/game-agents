@@ -10,10 +10,14 @@ no way to tell that, and one of them was always going to be stale.
 
 So scoring happens in one place now, under `protocol.py`: the ladder on one set
 of seeds, the winning checkpoint re-scored on a disjoint set, and a verdict
-against two standard errors of the difference. The best checkpoint is reported
-rather than the last, because racing peaked at 60k steps and then declined for
-the next 360k — "trained" meaning "whatever was on disk when training stopped"
-flatters a run that got worse.
+against two standard errors of the difference. The best checkpoint is reported rather than
+the last, because a run can peak in the middle — the walking robot did, losing
+857 return between its best checkpoint and the end of training.
+
+Racing is the counter-example and the reason the episode count matters. Its
+film ladder, scored on two tracks, appeared to fall from 330 to 263 across
+training. Scored properly it rises the whole way, to 632.5 ± 92.7. CarRacing's
+spread between tracks is larger than the differences being compared.
 """
 from __future__ import annotations
 

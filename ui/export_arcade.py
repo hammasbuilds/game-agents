@@ -49,6 +49,9 @@ def main() -> None:
         history = read(run / "history.json") or []
         summary = read(run / "train_summary.json")
         ladder = read(media / "ladder.json")
+        # The protocol's evaluation wins over the film ladder wherever it
+        # exists: the film ladder may have been scored on two episodes.
+        evaluation = read(run / "eval.json")
         clips = sorted(p.name for p in media.glob("*.mp4")) if media.exists() else []
         gifs = sorted(p.name for p in media.glob("*.gif")) if media.exists() else []
         # A run that was stopped early but produced a scored ladder has results
@@ -71,6 +74,8 @@ def main() -> None:
             "summary": summary,
             "curve": thin(history),
             "ladder": (ladder or {}).get("ladder"),
+            "ladder_measurement": (ladder or {}).get("measurement"),
+            "evaluation": evaluation,
             "evaluation_seeds": (ladder or {}).get("evaluation_seeds"),
             "clips": clips,
             "gifs": gifs,

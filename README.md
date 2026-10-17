@@ -115,11 +115,20 @@ One file, [`protocol.py`](protocol.py), decides what every number in this
 repository means. Three rules, each of them written down because this repository
 got it wrong first:
 
-**The last checkpoint is not the trained agent.** Both long runs peaked in the
-middle and got worse — the walker reached 4,494 at 700k steps and finished at
-3,637 by 2M; racing peaked at 60k and declined for the next 360k. Reporting the
-final checkpoint reports whichever point training happened to stop at, so the
-ladder is scored and a checkpoint is *chosen*.
+**The last checkpoint is not the trained agent.** The walker reached 4,494 at
+700k steps and finished at 3,637 by 2M — a decline of 857 against a bar of 786,
+so real, but only just. Reporting the final checkpoint reports whichever point
+training happened to stop at, so the ladder is scored and a checkpoint is
+*chosen*.
+
+Racing taught the other half of this. Its film ladder appeared to decline from
+330 at 60k steps to 263 at 419k, and that decline was written up here. It was
+scored on **two tracks**, because the ladder beside the films exists to choose
+what to film and had been run with two episodes. Under the protocol — six
+selection episodes and six held out — the same checkpoints rise monotonically
+and the last one scores **632.5 ± 92.7** against an untrained **−41.7 ± 6.6**.
+CarRacing's spread between tracks is enormous; two of them say nothing. The film
+ladder now labels itself *film-grade* and the page prefers the evaluation.
 
 **Choosing a checkpoint is itself a measurement, so it gets its own episodes.**
 Picking the highest scorer on a set of episodes and then quoting that same score
@@ -144,6 +153,7 @@ says *no error bar* rather than claiming a win it cannot support.
 | Crafter · planner | a random agent | 10 | 12.73% vs 1.13%, no error bar |
 | Brogue · explorer | random keystrokes | 6 | **inside noise** on descents, −0.3 vs a bar of 1.3 |
 | Walker2d | the same network, untrained | 12 | learned, +4,433 vs a bar of 28 |
+| Car racing | the same network, untrained | 6 | learned, +674 vs a bar of 186 |
 
 The Brogue row is the reason the table exists. The explorer names the dungeon
 and dives on purpose, and over 300 keystrokes it still does not descend more

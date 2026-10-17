@@ -171,10 +171,31 @@ def collect() -> list[dict]:
     return rows
 
 
+def rounds() -> list[dict]:
+    """The round log, oldest first.
+
+    It is a .jsonl because it is only ever appended to: a round whose numbers
+    came out badly stays in the file, and that is the whole point of keeping it.
+    """
+    path = DATA / "rounds.jsonl"
+    if not path.exists():
+        return []
+    out = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            out.append(json.loads(line))
+        except json.JSONDecodeError:
+            continue
+    return out
+
+
 def main() -> None:
     rows = collect()
     DATA.mkdir(parents=True, exist_ok=True)
-    payload = {"rows": rows}
+    payload = {"rows": rows, "rounds": rounds()}
     (DATA / "scoreboard.json").write_text(json.dumps(payload, indent=1), encoding="utf-8")
     (DATA / "scoreboard.js").write_text(
         "window.SCOREBOARD = " + json.dumps(payload, indent=1) + ";\n", encoding="utf-8")
@@ -184,7 +205,8 @@ def main() -> None:
         print(f"  {r['project']:<{width}}  {r['game']:<20} "
               f"{r['agent_score']:>10,.2f} vs {r['baseline_score']:>9,.2f} "
               f"{r['unit']:<16} {r['verdict']}")
-    print(f"\n{len(rows)} rows -> {(DATA / 'scoreboard.json').relative_to(ROOT)}")
+    print(f"\n{len(rows)} rows and {len(payload['rounds'])} rounds -> "
+          f"{(DATA / 'scoreboard.json').relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

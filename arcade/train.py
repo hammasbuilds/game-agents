@@ -25,6 +25,23 @@ BUDGET = {"boxing": 2_000_000, "platformer": 2_000_000, "racing": 800_000,
           "pingpong": 2_000_000}
 
 
+def occupied(out: Path, overwrite: bool) -> str | None:
+    """Refuse to train into a directory that already holds a run.
+
+    A second run started into the same directory silently replaces the first
+    one's checkpoints -- including ckpt_000, the untrained network every verdict
+    is measured against. That happened here: a racing run launched without
+    --out overwrote the untrained checkpoint of the run whose numbers the README
+    was quoting, and nothing in the output said a word about it.
+    """
+    existing = sorted(out.glob("ckpt_*.pt")) if out.exists() else []
+    if not existing or overwrite:
+        return None
+    return (f"{out} already holds {len(existing)} checkpoints from an earlier "
+            f"run. Pass --out to train somewhere else, or --overwrite to "
+            f"replace them on purpose.")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--game", choices=sorted(CATALOGUE))
@@ -43,6 +60,8 @@ def main() -> None:
     ap.add_argument("--epochs", type=int, default=4)
     ap.add_argument("--minibatches", type=int, default=4)
     ap.add_argument("--out", default=None, help="where to write the run")
+    ap.add_argument("--overwrite", action="store_true",
+                    help="train into a directory that already holds a finished run")
     args = ap.parse_args()
 
     if not args.game and not args.all:
@@ -53,6 +72,14 @@ def main() -> None:
         game = CATALOGUE[key]
         steps = args.steps or BUDGET.get(key, 1_000_000)
         out = Path(args.out) if args.out else ROOT / "runs_arcade" / key
+        # A second run started into the same directory silently replaces the
+        # first run's checkpoints -- including ckpt_000, the untrained network
+        # every verdict is measured against. That happened here: a racing run
+        # launched without --out overwrote the untrained checkpoint of the run
+        # whose numbers the README was quoting, and nothing said a word.
+        problem = occupied(out, args.overwrite)
+        if problem:
+            ap.error(problem)
         cfg = PPOConfig(total_steps=steps, n_envs=args.envs, width=args.width,
                         arch=args.arch, device=args.device, lr=args.lr,
                         entropy_coef=args.entropy, lr_schedule=args.lr_schedule,

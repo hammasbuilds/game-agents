@@ -110,6 +110,18 @@ def main() -> None:
     saved.sort(key=lambda entry: entry["steps"])
     # -- the ladder --------------------------------------------------------
     seeds = [50_000 + i for i in range(args.episodes)]
+    # This ladder exists to pick which checkpoints are worth filming. Scored on
+    # a couple of episodes it is not a measurement of anything, and it was read
+    # as one: a two-episode run of this script produced a racing ladder that
+    # appeared to decline from 330 to 263 across training, and that "decline"
+    # reached the README. Under the real protocol -- six selection and six
+    # reporting episodes -- the same checkpoints rise to 632. CarRacing's
+    # per-track spread is enormous and two tracks say nothing.
+    if args.episodes < 6:
+        print(f"  note: {args.episodes} episodes per checkpoint is enough to "
+              f"choose what to film and not enough to compare checkpoints; "
+              f"run `python -m arcade.evaluate --game {args.game}` for that",
+              flush=True)
     ladder = [{"tag": "random", "steps": None,
                **score(None, game, seeds, max_steps=args.max_steps)}]
     for entry in saved:
@@ -119,7 +131,10 @@ def main() -> None:
               f"score {row['return_mean']:8.2f} +- {row['return_std']:.2f}", flush=True)
     (out_dir / "ladder.json").write_text(json.dumps(
         {"game": game.key, "title": game.title, "env_id": game.env_id,
-         "evaluation_seeds": seeds, "ladder": ladder}, indent=1))
+         "evaluation_seeds": seeds, "ladder": ladder,
+         # Named in the file, so anything that reads it knows what it is.
+         "measurement": "film-grade" if args.episodes < 6 else "ladder",
+         "episodes_per_checkpoint": args.episodes}, indent=1))
 
     # -- the films ---------------------------------------------------------
     pick = [saved[0]] + ([saved[len(saved) // 2]] if len(saved) > 2 and args.panels > 2 else []) \

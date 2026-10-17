@@ -319,6 +319,36 @@ function renderScoreboard(into) {
     (r.note ? "; " + esc(r.note) : "") + "</li>").join(""));
   card.append(el("h3", "", "How each one was measured"), notes);
   into.append(card);
+
+  /* The rounds. A result says what an agent does; the log says what trying
+     again did. Rounds that went backwards stay in it — the health gathering
+     agent's first round scored below a random one, and the second round is only
+     meaningful next to it. */
+  const log = ((window.SCOREBOARD || {}).rounds) || [];
+  if (!log.length) return;
+  const rounds = el("div", "card");
+  rounds.append(el("h2", "", "Rounds"),
+    el("p", "lede", "Every scored attempt, in order, with the configuration that produced it. Attempts that went backwards are kept: a second round only means something beside the first."));
+  const roundRows = log.map(r => [
+    esc(r.project) + " · " + esc(r.game),
+    "round " + r.round,
+    Object.entries(r.config || {}).filter(([k, v]) => v !== null && v !== undefined)
+      .map(([k, v]) => k + " " + (typeof v !== "number" ? v
+        : Math.abs(v) < 0.01 && v !== 0 ? v.toExponential(1) : Number(v).toLocaleString()))
+      .join(", "),
+    fmt(r.score, 1) + (r.baseline === null || r.baseline === undefined ? "" :
+      " vs " + fmt(r.baseline, 1)),
+    '<span class="tag ' + (r.verdict === "learned" ? "good" :
+      String(r.verdict).startsWith("worse") ? "bad" : "flat") + '">' + esc(r.verdict) + "</span>",
+  ]);
+  rounds.append(table(["what", "round", "configuration", "score", "verdict"], roundRows));
+  const why = log.filter(r => r.note);
+  if (why.length) {
+    rounds.append(el("ul", "bugs", why.map(r =>
+      "<li><strong>" + esc(r.game) + " round " + r.round + "</strong> — " +
+      esc(r.note) + "</li>").join("")));
+  }
+  into.append(rounds);
 }
 
 /* ---------- the arcade cards ---------- */

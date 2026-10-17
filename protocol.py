@@ -154,3 +154,35 @@ def score_ladder(checkpoints: Sequence, play: Callable[[object, Iterable[int]], 
         out["decline_after_peak"] = round(drop, 2)
         log(f"  peaked at {best_label} and declined {drop:.1f} by the end of training")
     return out
+
+
+# -- the record of rounds ----------------------------------------------------
+def record_round(entry: dict, path=None) -> None:
+    """Append one scored round to the repository's round log.
+
+    A single result says what an agent does; the log says what *trying again*
+    did, which is the only way to tell a real improvement from a seed. Each line
+    carries the configuration that produced it, so a round that beat the last
+    one can be repeated rather than admired.
+
+    Appending, never rewriting: a round whose numbers came out badly stays in
+    the file. The whole value of the log is that it contains the attempts that
+    did not work.
+    """
+    import json
+    import subprocess
+    from datetime import datetime, timezone
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent
+    path = Path(path) if path else root / "docs" / "data" / "rounds.jsonl"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=root,
+                                capture_output=True, text=True, timeout=20).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        commit = None
+    row = {"at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ"),
+           "commit": commit or None, **entry}
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(row) + chr(10))
