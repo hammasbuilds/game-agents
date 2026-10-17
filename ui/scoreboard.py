@@ -158,15 +158,21 @@ def collect() -> list[dict]:
         if not data or "verdict" not in data:
             continue
         v, best, untrained = data["verdict"], data["best"], data["untrained"]
+        # The random floor is context, not the comparison: training is credited
+        # against the same network before any of it, and a row that says
+        # "untrained" has to mean that network.
+        floor = (data.get("random_floor") or {}).get("return_mean")
         rows.append(row(
             "arcade", data.get("game", run_dir.name), "PPO (best checkpoint)",
-            untrained["checkpoint"].replace(".pt", ""),
+            "untrained network",
             best["return_mean"], untrained["return_mean"],
             best["return_se"], untrained["return_se"], best["episodes"], "episode return",
             f"protocol.py — ladder on {len(data['select_seeds'])} selection episodes, "
             f"winner re-scored on {len(data['report_seeds'])} held out",
             peaked_early=data.get("peaked_early"),
-            decline_after_peak=data.get("decline_after_peak")))
+            decline_after_peak=data.get("decline_after_peak"),
+            random_floor=round(floor, 2) if floor is not None else None,
+            best_checkpoint=best["checkpoint"].replace(".pt", "")))
 
     return rows
 

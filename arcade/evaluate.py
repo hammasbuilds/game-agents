@@ -69,9 +69,12 @@ def main() -> None:
 
     game = CATALOGUE[args.game]
     checkpoints, steps_of = [], {}
-    # The random policy is the floor every other row is read against, and it is
-    # measured here rather than assumed.
-    checkpoints.append(("random", None))
+    # The random policy is a floor, not a competitor. It was in the candidate
+    # list once, which had two consequences: the comparison said "against the
+    # untrained network" while comparing against random play, and on Kangaroo
+    # -- where no checkpoint beats random -- the random policy won the selection
+    # and was reported as the best checkpoint.
+    extra = [("random", None)]
     steps_of["random"] = None
     for path in paths:
         model, loaded_game, meta = load(path)
@@ -82,7 +85,11 @@ def main() -> None:
     select = tuple(2_000 + i for i in range(args.episodes))
     report = tuple(9_000 + i for i in range(args.episodes))
     result = score_ladder(checkpoints, play_factory(game, args.max_steps),
-                          select_seeds=select, report_seeds=report)
+                          select_seeds=select, report_seeds=report,
+                          # ckpt_000 is the same network before a single
+                          # gradient step: the only fair thing to credit
+                          # training against.
+                          baseline=checkpoints[0], extra=extra)
     for row in result["ladder"]:
         row["steps"] = steps_of.get(row["checkpoint"])
     result["game"] = args.game
@@ -90,9 +97,9 @@ def main() -> None:
 
     # The untrained *network* is a different thing from a random policy, and the
     # gap between them is worth keeping: an untrained network is not uniform.
-    untrained_rows = [r for r in result["ladder"] if r["checkpoint"].startswith("ckpt_000")]
-    if untrained_rows:
-        result["untrained_network"] = untrained_rows[0]
+    random_rows = [r for r in result["ladder"] if r["checkpoint"] == "random"]
+    if random_rows:
+        result["random_floor"] = random_rows[0]
 
     v = result["verdict"]
     print(f"\n{args.game}: {v['baseline_mean']:.1f} -> {v['challenger_mean']:.1f}: "

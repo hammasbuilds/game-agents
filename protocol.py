@@ -110,47 +110,87 @@ def _log(message: str) -> None:
 def score_ladder(checkpoints: Sequence, play: Callable[[object, Iterable[int]], Score],
                  select_seeds: Sequence[int] = SELECT_SEEDS,
                  report_seeds: Sequence[int] = REPORT_SEEDS,
+                 baseline: tuple | None = None,
+                 extra: Sequence | None = None,
                  log=_log) -> dict:
     """Score every checkpoint, pick the best, and re-score it on fresh episodes.
 
-    `checkpoints` is any sequence of (label, handle) pairs, oldest first;
-    `play(handle, seeds)` returns a Score. The first checkpoint is treated as the
-    untrained baseline, which is why every training run here keeps one.
+    `checkpoints` is a sequence of (label, handle) pairs, oldest first, and
+    `play(handle, seeds)` returns a Score. These are the *candidates*: the best
+    of them is chosen and reported.
+
+    `baseline` is what the winner is compared against — by default the first
+    checkpoint, which in every run here is the untrained network. It is passed
+    explicitly because getting it wrong is silent: the arcade evaluation put a
+    random policy first in the list, so a comparison that said "against the
+    untrained network" was really against random play, and on Kangaroo the
+    random policy won the selection and was reported as the best *checkpoint*.
+
+    `extra` rows are scored and kept for context — a random floor belongs in the
+    table and does not belong in the competition.
     """
     rows = []
-    for label, handle in checkpoints:
-        score = play(handle, select_seeds)
-        rows.append({"checkpoint": label, **score.as_dict()})
-        log(f"  {str(label):<16} return {score.mean:>9.1f} ± {score.se:>6.1f} "
-            f"over {score.n} selection episodes")
 
-    best_index = int(np.argmax([r["return_mean"] for r in rows]))
-    best_label, best_handle = checkpoints[best_index]
-    first_label, first_handle = checkpoints[0]
+    def score(label, handle, seeds):
+        result = play(handle, seeds)
+        log(f"  {str(label):<16} return {result.mean:>9.1f} ± {result.se:>6.1f} "
+            f"over {result.n} episodes")
+        return result
+
+    base_label, base_handle = baseline if baseline is not None else checkpoints[0]
+    candidate_list = [(label, handle) for label, handle in checkpoints
+                      if label != base_label]
+    if not candidate_list:
+        raise ValueError("every checkpoint is the baseline; nothing to score")
+
+    for label, handle in (extra or []):
+        rows.append({"checkpoint": label, "candidate": False,
+                     **score(label, handle, select_seeds).as_dict()})
+    # The baseline is in the table but never in the race. It was a candidate
+    # once, and on Kangaroo -- where training makes the agent worse -- the
+    # untrained network won its own comparison, which reads as "inside noise"
+    # and hides the finding: no trained checkpoint beat it.
+    base_select = score(base_label, base_handle, select_seeds)
+    rows.append({"checkpoint": base_label, "candidate": False,
+                 "baseline": True, **base_select.as_dict()})
+    for label, handle in candidate_list:
+        rows.append({"checkpoint": label, "candidate": True,
+                     **score(label, handle, select_seeds).as_dict()})
+
+    candidates = [r for r in rows if r["candidate"]]
+    best_row = max(candidates, key=lambda r: r["return_mean"])
+    best_index = [c["checkpoint"] for c in candidates].index(best_row["checkpoint"])
+    best_label, best_handle = candidate_list[best_index]
 
     # The two numbers that get quoted are measured on episodes no checkpoint was
     # chosen on.
-    best_report = play(best_handle, report_seeds)
-    first_report = play(first_handle, report_seeds)
-    log(f"\n  best on selection episodes: {best_label}")
-    log(f"  re-scored on {len(report_seeds)} held-out episodes: "
-        f"{best_report.mean:.1f} ± {best_report.se:.1f} "
-        f"(untrained {first_report.mean:.1f} ± {first_report.se:.1f})")
+    log(f"\n  best on the selection episodes: {best_label}")
+    best_report = score(f"{best_label} (held out)", best_handle, report_seeds)
+    base_report = score(f"{base_label} (held out)", base_handle, report_seeds)
 
     out = {
         "select_seeds": list(select_seeds),
         "report_seeds": list(report_seeds),
         "ladder": rows,
         "best": {"checkpoint": best_label, **best_report.as_dict()},
-        "untrained": {"checkpoint": first_label, **first_report.as_dict()},
-        "final": rows[-1],
-        "verdict": verdict(best_report, first_report),
+        "untrained": {"checkpoint": base_label, **base_report.as_dict()},
+        "final": candidates[-1],
+        "verdict": verdict(best_report, base_report, baseline_name=str(base_label)),
     }
+    # The plainest fact a ladder can produce, and the one a bare verdict loses:
+    # not one of the trained checkpoints was better than the network they all
+    # started from.
+    out["none_beat_the_baseline"] = bool(
+        best_row["return_mean"] <= base_select.mean)
+    if out["none_beat_the_baseline"]:
+        log(f"  no checkpoint beat {base_label} on the selection episodes "
+            f"(best candidate {best_row['return_mean']:.1f} against "
+            f"{base_select.mean:.1f})")
     # Whether training should have stopped earlier is a fact about the run, and
     # it is the one a "final checkpoint" report hides.
-    out["peaked_early"] = bool(best_index < len(rows) - 1)
+    out["peaked_early"] = bool(best_index < len(candidates) - 1)
     if out["peaked_early"]:
-        drop = rows[best_index]["return_mean"] - rows[-1]["return_mean"]
+        drop = candidates[best_index]["return_mean"] - candidates[-1]["return_mean"]
         out["decline_after_peak"] = round(drop, 2)
         log(f"  peaked at {best_label} and declined {drop:.1f} by the end of training")
     return out

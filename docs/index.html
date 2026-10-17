@@ -83,6 +83,7 @@
   .films { display: grid; gap: 16px; margin-top: 10px; }
   .films video { width: 100%; border-radius: 10px; background: #0c0e12; }
   .films figcaption { color: var(--ink-dim); font-size: 12.5px; margin-top: 6px; }
+  .floor { display: block; color: var(--ink-dim); font-size: 11.5px; margin-top: 2px; }
   .tag { font-size: 12px; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
   .tag.good { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }
   .tag.bad { background: color-mix(in srgb, var(--bad) 18%, transparent); color: var(--bad); }
@@ -300,7 +301,9 @@ function renderScoreboard(into) {
   const body = rows.map(r => [
     esc(r.project),
     esc(r.game),
-    esc(r.baseline) + " " + fmt(r.baseline_score, 1),
+    esc(r.baseline) + " " + fmt(r.baseline_score, 1) +
+      (r.random_floor === null || r.random_floor === undefined ? ""
+       : '<span class="floor">random ' + fmt(r.random_floor, 1) + "</span>"),
     "<b>" + fmt(r.agent_score, 1) + "</b> " + esc(r.unit),
     (r.gain >= 0 ? "+" : "") + fmt(r.gain, 1) +
       (r.bar === null || r.bar === undefined ? " vs —" : " vs " + fmt(r.bar, 1)),
@@ -461,19 +464,27 @@ function renderOverview() {
   if (m.brogue && m.brogue.length) media.append(el("h3", "", "Brogue"), shots(m.brogue.slice(0, 2), "brogue"));
   s.append(media);
 
-  const clips = (R.clips || []).filter(n => n.endsWith(".mp4"));
+  /* A clip is {file, title, detail} now; it used to be a bare filename, and
+     this page kept calling endsWith on it. The error killed the whole section
+     silently -- the page checker sees nothing wrong with a JavaScript type. */
+  const clips = (R.clips || []).map(n => typeof n === "string"
+    ? { file: n, title: n.replace("clip_", "").replace(".mp4", ""), detail: "" }
+    : n).filter(c => String(c.file).endsWith(".mp4"));
   if (clips.length) {
     const cv = el("div", "card");
     cv.append(el("h2", "", "Watch them play"),
-              el("p", "lede", "Real episodes, recorded straight off the agents."));
+              el("p", "lede", "Every demonstration: the agent before training beside the agent after it, on the same episode."));
     const box = el("div", "shots");
-    for (const n of clips) {
+    for (const c of clips) {
       const f = el("figure");
       const v = document.createElement("video");
-      v.src = "media/" + n; v.controls = true; v.loop = true; v.muted = true;
-      v.playsInline = true; v.autoplay = true; v.setAttribute("muted", "");
+      // Seek half a second in so an unplayed card shows the game, not black.
+      v.src = "media/" + c.file + "#t=0.5"; v.controls = true; v.loop = true;
+      v.muted = true; v.playsInline = true; v.setAttribute("muted", "");
       v.style.width = "100%"; v.style.borderRadius = "10px"; v.style.border = "1px solid var(--line)";
-      f.append(v, el("figcaption", "", n.replace("clip_", "").replace(".mp4", "")));
+      const caption = el("figcaption", "", esc(c.title));
+      if (c.detail) caption.append(el("span", "floor", esc(c.detail)));
+      f.append(v, caption);
       box.append(f);
     }
     cv.append(box);

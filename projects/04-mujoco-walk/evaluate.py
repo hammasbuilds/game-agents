@@ -85,7 +85,10 @@ def main() -> None:
     select = tuple(2_000 + i for i in range(args.episodes))
     report = tuple(9_000 + i for i in range(args.episodes))
     result = score_ladder(checkpoints, play_factory(args.env),
-                          select_seeds=select, report_seeds=report)
+                          select_seeds=select, report_seeds=report,
+                          # Said out loud rather than relied on: ckpt_000 is the
+                          # untrained network and nothing else may stand in for it.
+                          baseline=checkpoints[0])
     for row in result["ladder"]:
         row["steps"] = steps_of[row["checkpoint"]]
     result["best"]["steps"] = steps_of[result["best"]["checkpoint"]]

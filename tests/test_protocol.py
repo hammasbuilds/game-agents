@@ -103,3 +103,83 @@ def test_the_first_checkpoint_is_the_baseline():
     assert out["untrained"]["checkpoint"] == "ckpt_000"
     assert out["verdict"]["baseline_mean"] == pytest.approx(4.0)
     assert out["verdict"]["label"] == "learned"
+
+
+def test_a_floor_does_not_compete_for_best():
+    """A random policy belongs in the table and not in the race.
+
+    The arcade evaluation put one in the candidate list. On Kangaroo, where no
+    checkpoint beats random play, the random policy won the selection and was
+    reported as the best *checkpoint* — a sentence that cannot be true.
+    """
+    checkpoints = [("ckpt_000", 0), ("ckpt_001", 1)]
+    play = fake_ladder(select_values={0: 10.0, 1: 20.0, "rand": 90.0},
+                       report_values={0: 10.0, 1: 21.0, "rand": 88.0})
+    out = score_ladder(checkpoints, play, select_seeds=SELECT_SEEDS[:3],
+                       report_seeds=REPORT_SEEDS[:3],
+                       extra=[("random", "rand")], log=lambda *_: None)
+    assert out["best"]["checkpoint"] == "ckpt_001"
+    # The floor is still in the table, where a reader can see it beat everything.
+    floors = [r for r in out["ladder"] if r["checkpoint"] == "random"]
+    assert floors and floors[0]["return_mean"] == pytest.approx(90.0)
+    assert floors[0]["candidate"] is False
+
+
+def test_the_baseline_is_whatever_was_passed():
+    """Saying "against the untrained network" must mean that network.
+
+    With the baseline taken from position zero, putting a random policy first in
+    the list silently changed what every verdict in the arcade was measured
+    against — and the word "untrained" in the output did not change with it.
+    """
+    checkpoints = [("ckpt_000", 0), ("ckpt_001", 1)]
+    play = fake_ladder(select_values={0: 10.0, 1: 50.0, "rand": 30.0},
+                       report_values={0: 11.0, 1: 51.0, "rand": 29.0})
+    out = score_ladder(checkpoints, play, select_seeds=SELECT_SEEDS[:3],
+                       report_seeds=REPORT_SEEDS[:3],
+                       baseline=("ckpt_000", 0), extra=[("random", "rand")],
+                       log=lambda *_: None)
+    assert out["untrained"]["checkpoint"] == "ckpt_000"
+    assert out["verdict"]["baseline_mean"] == pytest.approx(11.0)
+    assert out["verdict"]["baseline"] == "ckpt_000"
+
+
+def test_peaked_early_ignores_the_floor_rows():
+    """Context rows must not shift which candidate counts as the last one."""
+    checkpoints = [("ckpt_000", 0), ("ckpt_001", 1), ("ckpt_002", 2)]
+    play = fake_ladder(select_values={0: 10.0, 1: 90.0, 2: 40.0, "rand": 5.0},
+                       report_values={0: 10.0, 1: 88.0, 2: 41.0, "rand": 5.0})
+    out = score_ladder(checkpoints, play, select_seeds=SELECT_SEEDS[:3],
+                       report_seeds=REPORT_SEEDS[:3],
+                       baseline=("ckpt_000", 0), extra=[("random", "rand")],
+                       log=lambda *_: None)
+    assert out["peaked_early"] is True
+    assert out["decline_after_peak"] == pytest.approx(50.0)
+
+
+def test_the_baseline_cannot_win_its_own_comparison():
+    """Kangaroo: every trained checkpoint is worse than the network it started
+    from. With the baseline in the race it won, and the verdict read "inside
+    noise" — which is true of a thing compared with itself and tells nobody
+    that training made the agent worse."""
+    checkpoints = [("ckpt_000", 0), ("ckpt_001", 1), ("ckpt_002", 2)]
+    play = fake_ladder(select_values={0: 60.0, 1: 10.0, 2: 0.0},
+                       report_values={0: 55.0, 1: 9.0, 2: 0.0})
+    out = score_ladder(checkpoints, play, select_seeds=SELECT_SEEDS[:3],
+                       report_seeds=REPORT_SEEDS[:3],
+                       baseline=("ckpt_000", 0), log=lambda *_: None)
+    assert out["best"]["checkpoint"] == "ckpt_001"       # best TRAINED one
+    assert out["untrained"]["checkpoint"] == "ckpt_000"
+    assert out["none_beat_the_baseline"] is True
+    rows = {r["checkpoint"]: r for r in out["ladder"]}
+    assert rows["ckpt_000"]["candidate"] is False        # in the table, not the race
+
+
+def test_a_run_where_something_did_beat_it_says_nothing_of_the_sort():
+    checkpoints = [("ckpt_000", 0), ("ckpt_001", 1)]
+    play = fake_ladder(select_values={0: 10.0, 1: 90.0},
+                       report_values={0: 11.0, 1: 88.0})
+    out = score_ladder(checkpoints, play, select_seeds=SELECT_SEEDS[:3],
+                       report_seeds=REPORT_SEEDS[:3],
+                       baseline=("ckpt_000", 0), log=lambda *_: None)
+    assert out["none_beat_the_baseline"] is False
