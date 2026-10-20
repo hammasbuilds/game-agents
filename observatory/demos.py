@@ -81,6 +81,14 @@ KNOWN: dict[str, tuple[str, str, str, str]] = {
     "clip_brogue.mp4": (
         "Brogue — first recording", "Brogue CE", "03 · Brogue through the screen",
         "a plain screen capture of one run, before the decode was shown beside it"),
+    "anatomy/game-agents.mp4": (
+        "How it works — one frame to one verdict", "all eight", "the whole repository",
+        "the isometric walk-through: a frame shrunk to what the agent sees, through "
+        "the network, into a ladder of checkpoints and out as a scored verdict"),
+    "anatomy/game-agents-architecture.mp4": (
+        "The network, layer by layer", "all eight", "the whole repository",
+        "every tensor shape and parameter count read from the model: 95% of the "
+        "424,790 parameters are in one hidden layer"),
     "reel.mp4": (
         "The reel", "all four arcade games", "arcade",
         "every arcade game in one strip"),

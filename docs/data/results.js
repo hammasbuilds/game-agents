@@ -1,5 +1,5 @@
 window.RESULTS = {
- "generated": "0fa6bd4",
+ "generated": "c60bb19",
  "doom": {
   "eval": {
    "scenario": "defend_the_center",
@@ -14294,9 +14294,9 @@ window.RESULTS = {
    "gras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras",
    "gras gras gras gras gras tree tree gras wate\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ntabl gras gras gras gras gras tree gras gras\ngras gras gras gras tree gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras",
    "path gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras tabl gras gras\ngras gras tabl gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\nston tree gras gras tree gras tabl gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras tabl gras",
-   "path ston ston ston path diam ston ston ston\nston ston ston ston path iron iron ston ston\nston ston ston ston path path path iron path\nston ston ston path path path path path path\nston ston ston ston path iron path path gras\nston ston ston ston path diam ston ston gras\nston ston ston ston path lava ston ston gras",
-   "gras gras gras tree sand wate wate wate wate\ngras gras gras gras sand sand wate wate wate\ngras gras gras ston gras sand wate wate wate\ngras gras gras gras gras gras gras wate wate\ngras gras tabl gras gras gras gras wate wate\ngras gras gras gras gras gras gras gras wate\ngras gras gras tabl gras gras gras gras gras",
-   "gras gras gras tree sand wate wate wate wate\ngras gras gras ston sand sand wate wate wate\ngras gras gras ston gras sand wate wate wate\ngras gras gras ston gras gras ston wate wate\ngras gras tabl gras gras ston gras wate wate\ngras gras gras gras ston gras gras gras wate\ngras gras gras tabl gras gras gras gras gras"
+   "path path ston ston ston path ston ston ston\npath path ston ston ston path diam ston ston\npath ston ston ston ston path iron iron ston\nston ston ston path path path path path iron\nston ston ston ston furn path path path path\nston ston ston ston ston path iron path path\nston ston ston ston ston path diam ston ston",
+   "gras gras sand sand wate wate wate wate wate\ngras gras tree sand wate wate wate wate wate\ngras gras gras sand sand wate wate wate wate\ngras gras ston gras sand wate wate wate wate\ngras gras gras gras gras gras wate wate wate\ngras tabl gras gras gras gras wate wate ston\ngras gras gras gras gras gras gras wate ston",
+   "gras gras gras gras gras gras sand sand sand\ngras gras gras gras sand sand sand wate wate\ngras gras tree sand sand wate wate wate wate\ngras gras ston sand sand wate wate wate wate\ngras gras gras tree sand wate wate wate wate\ngras ston gras gras ston sand wate wate wate\ngras gras gras ston gras sand wate wate wate"
   ],
   "brogue": [
    "brogue_0.png",
@@ -14394,25 +14394,25 @@ window.RESULTS = {
    "place_table",
    "collect_wood",
    "mine_adjacent_tree",
-   "flee",
-   "place_table",
-   "collect_wood",
-   "mine_adjacent_tree",
-   "collect_wood",
-   "mine_adjacent_tree",
-   "place_table",
-   "place_table",
-   "mine_adjacent_tree",
    "make_wood_pickaxe",
    "collect_wood",
-   "make_wood_sword",
+   "mine_adjacent_tree",
+   "collect_wood",
+   "collect_wood",
    "mine_adjacent_tree",
    "collect_stone",
    "collect_stone",
    "collect_stone",
    "collect_stone",
+   "mine_adjacent_stone",
+   "mine_adjacent_stone",
+   "mine_adjacent_stone",
    "collect_stone",
-   "collect_stone"
+   "mine_adjacent_stone",
+   "collect_stone",
+   "collect_stone",
+   "place_stone",
+   "mine_adjacent_stone"
   ],
   "daylight": [
    0.81,
@@ -14566,39 +14566,8 @@ window.RESULTS = {
    },
    {
     "sapling": 1,
-    "wood": 6
-   },
-   {
-    "sapling": 1,
-    "wood": 4
-   },
-   {
-    "sapling": 1,
-    "wood": 4
-   },
-   {
-    "sapling": 1,
-    "wood": 5
-   },
-   {
-    "sapling": 1,
-    "wood": 5
-   },
-   {
-    "sapling": 1,
-    "wood": 6
-   },
-   {
-    "sapling": 1,
-    "wood": 7
-   },
-   {
-    "sapling": 1,
-    "wood": 5
-   },
-   {
-    "sapling": 1,
-    "wood": 6
+    "wood": 5,
+    "wood_pickaxe": 1
    },
    {
     "sapling": 1,
@@ -14607,8 +14576,15 @@ window.RESULTS = {
    },
    {
     "sapling": 1,
-    "wood": 6,
-    "wood_pickaxe": 1
+    "wood": 5,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 5,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
    },
    {
     "sapling": 1,
@@ -14637,18 +14613,78 @@ window.RESULTS = {
    {
     "sapling": 1,
     "wood": 6,
+    "coal": 1,
     "wood_pickaxe": 1,
     "wood_sword": 1
    },
    {
     "sapling": 1,
     "wood": 6,
+    "coal": 1,
     "wood_pickaxe": 1,
     "wood_sword": 1
    },
    {
     "sapling": 1,
     "wood": 6,
+    "stone": 1,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 2,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 3,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 3,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 4,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 5,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 6,
+    "coal": 1,
+    "wood_pickaxe": 1,
+    "wood_sword": 1
+   },
+   {
+    "sapling": 1,
+    "wood": 6,
+    "stone": 5,
+    "coal": 1,
     "wood_pickaxe": 1,
     "wood_sword": 1
    }
@@ -14950,6 +14986,16 @@ window.RESULTS = {
    "file": "pingpong/progress.mp4",
    "title": "Table tennis \u2014 the ladder (retired)",
    "detail": "from losing every rally to winning them"
+  },
+  {
+   "file": "anatomy/game-agents.mp4",
+   "title": "How it works \u2014 one frame to one verdict",
+   "detail": "the isometric walk-through: a frame shrunk to what the agent sees, through the network, into a ladder of checkpoints and out as a scored verdict"
+  },
+  {
+   "file": "anatomy/game-agents-architecture.mp4",
+   "title": "The network, layer by layer",
+   "detail": "every tensor shape and parameter count read from the model: 95% of the 424,790 parameters are in one hidden layer"
   }
  ]
 };
