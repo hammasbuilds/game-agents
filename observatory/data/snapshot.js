@@ -1,5 +1,5 @@
 window.SNAPSHOT = {
- "taken_at": "2026-10-17 10:58:26Z",
+ "taken_at": "2026-10-20 03:58:23Z",
  "arcade": [
   {
    "kind": "arcade",
@@ -16,7 +16,7 @@ window.SNAPSHOT = {
    "wall_minutes": null,
    "params": null,
    "eta_minutes": null,
-   "seconds_since_update": 189404,
+   "seconds_since_update": 423400,
    "checkpoints": [
     {
      "tag": "000",
@@ -1095,7 +1095,7 @@ window.SNAPSHOT = {
    "wall_minutes": 56.4,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 199920,
+   "seconds_since_update": 433916,
    "checkpoints": [
     {
      "tag": "000",
@@ -2206,7 +2206,7 @@ window.SNAPSHOT = {
    "wall_minutes": 61.1,
    "params": 428131,
    "eta_minutes": null,
-   "seconds_since_update": 185615,
+   "seconds_since_update": 419612,
    "checkpoints": [
     {
      "tag": "000",
@@ -3324,7 +3324,7 @@ window.SNAPSHOT = {
    "wall_minutes": 59.6,
    "params": 425047,
    "eta_minutes": null,
-   "seconds_since_update": 196306,
+   "seconds_since_update": 430302,
    "checkpoints": [
     {
      "tag": "000",
@@ -6544,13 +6544,13 @@ window.SNAPSHOT = {
   "media_dir": "../docs/media"
  },
  "machine": {
-  "cpu_percent": 78.5,
-  "python_processes": 117,
+  "cpu_percent": 34.7,
+  "python_processes": 126,
   "gpu": {
    "name": "Quadro RTX 5000",
-   "memory_used": "10665 MiB",
+   "memory_used": "0 MiB",
    "memory_total": "16384 MiB",
-   "utilisation": "25 %"
+   "utilisation": "0 %"
   }
  }
 };

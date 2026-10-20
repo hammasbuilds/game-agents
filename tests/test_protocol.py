@@ -90,7 +90,9 @@ def test_a_run_that_ended_at_its_best_does_not_claim_a_peak():
     out = score_ladder(checkpoints, play, select_seeds=SELECT_SEEDS[:3],
                        report_seeds=REPORT_SEEDS[:3], log=lambda *_: None)
     assert out["peaked_early"] is False
-    assert "decline_after_peak" not in out
+    # The drop is always reported -- it is a measurement. Only the claim that
+    # the run peaked is conditional on it clearing its own uncertainty.
+    assert out["decline_after_peak"] <= 0
 
 
 def test_the_first_checkpoint_is_the_baseline():
@@ -183,3 +185,30 @@ def test_a_run_where_something_did_beat_it_says_nothing_of_the_sort():
                        report_seeds=REPORT_SEEDS[:3],
                        baseline=("ckpt_000", 0), log=lambda *_: None)
     assert out["none_beat_the_baseline"] is False
+
+
+def test_a_drop_inside_the_noise_is_not_a_peak():
+    """Pong's best checkpoint was two from the end by a margin of zero, and the
+    page said "peaked mid-run and lost 0". A decline is a claim like any other
+    and has to clear the uncertainty of the two rows being compared."""
+    checkpoints = [("ckpt_000", 0), ("ckpt_001", 1), ("ckpt_002", 2)]
+    play = fake_ladder(select_values={0: 10.0, 1: 50.0, 2: 49.9},
+                       report_values={0: 10.0, 1: 50.0, 2: 49.9})
+    out = score_ladder(checkpoints, play, select_seeds=SELECT_SEEDS[:3],
+                       report_seeds=REPORT_SEEDS[:3],
+                       baseline=("ckpt_000", 0), log=lambda *_: None)
+    assert out["best"]["checkpoint"] == "ckpt_001"
+    assert out["peaked_early"] is False
+    assert out["decline_after_peak"] == pytest.approx(0.1)
+    assert out["decline_bar"] > out["decline_after_peak"]
+
+
+def test_a_real_decline_still_counts_as_one():
+    checkpoints = [("ckpt_000", 0), ("ckpt_001", 1), ("ckpt_002", 2)]
+    play = fake_ladder(select_values={0: 10.0, 1: 900.0, 2: 100.0},
+                       report_values={0: 10.0, 1: 890.0, 2: 101.0})
+    out = score_ladder(checkpoints, play, select_seeds=SELECT_SEEDS[:3],
+                       report_seeds=REPORT_SEEDS[:3],
+                       baseline=("ckpt_000", 0), log=lambda *_: None)
+    assert out["peaked_early"] is True
+    assert out["decline_after_peak"] == pytest.approx(800.0)

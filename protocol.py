@@ -187,12 +187,24 @@ def score_ladder(checkpoints: Sequence, play: Callable[[object, Iterable[int]], 
             f"(best candidate {best_row['return_mean']:.1f} against "
             f"{base_select.mean:.1f})")
     # Whether training should have stopped earlier is a fact about the run, and
-    # it is the one a "final checkpoint" report hides.
-    out["peaked_early"] = bool(best_index < len(candidates) - 1)
+    # it is the one a "final checkpoint" report hides. But a later checkpoint
+    # being nominally lower is not a peak: Pong's best was two checkpoints from
+    # the end by a margin of zero, and the page dutifully said "peaked mid-run
+    # and lost 0". The drop has to clear the uncertainty of the two rows being
+    # compared, like every other claim here.
+    final = candidates[-1]
+    peak = candidates[best_index]
+    drop = peak["return_mean"] - final["return_mean"]
+    drop_bar = 2 * float(np.hypot(peak["return_se"], final["return_se"]))
+    out["decline_after_peak"] = round(drop, 2)
+    out["decline_bar"] = round(drop_bar, 2)
+    out["peaked_early"] = bool(best_index < len(candidates) - 1 and drop > drop_bar)
     if out["peaked_early"]:
-        drop = candidates[best_index]["return_mean"] - candidates[-1]["return_mean"]
-        out["decline_after_peak"] = round(drop, 2)
-        log(f"  peaked at {best_label} and declined {drop:.1f} by the end of training")
+        log(f"  peaked at {best_label} and declined {drop:.1f} by the end of "
+            f"training, against a bar of {drop_bar:.1f}")
+    elif best_index < len(candidates) - 1:
+        log(f"  best was {best_label}, {drop:.1f} above the final checkpoint "
+            f"— inside a bar of {drop_bar:.1f}, so not a decline")
     return out
 
 

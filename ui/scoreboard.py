@@ -27,6 +27,25 @@ sys.path.insert(0, str(ROOT))
 DATA = ROOT / "docs" / "data"
 
 
+def recompute_peak(data: dict) -> tuple[bool, float | None]:
+    """Did this run really peak before the end, or is the drop inside the noise?
+
+    Recomputed here rather than read from the file: eval.json files written
+    before the rule was tightened carry `peaked_early` for drops of zero.
+    """
+    candidates = [r for r in data.get("ladder", []) if r.get("candidate", True)]
+    if len(candidates) < 2 or "best" not in data:
+        return bool(data.get("peaked_early")), data.get("decline_after_peak")
+    best_name = data["best"]["checkpoint"]
+    names = [r["checkpoint"] for r in candidates]
+    if best_name not in names:
+        return bool(data.get("peaked_early")), data.get("decline_after_peak")
+    peak, final = candidates[names.index(best_name)], candidates[-1]
+    drop = peak["return_mean"] - final["return_mean"]
+    bar = 2 * float(np.hypot(peak["return_se"], final["return_se"]))
+    return bool(names.index(best_name) < len(names) - 1 and drop > bar), round(drop, 2)
+
+
 def read(path: Path):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -149,8 +168,8 @@ def collect() -> list[dict]:
             best["return_se"], untrained["return_se"], best["episodes"], "return",
             f"protocol.py — ladder on {len(data['select_seeds'])} selection episodes, "
             f"winner re-scored on {len(data['report_seeds'])} held out",
-            peaked_early=data.get("peaked_early"),
-            decline_after_peak=data.get("decline_after_peak")))
+            peaked_early=recompute_peak(data)[0],
+            decline_after_peak=recompute_peak(data)[1]))
 
     # -- the arcade ----------------------------------------------------------
     for run_dir in sorted((ROOT / "runs_arcade").glob("*")):
@@ -172,8 +191,8 @@ def collect() -> list[dict]:
             best["return_se"], untrained["return_se"], best["episodes"], "episode return",
             f"protocol.py — ladder on {len(data['select_seeds'])} selection episodes, "
             f"winner re-scored on {len(data['report_seeds'])} held out",
-            peaked_early=data.get("peaked_early"),
-            decline_after_peak=data.get("decline_after_peak"),
+            peaked_early=recompute_peak(data)[0],
+            decline_after_peak=recompute_peak(data)[1],
             random_floor=round(floor, 2) if floor is not None else None,
             best_checkpoint=best["checkpoint"].replace(".pt", ""),
             none_beat_the_baseline=data.get("none_beat_the_baseline")))

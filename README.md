@@ -33,6 +33,12 @@ compromise or was enough.
 same moment: never trained, then 60k, 180k and 419k steps. All four games are in
 the [reel](docs/media/reel.mp4).*
 
+![the scoreboard: one row per agent, each with its baseline, its gain and the bar it had to clear](docs/media/ui/dashboard-scoreboard.png)
+
+*Every result in the repository, judged the same way. The units differ and are
+not comparable; the verdict is. A gap smaller than its own uncertainty is not
+called a win — three rows here say so.*
+
 ## What an hour of laptop CPU actually buys
 
 Four games, one network, one PPO, one evaluation protocol — and four different
@@ -125,8 +131,10 @@ repository means. Three rules, each of them written down because this repository
 got it wrong first:
 
 **The last checkpoint is not the trained agent.** The walker reached 4,494 at
-700k steps and finished at 3,637 by 2M — a decline of 857 against a bar of 786,
-so real, but only just. Reporting the final checkpoint reports whichever point
+700k steps and finished at 3,637 by 2M — a decline of 858 against a bar of 786,
+so real, but only just. It is the only run here whose decline clears that bar:
+the others nominally peak early by margins of 0 to 1.4, which is nothing, and
+the page says so rather than calling them peaks. Reporting the final checkpoint reports whichever point
 training happened to stop at, so the ladder is scored and a checkpoint is
 *chosen*.
 
@@ -267,6 +275,12 @@ HTML rather than read from the data.
 python ui/export.py && python ui/check_page.py
 ```
 
+![the Observatory's demonstrations view: every film playing in one place](docs/media/ui/observatory-demos.png)
+
+*The control panel, `python -m observatory.server --open`: start and stop
+training, watch any of the ten demonstrations, and open any project on this
+machine. The films are the agent before training beside the agent after it.*
+
 ## Projects & tools
 
 The panel's second half is a launcher for everything on this machine that has a
@@ -278,6 +292,8 @@ tell you.
 python -m observatory.scan_projects    # check the catalogue against the machine
 python -m observatory.server --open    # the panel, with the launcher in it
 ```
+
+![the launcher: twenty-nine projects with their ports, repositories and published pages](docs/media/ui/observatory-projects.png)
 
 | it says | because |
 |---|---|

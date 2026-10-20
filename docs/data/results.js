@@ -1,5 +1,5 @@
 window.RESULTS = {
- "generated": "2927a06",
+ "generated": "0fa6bd4",
  "doom": {
   "eval": {
    "scenario": "defend_the_center",
@@ -14294,9 +14294,9 @@ window.RESULTS = {
    "gras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras",
    "gras gras gras gras gras tree tree gras wate\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ntabl gras gras gras gras gras tree gras gras\ngras gras gras gras tree gras gras gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras",
    "path gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras tabl gras gras\ngras gras tabl gras gras gras gras gras gras\ngras gras gras gras gras gras gras gras gras\nston tree gras gras tree gras tabl gras gras\ngras gras gras gras gras gras gras gras gras\ngras gras gras gras gras gras gras tabl gras",
-   "path path ston ston ston path ston ston ston\npath path ston ston ston path diam ston ston\npath ston ston ston ston path iron iron ston\nston ston ston path path path path path iron\nston ston ston ston furn path path path path\nston ston ston ston ston path iron path path\nston ston ston ston ston path diam ston ston",
-   "gras gras sand sand wate wate wate wate wate\ngras gras tree sand wate wate wate wate wate\ngras gras gras sand sand wate wate wate wate\ngras gras ston gras sand wate wate wate wate\ngras gras gras gras gras gras wate wate wate\ngras tabl gras gras gras gras wate wate ston\ngras gras gras gras gras gras gras wate ston",
-   "gras gras gras gras gras gras sand sand sand\ngras gras gras gras sand sand sand wate wate\ngras gras tree sand sand wate wate wate wate\ngras gras ston sand sand wate wate wate wate\ngras gras gras tree sand wate wate wate wate\ngras ston gras gras ston sand wate wate wate\ngras gras gras ston gras sand wate wate wate"
+   "path ston ston ston path diam ston ston ston\nston ston ston ston path iron iron ston ston\nston ston ston ston path path path iron path\nston ston ston path path path path path path\nston ston ston ston path iron path path gras\nston ston ston ston path diam ston ston gras\nston ston ston ston path lava ston ston gras",
+   "gras gras gras tree sand wate wate wate wate\ngras gras gras gras sand sand wate wate wate\ngras gras gras ston gras sand wate wate wate\ngras gras gras gras gras gras gras wate wate\ngras gras tabl gras gras gras gras wate wate\ngras gras gras gras gras gras gras gras wate\ngras gras gras tabl gras gras gras gras gras",
+   "gras gras gras tree sand wate wate wate wate\ngras gras gras ston sand sand wate wate wate\ngras gras gras ston gras sand wate wate wate\ngras gras gras ston gras gras ston wate wate\ngras gras tabl gras gras ston gras wate wate\ngras gras gras gras ston gras gras gras wate\ngras gras gras tabl gras gras gras gras gras"
   ],
   "brogue": [
    "brogue_0.png",
