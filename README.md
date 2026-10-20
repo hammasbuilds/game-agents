@@ -275,11 +275,56 @@ HTML rather than read from the data.
 python ui/export.py && python ui/check_page.py
 ```
 
-![the Observatory's demonstrations view: every film playing in one place](docs/media/ui/observatory-demos.png)
+## The control panel
 
-*The control panel, `python -m observatory.server --open`: start and stop
-training, watch any of the ten demonstrations, and open any project on this
-machine. The films are the agent before training beside the agent after it.*
+`python -m observatory.server --open`. Every picture below is a screenshot of
+that page being used, taken by a browser driving it — the values are typed in,
+the buttons are clicked, and each shot is taken after the feature produced its
+result.
+
+![the overview: every agent, its state and its film](docs/screenshots/01-overview.png)
+
+*Every agent in one place, each card playing its own film.*
+
+![one game: its ladder, its films, its curve](docs/screenshots/02-game-page.png)
+
+*One game end to end: the checkpoint ladder with its spreads, the films of each
+checkpoint playing the same level, the training curve and the policy entropy.*
+
+![the training form with real values typed in](docs/screenshots/03-training-settings.png)
+
+*Training settings. Every value is checked against a range before anything
+starts, and choosing an architecture fills in a starting point for the rest —
+suggestions, all of them still editable. The curve under the form is the
+learning rate this run would actually follow.*
+
+![a run started from the panel](docs/screenshots/04-training-started.png)
+
+*The same page a few seconds after pressing start: the button has become
+**stop training**, the job carries its own elapsed time, and the form is locked
+to the settings the run was started with.*
+
+![the run stopped again](docs/screenshots/05-training-stopped.png)
+
+*And stopped from the same button. A run started here outlives the panel — the
+job registry adopts it on the next launch rather than pretending the machine is
+idle.*
+
+![the demonstrations view](docs/screenshots/06-demonstrations.png)
+
+*Every demonstration in the repository, playing here rather than sitting in a
+folder: the agent before training beside the agent after it, on the same
+episode.*
+
+![the launcher](docs/screenshots/08-projects.png)
+
+*The launcher: twenty-nine projects on this machine with their ports,
+repositories and published pages. A port that is answering is reported as
+exactly that — five ports here are claimed by two projects each.*
+
+![the light theme](docs/screenshots/10-light-theme.png)
+
+*Both themes, on every view.*
 
 ## Projects & tools
 

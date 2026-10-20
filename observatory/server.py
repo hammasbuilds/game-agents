@@ -430,11 +430,21 @@ def start_job(kind: str, game: str, config: dict | None = None) -> dict:
             extra, used, problem = build_train_args(config or {})
             if problem:
                 return {"ok": False, "error": problem}
-            args = [python(), "-m", "arcade.train", "--game", game]
+            # Each launch gets its own run directory. The trainer refuses to
+            # write into one that already holds checkpoints -- it let an earlier
+            # run's untrained checkpoint be overwritten silently -- so a panel
+            # that always used runs_arcade/<game> could only ever start the
+            # first run of a game, and would fail from the second onwards with
+            # the error buried in a log file.
+            stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+            out_dir = ROOT / "runs_arcade" / f"{game}_{stamp}"
+            args = [python(), "-m", "arcade.train", "--game", game,
+                    "--out", str(out_dir)]
             if "--envs" not in extra:
                 args += ["--envs", "12"]
             args += extra
-            log = ROOT / "runs_arcade" / f"train_{game}.log"
+            used["out"] = out_dir.name
+            log = ROOT / "runs_arcade" / f"train_{game}_{stamp}.log"
         elif kind == "play":
             used = {}
             args = [python(), "-m", "observatory.live", "--game", game]

@@ -509,6 +509,11 @@ function configForm(e) {
       if (rule.max !== undefined) input.max = rule.max;
       input.step = rule.kind === "float" ? "any" : "1";
     }
+    // A stable handle on each control. Without one the only way to address a
+    // field is its position in the form, which changes whenever a setting is
+    // added, and anything driving this page -- a demo, a test -- silently types
+    // into the wrong box.
+    input.dataset.field = key;
     input.disabled = !!running;
     input.addEventListener("change", () => {
       state[key] = rule.kind === "float" ? parseFloat(input.value) :
@@ -1093,8 +1098,22 @@ window.addEventListener("hashchange", render);
 
 /* ---------- live refresh ---------- */
 let auto = true;
+/* Is someone in the middle of using the page? The refresh below rebuilds the
+   whole view, which rips the focus out of whatever is being typed into and
+   replaces the element under a click that is already on its way. Typing a
+   learning rate into the training form meant losing the cursor every fifteen
+   seconds, and a click that landed on the tick boundary did nothing at all --
+   the button was gone before its handler ran. */
+function busy() {
+  const active = document.activeElement;
+  if (!active) return false;
+  if (["INPUT", "SELECT", "TEXTAREA"].includes(active.tagName)) return true;
+  return active.matches && active.matches("button:not(.pill)");
+}
+
 function reload() {
   if (!auto) return;
+  if (busy()) return;          // try again on the next tick
   pollJobs();
   const s = document.createElement("script");
   // Cache-buster, so this also works opened straight off disk where fetching a
