@@ -84,8 +84,11 @@ def check(pages: list[str], base: str, verbose: bool = True) -> list[str]:
         for name in pages:
             seen.clear()
             url = f"{base}/{name}"
-            page.goto(url, wait_until="networkidle")
-            page.wait_for_timeout(900)
+            # Not networkidle. Every page here autoplays looping films, so the
+            # network never goes quiet: against the published site this timed
+            # out after thirty seconds without ever running a single check.
+            page.goto(url, wait_until="domcontentloaded", timeout=60_000)
+            page.wait_for_timeout(4000)
             tabs = page.locator("#tabs button")
             for i in range(tabs.count()):
                 tabs.nth(i).click()
