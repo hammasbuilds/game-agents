@@ -17,9 +17,16 @@ import numpy as np
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "projects" / "01-doom-pixel-rl"))
-sys.path.insert(0, str(ROOT / "projects" / "02-crafter-planner"))
-sys.path.insert(0, str(ROOT / "projects" / "03-brogue-screen-agent"))
+# Appended, not inserted at the front. Each project folder holds its own
+# film.py, and putting those folders ahead of the repository root let
+# "from film import side_by_side" resolve to a project's module instead of the
+# shared film package -- a circular import that only stayed hidden here because
+# pytest happened to put the root first. The agent packages imported below have
+# no such name clash, so the end of the path is enough for them.
+sys.path.insert(0, str(ROOT))
+for _project in ("projects/01-doom-pixel-rl", "projects/02-crafter-planner",
+                 "projects/03-brogue-screen-agent"):
+    sys.path.append(str(ROOT / _project))
 
 
 # -- 01 doom ---------------------------------------------------------------
