@@ -14,10 +14,16 @@ and the launcher comes from here, so there is no path by which the page — or a
 website that found this port — supplies a path to run.
 
 **A port answering is not proof the project is up.** Ports collide on this
-machine: the PsyReason studio and the traffic panel both want 8781, StudyLoop
-and the pak-law demo both want 8765. So "something is answering on 8765" is
-reported as exactly that, and only a process this panel started is reported as
-started by this panel.
+machine: StudyLoop and the pak-law demo both want 8765. So "something is
+answering on 8765" is reported as exactly that, and only a process this panel
+started is reported as started by this panel.
+
+`port_conflicts()` is what surfaces these, and it found the traffic panel
+sitting on 8781 beside the PsyReason studio -- both launchers really do bind it,
+so whichever started second simply failed to come up. The traffic panel is the
+one this session owns, so the traffic panel is the one that moved, to 8822:
+a port claimed by nothing in this catalogue, nothing in the Launchpad registry
+and no .bat under the studios tree.
 """
 from __future__ import annotations
 
@@ -92,9 +98,9 @@ CATALOGUE: list[Project] = [
         group="Traffic",
         blurb="A 3x3 grid of signalised junctions, four controllers, and a "
               "head-to-head race on identical arrivals.",
-        launcher=[sys.executable, "-m", "web.server", "--port", "8781"],
+        launcher=[sys.executable, "-m", "web.server", "--port", "8822"],
         cwd="D:/github/traffic-agents",
-        port=8781,
+        port=8822,
         repo_dir="D:/github/traffic-agents",
         io_hint="in: grid size, demand, controller · out: delay, throughput, "
                 "per-phase reasoning at any junction",
