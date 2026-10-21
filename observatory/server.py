@@ -35,6 +35,12 @@ ROOT = Path(__file__).resolve().parents[1]
 HERE = Path(__file__).resolve().parent
 PY = ROOT / ".venv" / "Scripts" / "python.exe"
 
+# Run either way. `-m observatory.server` puts the repo on the path for us;
+# `python observatory/server.py` puts only observatory/ there and the import
+# below dies. The launchers use -m, so a hand-typed path was a crash nobody hit.
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from observatory import projects                                  # noqa: E402
 
 TOKEN = secrets.token_urlsafe(18)
@@ -515,27 +521,31 @@ def start_sweep(game: str, param: str, values: list, steps: int, envs: int,
 
 def stop_job(kind: str, game: str) -> dict:
     key = job_key(kind, game)
+    # Look the job up under the lock and then let go of it. Waiting up to twelve
+    # seconds for the run to end while still holding it froze the whole panel:
+    # job_status() wants the same lock, so the page's poll blocked behind the
+    # stop and the UI showed nothing moving until the process was gone.
     with LOCK:
         job = JOBS.get(key)
         if not job or job["process"].poll() is not None:
             return {"ok": False, "error": f"no {kind} running for {game}"}
         process = job["process"]
-        # Ask first, insist second: a training run that is killed outright leaves
-        # its worker processes orphaned and holding the game's shared memory.
+    # Ask first, insist second: a training run that is killed outright leaves
+    # its worker processes orphaned and holding the game's shared memory.
+    try:
+        if os.name == "nt":
+            process.send_signal(signal.CTRL_BREAK_EVENT)
+        else:
+            process.terminate()
+        process.wait(timeout=12)
+    except Exception:
+        process.kill()
+    finally:
         try:
-            if os.name == "nt":
-                process.send_signal(signal.CTRL_BREAK_EVENT)
-            else:
-                process.terminate()
-            process.wait(timeout=12)
+            if job.get("handle"):
+                job["handle"].close()
         except Exception:
-            process.kill()
-        finally:
-            try:
-                if job.get("handle"):
-                    job["handle"].close()
-            except Exception:
-                pass
+            pass
     save_registry()
     return {"ok": True, "stopped": key}
 
