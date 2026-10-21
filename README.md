@@ -124,21 +124,6 @@ random agent** — 310 against random's 367, with the entropy of its action
 distribution at 0.0017 out of a possible 1.10. Raising the entropy bonus from
 0.01 to 0.03 and halving the learning rate turned that into 1,930.
 
-## How it works, in two animations
-
-![from one frame to one verdict](docs/media/anatomy/game-agents.gif)
-
-*[`docs/anatomy.html`](docs/anatomy.html) — the whole path: a frame shrunk to
-84×84 greyscale, stacked four deep, through the trunk into a button and a value,
-acted out in twelve games at once, learned from by PPO, kept as a ladder, and
-scored.*
-
-![the network, layer by layer](docs/media/anatomy/game-agents-architecture.gif)
-
-*[`docs/architecture.html`](docs/architecture.html) — one level down: every
-tensor shape and every parameter count, read from the model rather than typed.
-95% of the 424,790 parameters sit in a single hidden layer.*
-
 ## How everything here is scored
 
 One file, [`protocol.py`](protocol.py), decides what every number in this
