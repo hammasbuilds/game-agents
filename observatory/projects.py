@@ -19,7 +19,7 @@ answering on 8765" is reported as exactly that, and only a process this panel
 started is reported as started by this panel.
 
 `port_conflicts()` is what surfaces these, and it found the traffic panel
-sitting on 8781 beside the PsyReason studio -- both launchers really do bind it,
+sitting on 8781 beside a dataset studio -- both launchers really do bind it,
 so whichever started second simply failed to come up. The traffic panel is the
 one this session owns, so the traffic panel is the one that moved, to 8822:
 a port claimed by nothing in this catalogue, nothing in the Launchpad registry
@@ -175,42 +175,12 @@ CATALOGUE: list[Project] = [
             repo_dir="D:/github/job-radar", private=True,
             io_hint="in: a search · out: the few postings that survive the filters"),
 
-    # -- research, all private ------------------------------------------------
-    Project(id="trial-by-ai", name="Trial by AI", group="Research",
-            blurb="The courtroom game. Private, and staying private.",
-            launcher="D:/the dock/TrialByAI.bat", port=8000,
-            repo_dir="D:/the dock", private=True,
-            io_hint="in: your questions to a witness · out: a verdict and a score"),
-    Project(id="psyscreen", name="PsyScreen", group="Research",
-            blurb="The psychological assessment app.",
-            launcher="D:/psychological assessment app/psyreason-app/PsyScreen.bat",
-            port=8010, repo_dir="D:/psychological assessment app/psyreason-app",
-            private=True,
-            io_hint="in: an instrument and answers · out: scored scales and a report"),
-    Project(id="dalil", name="DALIL", group="Research",
-            blurb="The Urdu legal reasoning model, in a browser.",
-            launcher="D:/22 Ai genefrted dataset 22/dalil/DALIL.bat", port=8731,
-            repo_dir="D:/22 Ai genefrted dataset 22/dalil", private=True,
-            io_hint="in: an Urdu legal question · out: the model's reasoning and answer"),
-    Project(id="scholarcritic", name="ScholarCritic", group="Research",
-            blurb="Reviews a protocol and says what is wrong with it.",
-            launcher=str(DATASETS / "10-scholarcritic" / "ScholarCritic.bat"),
-            port=8020, repo_dir=None, private=True,
-            io_hint="in: a method section · out: the flaws it finds, with reasons"),
-    Project(id="research-lab", name="Research Lab", group="Research",
-            blurb="The GPU queue and the research projects, as a desktop window.",
-            launcher=["D:/the dock/.venv/Scripts/pythonw.exe",
-                      "D:/pending research work/_desktop/research_lab.pyw"],
-            cwd="D:/pending research work/_desktop", kind="desktop", private=True,
-            io_hint="in: a job · out: the queue, and what the GPU is doing"),
-
     # -- the ten dataset studios ---------------------------------------------
     *[Project(id=f"studio-{slug}", name=f"{label} studio", group="Dataset studios",
               blurb=f"Browse and search the {label} dataset.",
               launcher=str(STUDIOS / folder / bat), port=port, private=True,
               io_hint="in: a filter or a row id · out: the example, its label and its check")
       for slug, label, folder, bat, port in (
-          ("psyreason", "PsyReason", "01-psyreason", "PsyReason-Studio.bat", 8781),
           ("contradiction-ledger", "Contradiction Ledger", "02-contradiction-ledger",
            "ContradictionLedger-Studio.bat", 8782),
           ("witnessdrift", "WitnessDrift", "03-witnessdrift", "WitnessDrift-Studio.bat", 8783),
@@ -223,13 +193,20 @@ CATALOGUE: list[Project] = [
            "InterrogationLogic-Studio.bat", 8788),
           ("protocolcheck", "ProtocolCheck", "09-protocolcheck", "ProtocolCheck.bat", 8791),
       )],
-    Project(id="studio-scholarcritic", name="ScholarCritic data studio",
-            group="Dataset studios",
-            blurb="Browse and search the ScholarCritic dataset — 271,755 rows, five tasks.",
-            launcher=str(DATASETS / "10-scholarcritic" / "ScholarCriticData-Studio.bat"),
-            port=8790, private=True,
-            io_hint="in: a task and a filter · out: the example and its verified label"),
 ]
+
+# Projects that stay private live in projects_local.py, which git ignores: the
+# panel on this machine launches them, and the public repository never names them.
+try:
+    from observatory.projects_local import local_projects
+except ImportError:
+    local_projects = None
+LOCAL_IDS = set()
+if local_projects:
+    _local = local_projects(Project, DATASETS, STUDIOS)
+    LOCAL_IDS = {p.id for p in _local}
+    CATALOGUE += _local
+LOCAL_SNAPSHOT = HERE / "data" / "projects.local.json"
 
 BY_ID = {p.id: p for p in CATALOGUE}
 GROUPS = ["Game agents", "Traffic", "Packages", "Products", "Research",
@@ -262,9 +239,14 @@ def port_conflicts() -> dict[int, list[str]]:
 def snapshot() -> dict:
     """The verified side of the catalogue, written by scan_projects.py."""
     try:
-        return json.loads(SNAPSHOT.read_text(encoding="utf-8"))
+        data = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
-        return {"checked": None, "projects": {}}
+        data = {"checked": None, "projects": {}}
+    try:
+        data["projects"].update(json.loads(LOCAL_SNAPSHOT.read_text(encoding="utf-8"))["projects"])
+    except (OSError, json.JSONDecodeError, KeyError):
+        pass
+    return data
 
 
 def as_dict(project: Project, verified: dict) -> dict:

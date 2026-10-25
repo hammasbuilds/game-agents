@@ -342,7 +342,7 @@ python -m observatory.server --open    # the panel, with the launcher in it
 
 | it says | because |
 |---|---|
-| whether a port is answering, separately from whether this panel started it | five ports on this box are claimed by two projects each — 8765 by StudyLoop and the pak-law demo, 8781 by the traffic panel and the PsyReason studio — so "something is answering" is not "your project is up" |
+| whether a port is answering, separately from whether this panel started it | five ports on this box are claimed by two projects each — 8765 by StudyLoop and the pak-law demo, 8781 by the traffic panel and a dataset studio — so "something is answering" is not "your project is up" |
 | the repository, only when it is public | 12 of the 29 are public; a GitHub link to a private repo is a 404 for everybody but its owner, so the private ones say *repo private* rather than offering a dead link |
 | the published page, only when it answered | 4 have one. The other 25 were checked and have none, and are shown that way rather than linked hopefully |
 | what it takes in and gives back | one line per project, so the card says what the thing is *for* before you start it |

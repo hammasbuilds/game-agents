@@ -23,3 +23,6 @@ atlas_sheet.png
 docs/_shots/
 runs_arcade/
 MUJOCO_LOG.TXT
+# private projects for the local Observatory panel, never published
+observatory/projects_local.py
+observatory/data/projects.local.json

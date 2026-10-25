@@ -87,45 +87,6 @@
    "live_status": null,
    "github_note": "private repository \u2014 no public link"
   },
-  "trial-by-ai": {
-   "launcher_exists": true,
-   "github": null,
-   "visibility": "PRIVATE",
-   "live_status": null,
-   "github_note": "private repository \u2014 no public link"
-  },
-  "psyscreen": {
-   "launcher_exists": true,
-   "github": null,
-   "visibility": "PRIVATE",
-   "live_status": null,
-   "github_note": "private repository \u2014 no public link"
-  },
-  "dalil": {
-   "launcher_exists": true,
-   "github": null,
-   "visibility": "PRIVATE",
-   "live_status": null,
-   "github_note": "private repository \u2014 no public link"
-  },
-  "scholarcritic": {
-   "launcher_exists": true,
-   "github": null,
-   "visibility": null,
-   "live_status": null
-  },
-  "research-lab": {
-   "launcher_exists": true,
-   "github": null,
-   "visibility": null,
-   "live_status": null
-  },
-  "studio-psyreason": {
-   "launcher_exists": true,
-   "github": null,
-   "visibility": null,
-   "live_status": null
-  },
   "studio-contradiction-ledger": {
    "launcher_exists": true,
    "github": null,
@@ -169,12 +130,6 @@
    "live_status": null
   },
   "studio-protocolcheck": {
-   "launcher_exists": true,
-   "github": null,
-   "visibility": null,
-   "live_status": null
-  },
-  "studio-scholarcritic": {
    "launcher_exists": true,
    "github": null,
    "visibility": null,

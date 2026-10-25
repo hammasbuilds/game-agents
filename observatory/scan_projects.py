@@ -28,7 +28,7 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from observatory.projects import CATALOGUE, SNAPSHOT, Project
+from observatory.projects import CATALOGUE, LOCAL_IDS, LOCAL_SNAPSHOT, SNAPSHOT, Project
 
 
 def remote_of(repo_dir: str | None) -> str | None:
@@ -110,10 +110,12 @@ def main() -> None:
             flags.append(f"live {row['live_status']}")
         print(f"  {project.id:<26} {' · '.join(flags) or '—'}", flush=True)
 
-    payload = {"checked": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ"),
-               "projects": rows}
+    checked = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
     SNAPSHOT.parent.mkdir(parents=True, exist_ok=True)
-    SNAPSHOT.write_text(json.dumps(payload, indent=1), encoding="utf-8")
+    # private projects' facts go to the git-ignored file, so a commit never names them
+    for path, keep in ((SNAPSHOT, lambda k: k not in LOCAL_IDS), (LOCAL_SNAPSHOT, lambda k: k in LOCAL_IDS)):
+        payload = {"checked": checked, "projects": {k: v for k, v in rows.items() if keep(k)}}
+        path.write_text(json.dumps(payload, indent=1), encoding="utf-8")
     missing = [k for k, v in rows.items() if not v["launcher_exists"]]
     print(f"\n{len(rows)} projects checked; {len(missing)} launchers missing"
           f"{': ' + ', '.join(missing) if missing else ''}")
